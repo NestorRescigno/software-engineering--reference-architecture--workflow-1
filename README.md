@@ -1,4 +1,4 @@
-# GitHub Workflow Architecture
+# Architecture Reference to infrastructure code & software deployment
 # by Software Engineering
 
 Index
