@@ -1,1 +1,30 @@
+# This action yaml represents the different steps to perform for a deployment in a development environment with github workflow
+# This action'll need a runner to compile and process data for its use.
+# create by software Engineering
 
+name: Develop
+description: 'Deployment to develop'
+
+runs:
+  using: "composite"
+  steps:      
+    - name: Building Artifact
+      shell: bash
+      env:
+        SETTINGS: ${{ github.workspace }}/.github/cicd/setting.xml
+      run: |
+        echo "+++++++++++++++++++++++++++++++++++++++++++++++++++"
+        echo "Building..."
+        echo "+++++++++++++++++++++++++++++++++++++++++++++++++++"
+        mvn clean install -s ${{ env.SETTINGS }} -Ddocker.customTag=ci-${{ github.run_id }} --batch-mode
+  steps:
+    - name: Unit test
+    # implement sonar
+  steps:
+    - name: Registy Snapshop
+    # Implement nexus
+  steps:
+    - name: Deploy
+    # instance software.
+  steps:
+    - name: Health Check
