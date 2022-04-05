@@ -21,7 +21,7 @@ This repository contains all the workflow, modules and scripts standard necessar
 It will be the basis for best practices and the basis for the deployment of the company.
 
 In general, a company that develops software needs an environment for its own development as well as software, certification environments, as well as production environments. in this last, it is where more control is needed.
-That is why the balancing is applied to a hidden environment to test the new functional release before presenting it to the market. in the next picture show architecture standard network.
+That is why the balancing is applied to a hidden environment to test the new functional release before presenting it to the market. in next picture show architecture standard network.
 
 ![Network Environment](./images/docs/project-template/vpc-network.png) 
 
