@@ -27,12 +27,12 @@ That is why the balancing is applied to a hidden environment to test the new fun
 
 In the philosophy of infrastructure by code, the github action itself is used to automatically create the necessary environments for both the agents and the environments where the software or cluster container will be hosted. next pricture represent workflow action to create environment
 
-![Deploy Environment](./images/docs/project-template/vpc-network.png)
+![Deploy Environment](./images/docs/project-template/Deployment Infrastructure.png)
 
 Finally, the developer uses a workflow that allows quality control and the deployment of his software in the environments or cluster, generating an image that will be kept in a registry and that allows maintaining a standard software and magine in all environments.
 in next picture show workflow action
 
-![Deploy software](./images/docs/project-template/vpc-network.png)
+![Deploy software](./images/docs/project-template/DeveloperFlow V03.2.png)
 
 
 Getting started
