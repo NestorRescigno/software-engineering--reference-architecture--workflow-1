@@ -1,4 +1,4 @@
-# GitHub workflow best pratices
+# GitHub Workflow Architecture
 # by Software Engineering
 
 Index
