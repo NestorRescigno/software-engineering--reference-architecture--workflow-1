@@ -1,6 +1,6 @@
 # Architecture Reference 
-# Infrastructure Code & Software Deployment
-# by Software Engineering
+## Infrastructure Code & Software Deployment
+## by Software Engineering
 
 Index
 ----
