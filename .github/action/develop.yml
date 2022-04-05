@@ -19,8 +19,6 @@ runs:
         mvn clean install -s ${{ env.SETTINGS }} -Ddocker.customTag=ci-${{ github.run_id }} --batch-mode
   steps:
     - name: Unit test
-  steps:      
-    - name: Build Image
   steps:
     - name: Deploy
   steps:
