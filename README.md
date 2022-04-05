@@ -6,7 +6,6 @@ Index
 - [Summary](#Summary)
 - [Concepts](#Concepts)
 - [Getting started](#Getting-started)
-- [Testing](#Testing)
 - [Contributing](#Contributing)
 - [Maintainers](#Maintainers)
 
@@ -34,16 +33,16 @@ in next picture show workflow action
 
 ![Deploy software](./images/docs/project-template/DeveloperFlow.png)
 
-
 Getting started
 ---
+This repository contains the core modules that are referenced in the workflow templates for each purpose.
+the workflow templates such as infrastructure by code and software deployment based on the technology used, for example angular for the front or spring / quarkus for the backend.
 
-Include any essential instructions for: Getting it, Installing It, Configuring It, Running it, see [DEVELOPERS.md](./DEVELOPERS.md)
+**Getting Started Github flow:**
+- [Software deploy](https://github.com/Iberia-Ent/software-engineering--getting-started--github--flow)
+- [Infrastructure deploy](https://github.com/Iberia-Ent/software-engineering--getting-started--github--flow)
 
-Testing
----
-
-Explaination on how to run tests
+Include any essential instructions for core: Getting it, Installing It, Configuring It, Running it, see [DEVELOPERS.md](./DEVELOPERS.md)
 
 Contributing
 ---
