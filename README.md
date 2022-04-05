@@ -18,10 +18,26 @@ For the deployment of any software, it is necessary to design an infrastructure 
 Concepts
 ---
 This repository contains all the workflow, modules and scripts standard necessary for the deployment of a product. 
-It will be the basis for best practices and the basis for the deployment of the company
+It will be the basis for best practices and the basis for the deployment of the company.
+
+In general, a company that develops software needs an environment for its own development as well as software, certification environments, as well as production environments. in this last, it is where more control is needed.
+That is why the balancing is applied to a hidden environment to test the new functional release before presenting it to the market. in the next picture show architecture standard network.
+
+![Network Environment](./images/docs/project-template/vpc-network.png) 
+
+In the philosophy of infrastructure by code, the github action itself is used to automatically create the necessary environments for both the agents and the environments where the software or cluster container will be hosted. next pricture represent workflow action to create environment
+
+![Deploy Environment](./images/docs/project-template/vpc-network.png)
+
+Finally, the developer uses a workflow that allows quality control and the deployment of his software in the environments or cluster, generating an image that will be kept in a registry and that allows maintaining a standard software and magine in all environments.
+in next picture show workflow action
+
+![Deploy software](./images/docs/project-template/vpc-network.png)
+
 
 Getting started
 ---
+
 Include any essential instructions for: Getting it, Installing It, Configuring It, Running it, see [DEVELOPERS.md](./DEVELOPERS.md)
 
 Testing
