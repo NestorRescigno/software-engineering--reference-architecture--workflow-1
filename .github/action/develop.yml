@@ -19,7 +19,12 @@ runs:
         mvn clean install -s ${{ env.SETTINGS }} -Ddocker.customTag=ci-${{ github.run_id }} --batch-mode
   steps:
     - name: Unit test
+    # implement sonar
+  steps:
+    - name: Registy Snapshop
+    # Implement nexus
   steps:
     - name: Deploy
+    # instance software.
   steps:
     - name: Health Check
