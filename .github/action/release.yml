@@ -1,1 +1,4 @@
+# This action yaml represents the different steps to perform for a publish software with github workflow
+# This action'll need a runner to compile and process data for its use.
+# create by software Engineering
 
