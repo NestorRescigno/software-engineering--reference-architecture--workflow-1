@@ -1,6 +1,6 @@
-echo "++++++++++++++++++++++++++++++++++++++++++++++++++"
+echo "***************************************************"
 echo "Getting version.."
-echo "++++++++++++++++++++++++++++++++++++++++++++++++++"
+echo "***************************************************"
 POM_VERSION=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' -s ${{ env.SETTINGS }} --non-recursive exec:exec)
 echo POM_VERSION: $POM_VERSION
 # echo "POM_VERSION=$POM_VERSION" >> $GITHUB_ENV
