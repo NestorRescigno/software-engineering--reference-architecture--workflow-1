@@ -5,8 +5,8 @@ INDEX
 ---
 - [Overview](#Overview)
 - [Basic requirements](#Basic-requirements)
-- [Repository structure](#Repository structure)
-- [Getting started](#Getting started)
+- [Repository structure](#Repository-structure)
+- [Getting started](#Getting-started)
 - [Usages](#Usages)
 - [Conventions](#Conventions)
 
