@@ -22,25 +22,33 @@ Repository structure
 ----
 ````
 main
-│.github/action               # workflow github action core
-|     └───infrastructure      # action core to create automatic infraestructure
-|     └───software            # action core to deploy automatic software
-│___module                    # standars module core
-|     └───script              # script core ( example pathoy, shell, etc.)
-|     └───terrafom            # standars terrafom module core
-│___docs                      # document attached
-│     └───decisions           # strategy decisions 
+│.github/action                                                   # workflow github action core
+|     └───infrastructure                                          # action core to create automatic infraestructure
+|     └───software                                                # action core to deploy automatic software
+|     └───utils                                                   # utils script core for step action
+|           └───build-image.sh                                    # build image ami aws.
+|           └───build-maven.sh                                    # build artifact with maven script.
+|           └───checkout.sh                                       # checkout source code from git.
+|           └───configure-cloud-credentials.sh                    # configure cloud credentials access.
+|           └───get-version-pom.sh                                # get version form pom.xml maven.
+|           └───health-checking.sh                                # health checking instance in cloud.
+|           └───terraform-deploy.sh                               # terraform plan and apply deploy module.
+│___module                                                        # standars module core
+|     └───script                                                  # script core ( example pathoy, shell, etc.)
+|     └───terrafom                                                # standars terrafom module core
+│___docs                                                          # document attached
+│     └───decisions                                               # strategy decisions 
 │___images
 │     └───docs
-|           └───contributing                                         #informative picture.
-|                   └───sample.jpg                                   #sample picture
-│           └───developers                                           #informative picture.
-│                   └───sample.jpg                                   #sample picture
-|           └───project-template                                     #informative picture.
-|                   └───Deployment-Infrastructure.png                #deployment infrastructure design
-|                   └───DeploperFlow.png                             #deployment software design
-|                   └───vpc-network.png                              #Architeture network cloud design
-|                   └───README.md                                    #Document description design
+|           └───contributing                                      # Informative picture.
+|                   └───sample.jpg                                # sample picture
+│           └───developers                                        # Informative picture.
+│                   └───sample.jpg                                # sample picture
+|           └───project-template                                  # Informative picture.
+|                   └───Deployment-Infrastructure.png             # deployment infrastructure design
+|                   └───DeploperFlow.png                          # deployment software design
+|                   └───vpc-network.png                           # Architeture network cloud design
+|                   └───README.md                                 # Document description design
 │CHANGELOG.md
 │CODE_OF_CONDUCT.md
 │CONTRIBUTING.md
