@@ -25,3 +25,6 @@ echo "PACT_VERSION=$PACT_VERSION" >> $GITHUB_ENV
 CI_COMMIT_REF_SLUG=$(echo ${{ github.ref}} | cut -c -63 | sed -E 's/[^a-z0-9-]+/-/g' | sed -E 's/^-*([a-z0-9-]+[a-z0-9])-*$$/\1/g')
 echo CI_COMMIT_REF_SLUG: $CI_COMMIT_REF_SLUG
 echo "CI_COMMIT_REF_SLUG=$CI_COMMIT_REF_SLUG" >> $GITHUB_ENV
+echo "***************************************************"
+echo "End Get Version."
+echo "***************************************************"
