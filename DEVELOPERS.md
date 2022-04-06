@@ -86,6 +86,15 @@ jobs:
     # Repository name with owner.
     # Default: ${{ github.repository }}
     repository: ''
+    # Configutation DNS and credencials for access to repository artifact
+    # Default
+    ArtifactRepositoyURL: ''
+    ArtifactRepositoyToken: ''
+    # Configutation DNS and credencials for access to scan software
+    # Default
+    scanURL: '' 
+    scanToken: ''
+    # Default
 ````
 
 Conventions
