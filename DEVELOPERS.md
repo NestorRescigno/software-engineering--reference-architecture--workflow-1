@@ -1,3 +1,15 @@
+## Configuration and procedure for developers
+## by Software Engineering
+
+INDEX
+---
+- [Overview](#Overview)
+- [Basic requirements](#Basic-requirements)
+- [Repository structure](#Repository structure)
+- [Getting started](#Getting started)
+- [Usages](#Usages)
+- [Conventions](#Conventions)
+
 ## Overview
 
 Architecture and technology overview, description of packages, dependencies, tools are used
@@ -6,93 +18,90 @@ Architecture and technology overview, description of packages, dependencies, too
 
 pre installed software is needed for development
 
+## Repository structure
+
 ## Getting started
 
 How to setup environment
 
+## Usages
+the implementation of the workflow in the different repositories of the source code for use. can be referenced as follows:
+> **Recommendation:** Don't directly implement this flow in source repositories. use an intermediate repository where you can configure the different tools (exemple sonar, veracode, etc). and that it can be executed, for example, by means of [weebhook](https://docs.github.com/en/github-ae@latest/developers/webhooks-and-events/webhooks/about-webhooks). This configuration allows to separate the repository from the workflow.
+````
+- uses: actions/checkout@v3
+  with:
+    # Repository name with owner.
+    # Default: ${{ github.repository }}
+    repository: ''
+
+    # The branch, tag or SHA to checkout. When checking out the repository that
+    # triggered a workflow, this defaults to the reference or SHA for that event.
+    # Otherwise, uses the default branch.
+    ref: ''
+
+    # Personal access token (PAT) used to fetch the repository. The PAT is configured
+    # with the local git config, which enables your scripts to run authenticated git
+    # commands. The post-job step removes the PAT.
+    #
+    # We recommend using a service account with the least permissions necessary. Also
+    # when generating a new PAT, select the least scopes necessary.
+    #
+    # [Learn more about creating and using encrypted secrets](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets)
+    #
+    # Default: ${{ github.token }}
+    token: ''
+
+    # SSH key used to fetch the repository. The SSH key is configured with the local
+    # git config, which enables your scripts to run authenticated git commands. The
+    # post-job step removes the SSH key.
+    #
+    # We recommend using a service account with the least permissions necessary.
+    #
+    # [Learn more about creating and using encrypted secrets](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets)
+    ssh-key: ''
+
+    # Known hosts in addition to the user and global host key database. The public SSH
+    # keys for a host may be obtained using the utility `ssh-keyscan`. For example,
+    # `ssh-keyscan github.com`. The public key for github.com is always implicitly
+    # added.
+    ssh-known-hosts: ''
+
+    # Whether to perform strict host key checking. When true, adds the options
+    # `StrictHostKeyChecking=yes` and `CheckHostIP=no` to the SSH command line. Use
+    # the input `ssh-known-hosts` to configure additional hosts.
+    # Default: true
+    ssh-strict: ''
+
+    # Whether to configure the token or SSH key with the local git config
+    # Default: true
+    persist-credentials: ''
+
+    # Relative path under $GITHUB_WORKSPACE to place the repository
+    path: ''
+
+    # Whether to execute `git clean -ffdx && git reset --hard HEAD` before fetching
+    # Default: true
+    clean: ''
+
+    # Number of commits to fetch. 0 indicates all history for all branches and tags.
+    # Default: 1
+    fetch-depth: ''
+
+    # Whether to download Git-LFS files
+    # Default: false
+    lfs: ''
+
+    # Whether to checkout submodules: `true` to checkout submodules or `recursive` to
+    # recursively checkout submodules.
+    #
+    # When the `ssh-key` input is not provided, SSH URLs beginning with
+    # `git@github.com:` are converted to HTTPS.
+    #
+    # Default: false
+    submodules: ''
+````
+
 ## Conventions
-
-This project is following [Google Java Style Guide - for example]
-
-[Requirements for test coverage, linters, additional project rules]
 
 ## Workflow
 
-### Github Flow, as default for Product-based development
-
-GitHub flow is a lightweight, branch-based workflow that supports teams and projects where deployments are made regularly. This guide explains how and why GitHub flow works.
-
-The essence if Github Flow is explained in 6 points:
-
-- Anything in the 'main' branch is deployable
-- To work on something new, create a descriptively named branch off of 'main' (ie: new-oauth2-scopes)
-- Commit to that branch locally and regularly push your work to the same named branch on the server
-- When you need feedback or help, or you think the branch is ready for merging, open a pull request
-- After someone else has reviewed and signed off on the feature, you can merge it into 'main'
-- Once it is merged and pushed to 'main', you can and should deploy immediately
-
-We refer to Github documentation for and [introduction](https://guides.github.com/introduction/flow/) and [deeper details]https://docs.github.com/en/get-started/quickstart/github-flow().
-
-### Git Flow, for applications that require Integration Environments 
-
-We refer Integration Environments as a [Enterprise-wide integration test environments](https://www.thoughtworks.com/radar/techniques/enterprise-wide-integration-test-environments). In such case, it's necessary to keep running non-production environments that replacates the production behaviour with it's integrations.
-
-Gitflow Workflow is a Git workflow that helps with continuous software development and implementing DevOps practice. Gitflow is ideally suited for projects that have a scheduled release cycle:
-
-- The workflow is great for a release-based software workflow.
-- Gitflow offers a dedicated channel for hotfixes to production.
-
-The overall flow of Gitflow is:
-
-- A develop branch is created from main
-- A release branch is created from develop
-- Feature branches are created from develop
-- When a feature is complete it is merged into the develop branch
-- When the release branch is done it is merged into develop and main
-- If an issue in main is detected a hotfix branch is created from main
-- Once the hotfix is complete it is merged to both develop and main
-
-More detailed description on how to implement a gitflow is explained [here](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow).
-
-### Semantic Release and Conventional Changelog
-
-Releasing of new Group IT Standards versions is automatically managed by [Semantic Release][].
-Semantic Release makes sure correct version numbers get bumped according to the **meaning**
-of your changes once your PR gets merged to `main`.
-
-To make it work, it's necessary to follow [Conventional Changelog][]. That basically
-means all commit messages in the project should follow a particular format:
-
-```
-<type>: <subject>
-```
-
-Where `<type>` is:
-
-- `feat` - New functionality added
-- `fix` - Broken functionality fixed
-- `perf` - Performance improved
-- `docs` - Documentation added/removed/improved/...
-- `chore` - Package setup, CI setup, ...
-- `refactor` - Changes in code, but no changes in behavior
-- `test` - Tests added/removed/improved/...
-
-In the rare cases when your changes break backwards compatibility, the message
-must include string `BREAKING CHANGE:`. That will result in bumping the major version.
-
-Seems hard?
-
-- See [existing commits][] as a reference
-- [Commitizen CLI][] can help you to create correct commit messages
-- `npm run lint` validates format of your messages
-
-
-
-[Semantic Release]: https://github.com/semantic-release/semantic-release
-[Conventional Changelog]: https://github.com/conventional-changelog/conventional-changelog
-[Commitizen CLI]: https://github.com/commitizen/cz-cli
-[existing commits]: https://gitlab.com/dparra0007-IAGGBS/technical-architecture/application-standards/commits/master
-
-[upstream repository]: https://github.com/apiaryio/dredd
-[issues]: ISSUE_TEMPLATE.md
-[Pull Request]: PULL_REQUEST_TEMPLATE.md
