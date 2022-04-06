@@ -62,13 +62,11 @@ on:
   pull_request:
     branches: [ develop ]
 jobs:
-- uses: ./.github/action/software/develop.yml
+- uses: ./.github/action/software/develop.yml@v1.0
   with:
     # Repository name with owner.
     # Default: ${{ github.repository }}
     repository: ''
-    # Otherwise, uses the default branch.
-    ref: ''
 ````
 - **Implementation for desployment to publish environment and tagging technical release:**
 ````
@@ -77,13 +75,11 @@ on:
   pull_request:
     branches: [ main ]
 jobs:
-- uses: ./.github/action/software/release.yml
+- uses: ./.github/action/software/release.yml@v1.0
   with:
     # Repository name with owner.
     # Default: ${{ github.repository }}
     repository: ''
-    # Otherwise, uses the default branch.
-    ref: ''
 ````
 
 ## Conventions
