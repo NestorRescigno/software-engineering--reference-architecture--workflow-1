@@ -57,12 +57,11 @@ can be referenced as follows:
 
 - **Implementation for desployment to develop environment:**
 ````
+# Implementation for deployment to develop environment ( pull request event to develop branch )
 on:
   pull_request:
     branches: [ develop ]
-
 jobs:
-# Implementation for desployment to develop environment
 - uses: ./.github/action/software/develop.yml
   with:
     # Repository name with owner.
@@ -76,7 +75,7 @@ jobs:
 ````
 - **Implementation for desployment to publish environment and tagging technical release:**
 ````
-# Implementation for desployment to publish environment
+# Implementation for deployment to publish environment ( pull request event to main branch)
 on:
   pull_request:
     branches: [ main ]
