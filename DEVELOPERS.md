@@ -75,7 +75,7 @@ jobs:
     repository: ''
     # Configutation DNS and credencials for access to repository artifact
     # Default
-    artifact-repositoy: ''
+    artifact-repositoy-url: ''
     artifact-repositoy-token: ''
 ````
 - **Implementation for desployment to publish environment and tagging technical release:**
