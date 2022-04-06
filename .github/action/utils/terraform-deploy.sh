@@ -15,3 +15,6 @@ terraform apply -auto-approve
 -var "environment=int" 
 -var "anc_ins_ami_id=${{ env.IMAGE_ID }}" 
 -var "environment_prefix=ancill-int"
+echo "***************************************************"
+echo "Deploying end..."
+echo "***************************************************"
