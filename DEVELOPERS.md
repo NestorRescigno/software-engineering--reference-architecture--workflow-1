@@ -73,6 +73,10 @@ jobs:
     # Repository name with owner.
     # Default: ${{ github.repository }}
     repository: ''
+    # Configutation DNS and credencials for access to repository artifact
+    # Default
+    artifact-repositoy: ''
+    artifact-repositoy-token: ''
 ````
 - **Implementation for desployment to publish environment and tagging technical release:**
 ````
@@ -88,13 +92,16 @@ jobs:
     repository: ''
     # Configutation DNS and credencials for access to repository artifact
     # Default
-    ArtifactRepositoyURL: ''
-    ArtifactRepositoyToken: ''
-    # Configutation DNS and credencials for access to scan software
+    artifact-repositoy: ''
+    artifact-repositoy-token: ''
+    # Configutation DNS and credencials for access to scan software tools
     # Default
-    scanURL: '' 
-    scanToken: ''
+    scan-url: '' 
+    scan-token: ''
+    # Configutation DNS and credencials for access to vulnerability tools
     # Default
+    vulnerability-url: '' 
+    vulnerability-token: ''
 ````
 
 Conventions
