@@ -51,8 +51,11 @@ main
 Getting started
 ----
 
-The implementation of the workflow in the different repositories of the source code for use. 
+The implementation of the workflow in the different repositories of the source code for use.
+
 > **Recommendation:** Don't directly implement this flow in source repositories. Use an intermediate repository where you can configure the different tools (exemple sonar, veracode, etc). and that it can be executed, for example, by means of [weebhook](https://docs.github.com/en/github-ae@latest/developers/webhooks-and-events/webhooks/about-webhooks). This configuration allows to separate the repository from the workflow.
+
+
 
 Usages
 ----
