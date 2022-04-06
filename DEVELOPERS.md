@@ -67,9 +67,6 @@ jobs:
     # Repository name with owner.
     # Default: ${{ github.repository }}
     repository: ''
-
-    # The branch, tag or SHA to checkout. When checking out the repository that
-    # triggered a workflow, this defaults to the reference or SHA for that event.
     # Otherwise, uses the default branch.
     ref: ''
 ````
@@ -85,9 +82,6 @@ jobs:
     # Repository name with owner.
     # Default: ${{ github.repository }}
     repository: ''
-
-    # The branch, tag or SHA to checkout. When checking out the repository that
-    # triggered a workflow, this defaults to the reference or SHA for that event.
     # Otherwise, uses the default branch.
     ref: ''
 ````
