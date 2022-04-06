@@ -24,7 +24,12 @@ Repository structure
 main
 │.github/action                                                   # workflow github action core
 |     └───infrastructure                                          # action core to create automatic infraestructure
+|             └───environment.yml                                 # create virtual private network and subNet and device.
+|             └───access.yml                                      # configure policys
+|             └───operative-server.yml                            # create facility server and vitual private network operative.
 |     └───software                                                # action core to deploy automatic software
+|           └───develop.yml                                       # workflow deploy to development environment
+|           └───release.yml                                       # workflow deploy to publish environment & create tag release
 |     └───utils                                                   # utils script core for step action
 |           └───build-image.sh                                    # build image ami aws.
 |           └───build-maven.sh                                    # build artifact with maven script.
