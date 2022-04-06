@@ -1,6 +1,6 @@
-echo "++++++++++++++++++++++++++++++++++++++++++++++++++"
+echo "***************************************************"
 echo "Deploying with terraform..."
-echo "++++++++++++++++++++++++++++++++++++++++++++++++++"
+echo "***************************************************"
 cd ${{ github.workspace }}/${{ env.MICROSERVICE_NAME }}-iac/int/${{ env.MICROSERVICE_NAME }}-svc
 terraform init
 terraform plan 
