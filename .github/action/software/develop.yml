@@ -1,6 +1,6 @@
 # *********************************************************************
 # *************           IBERIA L.A.E.                   *************
-# *************       by software Engineering             *************
+# *************       by Software Engineering             *************
 # *********************************************************************
 # This action yaml represents the different steps to perform 
 # for a deployment in a development environment with github workflow
