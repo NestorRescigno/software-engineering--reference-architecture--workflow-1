@@ -25,9 +25,9 @@ runs:
       env:
         SETTINGS: ${{ github.workspace }}/.github/cicd/setting.xml
       run: |
-        echo "+++++++++++++++++++++++++++++++++++++++++++++++++++"
+        echo "***************************************************"
         echo "Building..."
-        echo "+++++++++++++++++++++++++++++++++++++++++++++++++++"
+        echo "***************************************************"
         # mvn clean install -s ${{ env.SETTINGS }} -Ddocker.customTag=ci-${{ github.run_id }} --batch-mode  //no operative code - remove
         # maven compile pom.xml, it's need present in root repository.
         mvn -B package --file ${{ github.workspace }}/pom.xml
