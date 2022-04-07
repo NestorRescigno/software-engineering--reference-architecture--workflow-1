@@ -116,10 +116,6 @@ jobs:
     vulnerability-url: '' 
     vulnerability-token: ''
 ````
-
-Conventions
-----
-
 Workflow
 ----
 ### Github Flow, as default for Product-based development
@@ -157,3 +153,6 @@ The overall flow of Gitflow is:
 - Once the hotfix is complete it is merged to both develop and main
 
 More detailed description on how to implement a gitflow is explained [here](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow).
+
+Conventions
+----
