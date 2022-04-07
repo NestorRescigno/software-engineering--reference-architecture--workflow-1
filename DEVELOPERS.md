@@ -135,7 +135,7 @@ The essence if Github Flow is explained in 6 points:
 - After someone else has reviewed and signed off on the feature, you can merge it into 'main'
 - Once it is merged and pushed to 'main', you can and should deploy immediately
 
-We refer to Github documentation for and [introduction](https://guides.github.com/introduction/flow/) and [deeper details]https://docs.github.com/en/get-started/quickstart/github-flow().
+We refer to Github documentation for and [introduction](https://guides.github.com/introduction/flow/) and [deeper details](https://docs.github.com/en/get-started/quickstart/github-flow()).
 
 ### Git Flow, for applications that require Integration Environments 
 
