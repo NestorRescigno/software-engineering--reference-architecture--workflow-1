@@ -14,7 +14,7 @@ runs:
   steps:
     # Nota: 
     # Remplace action's with custom shell script to future
-    # by iberia for segurity - location in (../utils/)
+    # for segurity - location in (../utils/)
     # Step 1 
     - name: checkout
       uses: actions/checkout@v2
