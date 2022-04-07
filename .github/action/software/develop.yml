@@ -7,7 +7,19 @@ description: 'Deployment to develop'
 
 runs:
   using: "composite"
-  steps:      
+  steps:
+    # Nota: 
+    # Remplace action's with custom shell script to future
+    # by iberia for segurity - location in (../utils/)
+    # Step 1 
+    - uses: actions/checkout@v2
+    # Step 2
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+    # Step 3
     - name: Building Artifact
       shell: bash
       env:
@@ -16,7 +28,9 @@ runs:
         echo "+++++++++++++++++++++++++++++++++++++++++++++++++++"
         echo "Building..."
         echo "+++++++++++++++++++++++++++++++++++++++++++++++++++"
-        mvn clean install -s ${{ env.SETTINGS }} -Ddocker.customTag=ci-${{ github.run_id }} --batch-mode
+        # mvn clean install -s ${{ env.SETTINGS }} -Ddocker.customTag=ci-${{ github.run_id }} --batch-mode  //no operative code - remove
+        # maven compile pom.xml, it's need present in root repository.
+        mvn -B package --file ${{ github.workspace }}/pom.xml
   steps:
     - name: Unit test
     # implement sonar
