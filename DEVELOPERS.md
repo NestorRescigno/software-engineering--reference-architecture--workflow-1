@@ -116,8 +116,10 @@ jobs:
     vulnerability-url: '' 
     vulnerability-token: ''
 ````
-Workflow
+Repository flow 
 ----
+We have two working methods within the context of the repositories available in the reference architecture
+
 ### Github Flow, as default for Product-based development
 
 GitHub flow is a lightweight, branch-based workflow that supports teams and projects where deployments are made regularly. This guide explains how and why GitHub flow works.
