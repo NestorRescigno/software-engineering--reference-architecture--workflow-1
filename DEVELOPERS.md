@@ -8,6 +8,7 @@ Index
 - [Repository structure](#Repository-structure)
 - [Getting started](#Getting-started)
 - [Usages](#Usages)
+- [Repository flow](#Repository-flow)
 - [Conventions](#Conventions)
 
 Overview
