@@ -28,6 +28,11 @@ runs:
         java-version: '11'
         distribution: 'adopt'
     # Step 3
+    - name: Set up Node 14
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+    # Step 4
     - name: Building Artifact
       shell: bash
       env:
@@ -36,7 +41,7 @@ runs:
         LANGUAGE: 
       run: |
       ${{ env.SCRIPT }}/build-maven.sh ${{ github.workspace }} ${{ env.LANGUAGE }} 
-    # Step 4
+    # Step 5
     - name: Registy Artifact
       shell: bash
       env:
