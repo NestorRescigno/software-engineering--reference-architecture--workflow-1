@@ -10,7 +10,7 @@ SONAR_PROJECT_ID = $4
 SONAR_TARGET_PATH = $5
 SONAR_LANGUAGE = $6
 # if url isn't empty then allow sonar for scanner code
-if [ SONAR_URL != ""]
+if [ ${SONAR_URL} != ""]
 then  
   echo "***************************************************"
   echo "Sonar scanner started..."
