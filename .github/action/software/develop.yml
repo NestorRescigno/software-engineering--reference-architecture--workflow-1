@@ -45,7 +45,7 @@ runs:
         # angular or java
         SONAR_LANGUAGE:
     run: |
-      ${{ env.SCRIPT }}/sonar-scanner.sh ${{ env.SONAR_URL }} ${{ env.SONAR_USER }} ${{ env.SONAR_PASS }} ${{ env.SONAR_LANGUAGE }} 
+      ${{ env.SCRIPT }}/sonar-scanner.sh ${{ env.SONAR_URL }} ${{ env.SONAR_USER }} ${{ env.SONAR_PASS }} ${{ env.SONAR_LANGUAGE }} ${{ github.workspace }}
   steps:
     - name: Registy
     # Implement nexus
