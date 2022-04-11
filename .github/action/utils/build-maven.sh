@@ -24,7 +24,7 @@ then
 elif [${lenguage}="angular"]
 then
   echo "***************************************************"
-  echo "Artifact Agular Building"
+  echo "Artifact Angular Building"
   echo "***************************************************"
   if [ ${{ startsWith(github.ref, 'refs/heads/main') }} = true ]
   then 
