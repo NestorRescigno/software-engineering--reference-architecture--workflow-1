@@ -28,11 +28,11 @@ then
   echo "***************************************************"
   if [ ${{ startsWith(github.ref, 'refs/heads/main') }} = true ]
   then 
-   # not implement
-   ng build ${ workspace }/package.json
+    # not implement
+    ng build ${ workspace }/package.json
   else
-   # not implemen, in other reference may be have other build action commands
-   ng build ${ workspace }/package.json
+    # not implemen, in other reference may be have other build action commands
+    ng build ${ workspace }/package.json
   fi
   echo "***************************************************"
   echo "End Angular Building"
