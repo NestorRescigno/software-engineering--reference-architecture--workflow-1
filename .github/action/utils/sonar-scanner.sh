@@ -14,7 +14,7 @@ then
   echo "***************************************************"
   echo "Sonar scanner started..."
   echo "***************************************************"
-  if[${SONAR_LANGUAGE}="java"]
+  if [${SONAR_LANGUAGE}="java"]
   then
     # sonar scannar java setup
     sonar-scanner
@@ -24,7 +24,7 @@ then
       -Dsonar.projectKey=${SONAR_PROJECT_ID}
       -Dsonar.java.binaries=**/target/classes
       -Dsonar.language=java
-  elif[${SONAR_LANGUAGE}="angular"]
+  elif [${SONAR_LANGUAGE}="angular"]
   then
     # sonar scannar angular setup
     sonar-scanner
