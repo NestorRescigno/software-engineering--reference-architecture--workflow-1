@@ -1,7 +1,7 @@
-# ******************************************************************************
-# *************           IBERIA L.A.E.                   **********************
-# *************       by software Engineering             **********************
-# ******************************************************************************
+# *********************************************************************
+# *************           IBERIA L.A.E.                   *************
+# *************       by software Engineering             *************
+# *********************************************************************
 #
 # Setting variable
 SONAR_URL = $1
@@ -71,11 +71,11 @@ else
 fi
 
 # ************************** NOTE OF SEGURITY **********************************
-# ***  sonar-scanner is scriptc client by sonarqube to donwload               **    
+# ***  sonar-scanner is script client by sonarqube to donwload                **    
 # ***  form                                                                   **      
 # *** https://binaries.sonarsource.com/?prefix=Distribution/sonar-scanner-cli/ *
 # *** move this script on magine runner or create script                      **
-# *** download in workflow process or call rest api                           **
+# *** download in workflow process or call direct rest api                    **
 # *** remove @action and reemplace with script download ( more segurity)      **
 # ***  - name: Setup sonarqube                                                **
 # ***  uses: warchant/setup-sonar-scanner@v3                                  **
