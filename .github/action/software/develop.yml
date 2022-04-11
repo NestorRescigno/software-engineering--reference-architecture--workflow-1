@@ -28,16 +28,22 @@ runs:
     - name: Building Artifact
       shell: bash
       env:
-        SETTINGS: ${{ github.workspace }}/.github/cicd/setting.xml
+        SCRIPT: ${{ github.workspace }}/.github/action/utils/
+        LANGUAGE: 
       run: |
-        echo "***************************************************"
-        echo "Building..."
-        echo "***************************************************"
-        # mvn clean install -s ${{ env.SETTINGS }} -Ddocker.customTag=ci-${{ github.run_id }} --batch-mode  //no operative code - remove
-        mvn -B package --file ${{ github.workspace }}/pom.xml    #pom.xml maven compile, it's need present in root repository.
+      ${{ env.SCRIPT }}/build-maven.sh ${{ github.workspace }} ${{ env.LANGUAGE }} 
   steps:
-    - name: Scan
     # implement sonar
+    - name: Scan
+    shell: bash
+    env:
+        SCRIPT: ${{ github.workspace }}/.github/action/utils
+        SONAR_URL:
+        SONAR_USER:
+        SONAR_PASS:
+        SONAR_LANGUAGE:
+    run: |
+      ${{ env.SCRIPT }}/sonar-scanner.sh ${{ env.SONAR_URL }} ${{ env.SONAR_USER }} ${{ env.SONAR_PASS }} ${{ env.SONAR_LANGUAGE }} 
   steps:
     - name: Registy
     # Implement nexus
