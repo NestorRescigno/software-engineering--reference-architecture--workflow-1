@@ -5,6 +5,8 @@
 # This action yaml represents the different steps to perform 
 # for a deployment in a development environment with github workflow
 # This action'll need a runner to compile and process data for its use.
+#
+# currently it is only possible to configure two types of languages "java and angular"
 
 name: Develop
 description: 'Deployment to develop'
