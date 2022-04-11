@@ -48,8 +48,10 @@ runs:
       ${{ env.SCRIPT }}/nexus-registry.sh ${{ env.REPOSITORY_URL }} ${{ env.RELEASE }}
   steps:
     # implement sonar
-    - name: Setup sonarqube                                                **
+    # Step 1
+    - name: Setup sonarqube
       uses: warchant/setup-sonar-scanner@v3
+    # Step 2
     - name: Scan
       shell: bash
       env:
@@ -62,7 +64,8 @@ runs:
       run: |
         ${{ env.SCRIPT }}/sonar-scanner.sh ${{ env.SONAR_URL }} ${{ env.SONAR_USER }} ${{ env.SONAR_PASS }} ${{ env.SONAR_LANGUAGE }} ${{ github.workspace }}
   steps:
-    - name: Deploy
     # instance software.
+    # Step 1
+    - name: Deploy
+    # Step 2
     - name: Health Check
-    # Health Check instance
