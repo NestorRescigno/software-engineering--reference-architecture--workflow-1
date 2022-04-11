@@ -1,7 +1,8 @@
-# *********************************************************************
-# *************           IBERIA L.A.E.                   *************
-# *************       by software Engineering             *************
-# *********************************************************************
+# ******************************************************************************
+# *************           IBERIA L.A.E.                   **********************
+# *************       by software Engineering             **********************
+# ******************************************************************************
+#
 # Setting variable
 SONAR_URL = $1
 SONAR_USER = $2
@@ -68,3 +69,14 @@ else
   echo "Sonar scanner is disable..."
   echo "***************************************************"
 fi
+
+# ************************** NOTE OF SEGURITY **********************************
+# ***  sonar-scanner is scriptc client by sonarqube to donwload               **    
+# ***  form                                                                   **      
+# *** https://binaries.sonarsource.com/?prefix=Distribution/sonar-scanner-cli/ *
+# *** move this script on magine runner or create script                      **
+# *** download in workflow process or call rest api                           **
+# *** remove @action and reemplace with script download ( more segurity)      **
+# ***  - name: Setup sonarqube                                                **
+# ***  uses: warchant/setup-sonar-scanner@v3                                  **
+# ******************************************************************************
