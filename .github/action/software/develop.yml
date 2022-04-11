@@ -54,5 +54,5 @@ runs:
   steps:
     - name: Deploy
     # instance software.
-  steps:
     - name: Health Check
+    # Health Check instance
