@@ -23,7 +23,7 @@ then
       -Dsonar.host.url=${SONAR_URL}
       -Dsonar.projectKey=${SONAR_PROJECT_ID}
       -Dsonar.java.binaries=**/target/classes
-      -DDsonar.language=java
+      -Dsonar.language=java
   elif[${SONAR_LANGUAGE}="angular"]
   then
     # sonar scannar angular setup
@@ -38,6 +38,11 @@ then
       -Dsonar.tests=src
       -Dsonar.test.inclusions=**/*.spec.ts
       -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info
+  else 
+    echo "***************************************************"
+    echo "Error lenguage select, options [java, angular]"
+    echo "***************************************************"
+    exit -1
   fi
   echo "***************************************************"
   echo "Sonar scanner complete..."
