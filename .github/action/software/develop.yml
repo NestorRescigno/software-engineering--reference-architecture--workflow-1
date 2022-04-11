@@ -41,7 +41,7 @@ runs:
       shell: bash
       env:
         SCRIPT: ${{ github.workspace }}/.github/action/utils/
-        REPOSITORY_URL: "https://nexus.corp.iberia.es"
+        REPOSITORY_URL:
         RELEASE: false
       run: |
       # path in script repository nexus is /repository/snapshots/ and /repository/releases/
