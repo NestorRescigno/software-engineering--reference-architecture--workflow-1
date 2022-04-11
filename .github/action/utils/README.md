@@ -1,6 +1,6 @@
-# script use direct or inderect clients commands
+# the scripts shell use direct or inderect next clients commands
 
-sonarQube download form site 
+sonarQube use binary script from download to next site 
 ````
 https://binaries.sonarsource.com/?prefix=Distribution/sonar-scanner-cli/
 ````
