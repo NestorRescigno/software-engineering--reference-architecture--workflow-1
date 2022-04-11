@@ -2,78 +2,38 @@
 # *************           IBERIA L.A.E.                   *************
 # *************       by software Engineering             *************
 # *********************************************************************
-echo "***************************************************"
-echo "Artifact Building with maven"
-echo "***************************************************"
-if [ ${{ startsWith(github.ref, 'refs/heads/main') }} = true ]
-then 
-  echo ARTIFACT_TYPE: SNAPSHOT
-  mvn clean deploy -s ${{ env.SETTINGS }} 
-  -Dmaven.wagon.http.ssl.insecure=true 
-  -DaltSnapshotDeploymentRepository=ibis-snapshots::default::${{ env.SNAPSHOTS_REPOSITORY_URL }} 
-  -Ddocker.customTag=ci-${{ github.run_id }} 
-  -Dpactbroker.auth.username=${{ env.IBIS_PACT_BROKER_USERNAME }} 
-  -Dpactbroker.auth.password=${{ env.IBIS_PACT_BROKER_PASSWORD }} 
-  -Dpactbroker.tags="latest,integration,qa,uat,prelive,beta,staging,live" 
-  -Dpact.verifier.publishResults=true 
-  -Dpact.consumer.tag=${{ env.CI_COMMIT_REF_SLUG }} 
-  -Dpact.provider.tag=${{ env.CI_COMMIT_REF_SLUG }} 
-  -Dpact.consumer.version=${{ env.PACT_VERSION }} 
-  -Dpact.provider.version=${{ env.PACT_VERSION }} 
-  --batch-mode
-elif [ ${{ startsWith(github.ref, 'refs/heads/release') }} = true ]
+# setting variable
+workspace = $1
+lenguage = $2
+if [${lenguage}="java"]
 then
-  echo ARTIFACT_TYPE: RELEASE
   echo "***************************************************"
-  echo "Setting version..."
+  echo "Artifact java Building with maven"
   echo "***************************************************"
-  mvn -s ${{ env.SETTINGS }} build-helper:parse-version versions:set 
-  -DremoveSnapshot=true versions:commit 
-  --batch-mode
-  echo "***************************************************"
-  echo "Building..."
-  echo "***************************************************"               
-  mvn clean deploy -s ${{ env.SETTINGS }} 
-  -Dmaven.wagon.http.ssl.insecure=true 
-  -DaltReleaseDeploymentRepository=ibis-releases::default::${{ env.RELEASES_REPOSITORY_URL }} 
-  -Ddocker.customTag=ci-${{ github.run_id }} 
-  -Dpactbroker.auth.username=${{ env.IBIS_PACT_BROKER_USERNAME }} 
-  -Dpactbroker.auth.password=${{ env.IBIS_PACT_BROKER_PASSWORD }} 
-  -Dpactbroker.tags="latest,integration,qa,uat,prelive,beta,staging,live" 
-  -Dpact.verifier.publishResults=true -Dpact.consumer.tag=${{ env.CI_COMMIT_REF_SLUG }} 
-  -Dpact.provider.tag=${{ env.CI_COMMIT_REF_SLUG }} -Dpact.consumer.version=${{ env.PACT_VERSION }} 
-  -Dpact.provider.version=${{ env.PACT_VERSION }} --batch-mode
- elif [ ${{ startsWith(github.ref, 'refs/tags') }} = true ] then
-  echo ARTIFACT_TYPE: RELEASE
-  echo "***************************************************"
-  echo "Setting version..."
-  echo "***************************************************"
-  mvn versions:set -DnewVersion=${{ env.ARTIFACT_VERSION }} -s ${{ env.SETTINGS }}
-  echo "***************************************************"
-  echo "Commit changes into project..."
-  echo "***************************************************"
-  mvn versions:commit -s ${{ env.SETTINGS }}
-  echo "***************************************************"
-  echo "Building..."
-  echo "***************************************************"               
-  mvn clean deploy -s ${{ env.SETTINGS }} 
-  -Dmaven.wagon.http.ssl.insecure=true 
-  -DaltReleaseDeploymentRepository=ibis-releases::default::${{ env.RELEASES_REPOSITORY_URL }} 
-  -Ddocker.customTag=ci-${{ github.run_id }} 
-  -Dpactbroker.auth.username=${{ env.IBIS_PACT_BROKER_USERNAME }} 
-  -Dpactbroker.auth.password=${{ env.IBIS_PACT_BROKER_PASSWORD }} 
-  -Dpactbroker.tags="latest,integration,qa,uat,prelive,beta,staging,live" 
-  -Dpact.verifier.publishResults=true 
-  -Dpact.consumer.tag=${{ env.CI_COMMIT_REF_SLUG }} 
-  -Dpact.provider.tag=${{ env.CI_COMMIT_REF_SLUG }} 
-  -Dpact.consumer.version=${{ env.PACT_VERSION }} 
-  -Dpact.provider.version=${{ env.PACT_VERSION }} 
-  --batch-mode
-else
-  mvn clean install -s ${{ env.SETTINGS }} 
-  -Ddocker.customTag=ci-${{ github.run_id }} 
-  --batch-mode
-fi
+  if [ ${{ startsWith(github.ref, 'refs/heads/main') }} = true ]
+  then 
+    #pom.xml maven compile, it's need present in root repository. 
+    mvn -B package --file ${ workspace }/pom.xml    
+  else
+    #pom.xml maven compile, it's need present in root repository.
+    mvn -B package --file ${ workspace }/pom.xml    
+  fi
   echo "***************************************************"
   echo "End Building"
-  echo "***************************************************"  
+  echo "***************************************************"
+else
+  echo "***************************************************"
+  echo "Artifact Agular Building"
+  echo "***************************************************"
+  if [ ${{ startsWith(github.ref, 'refs/heads/main') }} = true ]
+  then 
+   # not implement
+   ng build ${ workspace }/package.json
+  else
+   # not implemen, in other reference may be have other build action commands
+   ng build ${ workspace }/package.json
+  fi
+  echo "***************************************************"
+  echo "End Angular Building"
+  echo "***************************************************"
+fi
