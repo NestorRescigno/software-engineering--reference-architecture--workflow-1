@@ -3,17 +3,24 @@
 # *************       by Software Engineering             *************
 # *********************************************************************
 # This action yaml represents the different steps to perform 
-# for a deployment in a development environment with github workflow
+# for a deployment in environment with github workflow
 # This action'll need a runner to compile and process data for its use.
 #
 # currently it is only possible to configure 
 # two types of languages "java and angular"
 
-name: Develop
-description: 'Deployment to develop'
-
-runs:
-  using: "composite"
+name: CICD
+description: 'continuos integration'
+on: [pull_request]
+  pull_request:
+    # Sequence of patterns matched against refs/heads
+    branches:    
+      - main
+      - develop
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: [self-hosted, deploy]
   steps:
     # Nota: 
     # Remplace action's with custom shell script to future
