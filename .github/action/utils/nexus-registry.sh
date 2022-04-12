@@ -10,7 +10,7 @@ echo "***************************************************"
 REPOSITORY_URL=%1
 LANGUAGE=%2
 ref = %3
-workspace=%4
+
 
 if [${REPOSITORY_URL} != ""] 
 then
