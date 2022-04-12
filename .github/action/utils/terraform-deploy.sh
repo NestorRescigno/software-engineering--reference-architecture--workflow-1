@@ -5,7 +5,7 @@
 echo "***************************************************"
 echo "Deploying with terraform..."
 echo "***************************************************"
-cd ${{ github.workspace }}/${{ env.MICROSERVICE_NAME }}-iac/int/${{ env.MICROSERVICE_NAME }}-svc
+cd ${{ github.workspace }}/module/terraform/
 terraform init
 terraform plan 
 -var "anc_ins_version=${{ needs.init.outputs.AMI_VERSION }}" 
