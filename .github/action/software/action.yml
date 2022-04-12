@@ -80,8 +80,14 @@ jobs:
       SCRIPT: ${{ github.workspace }}/.github/action/utils/
       LANGUAGE:
     steps:
+      # build image
+      # Step 1
+      - name: build image
+    steps:
       # instance software.
       # Step 1
       - name: Deploy
       # Step 2
       - name: Health Check
+      # Step 3
+      - name: Integration tests
