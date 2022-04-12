@@ -70,11 +70,11 @@ data "aws_subnet_ids" "snet-internal-eu-central-1_subnets" {
   }
 }
 
-data "aws_subnet" "snet-internal-eu-central-1a" {
+data "aws_subnet" "snet-amber-eu-central-1a" {
     vpc_id = data.aws_vpc.vpc-product.id
  
    tags = {
-    Name = local.data.vpc.internal.subneta
+    Name = local.data.vpc.amber.subneta
    }
 }
 
