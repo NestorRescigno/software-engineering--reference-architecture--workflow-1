@@ -18,64 +18,70 @@ on: [pull_request]
       - main
       - develop
 jobs:
-  deploy:
-    name: Deploy
-    runs-on: [self-hosted, deploy]
+  build:
+    name: build
+    runs-on: [self-hosted]
     env:
       SCRIPT: ${{ github.workspace }}/.github/action/utils/
       LANGUAGE:
-  steps:
-    # Nota: 
-    # Remplace action's with custom shell script to future
-    # for segurity - location in (../utils/)
-    # Step 1 
-    - name: checkout
-      uses: actions/checkout@v2
-    # Step 2 - Reemplace with install process jdk and configure path environment
-    - name: Set up JDK 11
-      uses: actions/setup-java@v2
-      with:
-        java-version: '11'
-        distribution: 'adopt'
-    # Step 3   - Reemplace with install process node.js
-    - name: Set up Node 14
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
-    # Step 4
-    - name: Building Artifact
-      shell: bash
-      run: |
-      ${{ env.SCRIPT }}/build-maven.sh ${{ github.workspace }} ${{ env.LANGUAGE }}
-  steps:
-    # implement sonar
-    # Step 1
-    - name: Setup sonarqube
-      uses: warchant/setup-sonar-scanner@v3
-    # Step 2
-    - name: Scan
-      shell: bash
-      env:
-          SONAR_URL: ${{secret.sonar-url}}
-          SONAR_USER: ${{secret.sonar-user}}
-          SONAR_PASS: ${{secret.sonar-pass}}
-      run: |
-        ${{ env.SCRIPT }}/sonar-scanner.sh ${{ env.SONAR_URL }} ${{ env.SONAR_USER }} ${{ env.SONAR_PASS }} ${{ env.LANGUAGE }} ${{ github.workspace }} ${{ github.ref }}
-  steps:
-     # deploy artifact to registry repository
-    - name: Registy Artifact
-      shell: bash
-      env:
-        # DNS hasn't content http:// or https://
-        REPOSITORY_DNS: ${{secret.nexus-url}}
-        REPOSITORY_USER: ${{secret.nexus-user}}
-        REPOSITORY_PASS: ${{secret.nexus-pass}}
-      run: |
-      # path in script repository nexus is /repository/snapshots/ and /repository/releases/
-      ${{ env.SCRIPT }}/nexus-registry.sh ${{ env.REPOSITORY_DNS }} ${{ env.REPOSITORY_USER }} ${{ env.REPOSITORY_PASS }} ${{ env.LANGUAGE }} ${{ github.ref }}
-  steps:
-    # instance software.
-    # Step 1
-    - name: Deploy
-    # Step 2
-    - name: Health Check
+    steps:
+      # Nota: 
+      # Remplace action's with custom shell script to future
+      # for segurity - location in (../utils/)
+      # Step 1 
+      - name: checkout
+        uses: actions/checkout@v2
+      # Step 2 - Reemplace with install process jdk and configure path environment
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+      # Step 3   - Reemplace with install process node.js
+      - name: Set up Node 14
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      # Step 4
+      - name: Building Artifact
+        shell: bash
+        run: |
+        ${{ env.SCRIPT }}/build-maven.sh ${{ github.workspace }} ${{ env.LANGUAGE }}
+    steps:
+      # implement sonar
+      # Step 1
+      - name: Setup sonarqube
+        uses: warchant/setup-sonar-scanner@v3
+      # Step 2
+      - name: Scan
+        shell: bash
+        env:
+            SONAR_URL: ${{secret.sonar-url}}
+            SONAR_USER: ${{secret.sonar-user}}
+            SONAR_PASS: ${{secret.sonar-pass}}
+        run: |
+          ${{ env.SCRIPT }}/sonar-scanner.sh ${{ env.SONAR_URL }} ${{ env.SONAR_USER }} ${{ env.SONAR_PASS }} ${{ env.LANGUAGE }} ${{ github.workspace }} ${{ github.ref }}
+    steps:
+       # deploy artifact to registry repository
+      - name: Registy Artifact
+        shell: bash
+        env:
+          # DNS hasn't content http:// or https://
+          REPOSITORY_DNS: ${{secret.nexus-url}}
+          REPOSITORY_USER: ${{secret.nexus-user}}
+          REPOSITORY_PASS: ${{secret.nexus-pass}}
+        run: |
+        # path in script repository nexus is /repository/snapshots/ and /repository/releases/
+        ${{ env.SCRIPT }}/nexus-registry.sh ${{ env.REPOSITORY_DNS }} ${{ env.REPOSITORY_USER }} ${{ env.REPOSITORY_PASS }} ${{ env.LANGUAGE }} ${{ github.ref }}
+  deploy:
+    name: deploy
+    runs-on: [self-hosted]
+    env:
+      SCRIPT: ${{ github.workspace }}/.github/action/utils/
+      LANGUAGE:
+    steps:
+      # instance software.
+      # Step 1
+      - name: Deploy
+      # Step 2
+      - name: Health Check
