@@ -2,18 +2,20 @@
 # *************           IBERIA L.A.E.                   *************
 # *************       by software Engineering             *************
 # *********************************************************************
-echo "***************************************************"
-echo "Registy artifact to nexus repository"
-echo "***************************************************"
 
-# setting variable
-REPOSITORY_URL=%1
-LANGUAGE=%2
-ref = %3
 
 
 if [${REPOSITORY_URL} != ""] 
 then
+    echo "***************************************************"
+    echo "Registy artifact to nexus repository"
+    echo "***************************************************"
+
+    # setting variable
+    REPOSITORY_URL=%1
+    LANGUAGE=%2
+    ref = %3
+    
     if [${LANGUAGE} = "java"]
     then
     echo "***************************************************"
@@ -41,7 +43,7 @@ then
         echo "upload complete"
         echo "***************************************************"
       fi
-    else
+    elif [${LANGUAGE} = "angular"]
       echo "***************************************************"
       echo "artifact type angular"
       echo "***************************************************"
@@ -68,6 +70,11 @@ then
         echo "upload complete"
         echo "***************************************************"
       fi
+    else 
+        echo "***************************************************"
+        echo "Error lenguage select, options [java, angular]"
+        echo "***************************************************"
+        exit -1
     fi
     echo "***************************************************"
     echo "Registy complete"
