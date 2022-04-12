@@ -38,6 +38,10 @@ main
 |           └───configure-cloud-credentials.sh                    # configure cloud credentials access.
 |           └───get-version-pom.sh                                # get version form pom.xml maven.
 |           └───health-checking.sh                                # health checking instance in cloud.
+|           └───nexus-registry.sh                                 # script upload artifact to registry nexus
+|           └───script-note.md                                    # diferente note to scripts
+|           └───setup-java.md                                     # install jdk java in runner.
+|           └───sonar-scanner.sh                                  # script scan code with sonarqube
 |           └───terraform-deploy.sh                               # terraform plan and apply deploy module.
 │___module                                                        # standars module core
 |     └───script                                                  # script core ( example pathoy, shell, etc.)
