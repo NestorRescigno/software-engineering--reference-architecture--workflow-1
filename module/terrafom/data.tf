@@ -11,8 +11,8 @@ data "aws_region" "current" {}
 ## data Route53 Hosted Zone
 ###########################
 
-data "aws_route53_zone" "ancillaries_cloud_iberia_local" {
-  name         = "${var.environment}.ancillaries.cloud.iberia.local"
+data "aws_route53_zone" "route-zone" {
+  name         = "${var.environment}.${var.route-zone}"
   private_zone = true
 }
 
@@ -21,15 +21,15 @@ data "aws_route53_zone" "ancillaries_cloud_iberia_local" {
 #########################
 
 data "aws_security_group" "sg-svc-instances" {
-  name   = "ancill-*-sg-anc-svc-instances"
-  vpc_id = data.aws_vpc.vpc-ancill.id
+  name   = "${var.project}-sg-anc-svc-instances"
+  vpc_id = data.aws_vpc.vpc-product.id
 }
 
 data "aws_security_group" "sg-common-microservices" {
 
-  name = "ancill-*-sg-common-microservices"
+  name = "${var.project}-sg-common-microservices"
 
-  vpc_id = data.aws_vpc.vpc-ancill.id
+  vpc_id = data.aws_vpc.vpc-product.id
 
 }
 #########################
@@ -38,61 +38,61 @@ data "aws_security_group" "sg-common-microservices" {
 
 data "aws_security_group" "sg-common-microservices-alb" {
 
-  name = "ancill-*-sg-common-microservices-alb"
+  name = "${var.project}-sg-common-microservices-alb"
 
-  vpc_id = data.aws_vpc.vpc-ancill.id
+  vpc_id = data.aws_vpc.vpc-product.id
 
 }
 
-data "aws_iam_instance_profile" "ip-ancill" {
-  name = "ancill-${var.environment}-instanceprofile-${var.service_name}"
-}
-
-#########################
-## VPC ancilliaries
-#########################
-
-data "aws_vpc" "vpc-ancill" {
-  tags = {
-    Name = local.data.vpc.vpc-ancill
-  }
+data "aws_iam_instance_profile" "ip" {
+  name = "${var.project}-${var.environment}-instanceprofile-${var.service_name}"
 }
 
 #########################
-###### Amber Subnets data
+## VPC
 #########################
 
-data "aws_subnet_ids" "snet-amber-eu-central-1_subnets" {
-  vpc_id = data.aws_vpc.vpc-ancill.id
-
+data "aws_vpc" "vpc-product" {
   tags = {
-    Name = local.data.vpc.amber.subnet
+    Name = local.data.vpc.vpc-product
   }
 }
 
-data "aws_subnet" "snet-amber-eu-central-1a" {
-  vpc_id = data.aws_vpc.vpc-ancill.id
+#########################
+###### Subnets data
+#########################
+
+data "aws_subnet_ids" "snet-internal-eu-central-1_subnets" {
+  vpc_id = data.aws_vpc.vpc-product.id
 
   tags = {
-    Name = local.data.vpc.amber.subneta
+    Name = local.data.vpc.internal.subnet
   }
 }
 
-data "aws_subnet" "snet-amber-eu-central-1b" {
-  vpc_id = data.aws_vpc.vpc-ancill.id
-
-  tags = {
-    Name = local.data.vpc.amber.subnetb
-  }
+data "aws_subnet" "snet-internal-eu-central-1a" {
+    vpc_id = data.aws_vpc.vpc-product.id
+ 
+   tags = {
+    Name = local.data.vpc.internal.subneta
+   }
 }
 
-data "aws_subnet" "snet-amber-eu-central-1c" {
-  vpc_id = data.aws_vpc.vpc-ancill.id
+# data "aws_subnet" "snet-amber-eu-central-1b" {
+#   vpc_id = data.aws_vpc.vpc-ancill.id
+# 
+#   tags = {
+#     Name = local.data.vpc.amber.subnetb
+#   }
+# }
 
-  tags = {
-    Name = local.data.vpc.amber.subnetc
-  }
-}
+# data "aws_subnet" "snet-amber-eu-central-1c" {
+#   vpc_id = data.aws_vpc.vpc-ancill.id
+# 
+#   tags = {
+#     Name = local.data.vpc.amber.subnetc
+#   }
+# }
 
 ##################
 # global policies
