@@ -56,9 +56,9 @@ jobs:
       - name: Scan
         shell: bash
         env:
-            SONAR_URL: ${{secret.sonar-url}}
-            SONAR_USER: ${{secret.sonar-user}}
-            SONAR_PASS: ${{secret.sonar-pass}}
+          SONAR_URL: ${{secret.sonar-url}}
+          SONAR_USER: ${{secret.sonar-user}}
+          SONAR_PASS: ${{secret.sonar-pass}}
         run: |
           ${{ env.SCRIPT }}/sonar-scanner.sh ${{ env.SONAR_URL }} ${{ env.SONAR_USER }} ${{ env.SONAR_PASS }} ${{ env.LANGUAGE }} ${{ github.workspace }} ${{ github.ref }}
     steps:
