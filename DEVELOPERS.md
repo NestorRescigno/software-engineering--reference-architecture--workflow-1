@@ -29,8 +29,7 @@ main
 |             └───access.yml                                      # configure policys
 |             └───operative-server.yml                            # create facility server and vitual private network operative.
 |     └───software                                                # action core to deploy automatic software
-|           └───develop.yml                                       # workflow deploy to development environment
-|           └───release.yml                                       # workflow deploy to publish environment & create tag release
+|           └───action.yml                                        # workflow deploy to environment with pull request
 |     └───utils                                                   # utils script core for step action
 |           └───build-image.sh                                    # build image ami aws.
 |           └───build-maven.sh                                    # build artifact with maven script.
@@ -101,9 +100,9 @@ Usages
 ----
 can be referenced as follows:
 
-- **Implementation for desployment to develop environment:**
+- **Implementation continous integration:**
 ````
-# Implementation for deployment to develop environment ( pull request event to develop branch )
+# Implementation for deployment to environment ( pull request event to branch )
 on:
   pull_request:
     branches: [ develop ]
@@ -118,31 +117,7 @@ jobs:
     artifact-repositoy-url: ''
     artifact-repositoy-token: ''
 ````
-- **Implementation for desployment to publish environment and tagging technical release:**
-````
-# Implementation for deployment to publish environment ( pull request event to main branch)
-on:
-  pull_request:
-    branches: [ main ]
-jobs:
-- uses: ./.github/action/software/release.yml@v1.0
-  with:
-    # Repository name with owner.
-    # Default: ${{ github.repository }}
-    repository: ''
-    # Configutation DNS and credencials for access to repository artifact
-    # Default
-    artifact-repositoy: ''
-    artifact-repositoy-token: ''
-    # Configutation DNS and credencials for access to scan software tools
-    # Default
-    scan-url: '' 
-    scan-token: ''
-    # Configutation DNS and credencials for access to vulnerability tools
-    # Default
-    vulnerability-url: '' 
-    vulnerability-token: ''
-````
+
 Repository flow 
 ----
 We have two working methods within the context of the repositories available in the reference architecture
