@@ -28,7 +28,7 @@ then
         mvn deploy -DaltSnapshotDeploymentRepository=ibis-snapshots::default::${ SNAPSHOTS_REPOSITORY_URL } 
         # --batch-mode
         echo "***************************************************"
-        echo "upload compete"
+        echo "upload complete"
         echo "***************************************************"
       elif [${{ startsWith(${ ref }, 'refs/heads/main') }} = true ]
         echo "***************************************************"
@@ -38,7 +38,7 @@ then
         mvn deploy -DaltSnapshotDeploymentRepository=ibis-release::default::${ RELEASE_REPOSITORY_URL } 
         # --batch-mode
         echo "***************************************************"
-        echo "upload compete"
+        echo "upload complete"
         echo "***************************************************"
       fi
     else
@@ -54,7 +54,7 @@ then
          # pending implement deploy to repository
          
         echo "***************************************************"
-        echo "upload compete"
+        echo "upload complete"
         echo "***************************************************"
          
       elif [${{ startsWith(${ ref }, 'refs/heads/main') }} = true ]
@@ -65,7 +65,7 @@ then
         # pending implement deploy to repository
         
         echo "***************************************************"
-        echo "upload compete"
+        echo "upload complete"
         echo "***************************************************"
       fi
     fi
