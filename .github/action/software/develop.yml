@@ -52,9 +52,9 @@ runs:
     - name: Scan
       shell: bash
       env:
-          SONAR_URL:
-          SONAR_USER:
-          SONAR_PASS:
+          SONAR_URL: ${{secret.sonar-url}}
+          SONAR_USER: ${{secret.sonar-user}}
+          SONAR_PASS: ${{secret.sonar-pass}}
       run: |
         ${{ env.SCRIPT }}/sonar-scanner.sh ${{ env.SONAR_URL }} ${{ env.SONAR_USER }} ${{ env.SONAR_PASS }} ${{ env.LANGUAGE }} ${{ github.workspace }} ${{ github.ref }}
   steps:
@@ -66,9 +66,9 @@ runs:
       shell: bash
       env:
         # DNS hasn't content http:// or https://
-        REPOSITORY_DNS:
-        REPOSITORY_USER:
-        REPOSITORY_PASS:
+        REPOSITORY_DNS: ${{secret.nexus-url}}
+        REPOSITORY_USER: ${{secret.nexus-user}}
+        REPOSITORY_PASS: ${{secret.nexus-pass}}
       run: |
       # path in script repository nexus is /repository/snapshots/ and /repository/releases/
       ${{ env.SCRIPT }}/nexus-registry.sh ${{ env.REPOSITORY_DNS }} ${{ env.REPOSITORY_USER }} ${{ env.REPOSITORY_PASS }} ${{ env.LANGUAGE }} ${{ github.ref }}
