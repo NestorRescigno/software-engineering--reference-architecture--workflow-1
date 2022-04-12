@@ -19,6 +19,7 @@ ami-07544e2d119d2361f
 account aws "shared-services"
 ````
 > usage [reference amazon](https://docs.aws.amazon.com/cli/latest/reference/ec2/copy-image.html) 
+
 **Example:** To copy an AMI to another Region and encrypt the backing snapshot
 The following copy-image command copies the specified AMI from the us-west-2 Region to the current Region and encrypts the backing snapshot using the specified KMS key.
 ````
