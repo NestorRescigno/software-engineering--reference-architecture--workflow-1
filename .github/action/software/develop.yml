@@ -18,6 +18,9 @@ runs:
     # Nota: 
     # Remplace action's with custom shell script to future
     # for segurity - location in (../utils/)
+    env:
+      SCRIPT: ${{ github.workspace }}/.github/action/utils/
+      LANGUAGE:
     # Step 1 
     - name: checkout
       uses: actions/checkout@v2
@@ -35,24 +38,21 @@ runs:
     # Step 4
     - name: Building Artifact
       shell: bash
-      env:
-        SCRIPT: ${{ github.workspace }}/.github/action/utils/
-        # angular or java
-        LANGUAGE: 
       run: |
       ${{ env.SCRIPT }}/build-maven.sh ${{ github.workspace }} ${{ env.LANGUAGE }} 
     # Step 5
     - name: Registy Artifact
       shell: bash
       env:
-        SCRIPT: ${{ github.workspace }}/.github/action/utils/
         REPOSITORY_URL:
-        LANGUAGE:
       run: |
       # path in script repository nexus is /repository/snapshots/ and /repository/releases/
       ${{ env.SCRIPT }}/nexus-registry.sh ${{ env.REPOSITORY_URL }} ${{ env.LANGUAGE }} ${{ github.ref }}
   steps:
     # implement sonar
+    env:
+      SCRIPT: ${{ github.workspace }}/.github/action/utils/
+      LANGUAGE:
     # Step 1
     - name: Setup sonarqube
       uses: warchant/setup-sonar-scanner@v3
@@ -60,14 +60,11 @@ runs:
     - name: Scan
       shell: bash
       env:
-          SCRIPT: ${{ github.workspace }}/.github/action/utils
           SONAR_URL:
           SONAR_USER:
           SONAR_PASS:
-          # angular or java
-          SONAR_LANGUAGE:
       run: |
-        ${{ env.SCRIPT }}/sonar-scanner.sh ${{ env.SONAR_URL }} ${{ env.SONAR_USER }} ${{ env.SONAR_PASS }} ${{ env.SONAR_LANGUAGE }} ${{ github.workspace }}
+        ${{ env.SCRIPT }}/sonar-scanner.sh ${{ env.SONAR_URL }} ${{ env.SONAR_USER }} ${{ env.SONAR_PASS }} ${{ env.LANGUAGE }} ${{ github.workspace }}
   steps:
     # instance software.
     # Step 1
