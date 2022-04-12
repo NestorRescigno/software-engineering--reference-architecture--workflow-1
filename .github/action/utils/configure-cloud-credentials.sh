@@ -25,16 +25,16 @@ then
   echo "***************************************************"
   echo "configure azure cloud isn't implement"
   echo "***************************************************"
-exit -1
+  exit -1
 elif [${TYPE} = "google"]
   echo "***************************************************"
   echo "configure google cloud isn't implement"
   echo "***************************************************"
-exit -1
+  exit -1
 then 
 else
   echo "***************************************************"
   echo "configure cloud credentials isn't correct"
   echo "***************************************************"
-exit -1
+  exit -1
 fi
