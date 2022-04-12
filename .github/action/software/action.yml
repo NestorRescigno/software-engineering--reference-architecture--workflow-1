@@ -73,8 +73,8 @@ jobs:
         run: |
         # path in script repository nexus is /repository/snapshots/ and /repository/releases/
         ${{ env.SCRIPT }}/nexus-registry.sh ${{ env.REPOSITORY_DNS }} ${{ env.REPOSITORY_USER }} ${{ env.REPOSITORY_PASS }} ${{ env.LANGUAGE }} ${{ github.ref }}
-  deploy:
-    name: deploy
+  image:
+    name: image
     runs-on: [self-hosted]
     env:
       SCRIPT: ${{ github.workspace }}/.github/action/utils/
@@ -83,6 +83,12 @@ jobs:
       # build image
       # Step 1
       - name: build image
+  deploy:
+    name: deploy
+    runs-on: [self-hosted]
+    env:
+      SCRIPT: ${{ github.workspace }}/.github/action/utils/
+      LANGUAGE:
     steps:
       # instance software.
       # Step 1
