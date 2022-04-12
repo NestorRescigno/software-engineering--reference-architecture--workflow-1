@@ -27,6 +27,9 @@ then
         SNAPSHOTS_REPOSITORY_URL = ${ REPOSITORY_URL } + "/repository/snapshots/"
         mvn deploy -DaltSnapshotDeploymentRepository=ibis-snapshots::default::${ SNAPSHOTS_REPOSITORY_URL } 
         # --batch-mode
+        echo "***************************************************"
+        echo "upload compete"
+        echo "***************************************************"
       elif [${{ startsWith(${ ref }, 'refs/heads/main') }} = true ]
         echo "***************************************************"
         echo "upload release"
@@ -34,6 +37,9 @@ then
         RELEASE_REPOSITORY_URL = ${ REPOSITORY_URL } + "/repository/releases/"
         mvn deploy -DaltSnapshotDeploymentRepository=ibis-release::default::${ RELEASE_REPOSITORY_URL } 
         # --batch-mode
+        echo "***************************************************"
+        echo "upload compete"
+        echo "***************************************************"
       fi
     else
       echo "***************************************************"
@@ -47,6 +53,10 @@ then
         
          # pending implement deploy to repository
          
+        echo "***************************************************"
+        echo "upload compete"
+        echo "***************************************************"
+         
       elif [${{ startsWith(${ ref }, 'refs/heads/main') }} = true ]
         echo "***************************************************"
         echo "upload release"
@@ -54,6 +64,9 @@ then
         
         # pending implement deploy to repository
         
+        echo "***************************************************"
+        echo "upload compete"
+        echo "***************************************************"
       fi
     fi
     echo "***************************************************"
