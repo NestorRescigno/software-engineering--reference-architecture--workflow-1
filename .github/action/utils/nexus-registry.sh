@@ -25,14 +25,14 @@ then
         echo "upload snapshop"
         echo "***************************************************"
         SNAPSHOTS_REPOSITORY_URL = ${ REPOSITORY_URL } + "/repository/snapshots/"
-        mvn clean deploy -Dmaven.wagon.http.ssl.insecure=true -DaltSnapshotDeploymentRepository=ibis-snapshots::default::${ SNAPSHOTS_REPOSITORY_URL } 
+        mvn deploy -Dmaven.wagon.http.ssl.insecure=true -DaltSnapshotDeploymentRepository=ibis-snapshots::default::${ SNAPSHOTS_REPOSITORY_URL } 
         --batch-mode
       elif [${{ startsWith(${ ref }, 'refs/heads/main') }} = true ]
         echo "***************************************************"
         echo "upload release"
         echo "***************************************************"
         RELEASE_REPOSITORY_URL = ${ REPOSITORY_URL } + "/repository/releases/"
-        mvn clean deploy -Dmaven.wagon.http.ssl.insecure=true -DaltSnapshotDeploymentRepository=ibis-release::default::${ RELEASE_REPOSITORY_URL } 
+        mvn deploy -Dmaven.wagon.http.ssl.insecure=true -DaltSnapshotDeploymentRepository=ibis-release::default::${ RELEASE_REPOSITORY_URL } 
         --batch-mode
       fi
     else
