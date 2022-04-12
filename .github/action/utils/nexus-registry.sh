@@ -10,9 +10,10 @@ then
     echo "***************************************************"
 
     # setting variable
-    REPOSITORY_URL=%1
-    LANGUAGE=%2
-    ref = %3
+    
+    REPOSITORY_URL="https://"+%2+":"+%3+"@"+%1      # DNS can't content http or https, is necesary certificate 
+    LANGUAGE=%4
+    ref = %5
     
     if [${LANGUAGE} = "java"]
     then
