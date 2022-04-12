@@ -45,29 +45,14 @@ locals {
 
 
 locals {
-
   data = {
     sg-common-microservices = ""
     vpc = {
       vpc-product = "${var.project}-${var.environment}"
       amber = {
         subnet  = "*amber*"
-        subneta = "product-*-snet-amber-eu-central-1a"
-#       subnetb = "product-*-snet-amber-eu-central-1b"
-#       subnetc = "product-*-snet-amber-eu-central-1c"
+        subneta = "snet-amber-eu-central-1a"
       }
-#    green = {
-#        subnet  = "*green*"
-#        subneta = "ancill-*-snet-green-eu-central-1a"
-#        subnetb = "ancill-*-snet-green-eu-central-1b"
-#        subnetc = "ancill-*-snet-green-eu-central-1c"
-#      }
-#    red = {
-#        subnet  = "*red*"
-#        subneta = "ancill-*-snet-red-eu-central-1a"
-#        subnetb = "ancill-*-snet-red-eu-central-1b"
-#        subnetc = "ancill-*-snet-red-eu-central-1c"
-#      }
     }
   }
 }
