@@ -50,7 +50,7 @@ runs:
         RELEASE: false
       run: |
       # path in script repository nexus is /repository/snapshots/ and /repository/releases/
-      ${{ env.SCRIPT }}/nexus-registry.sh ${{ env.REPOSITORY_URL }} ${{ env.RELEASE }}
+      ${{ env.SCRIPT }}/nexus-registry.sh ${{ env.REPOSITORY_URL }} ${{ env.RELEASE }} ${{ github.workspace }} ${{ env.LANGUAGE }} 
   steps:
     # implement sonar
     # Step 1
