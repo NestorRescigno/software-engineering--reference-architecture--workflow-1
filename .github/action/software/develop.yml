@@ -47,11 +47,10 @@ runs:
       env:
         SCRIPT: ${{ github.workspace }}/.github/action/utils/
         REPOSITORY_URL:
-        RELEASE: false
         LANGUAGE:
       run: |
       # path in script repository nexus is /repository/snapshots/ and /repository/releases/
-      ${{ env.SCRIPT }}/nexus-registry.sh ${{ env.REPOSITORY_URL }} ${{ env.RELEASE }} ${{ github.workspace }} ${{ env.LANGUAGE }} 
+      ${{ env.SCRIPT }}/nexus-registry.sh ${{ env.REPOSITORY_URL }} ${{ env.LANGUAGE }} ${{ github.ref }} ${{ github.workspace }}  
   steps:
     # implement sonar
     # Step 1
