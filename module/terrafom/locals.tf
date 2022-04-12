@@ -14,7 +14,7 @@ locals {
     Project                  = var.project
     Environment              = var.environment
     Name                     = var.service_name
-    Cluster                  = local.anc_cluster_name
+    Cluster                  = local.cluster_name
     Side                     = var.service_name
     "Application:ArtifactId" = "${var.service_name}-core"
     "tf:Used"                = "True"
@@ -49,7 +49,7 @@ locals {
   data = {
     sg-common-microservices = ""
     vpc = {
-      vpc-ancill = "${var.project}-${var.environment}"
+      vpc-product = "${var.project}-${var.environment}"
       amber = {
         subnet  = "*amber*"
         subneta = "product-*-snet-amber-eu-central-1a"
