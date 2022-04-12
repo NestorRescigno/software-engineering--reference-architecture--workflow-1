@@ -9,8 +9,10 @@ SONAR_USER = $2
 SONAR_PASS = $3
 SONAR_LANGUAGE = $4
 workspace = $5
+ref= %6
+
 # if url isn't empty then allow sonar for scanner code
-if [ ${SONAR_URL} != ""]
+if [ ${SONAR_URL} != "" && ${{ startsWith(${ ref }, 'refs/heads/main') }} = true]
 then  
   echo "***************************************************"
   echo "Sonar scanner started..."
