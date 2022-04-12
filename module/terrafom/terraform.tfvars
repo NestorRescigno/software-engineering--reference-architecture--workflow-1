@@ -9,4 +9,7 @@ service_name       = "[service_name]"
 environment_prefix = "ancill-int"
 project            = "ancill"
 environment        = "int"
+region             = ""
+dns-main           = "" 
+vpc-name           = ""
 ######################################################################
