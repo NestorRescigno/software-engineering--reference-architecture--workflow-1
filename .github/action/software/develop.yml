@@ -39,15 +39,7 @@ runs:
     - name: Building Artifact
       shell: bash
       run: |
-      ${{ env.SCRIPT }}/build-maven.sh ${{ github.workspace }} ${{ env.LANGUAGE }} 
-    # Step 5
-    - name: Registy Artifact
-      shell: bash
-      env:
-        REPOSITORY_URL:
-      run: |
-      # path in script repository nexus is /repository/snapshots/ and /repository/releases/
-      ${{ env.SCRIPT }}/nexus-registry.sh ${{ env.REPOSITORY_URL }} ${{ env.LANGUAGE }} ${{ github.ref }}
+      ${{ env.SCRIPT }}/build-maven.sh ${{ github.workspace }} ${{ env.LANGUAGE }}
   steps:
     # implement sonar
     env:
@@ -64,7 +56,19 @@ runs:
           SONAR_USER:
           SONAR_PASS:
       run: |
-        ${{ env.SCRIPT }}/sonar-scanner.sh ${{ env.SONAR_URL }} ${{ env.SONAR_USER }} ${{ env.SONAR_PASS }} ${{ env.LANGUAGE }} ${{ github.workspace }}
+        ${{ env.SCRIPT }}/sonar-scanner.sh ${{ env.SONAR_URL }} ${{ env.SONAR_USER }} ${{ env.SONAR_PASS }} ${{ env.LANGUAGE }} ${{ github.workspace }} ${{ github.ref }}
+  steps:
+     # deploy artifact to registry repository
+     env:
+        SCRIPT: ${{ github.workspace }}/.github/action/utils/
+        LANGUAGE:
+    - name: Registy Artifact
+      shell: bash
+      env:
+        REPOSITORY_URL:
+      run: |
+      # path in script repository nexus is /repository/snapshots/ and /repository/releases/
+      ${{ env.SCRIPT }}/nexus-registry.sh ${{ env.REPOSITORY_URL }} ${{ env.LANGUAGE }} ${{ github.ref }}
   steps:
     # instance software.
     # Step 1
