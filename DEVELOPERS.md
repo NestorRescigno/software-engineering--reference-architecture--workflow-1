@@ -69,6 +69,28 @@ The implementation of the workflow in the different repositories of the source c
 
 > **Recommendation:** Don't directly implement this flow in source repositories. Use an intermediate repository where you can configure the different tools (exemple sonar, veracode, etc). and that it can be executed, for example, by means of [weebhook](https://docs.github.com/en/github-ae@latest/developers/webhooks-and-events/webhooks/about-webhooks). This configuration allows to separate the repository from the workflow.
 
+the workflow uses different tools to complete different scenarios such as checking in to derivative repositories or running a code scan. to configure the tools it is necessary to configure the authentication secrets to step
+
+*Repository nexus:*
+````
+- name: Registy Artifact
+      shell: bash
+      env:
+        # DNS hasn't content http:// or https://
+        REPOSITORY_DNS: ${{secret.nexus-url}}
+        REPOSITORY_USER: ${{secret.nexus-user}}
+        REPOSITORY_PASS: ${{secret.nexus-pass}}
+````
+
+*sonarqube:*
+````
+ - name: Scan
+      shell: bash
+      env:
+          SONAR_URL: ${{secret.sonar-url}}
+          SONAR_USER: ${{secret.sonar-user}}
+          SONAR_PASS: ${{secret.sonar-pass}}
+````
 
 
 Usages
