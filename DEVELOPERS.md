@@ -34,7 +34,8 @@ main
 |           └───build-image.sh                                    # build image ami aws.
 |           └───build-maven.sh                                    # build artifact with maven script.
 |           └───checkout.sh                                       # checkout source code from git.
-|           └───configure-cloud-credentials.sh                    # configure cloud credentials access.
+|           └───configure-cloud-credentials.sh                    # configure cloud credentials access.4
+|           └───get-tools.sh                                      # installe tools cliente.
 |           └───get-version-pom.sh                                # get version form pom.xml maven.
 |           └───health-checking.sh                                # health checking instance in cloud.
 |           └───nexus-registry.sh                                 # script upload artifact to registry nexus
@@ -42,9 +43,22 @@ main
 |           └───setup-java.md                                     # install jdk java in runner.
 |           └───sonar-scanner.sh                                  # script scan code with sonarqube
 |           └───terraform-deploy.sh                               # terraform plan and apply deploy module.
-│___module                                                        # standars module core
+│___terrafom                                                      # standars terraform module core
 |     └───script                                                  # script core ( example pathoy, shell, etc.)
-|     └───terrafom                                                # standars terrafom module core
+|     └───modules                                                 # standars terraform modules
+|           └───data.tf                                           # terraform data source of module core
+|           └───locals.tf                                         # terraform locals declarative module core
+|           └───main.tf                                           # princial code of module core
+|           └───outputs.tf                                        # terraform output declarative of module core
+|           └───provider.tf                                       # terraform provider of module core
+|           └───variables.tf                                      # terraform variables of module core
+|           └───terraform.tfvars                                  # terraform pricipal parameter of module core
+|           └───aws-ec2-vpc-develops                              # terraform module vpn for develop enviroment
+|                 └───LICENSE                                     # License declaration by iberia
+|                 └───README.md                                   # document declarative of module
+|                 └───main.tf                                     # princial code of module
+|                 └───outputs.tf                                  # terraform output declarative of module
+|                 └───variables.tf                                # terraform variables of module
 │___docs                                                          # document attached
 │     └───decisions                                               # strategy decisions 
 │___images
