@@ -1,5 +1,36 @@
 AWS EC2 VPC Module
 ----
-the vpc module creates the entire infrastructure of an amazon virtual private network on EC2 with 3 subnets (blue, green, amber)
+The vpc module creates the entire infrastructure of an amazon virtual private network on EC2 with 3 subnets (blue, green, amber)
+set segurity group, domain, load balancer, target group, etc.
 
+It is possible to implement the module in a parent module to use the vpn creation in other infrastructure processes by code. more information with [modules](https://www.terraform.io/language/modules/syntax)
 
+````
+module "vpc" {
+  source = "./terraform/modules/aws-ec2-vpc-iberia"
+  
+  ....
+}
+````
+
+or configure the variables for use directly through the tfvars file
+````
+## Global variables
+service_name       = "<service name>"
+environment_prefix = "<environment prefix name>"
+project            = "<project name>"                     # this name is present in domain
+environment        = "<enviroment name>"
+aws_region         = "<regione name>"                     # default: "eu-central-1"
+global_dns         = "<domain>"                           # default: "cloud.iberia.local"
+bucket_name        = "<bucket name>"                      # set s3 backet for log
+bucket_key         = "<bucket key>"                       # set s3 backet for log
+dynamodb_table     = "<dynamo db>"
+kms_key_id         = "<kms id>" 
+role_arn           = "<regione name>"                     # AIM role aws
+````
+
+The deployment step of the workflow continous integration this modules receives the aws AMI image and instantiates it on EC2 with next param
+````
+ami_id  = "<ami id >" 
+version = "<version>" 
+````
