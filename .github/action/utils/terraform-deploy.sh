@@ -34,6 +34,9 @@ terraform apply -auto-approve
 -var "environment=${ENVIROMENT}" 
 -var "environment_prefix=${PREFIX}"
 
+# set terrafom arn aws target group output to environment
+echo "aws_alb_target_group_arn=$(terraform output aws_alb_target_group_arn)" >> $GITHUB_ENV  #test in shell or move to run action
+
 echo "***************************************************"
 echo "Deploying end..."
 echo "***************************************************"
