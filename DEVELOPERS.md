@@ -48,7 +48,49 @@ main
 |           └───provider.tf                                       # terraform provider of module core
 |           └───variables.tf                                      # terraform variables of module core
 |           └───terraform.tfvars                                  # terraform pricipal parameter of module core
-|           └───aws-ec2-vpc-develops                              # terraform module vpn for develop enviroment
+|           └───aws-ec2-vpc-develops                              # terraform module vpn for develop environment
+|                 └───LICENSE                                     # License declaration by iberia
+|                 └───README.md                                   # document declarative of module
+|                 └───main.tf                                     # princial code of module
+|                 └───outputs.tf                                  # terraform output declarative of module
+|                 └───variables.tf                                # terraform variables of module
+|           └───aws-ec2-targetgroup-develops                      # terraform module target group for develop environment
+|                 └───LICENSE                                     # License declaration by iberia
+|                 └───README.md                                   # document declarative of module
+|                 └───main.tf                                     # princial code of module
+|                 └───outputs.tf                                  # terraform output declarative of module
+|                 └───variables.tf                                # terraform variables of module
+|           └───aws-ec2-seguritygroup-develops                    # terraform module segurity group for develop environment
+|                 └───LICENSE                                     # License declaration by iberia
+|                 └───README.md                                   # document declarative of module
+|                 └───main.tf                                     # princial code of module
+|                 └───outputs.tf                                  # terraform output declarative of module
+|                 └───variables.tf                                # terraform variables of module
+|           └───aws-ec2-route-develops                            # terraform module route53 for develop environment
+|                 └───LICENSE                                     # License declaration by iberia
+|                 └───README.md                                   # document declarative of module
+|                 └───main.tf                                     # princial code of module
+|                 └───outputs.tf                                  # terraform output declarative of module
+|                 └───variables.tf                                # terraform variables of module
+|           └───aws-ec2-lb-develops                               # terraform module load balancer for develop environment
+|                 └───LICENSE                                     # License declaration by iberia
+|                 └───README.md                                   # document declarative of module
+|                 └───main.tf                                     # princial code of module
+|                 └───outputs.tf                                  # terraform output declarative of module
+|                 └───variables.tf                                # terraform variables of module
+|           └───aws-ec2-iam-role-develops                         # terraform module Identity and Access Management for develop environment
+|                 └───LICENSE                                     # License declaration by iberia
+|                 └───README.md                                   # document declarative of module
+|                 └───main.tf                                     # princial code of module
+|                 └───outputs.tf                                  # terraform output declarative of module
+|                 └───variables.tf                                # terraform variables of module
+|           └───aws-ec2-autoscalinggroup-develops                 # terraform module autoscaling group for develop environment
+|                 └───LICENSE                                     # License declaration by iberia
+|                 └───README.md                                   # document declarative of module
+|                 └───main.tf                                     # princial code of module
+|                 └───outputs.tf                                  # terraform output declarative of module
+|                 └───variables.tf                                # terraform variables of module
+|           └───aws-ec2-autoscaling-policy-develops               # terraform module autoscaling policy for develop environment
 |                 └───LICENSE                                     # License declaration by iberia
 |                 └───README.md                                   # document declarative of module
 |                 └───main.tf                                     # princial code of module
