@@ -13,14 +13,14 @@ then
     
     REPOSITORY_URL="https://"+%2+":"+%3+"@"+%1      # DNS can't content http or https, is necesary certificate 
     LANGUAGE=%4
-    ref = %5
+    REF = %5
     
     if [${LANGUAGE} = "java"]
     then
     echo "***************************************************"
     echo "artifact type java"
     echo "***************************************************"
-      if [ ${{ startsWith(${ ref }, 'refs/heads/develop') }} = true ]
+      if [ ${{ startsWith(${ REF }, 'refs/heads/develop') }} = true ]
       then
         echo "***************************************************"
         echo "upload snapshop"
@@ -46,7 +46,7 @@ then
       echo "***************************************************"
       echo "artifact type angular"
       echo "***************************************************"
-      if [ ${{ startsWith(${ ref }, 'refs/heads/develop') }} = true ]
+      if [ ${{ startsWith(${ REF }, 'refs/heads/develop') }} = true ]
       then
         echo "***************************************************"
         echo "upload snapshop"
@@ -58,7 +58,7 @@ then
         echo "upload complete"
         echo "***************************************************"
          
-      elif [${{ startsWith(${ ref }, 'refs/heads/main') }} = true ]
+      elif [${{ startsWith(${ REF }, 'refs/heads/main') }} = true ]
         echo "***************************************************"
         echo "upload release"
         echo "***************************************************"
