@@ -19,12 +19,12 @@ data "aws_route53_zone" "ancillaries_cloud_iberia_local" {
 ## SG for instances
 #########################
 
-data "aws_security_group" "sg-instances" {
+data "aws_security_group" "sg_instances" {
   name   = "${var.project}-sg-instances"
   vpc_id = data.aws_vpc.vpc_product.id
 }
 
-data "aws_security_group" "sg-common-microservices" {
+data "aws_security_group" "sg_common_microservices" {
 
   name = "${var.project}-sg-common-microservices"
 
@@ -35,7 +35,7 @@ data "aws_security_group" "sg-common-microservices" {
 ### SG for ALB Internal
 #########################
 
-data "aws_security_group" "sg-common-microservices-alb" {
+data "aws_security_group" "sg_common_microservices_alb" {
 
   name = "${var.project}-sg-common-microservices-alb"
 
@@ -61,7 +61,7 @@ data "aws_vpc" "vpc_product" {
 ###### Amber Subnets data
 #########################
 
-data "aws_subnet_ids" "snet-amber-eu-central-1_subnets" {
+data "aws_subnet_ids" "snet_amber_eu_central_1_subnets" {
   vpc_id = data.aws_vpc.vpc_product.id
 
   tags = {
@@ -69,7 +69,7 @@ data "aws_subnet_ids" "snet-amber-eu-central-1_subnets" {
   }
 }
 
-data "aws_subnet" "snet-amber-eu-central-1a" {
+data "aws_subnet" "snet_amber_eu_central_1a" {
   vpc_id = data.aws_vpc.vpc_product.id
 
   tags = {
@@ -77,7 +77,7 @@ data "aws_subnet" "snet-amber-eu-central-1a" {
   }
 }
 
-data "aws_subnet" "snet-amber-eu-central-1b" {
+data "aws_subnet" "snet_amber_eu_central_1b" {
   vpc_id = data.aws_vpc.vpc_product.id
 
   tags = {
@@ -85,7 +85,7 @@ data "aws_subnet" "snet-amber-eu-central-1b" {
   }
 }
 
-data "aws_subnet" "snet-amber-eu-central-1c" {
+data "aws_subnet" "snet_amber_eu_central_1c" {
   vpc_id = data.aws_vpc.vpc_product.id
 
   tags = {
