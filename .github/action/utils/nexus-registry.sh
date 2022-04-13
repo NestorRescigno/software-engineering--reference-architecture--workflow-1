@@ -4,59 +4,56 @@
 # *********************************************************************
 
 if [${REPOSITORY_URL} != ""] then
-    echo "***************************************************"
-    echo "Registy artifact to nexus repository"
-    echo "***************************************************"
 
     # setting variable
-    
     REPOSITORY_URL="https://"+%2+":"+%3+"@"+%1      # DNS can't content http or https, is necesary certificate 
     LANGUAGE=%4
     REF = %5
     
+    echo "***************************************************"
+    echo "Registy artifact to nexus repository"
+    echo "***************************************************"
+
     if [${LANGUAGE} = "java"] then
-    echo "***************************************************"
-    echo "artifact type java"
-    echo "***************************************************"
-      if [ ${{ startsWith(${ REF }, 'refs/heads/develop') }} = true ] then
         echo "***************************************************"
-        echo "upload snapshop"
-        echo "***************************************************"
-        SNAPSHOTS_REPOSITORY_URL = ${ REPOSITORY_URL } + "/repository/snapshots/"
-        mvn deploy -DaltSnapshotDeploymentRepository=ibis-snapshots::default::${ SNAPSHOTS_REPOSITORY_URL } 
-        # --batch-mode
-        echo "***************************************************"
-        echo "upload complete"
-        echo "***************************************************"
-      elif [${{ startsWith(${ ref }, 'refs/heads/main') }} = true ] then
-        echo "***************************************************"
-        echo "upload release"
-        echo "***************************************************"
-        RELEASE_REPOSITORY_URL = ${ REPOSITORY_URL } + "/repository/releases/"
-        mvn deploy -DaltSnapshotDeploymentRepository=ibis-release::default::${ RELEASE_REPOSITORY_URL } 
-        # --batch-mode
-        echo "***************************************************"
-        echo "upload complete"
-        echo "***************************************************"
-      fi
-    elif [${LANGUAGE} = "angular"]
-      echo "***************************************************"
-      echo "artifact type angular"
-      echo "***************************************************"
-      if [ ${{ startsWith(${ REF }, 'refs/heads/develop') }} = true ] then
-        echo "***************************************************"
-        echo "upload snapshop"
+        echo "artifact type java"
         echo "***************************************************"
         
-         # pending implement deploy to repository
-         
+        if [ ${{ startsWith(${ REF }, 'refs/heads/develop') }} = true ] then
+            echo "***************************************************"
+            echo "upload snapshop"
+            echo "***************************************************"
+            
+            SNAPSHOTS_REPOSITORY_URL = ${ REPOSITORY_URL } + "/repository/snapshots/"
+            mvn deploy -DaltSnapshotDeploymentRepository=ibis-snapshots::default::${ SNAPSHOTS_REPOSITORY_URL } 
+            # --batch-mode
+            
+            echo "***************************************************"
+            echo "upload complete"
+            echo "***************************************************"
+        elif [${{ startsWith(${ ref }, 'refs/heads/main') }} = true ] then
+            echo "***************************************************"
+            echo "upload release"
+            echo "***************************************************"
+            
+            RELEASE_REPOSITORY_URL = ${ REPOSITORY_URL } + "/repository/releases/"
+            mvn deploy -DaltSnapshotDeploymentRepository=ibis-release::default::${ RELEASE_REPOSITORY_URL } 
+            # --batch-mode
+            
+            echo "***************************************************"
+            echo "upload complete"
+            echo "***************************************************"
+        fi
+   elif [${LANGUAGE} = "angular"] then
+   
+      echo "***************************************************"
+      echo "Artifact type angular"
+      echo "***************************************************"
+      
+      if [${{ startsWith(${ REF }, 'refs/heads/main') }} = true ] then
+   
         echo "***************************************************"
-        echo "upload complete"
-        echo "***************************************************"
-         
-      elif [${{ startsWith(${ REF }, 'refs/heads/main') }} = true ] then
-        echo "***************************************************"
-        echo "upload release"
+        echo "upload npm private release"
         echo "***************************************************"
         
         # pending implement deploy to repository
@@ -65,15 +62,17 @@ if [${REPOSITORY_URL} != ""] then
         echo "upload complete"
         echo "***************************************************"
       fi
-    else 
-        echo "***************************************************"
-        echo "Error lenguage select, options [java, angular]"
-        echo "***************************************************"
-        exit -1
-    fi
-    echo "***************************************************"
-    echo "Registy complete"
-    echo "***************************************************"
+   else
+   
+      echo "***************************************************"
+      echo "Error lenguage select, options [java, angular]"
+      echo "***************************************************"
+      exit -1
+      
+   fi
+   echo "***************************************************"
+   echo "Registy complete"
+   echo "***************************************************"
 else
   echo "***************************************************"
   echo "Registy disable"
