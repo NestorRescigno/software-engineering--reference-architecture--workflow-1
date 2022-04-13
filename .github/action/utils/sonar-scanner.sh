@@ -23,6 +23,7 @@ then
     GROUPID=$(sed -n 's,.*<groupId>\(.*\)</groupId>.*,\1,p' ${ WORKSPACE }/pom.xml | head -1)
     ARTIFACTID=$(sed -n 's,.*<artifactId>\(.*\)</artifactId>.*,\1,p' ${ WORKSPACE }/pom.xml | head -1)
     VERSION=$(sed -n 's,.*<version>\(.*\)</version>.*,\1,p' ${ WORKSPACE }/pom.xml | head -1)
+    
     SONAR_PROJECT_ID=${GROUPID}+":"+${ARTIFACTID}
     SONAR_VERSION_ID = ${VERSION}
     
@@ -39,10 +40,8 @@ then
   elif [${SONAR_LANGUAGE}="angular"]
   then
     # get information from package.json
-    NAME=$(sed -n 'sed -n 's|.*"name":"\([^"]*\)".*|\1|p'' ${ WORKSPACE }/package.json)
-    VERSION=$(sed -n 'sed -n 's|.*"version":"\([^"]*\)".*|\1|p'' ${ WORKSPACE }/package.json)
-    SONAR_PROJECT_ID = ${NAME}
-    SONAR_VERSION_ID = ${VERSION}
+    SONAR_PROJECT_ID=$(sed -n 'sed -n 's|.*"name":"\([^"]*\)".*|\1|p'' ${ WORKSPACE }/package.json)
+    SONAR_VERSION_ID=$(sed -n 'sed -n 's|.*"version":"\([^"]*\)".*|\1|p'' ${ WORKSPACE }/package.json)
     
     # sonar scannar angular setup
     sonar-scanner
