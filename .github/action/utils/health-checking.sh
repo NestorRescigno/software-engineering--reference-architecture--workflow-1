@@ -5,7 +5,7 @@
 echo "***************************************************"
 echo "Health Checking..."
 echo "***************************************************"
-echo ALB_ARN: ${{ env.ALB_ARN }}
+ALB_ARN: %1
 sleep 30
 echo "1st instance state:"
 HEALTH_STATUS=0
