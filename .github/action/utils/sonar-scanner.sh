@@ -12,14 +12,15 @@ WORKSPACE = $5
 REF= %6
 
 # if url isn't empty then allow sonar for scanner code
-if [ ${SONAR_URL} != "" && ${{ startsWith(${ REF }, 'refs/heads/main') }} = true]
-then  
+if [ ${SONAR_URL} != "" && ${{ startsWith(${ REF }, 'refs/heads/main') }} = true ] then  
+ 
   echo "***************************************************"
   echo "Sonar scanner started..."
   echo "***************************************************"
-  if [${SONAR_LANGUAGE}="java"]
-  then
-    # get information from pom
+  
+  if [${SONAR_LANGUAGE}="java"] then
+   
+   # get information from pom
     GROUPID=$(sed -n 's,.*<groupId>\(.*\)</groupId>.*,\1,p' ${ WORKSPACE }/pom.xml | head -1)
     ARTIFACTID=$(sed -n 's,.*<artifactId>\(.*\)</artifactId>.*,\1,p' ${ WORKSPACE }/pom.xml | head -1)
     VERSION=$(sed -n 's,.*<version>\(.*\)</version>.*,\1,p' ${ WORKSPACE }/pom.xml | head -1)
@@ -37,11 +38,12 @@ then
       -Dsonar.projectVersion=${SONAR_VERSION_ID}
       -Dsonar.java.binaries=**/target/classes
       -Dsonar.language=java
-  elif [${SONAR_LANGUAGE}="angular"]
-  then
+  
+  elif [${SONAR_LANGUAGE}="angular"] then
+  
     # get information from package.json
-    SONAR_PROJECT_ID=$(sed -n 'sed -n 's|.*"name":"\([^"]*\)".*|\1|p'' ${ WORKSPACE }/package.json)
-    SONAR_VERSION_ID=$(sed -n 'sed -n 's|.*"version":"\([^"]*\)".*|\1|p'' ${ WORKSPACE }/package.json)
+    SONAR_PROJECT_ID=$(sed -n 'sed -n 's|.*"name":"\([^"]*\)".*|\1|p' ${ WORKSPACE }/package.json)
+    SONAR_VERSION_ID=$(sed -n 'sed -n 's|.*"version":"\([^"]*\)".*|\1|p' ${ WORKSPACE }/package.json)
     
     # sonar scannar angular setup
     sonar-scanner
@@ -56,7 +58,8 @@ then
       -Dsonar.tests=src
       -Dsonar.test.inclusions=**/*.spec.ts
       -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info
-  else 
+      
+  else
     echo "***************************************************"
     echo "Error lenguage select, options [java, angular]"
     echo "***************************************************"
