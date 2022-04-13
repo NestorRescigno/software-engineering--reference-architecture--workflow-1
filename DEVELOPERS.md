@@ -102,7 +102,7 @@ the workflow uses different tools to complete different scenarios such as checki
 ````
 
 ### Terraform modules:
-github workflow using terraform to creates and applies an infrastructure using the vpc module firt time. This module is configured by environment through the file **terraform.tfvars content:**
+github workflow using terraform to creates and applies an infrastructure using the vpc module firt time. This module is configured by environment through the file **terraform.tfvars** content:
 `````
 ## Global variables
 service_name       = "<service name>"
