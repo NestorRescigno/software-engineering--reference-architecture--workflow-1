@@ -104,11 +104,18 @@ the workflow uses different tools to complete different scenarios such as checki
 ### Terraform modules:
 github workflow using terraform to creates and applies an infrastructure using the vpc module firt time. This module is configured by environment through the file **terraform.tfvars content:**
 `````
+## Global variables
 service_name       = "<service name>"
 environment_prefix = "<environment prefix name>"
-project            = "<project name>"    # this name is present in domain
+project            = "<project name>"                     # this name is present in domain
 environment        = "<enviroment name>"
-aws_region         = "<regione name>"
+aws_region         = "<regione name>"                     # default: "eu-central-1"
+global_dns         = "<domain>"                           # default: "cloud.iberia.local"
+bucket_name        = "<bucket name>"                      # set s3 backet for log
+bucket_key         = "<bucket key>"                       # set s3 backet for log
+dynamodb_table     = "<dynamo db>"
+kms_key_id         = "<kms id>" 
+role_arn           = "<regione name>"                     # AIM role aws
 `````
 
 the deployment step of the workflow receives the aws AMI image and instantiates it on EC2
