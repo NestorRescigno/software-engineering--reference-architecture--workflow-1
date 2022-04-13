@@ -101,7 +101,7 @@ jobs:
         # ${{ env.AMI_VERSION }} from pom version
         # ${{ env.AMI_ID }} BOH! after create image process, it has return output id 
         # ${{ env.ENVIRONMENT }} ${{ PREFIX }} is setting to script with conditional branch ( main to Preproduction and develop to development)
-        # ${{ PREFIX }} BOH! is it necessary?
+        # ${{ PREFIX }} BOH! is it need?
         
         ${{ env.SCRIPT }}/terraform-deploy.sh ${{ env.AMI_VERSION }} ${{ env.AMI_ID }} ${{ env.PROJECT }} ${{ env.ENVIRONMENT }} ${{ PREFIX }}
       # Step 2
