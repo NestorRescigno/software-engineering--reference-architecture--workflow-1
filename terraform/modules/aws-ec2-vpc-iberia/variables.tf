@@ -14,6 +14,12 @@ variable "version" {
   type        = string
 }
 
+variable "service_groupid" {
+  description = "The name of groupid application service."
+  type        = string
+}
+
+
 variable "service_name" {
   description = "The name of the service to be created"
   type        = string
