@@ -97,7 +97,7 @@ jobs:
         shell: bash
         run: |
         # check get ami and version , other param may be form file
-        ${{ env.SCRIPT }}/terraform-deploy.sh ${{ env.AMI_VERSION }} ${{ env.PROJECT }} ${{ env.PROJECT }} ${{ env.AMI_ID }} ${{ PREFIX }}
+        ${{ env.SCRIPT }}/terraform-deploy.sh ${{ env.AMI_VERSION }} ${{ env.AMI_ID }} ${{ env.PROJECT }} ${{ env.ENVIRONMENT }} ${{ PREFIX }}
       # Step 2
       - name: Health Check
         shell: bash
