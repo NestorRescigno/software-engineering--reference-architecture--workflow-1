@@ -88,12 +88,25 @@ jobs:
     runs-on: [self-hosted]
     env:
       SCRIPT: ${{ github.workspace }}/.github/action/utils/
+      TEST: false
       LANGUAGE:
     steps:
       # instance software.
       # Step 1
       - name: Deploy
+        shell: bash
+        run: |
+        # check get ami and version , other param may be form file
+        ${{ env.SCRIPT }}/terraform-deploy.sh ${{ env.AMI_VERSION }} ${{ env.PROJECT }} ${{ env.PROJECT }} ${{ env.AMI_ID }} ${{ PREFIX }}
       # Step 2
       - name: Health Check
+        shell: bash
+        run: |
+        ${{ env.SCRIPT }}/health-checking.sh ${{ env.aws_alb_target_group_arn }}
       # Step 3
       - name: Integration tests
+        shell: bash
+        run: |
+        ${{ env.SCRIPT }}/get-tools.sh ${{ env.TEST }}
+        ${{ env.SCRIPT }}/integration-tests.sh ${{ env.TEST }}
+        
