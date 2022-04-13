@@ -3,8 +3,7 @@
 # *************       by software Engineering             *************
 # *********************************************************************
 
-if [${REPOSITORY_URL} != ""] 
-then
+if [${REPOSITORY_URL} != ""] then
     echo "***************************************************"
     echo "Registy artifact to nexus repository"
     echo "***************************************************"
@@ -15,13 +14,11 @@ then
     LANGUAGE=%4
     REF = %5
     
-    if [${LANGUAGE} = "java"]
-    then
+    if [${LANGUAGE} = "java"] then
     echo "***************************************************"
     echo "artifact type java"
     echo "***************************************************"
-      if [ ${{ startsWith(${ REF }, 'refs/heads/develop') }} = true ]
-      then
+      if [ ${{ startsWith(${ REF }, 'refs/heads/develop') }} = true ] then
         echo "***************************************************"
         echo "upload snapshop"
         echo "***************************************************"
@@ -31,7 +28,7 @@ then
         echo "***************************************************"
         echo "upload complete"
         echo "***************************************************"
-      elif [${{ startsWith(${ ref }, 'refs/heads/main') }} = true ]
+      elif [${{ startsWith(${ ref }, 'refs/heads/main') }} = true ] then
         echo "***************************************************"
         echo "upload release"
         echo "***************************************************"
@@ -46,8 +43,7 @@ then
       echo "***************************************************"
       echo "artifact type angular"
       echo "***************************************************"
-      if [ ${{ startsWith(${ REF }, 'refs/heads/develop') }} = true ]
-      then
+      if [ ${{ startsWith(${ REF }, 'refs/heads/develop') }} = true ] then
         echo "***************************************************"
         echo "upload snapshop"
         echo "***************************************************"
@@ -58,7 +54,7 @@ then
         echo "upload complete"
         echo "***************************************************"
          
-      elif [${{ startsWith(${ REF }, 'refs/heads/main') }} = true ]
+      elif [${{ startsWith(${ REF }, 'refs/heads/main') }} = true ] then
         echo "***************************************************"
         echo "upload release"
         echo "***************************************************"
