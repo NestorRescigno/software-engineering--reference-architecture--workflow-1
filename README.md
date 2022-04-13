@@ -43,9 +43,8 @@ Getting started
 This repository contains the core modules that are referenced in the workflow templates for each purpose.
 the workflow templates such as infrastructure by code and software deployment based on the technology used, for example angular for the front or spring / quarkus for the backend.
 
-**Getting Started Github flow:**
-- [Software deploy](https://github.com/Iberia-Ent/software-engineering--getting-started--github--flow)
-- [Infrastructure deploy](https://github.com/Iberia-Ent/software-engineering--getting-started--github--flow)
+**Get Started:**
+- [continous integration](https://github.com/Iberia-Ent/software-engineering--getting-started--github--flow)
 
 Include any essential instructions for core: Getting it, Installing It, Configuring It, Running it, see [DEVELOPERS.md](./DEVELOPERS.md)
 
