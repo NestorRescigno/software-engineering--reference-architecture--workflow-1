@@ -6,9 +6,9 @@
 if [${REPOSITORY_URL} != ""] then
 
     # setting variable
-    REPOSITORY_URL="https://"+%2+":"+%3+"@"+%1      # DNS can't content http or https, is necesary certificate 
-    LANGUAGE=%4
-    REF = %5
+    REPOSITORY_URL  ="https://"+%2+":"+%3+"@"+%1      # DNS can't content http or https, is necesary certificate 
+    LANGUAGE        =%4
+    REF             =%5
     
     # setting contants
     PATH-SNAPSHOTS =  "/repository/snapshots/"
