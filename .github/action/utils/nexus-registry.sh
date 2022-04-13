@@ -65,7 +65,7 @@ if [${REPOSITORY_URL} != ""] then
         cp package.json \dist
         cd \dist
         
-        # add publish registry in package.json
+        # add publish registry in package.json ( note: find other method becuase url and token is present on registry. )
         sed "s/\('publishConfig':\)/\1\""registry": "${NPM_REPOSITORY_URL}"\"\,/g" package.json
         
         # run npm publish
