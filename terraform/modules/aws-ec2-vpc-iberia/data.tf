@@ -10,7 +10,7 @@ data "aws_caller_identity" "current" {}
 ## data Route53 Hosted Zone
 ###########################
 
-data "aws_route53_zone" "ancillaries_cloud_iberia_local" {
+data "aws_route53_zone" "route_local" {
   name         = "${var.environment}.${var.project}.${var.global_dns}"
   private_zone = true
 }
