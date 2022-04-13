@@ -8,11 +8,11 @@ SONAR_URL = $1
 SONAR_USER = $2
 SONAR_PASS = $3
 SONAR_LANGUAGE = $4
-workspace = $5
-ref= %6
+WORKSPACE = $5
+REF= %6
 
 # if url isn't empty then allow sonar for scanner code
-if [ ${SONAR_URL} != "" && ${{ startsWith(${ ref }, 'refs/heads/main') }} = true]
+if [ ${SONAR_URL} != "" && ${{ startsWith(${ REF }, 'refs/heads/main') }} = true]
 then  
   echo "***************************************************"
   echo "Sonar scanner started..."
@@ -20,11 +20,11 @@ then
   if [${SONAR_LANGUAGE}="java"]
   then
     # get information from pom
-    groupId=$(sed -n 's,.*<groupId>\(.*\)</groupId>.*,\1,p' ${ workspace }/pom.xml | head -1)
-    artifactId=$(sed -n 's,.*<artifactId>\(.*\)</artifactId>.*,\1,p' ${ workspace }/pom.xml | head -1)
-    version=$(sed -n 's,.*<version>\(.*\)</version>.*,\1,p' ${ workspace }/pom.xml | head -1)
-    SONAR_PROJECT_ID=${groupId}+":"+${artifactId}
-    SONAR_VERSION_ID = ${version}
+    GROUPID=$(sed -n 's,.*<groupId>\(.*\)</groupId>.*,\1,p' ${ WORKSPACE }/pom.xml | head -1)
+    ARTIFACTID=$(sed -n 's,.*<artifactId>\(.*\)</artifactId>.*,\1,p' ${ WORKSPACE }/pom.xml | head -1)
+    VERSION=$(sed -n 's,.*<version>\(.*\)</version>.*,\1,p' ${ WORKSPACE }/pom.xml | head -1)
+    SONAR_PROJECT_ID=${GROUPID}+":"+${ARTIFACTID}
+    SONAR_VERSION_ID = ${VERSION}
     
     # sonar scannar java setup
     sonar-scanner
@@ -39,10 +39,10 @@ then
   elif [${SONAR_LANGUAGE}="angular"]
   then
     # get information from package.json
-    name=
-    version=
-    SONAR_PROJECT_ID = ${name}
-    SONAR_VERSION_ID = ${version}
+    NAME=
+    VERSION=
+    SONAR_PROJECT_ID = ${NAME}
+    SONAR_VERSION_ID = ${VERSION}
     
     # sonar scannar angular setup
     sonar-scanner
