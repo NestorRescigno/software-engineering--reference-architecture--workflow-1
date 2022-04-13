@@ -1,15 +1,7 @@
-# 000 - Global variables
+## Global variables
+service_name       = "<service name>"
+environment_prefix = "<environment prefix name>"
+project            = "<project name>"    # this name is present in domain
+environment        = "<enviroment name>"
+aws_region         = "<regione name>"
 
-######################################################################
-## This variable must have value with service name reference to deploy
-## Change this value
-## Examples anc-pri, anc-pre, anc-ins
-######################################################################
-service_name       = "[service_name]"
-environment_prefix = "ancill-int"
-project            = "ancill"
-environment        = "int"
-region             = "eu-central-1"
-dns-main           = "" 
-vpc-name           = ""
-######################################################################
