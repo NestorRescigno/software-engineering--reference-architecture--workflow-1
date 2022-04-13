@@ -39,8 +39,8 @@ then
   elif [${SONAR_LANGUAGE}="angular"]
   then
     # get information from package.json
-    NAME=
-    VERSION=
+    NAME=$(sed -n 'sed -n 's|.*"name":"\([^"]*\)".*|\1|p'' ${ WORKSPACE }/package.json)
+    VERSION=$(sed -n 'sed -n 's|.*"version":"\([^"]*\)".*|\1|p'' ${ WORKSPACE }/package.json)
     SONAR_PROJECT_ID = ${NAME}
     SONAR_VERSION_ID = ${VERSION}
     
