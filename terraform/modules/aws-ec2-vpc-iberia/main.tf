@@ -14,7 +14,7 @@ resource "aws_launch_template" "launch" {
   image_id      = var.ami_id
   instance_type = local.instance_type
   vpc_security_group_ids = [aws_security_group.instances.id, data.aws_security_group.sg_common_microservices.id]
-  user_data              = filebase64("files/prelive_env.sh")
+  user_data              = filebase64("files/prelive_env.sh") # remove after check use
   iam_instance_profile {
     name = data.aws_iam_instance_profile.ip.name
   }
