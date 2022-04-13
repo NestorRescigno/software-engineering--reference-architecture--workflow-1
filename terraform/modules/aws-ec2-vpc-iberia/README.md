@@ -3,6 +3,8 @@ AWS EC2 VPC Module
 The vpc module creates the entire infrastructure of an amazon virtual private network on EC2 with 3 subnets (blue, green, amber)
 set segurity group, domain, load balancer, target group, etc.
 
+> The module doesn't currently create a private subnet for the data models connected by tcp to the subnets of the application server
+
 It is possible to implement the module in a parent module to use the vpn creation in other infrastructure processes by code. more information with [modules](https://www.terraform.io/language/modules/syntax)
 
 ````
