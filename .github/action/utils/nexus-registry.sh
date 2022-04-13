@@ -10,6 +10,11 @@ if [${REPOSITORY_URL} != ""] then
     LANGUAGE=%4
     REF = %5
     
+    # setting contants
+    PATH-SNAPSHOTS =  "/repository/snapshots/"
+    PATH-RELEASE = "/repository/releases/"
+    PATH-NPM-PRIVATE = "/npm-private/release/" 
+    
     echo "***************************************************"
     echo "Registy artifact to nexus repository"
     echo "***************************************************"
@@ -24,7 +29,7 @@ if [${REPOSITORY_URL} != ""] then
             echo "upload snapshop"
             echo "***************************************************"
             
-            SNAPSHOTS_REPOSITORY_URL = ${ REPOSITORY_URL } + "/repository/snapshots/"
+            SNAPSHOTS_REPOSITORY_URL = ${ REPOSITORY_URL } + ${PATH-SNAPSHOTS}
             mvn deploy -DaltSnapshotDeploymentRepository=ibis-snapshots::default::${ SNAPSHOTS_REPOSITORY_URL } 
             # --batch-mode
             
@@ -36,7 +41,7 @@ if [${REPOSITORY_URL} != ""] then
             echo "upload release"
             echo "***************************************************"
             
-            RELEASE_REPOSITORY_URL = ${ REPOSITORY_URL } + "/repository/releases/"
+            RELEASE_REPOSITORY_URL = ${ REPOSITORY_URL } + ${PATH-RELEASE}
             mvn deploy -DaltSnapshotDeploymentRepository=ibis-release::default::${ RELEASE_REPOSITORY_URL } 
             # --batch-mode
             
@@ -56,7 +61,7 @@ if [${REPOSITORY_URL} != ""] then
         echo "upload npm private release"
         echo "***************************************************"
         
-        NPM_REPOSITORY_URL = ${ REPOSITORY_URL } + "/npm-private/release/"   
+        NPM_REPOSITORY_URL = ${ REPOSITORY_URL } + ${PATH-NPM-PRIVATE}   
         
         # node compile method
         # ng build
