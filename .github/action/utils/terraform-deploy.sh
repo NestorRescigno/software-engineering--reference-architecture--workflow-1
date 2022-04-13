@@ -5,10 +5,11 @@
 
 # setting variable
 AMI_VERSION=%1
-PROJECT=%2
-ENVIROMENT=%3
-AMI_ID=%4
+AMI_ID=%2
+PROJECT=%3
+ENVIROMENT=%4
 PREFIX=%5
+
 cd ${{ github.workspace }}/terraform/module/aws-ec2-vpc-iberia
 
 echo "***************************************************"
