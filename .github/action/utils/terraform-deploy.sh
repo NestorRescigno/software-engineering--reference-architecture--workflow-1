@@ -9,7 +9,7 @@ PROJECT=%2
 ENVIROMENT=%3
 AMI_ID=%4
 PREFIX=%5
-cd ${{ github.workspace }}/module/terraform/
+cd ${{ github.workspace }}/terraform/module/aws-ec2-vpc-iberia
 
 echo "***************************************************"
 echo "Deploying with terraform..."
@@ -20,19 +20,20 @@ terraform init
 
 # create plan terrafom
 terraform plan 
--var "version=${AMI_VERSION}" 
+-var "version=${AMI_VERSION}"
+-var "ami_id=${AMI_ID}" 
 -var "project=${PROJECT}" 
 -var "environment=${ENVIROMENT}" 
--var "ami_id=${AMI_ID}" 
 -var "environment_prefix=${PREFIX}"
 
 # apply plan terrafom
-terraform apply -auto-approve 
+terraform apply -auto-approve
+-var "ami_id=${AMI_ID}" 
 -var "version=${AMI_VERSION}" 
 -var "project=${PROJECT}" 
 -var "environment=${ENVIROMENT}" 
--var "ami_id=${AMI_ID}" 
 -var "environment_prefix=${PREFIX}"
+
 echo "***************************************************"
 echo "Deploying end..."
 echo "***************************************************"
