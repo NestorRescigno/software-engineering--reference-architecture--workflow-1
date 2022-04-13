@@ -56,7 +56,21 @@ if [${REPOSITORY_URL} != ""] then
         echo "upload npm private release"
         echo "***************************************************"
         
-        # pending implement deploy to repository
+        NPM_REPOSITORY_URL = ${ REPOSITORY_URL } + "/npm-private/release/"   
+        
+        # node compile 
+        ng build
+        
+        # copy package.json to dist
+        cp package.json \dist
+        cd \dist
+        
+        # add publish registry in package.json
+        sed "s/\('publishConfig':\)/\1\""registry": "${NPM_REPOSITORY_URL}"\"\,/g" package.json
+        
+        # run npm publish
+        
+        # penging implement
         
         echo "***************************************************"
         echo "upload complete"
