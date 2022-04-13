@@ -107,7 +107,7 @@ github workflow using terraform to creates and applies an infrastructure using t
 ## Global variables
 service_name       = "<service name>"
 environment_prefix = "<environment prefix name>"
-project            = "<project name>"                     # this name is present in domain
+project            = "<project name>"                     # this name is present in domain <project name>.<domain>
 environment        = "<enviroment name>"
 aws_region         = "<regione name>"                     # default: "eu-central-1"
 global_dns         = "<domain>"                           # default: "cloud.iberia.local"
