@@ -25,9 +25,13 @@ That is why the balancing is applied to a hidden environment to test the new fun
 
 ![Network Environment](./images/docs/project-template/vpc-network.png) 
 
-In the philosophy of infrastructure by code, the github action itself is used to automatically create the necessary environments for both the agents and the environments where the software or cluster container will be hosted. next pricture represent workflow action to create environment
+In the philosophy of infrastructure by code, the github action itself is used to automatically create the necessary environments for both the agents and the environments where the software or cluster container will be hosted. 
+for this purpose terraform's modules is used that allows to define code blocks for the infrastructure, the infrastructure will be created the first time when deploying.
 
-![Deploy Environment](./images/docs/project-template/Deployment-Infrastructure.png)
+>**About the Terraform Language:** The main purpose of the Terraform language is declaring resources, which represent infrastructure objects. All other language features exist only to make the definition of resources more flexible and convenient.
+A Terraform configuration is a complete document in the Terraform language that tells Terraform how to manage a given collection of infrastructure. A configuration can consist of multiple files and directories.more information to [terraform best practice](https://github.com/Iberia-Ent/software-engineering--best-practices--iac--terraform--documentation)
+
+This repository have diferente terraform standars modules by create infraestructure by code. more information to see [DEVELOPERS.md](./DEVELOPERS.md)
 
 Finally, the developer uses a workflow that allows quality control and the deployment of his software in the environments or cluster, generating an image that will be kept in a registry and that allows maintaining a standard software and magine in all environments.
 in next picture show workflow action
