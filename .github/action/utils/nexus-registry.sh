@@ -11,7 +11,7 @@ if [${REPOSITORY_URL} != ""] then
     REF             =%5
     
     # setting contants
-    PATH-SNAPSHOTS      =  "/repository/snapshots/"
+    PATH-SNAPSHOTS      = "/repository/snapshots/"
     PATH-RELEASE        = "/repository/releases/"
     PATH-NPM-PRIVATE    = "/npm-private/release/" 
     
