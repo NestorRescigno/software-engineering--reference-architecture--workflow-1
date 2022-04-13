@@ -58,20 +58,19 @@ if [${REPOSITORY_URL} != ""] then
         
         NPM_REPOSITORY_URL = ${ REPOSITORY_URL } + "/npm-private/release/"   
         
-        # node compile 
-        ng build
+        # node compile method
+        # ng build
         
         # copy package.json to dist
-        cp package.json \dist
-        cd \dist
+        # cp package.json \dist
+        # cd \dist
         
         # add publish registry in package.json ( note: find other method becuase url and token is present on registry. )
-        sed "s/\('publishConfig':\)/\1\""registry": "${NPM_REPOSITORY_URL}"\"\,/g" package.json
+        # sed "s/\('publishConfig':\)/\1\""registry": "${NPM_REPOSITORY_URL}"\"\,/g" package.json
         
         # run npm publish
-        
-        # penging implement
-        
+        npm publish --registry "${NPM_REPOSITORY_URL}"   # Nexus configure npm proxy and private registry.
+
         echo "***************************************************"
         echo "upload complete"
         echo "***************************************************"
