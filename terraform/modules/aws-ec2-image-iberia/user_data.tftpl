@@ -13,6 +13,9 @@ sudo apt -y -qq install golang-go
 # node js
 sudo apt install nodejs
 
+# java runtime 11
+sudo apt-get install openjdk-11-jre
+
 # Setup your group and adding your user
 sudo groupadd -r ${department}
 sudo useradd -m -s /bin/bash ${name}
@@ -30,11 +33,15 @@ cd /home/${name}
 # export environment variables
 export GOROOT=/usr/lib/go
 export NODEROOT=/usr/lib/nodejs
-export JVMROOT=/usr/lib/java
+export JAVAROOT=/usr/lib/java   # Note of developers : use readlink example -> $(dirname $(dirname $(readlink -f $(which java))))
+
+# path software 
 export GOPATH=/home/${name}/go
 export NODEPATH=/home/${name}/www
-export JARPATH=/home/${name}/target
-export PATH=$PATH:$GOROOT/bin:$NODEROOT/bin:$JVMROOT/bin:$GOPATH/bin:$NODEPATH/dist:$JARPATH
+export JARPATH=/home/${name}/target   # Note of developers : change to other path
+
+# setting environment path
+export PATH=$PATH:$GOROOT/bin:$NODEROOT/bin:$JAVAROOT/bin:$GOPATH/bin:$NODEPATH/dist:$JARPATH
 
 if[ ${lenguage} == "go"] then
     # get webapp from repository git
