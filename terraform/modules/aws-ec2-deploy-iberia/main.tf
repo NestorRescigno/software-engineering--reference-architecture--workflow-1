@@ -19,6 +19,7 @@ resource "aws_launch_template" "launch" {
   iam_instance_profile {
     name = data.aws_iam_instance_profile.ip.name
   }
+
   tag_specifications {
     resource_type = "instance"
     tags = merge(
@@ -28,6 +29,7 @@ resource "aws_launch_template" "launch" {
       })
     )
   }
+
   tag_specifications {
     resource_type = "volume"
     tags = merge(
@@ -38,6 +40,7 @@ resource "aws_launch_template" "launch" {
       })
     )
   }
+
   tags = merge(
     local.global_common_tags,
     tomap({
@@ -56,10 +59,12 @@ resource "aws_autoscaling_group" "asg" {
   min_size         = local.asg_min
   max_size         = local.asg_max
   desired_capacity = local.asg_desired
+  
   launch_template {
     id      = aws_launch_template.launch.id
     version = aws_launch_template.launch.latest_version
   }
+  
   vpc_zone_identifier       = [data.aws_subnet.snet_amber_eu_central_1a.id, data.aws_subnet.snet_amber_eu_central_1b.id, data.aws_subnet.snet_amber_eu_central_1c.id]
   health_check_grace_period = local.health_check_grace_period
   default_cooldown          = local.default_cooldown
