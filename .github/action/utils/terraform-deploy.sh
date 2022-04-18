@@ -45,7 +45,7 @@ terraform apply -auto-approve
 -var "environment=${ENVIROMENT}" 
 -var "environment_prefix=${PREFIX}"
 
-cd ${{ github.workspace }}/terraform/module/aws-ec2-depoly-iberia
+cd ${{ github.workspace }}/terraform/module/aws-ec2-deploy-iberia
 
 echo "***************************************************"
 echo "Deploying with terraform..."
