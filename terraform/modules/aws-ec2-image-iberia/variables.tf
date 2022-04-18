@@ -24,7 +24,17 @@ variable "instance_type" {
 
 # reference register 
 variable "ref" {
-  description = "The reference register artifact"
+  description = "The reference register artifact. example: Nexus"
+}
+
+# user read to reference register 
+variable "artifact_user" {
+  description = "the user access to read register artifact. example: Nexus"
+}
+
+# secret read to reference register 
+variable "artifact_secret" {
+  description = "the secret key access to read register artifact. example: Nexus"
 }
 
 variable "lenguage_code" {

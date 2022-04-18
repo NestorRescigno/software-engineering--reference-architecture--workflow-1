@@ -112,9 +112,9 @@ jobs:
         env:
           SONAR_URL: inputs.sonarqube_host
           SONAR_USER: inputs.sonarqube_user
-          SONAR_PASS: inputs.sonarqube_tokenS
+          SONAR_SECRET: inputs.sonarqube_token
         run: |
-          ${{ env.SCRIPT }}/sonar-scanner.sh ${{ env.SONAR_URL }} ${{ env.SONAR_USER }} ${{ env.SONAR_PASS }} ${{ env.LANGUAGE }} ${{ github.workspace }} ${{ github.ref }}
+          ${{ env.SCRIPT }}/sonar-scanner.sh ${{ env.SONAR_URL }} ${{ env.SONAR_USER }} ${{ env.SONAR_SECRET }} ${{ env.LANGUAGE }} ${{ github.workspace }} ${{ github.ref }}
     steps:
        # deploy artifact to registry repository
       - name: Registy Artifact
@@ -123,10 +123,10 @@ jobs:
           # DNS hasn't content http:// or https://
           REPOSITORY_DNS: inputs.repository_host
           REPOSITORY_USER: inputs.repository_user
-          REPOSITORY_PASS: inputs.repository_token
+          REPOSITORY_SECRET: inputs.repository_token
         run: |
         # path in script repository nexus is /repository/snapshots/ and /repository/releases/
-        ${{ env.SCRIPT }}/nexus-registry.sh ${{ env.REPOSITORY_DNS }} ${{ env.REPOSITORY_USER }} ${{ env.REPOSITORY_PASS }} ${{ env.LANGUAGE }} ${{ github.ref }}
+        ${{ env.SCRIPT }}/nexus-registry.sh ${{ env.REPOSITORY_DNS }} ${{ env.REPOSITORY_USER }} ${{ env.REPOSITORY_SECRET }} ${{ env.LANGUAGE }} ${{ github.ref }}
   image:
     name: image
     runs-on: [self-hosted]
@@ -141,11 +141,13 @@ jobs:
           SCRIPT: ${{ github.workspace }}/.github/action/utils/
           USER:
           DEPARTAMENT:
-          ARTIFACT:
           LANGUAGE:
+          ARTIFACT: 
+          REPOSITORY_USER: inputs.repository_user    # change user to read, now use write
+          REPOSITORY_SECRET: inputs.repository_token   # change token to read, now use write
         shell: bash
-        run: |        
-        ${{ env.SCRIPT }}/build-image.sh ${{ env.USER }} ${{ env.DEPARTAMENT }} ${{ env.ARTIFACT }} ${{ env.LANGUAGE }} 
+        run: |
+        ${{ env.SCRIPT }}/build-image.sh ${{ env.USER }} ${{ env.DEPARTAMENT }} ${{ env.LANGUAGE }} ${{ env.ARTIFACT }} ${{ env.REPOSITORY_USER }} ${{ env.REPOSITORY_SECRET }}
   deploy:
     name: deploy
     runs-on: [self-hosted]

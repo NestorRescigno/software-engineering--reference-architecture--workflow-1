@@ -36,7 +36,14 @@ resource "aws_instance" "app" {
     intance_type          = var.instance_type
     subnet_id             = var.subnet
     vpc_scurity_group_ids = [var.security]
-    user_data             = templatefile["user_data.tftpl", {department = var.user_department, name = var.user_name, artifact= var.ref , lenguage= var.lenguage_code}]
+    user_data             = templatefile("user_data.tftpl", {
+        department = var.user_department, 
+        name = var.user_name, 
+        lenguage= var.lenguage_code,
+        artifact= var.ref , 
+        user   = var.artifact_user,
+        secret = var.artifact_secret
+      })
 }
 
 # resource ami form instance

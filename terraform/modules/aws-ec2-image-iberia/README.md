@@ -18,9 +18,11 @@ ubuntu/image/hvm-ssd/ubuntu-xenial-20.08-amf64-server-**
 * user_departament: "The organization the user belongs to: dev, prod, qa"
 >default: "dev"
 * instance_type:"The instance aws type"
+* lenguage_code: "lenguage code origin for example java, angular , go , etc."
 > default: "t4g.micro"
 * ref :"The reference register artifact"
-* lenguage_code: "lenguage code origin for example java, angular , go , etc."
+* artifact_user:"The user access to read register artifact. example: Nexus"
+* artifact_secret :"The secret key access to read register artifact. example: Nexus"
 
 **output**
 * ami_id: "aws magine image id" 

@@ -54,13 +54,13 @@ elif[ ${lenguage} == "angular"] then
     # change directory
     cd $NODEPATH
     # get artifact 
-    curl -X GET -u ${artifact}
+    curl -X GET -u ${user}:${secret} ${artifact} && clear
     # run service 
     ng serve 
 elif[ ${lenguage} == "java"] then
     # run spring boot
     cd $JARPATH
-    curl -X GET -u ${artifact}
+    curl -X GET -u ${user}:${secret} ${artifact} && clear
     java -jar 
 else 
     echo "Not complete process, lenguage code selected isn't implement to script"

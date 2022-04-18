@@ -4,9 +4,11 @@
 # *********************************************************************
 user_name           = %1
 user_departament    = %2
-instance_type       = %3   
-artifact            = %4
-lenguage            = %5
+instance_type       = %3 
+lenguage            = %4  
+artifact_ref        = %5
+artifact_user       = %6
+artifact_secret     = %7
 
 echo "***************************************************"
 echo "Creating image"
@@ -26,17 +28,24 @@ terraform plan
 -var "user_name=${user_name}"
 -var "user_departament=${user_departament}" 
 -var "instance_type=${instance_type}" 
--var "ref=${artifact}" 
 -var "lenguage_code=${lenguage}"
+-var "ref=${artifact_ref}" 
+-var "artifact_user=${artifact_user}"
+-var "artifact_user=${artifact_secret}"
+
+clear
 
 # apply plan terrafom
 terraform apply -auto-approve
+-var "lenguage_code=${lenguage}"
 -var "user_name=${user_name}"
 -var "user_departament=${user_departament}" 
 -var "instance_type=${instance_type}" 
--var "ref=${artifact}" 
--var "lenguage_code=${lenguage}"
+-var "ref=${artifact_ref}" 
+-var "artifact_user=${artifact_user}"
+-var "artifact_user=${artifact_secret}"
 
+clear
 
 echo "***************************************************"
 echo "Created image"
