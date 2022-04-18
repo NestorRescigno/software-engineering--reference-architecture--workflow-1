@@ -47,6 +47,16 @@ inputs:
   kiuwan_token:
     description: 'kiuwan token parameter'
     required: false
+   # control vulnerability code with kiuwan
+  repository_host:
+    description: 'repository artifact host parameter'
+    required: true
+  repository_user:
+    description: 'repository artifact user parameter'
+    required: true
+  repository_token:
+    description: 'repository artifact token parameter'
+    required: true  
   # terraform module
   terraform-version:
     description: 'terraform module'
@@ -100,9 +110,9 @@ jobs:
       - name: Scan
         shell: bash
         env:
-          SONAR_URL: ${{secret.sonar-url}}
-          SONAR_USER: ${{secret.sonar-user}}
-          SONAR_PASS: ${{secret.sonar-pass}}
+          SONAR_URL: inputs.sonarqube_host
+          SONAR_USER: inputs.sonarqube_user
+          SONAR_PASS: inputs.sonarqube_tokenS
         run: |
           ${{ env.SCRIPT }}/sonar-scanner.sh ${{ env.SONAR_URL }} ${{ env.SONAR_USER }} ${{ env.SONAR_PASS }} ${{ env.LANGUAGE }} ${{ github.workspace }} ${{ github.ref }}
     steps:
@@ -111,9 +121,9 @@ jobs:
         shell: bash
         env:
           # DNS hasn't content http:// or https://
-          REPOSITORY_DNS: ${{secret.nexus-url}}
-          REPOSITORY_USER: ${{secret.nexus-user}}
-          REPOSITORY_PASS: ${{secret.nexus-pass}}
+          REPOSITORY_DNS: inputs.repository_host
+          REPOSITORY_USER: inputs.repository_user
+          REPOSITORY_PASS: inputs.repository_token
         run: |
         # path in script repository nexus is /repository/snapshots/ and /repository/releases/
         ${{ env.SCRIPT }}/nexus-registry.sh ${{ env.REPOSITORY_DNS }} ${{ env.REPOSITORY_USER }} ${{ env.REPOSITORY_PASS }} ${{ env.LANGUAGE }} ${{ github.ref }}
@@ -141,7 +151,7 @@ jobs:
     runs-on: [self-hosted]
     env:
       SCRIPT: ${{ github.workspace }}/.github/action/utils/
-      TEST: false
+      TEST: inputs.testIntegration
       LANGUAGE:
     steps:
       # instance software.
