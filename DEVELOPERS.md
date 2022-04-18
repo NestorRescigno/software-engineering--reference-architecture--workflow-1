@@ -86,7 +86,7 @@ The implementation of the workflow in the different repositories of the source c
 
 > **Recommendation:** Don't directly implement this flow in source repositories. Use an intermediate repository where you can configure the different tools (exemple sonar, veracode, etc). and that it can be executed, for example, by means of [weebhook](https://docs.github.com/en/github-ae@latest/developers/webhooks-and-events/webhooks/about-webhooks). This configuration allows to separate the repository from the workflow.
 
-the workflow uses different tools to complete different scenarios such as checking in to derivative repositories or running a code scan. to configure the tools it is necessary to configure the authentication secrets to step. more information to [secret github](https://docs.github.com/en/actions/security-guides/encrypted-secrets)
+the workflow uses different tools to complete different scenarios such as checking in to derivative repositories or running a code scan. to configure the tools it is necessary to configure the authentication secrets. more information to [secret github](https://docs.github.com/en/actions/security-guides/encrypted-secrets)
 see [Usages](#usages) implementation
 
 ### Terraform modules:
@@ -134,8 +134,8 @@ jobs:
     kiuwan_user:                                      # user control vulnerability code with kiuwan - optional
     kiuwan_token:                                     # pwd control vulnerability code with kiuwan - optional
     repository_DNS:  ${{secret.nexus-url}}            # host registry artifact
-    repository_user: ${{secret.nexus-user}}           # user registry artifactc
-    repository_token:  ${{secret.nexus-pass}}           # pass registry artifact
+    repository_user: ${{secret.nexus-user}}           # user registry artifact
+    repository_token:${{secret.nexus-pass}}           # pass registry artifact
 ````
 
 Repository flow 
