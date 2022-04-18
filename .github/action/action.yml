@@ -83,6 +83,15 @@ jobs:
       # build image
       # Step 1
       - name: build image
+        env:
+          SCRIPT: ${{ github.workspace }}/.github/action/utils/
+          USER:
+          DEPARTAMENT:
+          ARTIFACT:
+          LANGUAGE:
+        shell: bash
+        run: |        
+        ${{ env.SCRIPT }}/build-image.sh ${{ env.USER }} ${{ env.DEPARTAMENT }} ${{ env.ARTIFACT }} ${{ env.LANGUAGE }} 
   deploy:
     name: deploy
     runs-on: [self-hosted]
