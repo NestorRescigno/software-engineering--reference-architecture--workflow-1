@@ -48,7 +48,7 @@ data "aws_iam_instance_profile" "ip" {
 }
 
 #########################
-## VPC ancilliaries
+## VPC 
 #########################
 
 data "aws_vpc" "vpc_product" {
