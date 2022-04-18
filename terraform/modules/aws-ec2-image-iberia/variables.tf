@@ -7,7 +7,7 @@
 # user creating this infrastructure
 variable "user_name" {
   description = "The user creating this infrastructure"
-  default     = "user-ec2"
+  default     = "ec2-user"
 }
 
 # organization type
@@ -19,7 +19,7 @@ variable "user_departament" {
 # instance type to create instance
 variable "instance_type" {
   description = "The instance aws type"
-  default     = "t2.micro"
+  default     = "t4g.micro"
 }
 
 # reference register 
