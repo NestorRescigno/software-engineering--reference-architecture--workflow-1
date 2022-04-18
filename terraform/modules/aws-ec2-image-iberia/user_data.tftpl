@@ -13,14 +13,14 @@ sudo apt -y -qq install golang-go
 # node js
 sudo apt install nodejs
 
-
-
-# Setup sudo to allow no-password sudo for your group and adding your user
+# Setup your group and adding your user
 sudo groupadd -r ${department}
 sudo useradd -m -s /bin/bash ${name}
 sudo usermod -a -G ${department} ${name}
-sudo cp /etc/sudoers /etc/sudoers.orig
-echo "${name} ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/${name}
+
+# Setup sudo to allow no-password 
+# sudo cp /etc/sudoers /etc/sudoers.orig
+# echo "${name} ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/${name}
 
 # Create PATH for your user & download the webapp from github
 sudo -H -i -u ${name} -- env bash << EOF
