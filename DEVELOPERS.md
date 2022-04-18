@@ -39,10 +39,18 @@ main
 |           └───sonar-scanner.sh                                  # script scan code with sonarqube
 |           └───terraform-deploy.sh                               # terraform plan and apply deploy module.
 │___terrafom                                                      # standars terraform module core
-|     └───script                                                  # script core ( example pathoy, shell, etc.)
 |     └───modules                                                 # standars terraform modules
+|           └───aws-ec2-deploy-iberia                             # terraform module lanch template deploy iberia
+|                 └───README.md                                   # document declarative of module
+|                 └───main.tf                                     # princial code of module core
+|                 └───outputs.tf                                  # terraform output declarative of module core
+|                 └───variables.tf                                # terraform variables of module core
+|           └───aws-ec2-image-iberia                              # terraform module build image iberia: base ubuntu
+|                 └───README.md                                   # document declarative of module
+|                 └───main.tf                                     # princial code of module core
+|                 └───outputs.tf                                  # terraform output declarative of module core
+|                 └───variables.tf                                # terraform variables of module core
 |           └───aws-ec2-vpc-iberia                                # terraform module vpn iberia for create environment
-|                 └───LICENSE                                     # License declaration by iberia
 |                 └───README.md                                   # document declarative of module
 |                 └───data.tf                                     # terraform data source of module core
 |                 └───locals.tf                                   # terraform locals declarative module core
@@ -118,7 +126,9 @@ kms_key_id         = "<kms id>"
 role_arn           = "<regione name>"                     # AIM role aws
 `````
 
-the deployment step of the workflow receives the aws AMI image and instantiates it on EC2
+To create an image, the [aws-ec2-image-iberia](https://github.com/Iberia-Ent/software-engineering--reference-architecture--workflow/blob/main/terraform/modules/aws-ec2-vpc-iberia/README.md) module will be used, which creates a new image starting from an ubuntu base, configuring it according to the artifact
+
+the deployment step of the workflow receives the aws AMI image and instantiates it on EC2, use module [aws-ec2-deploy-iberia](https://github.com/Iberia-Ent/software-engineering--reference-architecture--workflow/blob/main/terraform/modules/aws-ec2-deploy-iberia/README.md) 
 
 
 Usages
@@ -130,17 +140,11 @@ can be referenced as follows:
 # Implementation for deployment to environment ( pull request event to branch )
 on:
   pull_request:
-    branches: [ develop ]
+    branches: [ main, develop ]
 jobs:
-- uses: ./.github/action/software/develop.yml@v1.0
+- uses: ./.github/action/action.yml@v1.0
   with:
-    # Repository name with owner.
-    # Default: ${{ github.repository }}
-    repository: ''
-    # Configutation DNS and credencials for access to repository artifact
-    # Default
-    artifact-repositoy-url: ''
-    artifact-repositoy-token: ''
+    
 ````
 
 Repository flow 
