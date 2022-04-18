@@ -1,0 +1,57 @@
+#!/bin/bash
+
+# Install necessary dependencies
+# GO lenguage
+sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
+sudo apt-get -y -qq install curl wget git vim apt-transport-https ca-certificates
+sudo add-apt-repository ppa:longsleep/golang-backports -y
+sudo apt -y -qq install golang-go
+# node js
+sudo apt install nodejs
+
+
+
+# Setup sudo to allow no-password sudo for your group and adding your user
+sudo groupadd -r ${department}
+sudo useradd -m -s /bin/bash ${name}
+sudo usermod -a -G ${department} ${name}
+sudo cp /etc/sudoers /etc/sudoers.orig
+echo "${name} ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/${name}
+
+# Create PATH for your user & download the webapp from github
+sudo -H -i -u ${name} -- env bash << EOF
+# change directory project home
+cd /home/${name}
+
+# export environment variables
+export GOROOT=/usr/lib/go
+export NODEROOT=/usr/lib/nodejs
+export JVMROOT=/usr/lib/java
+export GOPATH=/home/${name}/go
+export NODEPATH=/home/${name}/web
+export JARPATH=/home/${name}/target
+export PATH=$PATH:$GOROOT/bin:$NODEROOT/bin:$JVMROOT/bin:$GOPATH/bin:$NODEPATH/dist:$JARPATH
+
+if[ ${lenguage} == "go"] then
+    # get webapp from repository git
+    go get -d ${artifact}
+    # change directory source
+    cd go/src/${artifact}
+    # run go application 
+    go run webapp.go
+elif[ ${lenguage} == "angular"] then
+    # change directory
+    cd $NODEPATH
+    # get artifact 
+    curl -X GET -u ${artifact}
+    # run service 
+    ng serve 
+elif[ ${lenguage} == "java"] then
+    # run spring boot
+    cd $JARPATH
+    curl -X GET -u ${artifact}
+    java -jar 
+else 
+    echo "Not complete process, lenguage code selected isn't implement to script"
+if
+EOF
