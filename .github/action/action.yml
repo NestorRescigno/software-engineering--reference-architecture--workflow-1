@@ -132,19 +132,16 @@ jobs:
     runs-on: [self-hosted]
     env:
       SCRIPT: ${{ github.workspace }}/.github/action/utils/
+      USER:
+      DEPARTAMENT:
       LANGUAGE:
+      ARTIFACT: 
+      REPOSITORY_USER: inputs.repository_user    # change user to read, now use write
+      REPOSITORY_SECRET: inputs.repository_token   # change token to read, now use write
     steps:
       # build image
       # Step 1
       - name: build image
-        env:
-          SCRIPT: ${{ github.workspace }}/.github/action/utils/
-          USER:
-          DEPARTAMENT:
-          LANGUAGE:
-          ARTIFACT: 
-          REPOSITORY_USER: inputs.repository_user    # change user to read, now use write
-          REPOSITORY_SECRET: inputs.repository_token   # change token to read, now use write
         shell: bash
         run: |
         ${{ env.SCRIPT }}/build-image.sh ${{ env.USER }} ${{ env.DEPARTAMENT }} ${{ env.LANGUAGE }} ${{ env.ARTIFACT }} ${{ env.REPOSITORY_USER }} ${{ env.REPOSITORY_SECRET }}
