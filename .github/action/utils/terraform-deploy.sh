@@ -7,14 +7,23 @@
 AMI_VERSION=%1
 AMI_ID=%2
 PROJECT=%3
-ENVIROMENT=%4
-PREFIX=%5
+
+# setting enviroment and prefix with conditional reference branchs
+# pull request event from action
+if [ ${{ startsWith(${ REF }, 'refs/heads/main') }} = true ] then  
+    ENVIROMENT="integration"  # may be change to preproduction or production 
+    PREFIX="int"
+elif [${{ startsWith(${ REF }, 'refs/heads/develop') }} = true ] then  
+    ENVIROMENT="develoment"
+    PREFIX="dev"
+if 
 
 cd ${{ github.workspace }}/terraform/module/aws-ec2-vpc-iberia
 
 echo "***************************************************"
 echo "Deploying with terraform..."
 echo "***************************************************"
+# This module have lifecycle { create_before_destroy = false }
 
 # init terraform module
 terraform init
@@ -27,7 +36,7 @@ terraform plan
 -var "environment=${ENVIROMENT}" 
 -var "environment_prefix=${PREFIX}"
 
-# apply plan terrafom
+# apply plan terrafom 
 terraform apply -auto-approve
 -var "ami_id=${AMI_ID}" 
 -var "version=${AMI_VERSION}" 
@@ -59,6 +68,7 @@ terraform apply -auto-approve
 -var "project=${PROJECT}" 
 -var "environment=${ENVIROMENT}" 
 -var "environment_prefix=${PREFIX}"
+
 
 # set terrafom arn aws target group output to environment
 echo "aws_alb_target_group_arn=$(terraform output aws_alb_target_group_arn)" >> $GITHUB_ENV  #test in shell or move to run action
