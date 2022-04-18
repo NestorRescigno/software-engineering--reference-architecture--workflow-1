@@ -91,7 +91,7 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
-      # Step 3   - Reemplace with install process node.js
+      # Step 3 - Reemplace with install process node.js
       - name: Set up Node 14
         uses: actions/setup-node@v2
         with:
@@ -114,9 +114,9 @@ jobs:
           SONAR_USER: inputs.sonarqube_user
           SONAR_SECRET: inputs.sonarqube_token
         run: |
-          ${{ env.SCRIPT }}/sonar-scanner.sh ${{ env.SONAR_URL }} ${{ env.SONAR_USER }} ${{ env.SONAR_SECRET }} ${{ env.LANGUAGE }} ${{ github.workspace }} ${{ github.ref }}
+        ${{ env.SCRIPT }}/sonar-scanner.sh ${{ env.SONAR_URL }} ${{ env.SONAR_USER }} ${{ env.SONAR_SECRET }} ${{ env.LANGUAGE }} ${{ github.workspace }} ${{ github.ref }}
     steps:
-       # deploy artifact to registry repository
+      # deploy artifact to registry repository
       - name: Registy Artifact
         shell: bash
         env:
@@ -130,6 +130,10 @@ jobs:
   image:
     name: image
     runs-on: [self-hosted]
+    outputs:
+      image-number-id:
+        description: "image number id"
+        value: ${{ steps.image-generator.outputs.image-id }}
     env:
       SCRIPT: ${{ github.workspace }}/.github/action/utils/
       USER:
@@ -141,10 +145,12 @@ jobs:
     steps:
       # build image
       # Step 1
+      - id: image-generator
       - name: build image
         shell: bash
         run: |
         ${{ env.SCRIPT }}/build-image.sh ${{ env.USER }} ${{ env.DEPARTAMENT }} ${{ env.LANGUAGE }} ${{ env.ARTIFACT }} ${{ env.REPOSITORY_USER }} ${{ env.REPOSITORY_SECRET }}
+        
   deploy:
     name: deploy
     runs-on: [self-hosted]
@@ -152,6 +158,7 @@ jobs:
       SCRIPT: ${{ github.workspace }}/.github/action/utils/
       TEST: inputs.testIntegration
       LANGUAGE:
+      AMI_ID: ${{ jobs.image.outputs.image-number-id }}
     steps:
       # instance software.
       # Step 1
@@ -161,8 +168,7 @@ jobs:
         # NOTE OF DEVELOP
         # ${{ env.PROJECT }} from file configuration
         # ${{ env.AMI_VERSION }} from pom version
-        # ${{ env.AMI_ID }} BOH! after create image process, it has return output id 
-        
+         
         ${{ env.SCRIPT }}/terraform-deploy.sh ${{ env.PROJECT }} ${{ env.AMI_VERSION }} ${{ env.AMI_ID }} 
       # Step 2
       - name: Health Check

@@ -33,8 +33,6 @@ terraform plan
 -var "artifact_user=${artifact_user}"
 -var "artifact_user=${artifact_secret}"
 
-clear
-
 # apply plan terrafom
 terraform apply -auto-approve
 -var "lenguage_code=${lenguage}"
@@ -45,7 +43,7 @@ terraform apply -auto-approve
 -var "artifact_user=${artifact_user}"
 -var "artifact_user=${artifact_secret}"
 
-clear
+echo "::set-output name=image-id::$(terraform output ami_id)"
 
 echo "***************************************************"
 echo "Created image"
