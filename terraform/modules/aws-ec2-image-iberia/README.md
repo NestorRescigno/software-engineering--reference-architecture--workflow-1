@@ -21,3 +21,6 @@ ubuntu/image/hvm-ssd/ubuntu-xenial-20.08-amf64-server-**
 > default: "t4g.micro"
 * ref :"The reference register artifact"
 * lenguage_code: "lenguage code origin for example java, angular , go , etc."
+
+**output**
+* ami_id: "aws magine image id" 
