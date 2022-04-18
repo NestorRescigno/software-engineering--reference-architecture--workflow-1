@@ -27,7 +27,7 @@ main
 |     └───action.yml                                              # workflow deploy to environment with pull request
 |     └───utils                                                   # utils script core for step action
 |           └───build-image.sh                                    # build image ami aws.
-|           └───build-maven.sh                                    # build artifact with maven script.
+|           └───build.sh                                          # build artifact with maven or node.
 |           └───checkout.sh                                       # checkout source code from git.
 |           └───configure-cloud-credentials.sh                    # configure cloud credentials access.4
 |           └───get-tools.sh                                      # installe tools cliente.
