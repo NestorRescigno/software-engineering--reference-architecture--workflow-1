@@ -4,9 +4,10 @@
 # *********************************************************************
 
 # setting variable
-AMI_VERSION=%1
-AMI_ID=%2
-PROJECT=%3
+PROJECT=%1
+AMI_VERSION=%2
+AMI_ID=%3
+
 
 # setting enviroment and prefix with conditional reference branchs
 # pull request event from action
