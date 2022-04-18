@@ -100,7 +100,7 @@ jobs:
       - name: Building Artifact
         shell: bash
         run: |
-        ${{ env.SCRIPT }}/build-maven.sh ${{ github.workspace }} ${{ env.LANGUAGE }}
+        ${{ env.SCRIPT }}/build.sh ${{ github.workspace }} ${{ env.LANGUAGE }}
     steps:
       # implement sonar
       # Step 1
