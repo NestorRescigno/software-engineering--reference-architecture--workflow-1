@@ -118,10 +118,7 @@ can be referenced as follows:
 - **Implementation continous integration:**
 ````
 # Implementation for deployment to environment ( pull request event to branch )
-on:
-  pull_request:
-    branches: [ main, develop ]
-jobs:
+
 - uses: ./.github/action/action.yml@v1.0
   with:
     testIntegration:                                  # run integration test, soap request or rest  default: false
