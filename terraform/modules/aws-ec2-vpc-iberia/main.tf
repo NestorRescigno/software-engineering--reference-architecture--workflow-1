@@ -35,8 +35,8 @@ resource "aws_alb_target_group" "alb" {
       Environment              = var.environment
       Cluster                  = local.cluster_name
       "tf:Used"                = "True"
-      "Application:ArtifactId" = "${var.service_name}-core"
-      "Application:GroupId"    = "${var.service_groupid}"
+      "Application:ArtifactId" = join("-",[var.service_name,"core"])      
+      "Application:GroupId"    = var.service_groupid
     })
   )
 }
@@ -65,7 +65,7 @@ resource "aws_lb_listener" "lb_listener" {
 #######################################################
 
 resource "aws_lb" "alb" {
-  name               = "${var.service_name}-alb"
+  name               = join("-",[var.service_name,"alb"])
   internal           = true
   load_balancer_type = "application"
   security_groups = [aws_security_group.alb.id, data.aws_security_group.sg_common_microservices_alb.id]
@@ -74,7 +74,7 @@ resource "aws_lb" "alb" {
   enable_deletion_protection = false
 
   access_logs {
-    bucket  = "${var.environment_prefix}-elb-logs"
+    bucket  = join("-",[var.environment_prefix,"elb","logs"])
     prefix  = lower(format("%s-%s-ap-lb", var.environment_prefix, var.service_name))
     enabled = true
   }
@@ -89,9 +89,9 @@ resource "aws_lb" "alb" {
       Project                  = var.project
       Environment              = var.environment
       Cluster                  = local.cluster_name
-      "Application:GroupId"    = "${var.service_groupid}"
-      "Application:ArtifactId" = "${var.service_name}-core"
       "tf:Used"                = "True"
+      "Application:ArtifactId" = join("-",[var.service_name,"core"])      
+      "Application:GroupId"    = var.service_groupid
     })
   )
 }
@@ -100,7 +100,7 @@ resource "aws_lb" "alb" {
 ### New resources ALB SG 
 ######################################
 resource "aws_security_group" "alb" {
-  name        = "${var.service_name}-alb-${var.environment_prefix}-sg"
+  name        = join("-",[var.service_name,"alb",var.environment_prefix,"sg"])
   description = "SG for ${var.service_name} cluster ALB"
   vpc_id      = data.aws_vpc.vpc_product.id
   ingress {
@@ -113,7 +113,7 @@ resource "aws_security_group" "alb" {
   tags = merge(
     local.global_common_tags,
     tomap({
-      Name = "${var.service_name}-alb-${var.environment_prefix}-sg"
+      Name = join("-",[var.service_name,"alb",var.environment_prefix,"sg"])
     })
   )
 }
@@ -122,7 +122,7 @@ resource "aws_security_group" "instances" {
   depends_on = [
     aws_security_group.alb
   ]
-  name        = "${var.service_name}-instances-${var.environment_prefix}-sg"
+  name        = join("-",[var.service_name,"instances",var.environment_prefix,"sg"])
   description = "SG for ${var.service_name} cluster instances"
   vpc_id      = data.aws_vpc.vpc_product.id
 
@@ -137,7 +137,7 @@ resource "aws_security_group" "instances" {
   tags = merge(
     local.global_common_tags,
     tomap({
-      Name = "${var.service_name}-instances-${var.environment_prefix}-sg"
+      Name = join("-",[var.service_name,"instances",var.environment_prefix,"sg"])
     })
   )
 }
@@ -152,7 +152,7 @@ resource "aws_route53_zone" "main_domain_local" {
 resource "aws_route53_record" "alb-record" {
   zone_id = aws_route53_zone.main_domain_local.zone_id  
   # zone_id = data.aws_route53_zone.ancillaries_cloud_iberia_local.id
-  name    = "${var.service_name}.${var.environment}.${var.project}.${var.global_dns}"
+  name    = join(".",[var.service_name, var.environment, var.project. var.global_dns])
   type    = "A"
  
   alias {
@@ -168,7 +168,7 @@ resource "aws_route53_record" "alb-record" {
 resource "aws_route53_record" "blue-record" {
   zone_id = aws_route53_zone.main_domain_local.zone_id
   # zone_id = data.aws_route53_zone.ancillaries_cloud_iberia_local.id
-  name    = "${var.service_name}.blue.${var.environment}.${var.project}.${var.global_dns}"
+  name    = join(".",[var.service_name, "blue",var.environment, var.project. var.global_dns])
   type    = "A"
   allow_overwrite = true
  
@@ -185,7 +185,7 @@ resource "aws_route53_record" "blue-record" {
 resource "aws_route53_record" "green-record" {
   zone_id = aws_route53_zone.main_domain_local.zone_id
   # zone_id = data.aws_route53_zone.ancillaries_cloud_iberia_local.id
-  name    = "${var.service_name}.green.${var.environment}.${var.project}.${var.global_dns}"
+  name    = join(".",[var.service_name, "green",var.environment, var.project. var.global_dns])
   type    = "A"
   allow_overwrite = true
  

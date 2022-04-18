@@ -24,7 +24,7 @@ terraform {
     bucket = var.bucket_name  # bucket = "terraform-backend-ancill-accounts"
     key = var.bucket_key   # key= "prelive/terraform.[service_name].tfstate" 
 
-    region = "eu-central-1"
+    region = provider.aws.region
 
     dynamodb_table = var.dynamodb_table
     encrypt        = true
