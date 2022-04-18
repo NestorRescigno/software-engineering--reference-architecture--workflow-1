@@ -144,7 +144,15 @@ on:
 jobs:
 - uses: ./.github/action/action.yml@v1.0
   with:
-    
+    testIntegration:            # run integration test, soap request or rest  default: false
+    testIntegration-path:       # test xml integration path default: '${{ github.workspace }}'
+    scancode:                   # control scan code default: false
+    sonarqube_host:             # host control quality code with sonar - optional
+    sonarqube_user:             # user control quality code with sonar - optional
+    sonarqube_token:            # pwd control quality code with sonar - optional
+    kiuwan_host:                # host control vulnerability code with kiuwan - optional
+    kiuwan_user:                # user control vulnerability code with kiuwan - optional
+    kiuwan_token:               # pwd control vulnerability code with kiuwan - optional
 ````
 
 Repository flow 

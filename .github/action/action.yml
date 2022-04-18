@@ -11,6 +11,50 @@
 
 name: CICD
 description: 'continuos integration'
+# setting input
+inputs:
+  # ejecute integration test, soap request or rest
+  testIntegration:
+    description: 'active test integration'
+    required: false
+    default: false
+  testIntegration-path:
+    description: 'path'
+    required: false
+    default: '${{ github.workspace }}'
+  # control scan code
+  scancode:
+    description: 'scan code'
+    required: true
+    default: false
+  # control quality code with sonar
+  sonarqube_host:
+    description: 'sonar host parameter'
+    required: false
+  sonarqube_user:
+    description: 'sonar user parameter'
+    required: false
+  sonarqube_token:
+    description: 'sonar token parameter'
+    required: false
+  # control vulnerability code with kiuwan
+  kiuwan_host:
+    description: 'kiuwan host parameter'
+    required: false
+  kiuwan_user:
+    description: 'kiuwan user parameter'
+    required: false
+  kiuwan_token:
+    description: 'kiuwan token parameter'
+    required: false
+  # terraform module
+  terraform-version:
+    description: 'terraform module'
+    required: false
+  terraform-module-path:
+    description: 'path modules terraform'
+    required: false
+
 on: [pull_request]
   pull_request:
     # Sequence of patterns matched against refs/heads
