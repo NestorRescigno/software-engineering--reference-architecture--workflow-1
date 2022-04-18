@@ -163,10 +163,8 @@ jobs:
         # ${{ env.PROJECT }} from file configuration
         # ${{ env.AMI_VERSION }} from pom version
         # ${{ env.AMI_ID }} BOH! after create image process, it has return output id 
-        # ${{ env.ENVIRONMENT }} ${{ env.PREFIX }} is setting to script with conditional branch ( main to Preproduction and develop to development)
-        # ${{ env.PREFIX }} BOH! is it need?
         
-        ${{ env.SCRIPT }}/terraform-deploy.sh ${{ env.AMI_VERSION }} ${{ env.AMI_ID }} ${{ env.PROJECT }} ${{ env.ENVIRONMENT }} ${{ env.PREFIX }}
+        ${{ env.SCRIPT }}/terraform-deploy.sh ${{ env.PROJECT }} ${{ env.AMI_VERSION }} ${{ env.AMI_ID }} 
       # Step 2
       - name: Health Check
         shell: bash
