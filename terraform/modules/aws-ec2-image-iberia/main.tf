@@ -19,7 +19,7 @@ data "aws_ami" "base_ami" {
     
     filter {
       name  = "name"
-      value = ["ubuntu/image/hvm-ssd/ubuntu-xenial-20.08-amf64-server-**]
+      value = ["ubuntu/image/hvm-ssd/ubuntu-xenial-20.08-amf64-server-**"]
     }
     
     filter {
