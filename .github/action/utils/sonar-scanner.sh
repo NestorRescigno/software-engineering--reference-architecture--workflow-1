@@ -30,7 +30,7 @@ if [ ${SONAR_URL} != "" && ${{ startsWith(${ REF }, 'refs/heads/main') }} = true
       -Dsonar.host.url=${SONAR_URL}
       -Dsonar.projectKey=${GROUPID}+":"+${ARTIFACTID}
       -Dsonar.projectName=${GROUPID}+":"+${ARTIFACTID}
-      -Dsonar.projectVersion=${SONAR_VERSION_ID}
+      -Dsonar.projectVersion=${VERSION}
       -Dsonar.java.binaries=**/target/classes
       -Dsonar.language=java
   
@@ -43,7 +43,7 @@ if [ ${SONAR_URL} != "" && ${{ startsWith(${ REF }, 'refs/heads/main') }} = true
       -Dsonar.host.url=${SONAR_URL}
       -Dsonar.projectKey=${ARTIFACTID}
       -Dsonar.projectName=${ARTIFACTID}
-      -Dsonar.projectVersion=${SONAR_VERSION_ID}
+      -Dsonar.projectVersion=${VERSION}
       -Dsonar.sourceEncoding=UTF-8
       -Dsonar.exclusions=**/node_modules/**
       -Dsonar.tests=src
