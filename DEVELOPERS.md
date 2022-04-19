@@ -127,7 +127,7 @@ can be referenced as follows:
     sonarqube-host: ${{secret.sonar-url}}             # host control quality code with sonar - optional
     sonarqube-user: ${{secret.sonar-user}}            # user control quality code with sonar - optional
     sonarqube-token:${{secret.sonar-token}}           # pwd control quality code with sonar - optional
-    sonarqube_client_varsion:                         # client sonar-scanner use. see https://binaries.sonarsource.com/?prefix=Distribution/sonar-scanner-cli/
+    sonarqube_client_version:                         # client sonar-scanner use. see https://binaries.sonarsource.com/?prefix=Distribution/sonar-scanner-cli/
     kiuwan-host:                                      # host control vulnerability code with kiuwan - optional
     kiuwan-user:                                      # user control vulnerability code with kiuwan - optional
     kiuwan-token:                                     # pwd control vulnerability code with kiuwan - optional

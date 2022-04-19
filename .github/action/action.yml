@@ -119,7 +119,6 @@ jobs:
     steps:
       # implement sonar
       # Step 1
-
       - name: Scan
         shell: bash
         env:
