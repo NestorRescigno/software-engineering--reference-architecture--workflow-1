@@ -16,6 +16,21 @@ variable "user_departament" {
   default     = "dev"
 }
 
+# service name
+variable "service_name" {
+  description = "The name of service"
+}
+
+# service name
+variable "service_version" {
+  description = "The version of service"
+}
+
+# project name 
+variable "project_name" {
+  description = "The name of project"
+}
+
 # instance type to create instance
 variable "instance_type" {
   description = "The instance aws type"

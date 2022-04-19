@@ -2,6 +2,8 @@
 # *************           IBERIA L.A.E.                   *************
 # *************       by software Engineering             *************
 # *********************************************************************
+
+
 USER_NAME           = %1
 USER_DEPARTAMENT    = %2
 
@@ -20,10 +22,13 @@ USER                = %9
 SECRET              = %10
 REPOSITORY          = %11 
 
+# product name      
+PROJECT             = %12     
+
 # REF                 = %12
 
 # the path repository is present in var  
-artifact_ref        = "http://${HOST}/nexus/service/local/artifact/maven/redirect?r=${REPOSITORY}&g=${GROUP}&a=${ARTIFACT}&v=${VERSION}&p=${PACKAGE}"
+ARTIFACTREF        = "http://${HOST}/nexus/service/local/artifact/maven/redirect?r=${REPOSITORY}&g=${GROUP}&a=${ARTIFACT}&v=${VERSION}&p=${PACKAGE}"
  
 # return url for lenguar in artifact_ref: terraform have script shell use curl -u by download file
 
@@ -47,25 +52,31 @@ terraform init
 
 # create plan terrafom
 terraform plan 
--var "user_name=${user_name}"
--var "user_departament=${user_departament}" 
--var "instance_type=${instance_type}" 
--var "lenguage_code=${lenguage}"
--var "ref=${artifact_ref}" 
+-var "lenguage_code=${LANGUAGE}"
+-var "user_name=${USER_NAME}"
+-var "user_departament=${USER_DEPARTAMENT}" 
+-var "instance_type=${INSTANCE_TYPE}" 
+-var "ref=${ARTIFACTREF}" 
 -var "package=${PACKAGE}"
--var "artifact_user=${artifact_user}"
--var "artifact_secret=${artifact_secret}"
+-var "project_name=${PROJECT}"
+-var "service_name=${ARTIFACT}"
+-var "service_version=${VERSION}"
+-var "artifact_user=${USER}"
+-var "artifact_secret=${SECRET}"
 
 # apply plan terrafom
 terraform apply -auto-approve
--var "lenguage_code=${lenguage}"
--var "user_name=${user_name}"
--var "user_departament=${user_departament}" 
--var "instance_type=${instance_type}" 
--var "ref=${artifact_ref}" 
+-var "lenguage_code=${LANGUAGE}"
+-var "user_name=${USER_NAME}"
+-var "user_departament=${USER_DEPARTAMENT}" 
+-var "instance_type=${INSTANCE_TYPE}" 
+-var "ref=${ARTIFACTREF}" 
 -var "package=${PACKAGE}"
--var "artifact_user=${artifact_user}"
--var "artifact_secret=${artifact_secret}"
+-var "project_name=${PROJECT}"
+-var "service_name=${ARTIFACT}"
+-var "service_version=${VERSION}"
+-var "artifact_user=${USER}"
+-var "artifact_secret=${SECRET}"
 
 echo "::set-output name=image-id::$(terraform output ami_id)"
 

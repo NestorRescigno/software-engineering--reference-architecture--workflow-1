@@ -49,7 +49,7 @@ resource "aws_instance" "app" {
 
 # resource ami form instance
 resource "aws_ami_from_instance" "app_ami" {
-    name = join("_",[((var.lenguage_code=="java")?"ms":"web"), var.project_name, var.project_version])
+    name = join("-",[((var.lenguage_code=="java")?"ms":"web"), var.project_name, var.service_name, var.service_version, formatdate("YYMMMDDhhmmss", timestamp)])
     source_instance_id = resource.aws_instance.app.id
 }
 

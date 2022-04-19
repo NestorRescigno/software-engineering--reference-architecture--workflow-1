@@ -60,6 +60,7 @@ elif[ ${lenguage} == "angular"] then
 elif[ ${lenguage} == "java"] then
     # run jar spring boot
     cd $JARPATH
+    
     # NOTE OF DEVELOPER: use param remote-name for write file name in output curl and use jar command
     java -jar $(echo curl --remote-name -X GET -u ${user}:${secret} ${artifact}) && clear
     # if param is not exist then use next code and comment other code
