@@ -75,10 +75,17 @@ jobs:
   build:
     name: build
     runs-on: [self-hosted]
+    # setting output step build to use other jobs steps
     outputs:
-      package-name:
-        description: "Package build generator name"
-        value: ${{ steps.package-generator-name.outputs.package-Id }}
+      package-groupid-name:
+        description: "Package build generator Group Id"
+        value: ${{ steps.package-generator-name.outputs.package-group }}
+      package-artifactid-name:
+        description: "Package build generator artifact Id"
+        value: ${{ steps.package-generator-name.outputs.package-artifact }}
+      package-version-name:
+        description: "Package build generator version"
+        value: ${{ steps.package-generator-name.outputs.package-version }}  
     env:
       SCRIPT: ${{ github.workspace }}/.github/action/utils/
       LANGUAGE:
@@ -115,16 +122,22 @@ jobs:
       - name: Scan
         shell: bash
         env:
+          GROUP:  ${{ jobs.build.outputs.package-group }}   # get package name generate front step build
+          ARTIFACT:  ${{ jobs.build.outputs.package-artifact }}   # get package name generate front step build
+          VERSION:  ${{ jobs.build.outputs.package-version }}   # get package name generate front step build
           SONAR_URL: inputs.sonarqube_host
           SONAR_USER: inputs.sonarqube_user
           SONAR_SECRET: inputs.sonarqube_token
         run: |
-        ${{ env.SCRIPT }}/sonar-scanner.sh ${{ env.SONAR_URL }} ${{ env.SONAR_USER }} ${{ env.SONAR_SECRET }} ${{ env.LANGUAGE }} ${{ github.workspace }} ${{ github.ref }}
+        ${{ env.SCRIPT }}/sonar-scanner.sh ${{ env.SONAR_URL }} ${{ env.SONAR_USER }} ${{ env.SONAR_SECRET }} ${{ env.LANGUAGE }} ${{ github.ref }} ${{ github.GROUP }} ${{ github.ARTIFACT }} ${{ github.VERSION }} 
     steps:
       # deploy artifact to registry repository
       - name: Registy Artifact
         shell: bash
         env:
+          GROUP:  ${{ jobs.build.outputs.package-group }}   # get package name generate front step build
+          ARTIFACT:  ${{ jobs.build.outputs.package-artifact }}   # get package name generate front step build
+          VERSION:  ${{ jobs.build.outputs.package-version }}   # get package name generate front step build
           # DNS hasn't content http:// or https://
           REPOSITORY_DNS: inputs.repository_host
           REPOSITORY_USER: inputs.repository_user
@@ -144,7 +157,10 @@ jobs:
       USER:
       DEPARTAMENT:
       LANGUAGE:
-      ARTIFACT:  ${{ jobs.build.outputs.package-name }}   # get package name generate front step build
+      GROUP:  ${{ jobs.build.outputs.package-group }}   # get package name generate front step build
+      ARTIFACT:  ${{ jobs.build.outputs.package-artifact }}   # get package name generate front step build
+      VERSION:  ${{ jobs.build.outputs.package-version }}   # get package name generate front step build
+      REPOSITORY_HOST: inputs.repository_host
       REPOSITORY_USER: inputs.repository_user    # change user to read, now use write
       REPOSITORY_SECRET: inputs.repository_token   # change token to read, now use write
     steps:
@@ -154,8 +170,7 @@ jobs:
         id: image-generator
         shell: bash
         run: |
-        ${{ env.SCRIPT }}/build-image.sh ${{ env.USER }} ${{ env.DEPARTAMENT }} ${{ env.LANGUAGE }} ${{ env.ARTIFACT }} ${{ env.REPOSITORY_USER }} ${{ env.REPOSITORY_SECRET }}
-        
+        ${{ env.SCRIPT }}/build-image.sh ${{ env.USER }} ${{ env.DEPARTAMENT }} ${{ env.LANGUAGE }} ${{ env.GROUP }} ${{ env.ARTIFACT }} ${{ env.VERSION }} ${{ env.REPOSITORY_HOST }} ${{ env.REPOSITORY_USER }} ${{ env.REPOSITORY_SECRET }}   
   deploy:
     name: deploy
     runs-on: [self-hosted]
