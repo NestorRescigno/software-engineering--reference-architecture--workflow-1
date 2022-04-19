@@ -34,7 +34,7 @@ variable "project_name" {
 # instance type to create instance
 variable "instance_type" {
   description = "The instance aws type"
-  default     = "t4g.micro"
+  default     = "t2.micro" 
 }
 
 # reference register 

@@ -20,6 +20,7 @@ ubuntu/image/hvm-ssd/ubuntu-xenial-20.08-amf64-server-**
 * instance_type:    "The instance aws type"
 * lenguage_code:    "lenguage code origin for example java, angular , go , etc."
 > default:          "t4g.micro"
+> t2.micro reduce cost: 1 Gb RAM and 1 CPU. [see more type](https://aws.amazon.com/ec2/instance-types/)  
 * ref:              "The reference register artifact"
 * service_name:     "The name of service"
 * service_version:  "The version of service"
