@@ -119,6 +119,7 @@ jobs:
     steps:
       # implement sonar
       # Step 1
+
       - name: Scan
         shell: bash
         env:
@@ -130,7 +131,7 @@ jobs:
           SONAR_SECRET: inputs.sonarqube-token
           SONAR_CLI: inputs.sonarqube-client-varsion
         run: |
-        ${{ env.SCRIPT }}/sonar-scanner.sh ${{ env.SONAR_URL }} ${{ env.SONAR_USER }} ${{ env.SONAR_SECRET }} ${{ env.LANGUAGE }} ${{ github.ref }} ${{ github.GROUP }} ${{ github.ARTIFACT }} ${{ github.VERSION }} 
+        ${{ env.SCRIPT }}/sonar-scanner.sh ${{ env.SONAR_URL }} ${{ env.SONAR_USER }} ${{ env.SONAR_SECRET }} ${{ env.SONAR_CLI }} ${{ env.LANGUAGE }} ${{ github.ref }} ${{ github.GROUP }} ${{ github.ARTIFACT }} ${{ github.VERSION }} 
     steps:
       # deploy artifact to registry repository
       - name: Registy Artifact
