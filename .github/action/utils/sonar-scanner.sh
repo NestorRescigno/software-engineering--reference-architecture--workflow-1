@@ -15,7 +15,7 @@ ARTIFACTID      = %8
 VERSION         = %9
 
 # if url isn't empty then allow sonar for scanner code
-if [ ${SONAR_URL} != "" && ${{ startsWith(${ REF }, 'refs/heads/main') }} == true ] then  
+if [ ${SONAR_URL} != "" && ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then  
  
   echo "***************************************************"
   echo "Sonar scanner started..."

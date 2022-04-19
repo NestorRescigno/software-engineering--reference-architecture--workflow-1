@@ -121,7 +121,7 @@ jobs:
         id: package-generator-name
         shell: bash
         run: |
-        ${{ env.SCRIPT }}/build.sh ${{ github.workspace }} ${{ env.LANGUAGE }}
+        ${{ env.SCRIPT }}/build.sh ${{ github.workspace }} ${{ env.LANGUAGE }} ${{ github.ref }}
     steps:
       # implement sonar
       # Step 1
