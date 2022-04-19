@@ -136,12 +136,6 @@ can be referenced as follows:
     repository-token:${{secret.nexus-pass}}           # pass registry artifact
 ````
 
-mkdir /downloads/sonarqube -p
-cd /downloads/sonarqube
-wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.2.0.1873-linux.zip
-unzip sonar-scanner-cli-4.2.0.1873-linux.zip
-mv sonar-scanner-4.2.0.1873-linux /opt/sonar-scanner
-
 
 Repository flow 
 ----
