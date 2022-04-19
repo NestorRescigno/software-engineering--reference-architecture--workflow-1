@@ -58,10 +58,14 @@ elif[ ${lenguage} == "angular"] then
     # run service 
     ng serve 
 elif[ ${lenguage} == "java"] then
-    # run spring boot
+    # run jar spring boot
     cd $JARPATH
-    curl -X GET -u ${user}:${secret} ${artifact} && clear
-    java -jar $(echo find . -name *.${package})
+    # NOTE OF DEVELOPER: use param remote-name for write file name in output curl and use jar command
+    java -jar $(echo curl --remote-name -X GET -u ${user}:${secret} ${artifact}) && clear
+    # if param is not exist then use next code and comment other code
+    # curl -X GET -u ${user}:${secret} ${artifact} && clear
+    # java -jar $(echo find . -name *.${package})
+   
 else 
     echo "Not complete process, lenguage code selected isn't implement to script"
 if
