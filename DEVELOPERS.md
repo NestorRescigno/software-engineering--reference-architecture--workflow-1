@@ -124,16 +124,24 @@ can be referenced as follows:
     testIntegration:                                  # run integration test, soap request or rest  default: false
     testIntegration-path:                             # test xml integration path default: '${{ github.workspace }}'
     scancode:                                         # control scan code default: false
-    sonarqube_host: ${{secret.sonar-url}}             # host control quality code with sonar - optional
-    sonarqube_user: ${{secret.sonar-user}}            # user control quality code with sonar - optional
-    sonarqube_token:${{secret.sonar-token}}           # pwd control quality code with sonar - optional
-    kiuwan_host:                                      # host control vulnerability code with kiuwan - optional
-    kiuwan_user:                                      # user control vulnerability code with kiuwan - optional
-    kiuwan_token:                                     # pwd control vulnerability code with kiuwan - optional
-    repository_DNS:  ${{secret.nexus-url}}            # host registry artifact
-    repository_user: ${{secret.nexus-user}}           # user registry artifact
-    repository_token:${{secret.nexus-pass}}           # pass registry artifact
+    sonarqube-host: ${{secret.sonar-url}}             # host control quality code with sonar - optional
+    sonarqube-user: ${{secret.sonar-user}}            # user control quality code with sonar - optional
+    sonarqube-token:${{secret.sonar-token}}           # pwd control quality code with sonar - optional
+    sonarqube_client_varsion:                         # client sonar-scanner use. see https://binaries.sonarsource.com/?prefix=Distribution/sonar-scanner-cli/
+    kiuwan-host:                                      # host control vulnerability code with kiuwan - optional
+    kiuwan-user:                                      # user control vulnerability code with kiuwan - optional
+    kiuwan-token:                                     # pwd control vulnerability code with kiuwan - optional
+    repository-DNS:  ${{secret.nexus-url}}            # host registry artifact
+    repository-user: ${{secret.nexus-user}}           # user registry artifact
+    repository-token:${{secret.nexus-pass}}           # pass registry artifact
 ````
+
+mkdir /downloads/sonarqube -p
+cd /downloads/sonarqube
+wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.2.0.1873-linux.zip
+unzip sonar-scanner-cli-4.2.0.1873-linux.zip
+mv sonar-scanner-4.2.0.1873-linux /opt/sonar-scanner
+
 
 Repository flow 
 ----

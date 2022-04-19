@@ -28,33 +28,36 @@ inputs:
     required: true
     default: false
   # control quality code with sonar
-  sonarqube_host:
+  sonarqube-host:
     description: 'sonar host parameter'
     required: false
-  sonarqube_user:
+  sonarqube-user:
     description: 'sonar user parameter'
     required: false
-  sonarqube_token:
+  sonarqube-token:
     description: 'sonar token parameter'
     required: false
+  sonarqube_client_varsion:
+    description: 'sonar-scanner client version parameter v.r.f.build'
+    required: false
   # control vulnerability code with kiuwan
-  kiuwan_host:
+  kiuwan-host:
     description: 'kiuwan host parameter'
     required: false
-  kiuwan_user:
+  kiuwan-user:
     description: 'kiuwan user parameter'
     required: false
-  kiuwan_token:
+  kiuwan-token:
     description: 'kiuwan token parameter'
     required: false
    # control vulnerability code with kiuwan
-  repository_host:
+  repository-host:
     description: 'repository artifact host parameter'
     required: true
-  repository_user:
+  repository-user:
     description: 'repository artifact user parameter'
     required: true
-  repository_token:
+  repository-token:
     description: 'repository artifact token parameter'
     required: true  
   # terraform module
@@ -116,18 +119,16 @@ jobs:
     steps:
       # implement sonar
       # Step 1
-      - name: Setup sonarqube
-        uses: warchant/setup-sonar-scanner@v3
-      # Step 2
       - name: Scan
         shell: bash
         env:
           GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   # get package name generate front step build
           ARTIFACT:  ${{ jobs.build.outputs.package-artifactid-name }}   # get package name generate front step build
           VERSION:  ${{ jobs.build.outputs.package-version-name }}   # get package name generate front step build
-          SONAR_URL: inputs.sonarqube_host
-          SONAR_USER: inputs.sonarqube_user
-          SONAR_SECRET: inputs.sonarqube_token
+          SONAR_URL: inputs.sonarqube-host
+          SONAR_USER: inputs.sonarqube-user
+          SONAR_SECRET: inputs.sonarqube-token
+          SONAR_CLI: inputs.sonarqube-client-varsion
         run: |
         ${{ env.SCRIPT }}/sonar-scanner.sh ${{ env.SONAR_URL }} ${{ env.SONAR_USER }} ${{ env.SONAR_SECRET }} ${{ env.LANGUAGE }} ${{ github.ref }} ${{ github.GROUP }} ${{ github.ARTIFACT }} ${{ github.VERSION }} 
     steps:
@@ -139,9 +140,9 @@ jobs:
           ARTIFACT:  ${{ jobs.build.outputs.package-artifactid-name }}   # get package name generate front step build
           VERSION:  ${{ jobs.build.outputs.package-version-name }}   # get package name generate front step build
          # DNS hasn't content http:// or https://
-          REPOSITORY_DNS: inputs.repository_host
-          REPOSITORY_USER: inputs.repository_user
-          REPOSITORY_SECRET: inputs.repository_token
+          REPOSITORY_DNS: inputs.repository-host
+          REPOSITORY_USER: inputs.repository-user
+          REPOSITORY_SECRET: inputs.repository-token
         run: |
         # path in script repository nexus is /repository/snapshots/ and /repository/releases/
         ${{ env.SCRIPT }}/nexus-registry.sh ${{ env.REPOSITORY_DNS }} ${{ env.REPOSITORY_USER }} ${{ env.REPOSITORY_SECRET }} ${{ env.LANGUAGE }} ${{ github.ref }}
@@ -160,9 +161,9 @@ jobs:
       GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   # get package name generate front step build
       ARTIFACT:  ${{ jobs.build.outputs.package-artifactid-name }}   # get package name generate front step build
       VERSION:  ${{ jobs.build.outputs.package-version-name }}   # get package name generate front step build
-      REPOSITORY_HOST: inputs.repository_host
-      REPOSITORY_USER: inputs.repository_user    # change user to read, now use write
-      REPOSITORY_SECRET: inputs.repository_token   # change token to read, now use write
+      REPOSITORY_HOST: inputs.repository-host
+      REPOSITORY_USER: inputs.repository-user    # change user to read, now use write
+      REPOSITORY_SECRET: inputs.repository-token   # change token to read, now use write
     steps:
       # build image
       # Step 1

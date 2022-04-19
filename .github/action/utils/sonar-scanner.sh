@@ -8,10 +8,11 @@ SONAR_URL       = %1
 SONAR_USER      = %2
 SONAR_PASS      = %3
 SONAR_LANGUAGE  = %4
-REF             = %5
-GROUPID         = %6
-ARTIFACTID      = %7
-VERSION         = %8
+SONAR_CLI       = %5
+REF             = %6
+GROUPID         = %7
+ARTIFACTID      = %8
+VERSION         = %9
 
 # if url isn't empty then allow sonar for scanner code
 if [ ${SONAR_URL} != "" && ${{ startsWith(${ REF }, 'refs/heads/main') }} = true ] then  
@@ -19,7 +20,19 @@ if [ ${SONAR_URL} != "" && ${{ startsWith(${ REF }, 'refs/heads/main') }} = true
   echo "***************************************************"
   echo "Sonar scanner started..."
   echo "***************************************************"
-
+  
+  # install cliente version
+  apt-get update
+  apt-get install unzip wget nodejs
+  mkdir /downloads/sonarqube -p
+  cd /downloads/sonarqube
+  wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_CLI}-linux.zip
+  unzip sonar-scanner-cli-${SONAR_CLI}-linux.zip
+  mv sonar-scanner-${SONAR_CLI}-linux /opt/sonar-scanner
+  rm -r -f /downloads/sonarqube
+  export PATH="$PATH:/opt/sonar-scanner/bin"
+  # env | grep PATH
+  sonar-scanner -v 
 
   if [${SONAR_LANGUAGE}="java"] then
 
@@ -64,14 +77,3 @@ else
   echo "Sonar scanner is disable..."
   echo "***************************************************"
 fi
-
-# ************************** NOTE OF SEGURITY **********************************
-# ***  sonar-scanner is script client by sonarqube to donwload                **    
-# ***  form                                                                   **      
-# *** https://binaries.sonarsource.com/?prefix=Distribution/sonar-scanner-cli/ *
-# *** move this script on magine runner or create script                      **
-# *** download in workflow process or call direct rest api                    **
-# *** remove @action and reemplace with script download ( more segurity)      **
-# ***  - name: Setup sonarqube                                                **
-# ***  uses: warchant/setup-sonar-scanner@v3                                  **
-# ******************************************************************************
