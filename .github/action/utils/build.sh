@@ -11,13 +11,14 @@ then
   echo "Artifact java Building with maven"
   echo "***************************************************"
 
-  if [ ${{ startsWith(github.ref, 'refs/heads/main') }} = true ]
-  then 
-    #pom.xml maven compile, it's need present in root repository.  
+  if [ ${{ startsWith(github.ref, 'refs/heads/main') }} = true ] then 
+  
     mvn -B package --file ${ workspace }/pom.xml    
-  else
-    #pom.xml maven compile, it's need present in root repository.
+  
+  elif [ ${{ startsWith(github.ref, 'refs/heads/develop') }} = true ]
+   
     mvn -B package --file ${ workspace }/pom.xml    
+  
   fi
 
   # get information from pom.xml and create package name 
@@ -34,13 +35,14 @@ then
   echo "Artifact Angular Building"
   echo "***************************************************"
   
-   if [ ${{ startsWith(github.ref, 'refs/heads/main') }} = true ]
-  then 
-    # not implement
-    ng build ${ workspace }/package.json
-  else
-    # not implemen, in other reference may be have other build action commands
-    ng build ${ workspace }/package.json
+   if [ ${{ startsWith(github.ref, 'refs/heads/main') }} = true ] then 
+
+    ng build --Prod ${ workspace }/package.json  # implement build configure production --Prod
+
+  elif [ ${{ startsWith(github.ref, 'refs/heads/develop') }} = true ]
+
+    ng build ${ workspace }/package.json 
+
   fi
   
   # get information from package.json and create package name 
