@@ -20,6 +20,8 @@ USER                = %9
 SECRET              = %10
 REPOSITORY          = %11 
 
+# REF                 = %12
+
 # the path repository is present in var  
 artifact_ref        = "http://${HOST}/nexus/service/local/artifact/maven/redirect?r=${REPOSITORY}&g=${GROUP}&a=${ARTIFACT}&v=${VERSION}&p=${PACKAGE}"
  
@@ -29,7 +31,12 @@ echo "***************************************************"
 echo "Creating image"
 echo "***************************************************"
 
-cd ${{ github.workspace }}/terraform/module/aws-ec2-image-iberia
+# pull request to develop event create instance in aws but it don't registry image of snapshot
+# if [ ${SONAR_URL} != "" && ${{ startsWith(${ REF }, 'refs/heads/main') }} == true ] then  
+     cd ${{ github.workspace }}/terraform/module/aws-ec2-image-iberia
+# else
+#    cd ${{ github.workspace }}/terraform/module/aws-ec2-instance-iberia
+# if
 
 echo "***************************************************"
 echo "Deploying with terraform..."
