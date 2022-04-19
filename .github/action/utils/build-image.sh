@@ -12,10 +12,24 @@ artifact_host       = %8
 artifact_user       = %9
 artifact_secret     = %10
 
+# setting contants
+PATH-SNAPSHOTS      = "/repository/snapshots/"
+PATH-RELEASE        = "/repository/releases/"
+PATH-NPM-PRIVATE    = "/npm-private/release/" 
+
 if [ ${lenguage} == "java"] then 
-    artifact_ref        = "http://%8/nexus/service/local/artifact/maven/redirect?r=Repo_Name&g=%5&a=%6&v=%7&p=jar"
+    # change repository by pull request event 
+    if [ ${{ startsWith(${ REF }, 'refs/heads/develop') }} == true ] then
+        artifact_ref        = "http://%8/nexus/service/local/artifact/maven/redirect?r=${PATH-SNAPSHOTS}&g=%5&a=%6&v=%7&p=jar"
+    elif [ ${{ startsWith(${ REF }, 'refs/heads/main') }} == true ] then
+        artifact_ref        = "http://%8/nexus/service/local/artifact/maven/redirect?r=${PATH-RELEASE}&g=%5&a=%6&v=%7&p=jar"
+    if
 elif [ ${lenguage} == "angular"] then 
-    artifact_ref        = "http://%8/nexus/service/local/artifact/maven/redirect?r=Repo_Name&g=%5&a=%6&v=%7&p=zip"
+    # use main
+    if [ ${{ startsWith(${ REF }, 'refs/heads/main') }} == true ] then
+        artifact_ref        = "http://%8/nexus/service/local/artifact/maven/redirect?r=${PATH-NPM-PRIVATE}&g=%5&a=%6&v=%7&p=zip"
+    if
+
 if
 
 # return url for lenguar in artifact_ref: terraform have script shell use curl -u by download file
