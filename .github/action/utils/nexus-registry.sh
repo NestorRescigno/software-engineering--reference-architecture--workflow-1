@@ -32,6 +32,17 @@ if [${REPOSITORY_URL} != ""] then
             SNAPSHOTS_REPOSITORY_URL = ${ REPOSITORY_URL } + ${PATH-SNAPSHOTS}
             mvn deploy -DaltSnapshotDeploymentRepository=ibis-snapshots::default::${ SNAPSHOTS_REPOSITORY_URL } 
             # --batch-mode
+
+             # example deploy file with maven
+             # mvn deploy:deploy-file 
+             # -DgroupId=com.somecompany 
+             # -DartifactId=project 
+             # -Dversion=1.0.0 
+             # -DgeneratePom=true 
+             # -Dpackaging=jar 
+             # -DrepositoryId=nexus 
+             # -Durl=http://localhost:8081/repository/maven-releases 
+             # -Dfile=target/project-1.0.0.jar
             
             echo "***************************************************"
             echo "upload complete"
@@ -45,6 +56,18 @@ if [${REPOSITORY_URL} != ""] then
             mvn deploy -DaltSnapshotDeploymentRepository=ibis-release::default::${ RELEASE_REPOSITORY_URL } 
             # --batch-mode
             
+             # example deploy file with maven
+             # mvn deploy:deploy-file 
+             # -DgroupId=com.somecompany 
+             # -DartifactId=project 
+             # -Dversion=1.0.0 
+             # -DgeneratePom=true 
+             # -Dpackaging=jar 
+             # -DrepositoryId=nexus 
+             # -Durl=http://localhost:8081/repository/maven-releases 
+             # -Dfile=target/project-1.0.0.jar
+            
+
             echo "***************************************************"
             echo "upload complete"
             echo "***************************************************"
