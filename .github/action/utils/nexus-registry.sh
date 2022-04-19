@@ -6,10 +6,13 @@
 if [${REPOSITORY_URL} != ""] then
 
     # setting variable
-    REPOSITORY_URL  ="https://"+%2+":"+%3+"@"+%1      # DNS can't content http or https, is necesary certificate 
+    REPOSITORY_URL  ="https://%2:%3@%1"      # DNS can't content http or https, is necesary certificate 
     LANGUAGE        =%4
     REF             =%5
-    
+    GROUPID         =%6
+    ARTIFACTID      =%7
+    VERSION         =%8
+    PACKAGE-TYPE    =%9
     # setting contants
     PATH-SNAPSHOTS      = "/repository/snapshots/"
     PATH-RELEASE        = "/repository/releases/"
@@ -30,20 +33,19 @@ if [${REPOSITORY_URL} != ""] then
             echo "***************************************************"
             
             SNAPSHOTS_REPOSITORY_URL = ${ REPOSITORY_URL } + ${PATH-SNAPSHOTS}
-            mvn deploy -DaltSnapshotDeploymentRepository=ibis-snapshots::default::${ SNAPSHOTS_REPOSITORY_URL } 
             # --batch-mode
-
-             # example deploy file with maven
-             # mvn deploy:deploy-file 
-             # -DgroupId=com.somecompany 
-             # -DartifactId=project 
-             # -Dversion=1.0.0 
-             # -DgeneratePom=true 
-             # -Dpackaging=jar 
-             # -DrepositoryId=nexus 
-             # -Durl=http://localhost:8081/repository/maven-releases 
-             # -Dfile=target/project-1.0.0.jar
+            # example deploy file with maven
+            mvn deploy:deploy-file 
+            -DgroupId=${GROUPID}
+            -DartifactId=${ARTIFACTID} 
+            -Dversion=${VERSION}
+            -DgeneratePom=true 
+            -Dpackaging=${PACKAGE-TYPE} 
+            # -DrepositoryId=nexus 
+            -Durl=${ SNAPSHOTS_REPOSITORY_URL }
+            -Dfile=target/${ARTIFACTID}-${VERSION}.${PACKAGE-TYPE}
             
+            echo "::set-output name=registry-repository-id::$(echo ${PATH-SNAPSHOTS})" 
             echo "***************************************************"
             echo "upload complete"
             echo "***************************************************"
@@ -53,21 +55,21 @@ if [${REPOSITORY_URL} != ""] then
             echo "***************************************************"
             
             RELEASE_REPOSITORY_URL = ${ REPOSITORY_URL } + ${PATH-RELEASE}
-            mvn deploy -DaltSnapshotDeploymentRepository=ibis-release::default::${ RELEASE_REPOSITORY_URL } 
+            # mvn deploy -DaltSnapshotDeploymentRepository=ibis-release::default::${ RELEASE_REPOSITORY_URL } 
             # --batch-mode
             
-             # example deploy file with maven
-             # mvn deploy:deploy-file 
-             # -DgroupId=com.somecompany 
-             # -DartifactId=project 
-             # -Dversion=1.0.0 
-             # -DgeneratePom=true 
-             # -Dpackaging=jar 
-             # -DrepositoryId=nexus 
-             # -Durl=http://localhost:8081/repository/maven-releases 
-             # -Dfile=target/project-1.0.0.jar
+            # example deploy file with maven
+            mvn deploy:deploy-file 
+            -DgroupId=${GROUPID}
+            -DartifactId=${ARTIFACTID} 
+            -Dversion=${VERSION}
+            -DgeneratePom=true 
+            -Dpackaging=${PACKAGE-TYPE} 
+            # -DrepositoryId=nexus 
+            -Durl=${ RELEASE_REPOSITORY_URL }
+            -Dfile=target/${ARTIFACTID}-${VERSION}.${PACKAGE-TYPE}
             
-
+            echo "::set-output name=registry-repository-id::$(echo ${PATH-RELEASE})" 
             echo "***************************************************"
             echo "upload complete"
             echo "***************************************************"
@@ -99,6 +101,7 @@ if [${REPOSITORY_URL} != ""] then
         # run npm publish
         npm publish --registry "${NPM_REPOSITORY_URL}"   # Nexus configure npm proxy and private registry.
 
+        echo "::set-output name=registry-repository-id::$(echo ${PATH-NPM-PRIVATE})" 
         echo "***************************************************"
         echo "upload complete"
         echo "***************************************************"

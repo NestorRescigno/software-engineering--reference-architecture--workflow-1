@@ -2,36 +2,27 @@
 # *************           IBERIA L.A.E.                   *************
 # *************       by software Engineering             *************
 # *********************************************************************
-user_name           = %1
-user_departament    = %2
-instance_type       = %3 
-lenguage            = %4  
+USER_NAME           = %1
+USER_DEPARTAMENT    = %2
+
+# INSTANCE_TYPE     = %3 
+LANGUAGE            = %3
+
+# artifact param
+GROUP               = %4     
+ARTIFACT            = %5
+VERSION             = %6
+PACKAGE             = %7
 
 # get artifact image of differente type for lenguage
-artifact_host       = %8
-artifact_user       = %9
-artifact_secret     = %10
+HOST                = %8
+USER                = %9
+SECRET              = %10
+REPOSITORY          = %11 
 
-# setting contants
-PATH-SNAPSHOTS      = "/repository/snapshots/"
-PATH-RELEASE        = "/repository/releases/"
-PATH-NPM-PRIVATE    = "/npm-private/release/" 
-
-if [ ${lenguage} == "java"] then 
-    # change repository by pull request event 
-    if [ ${{ startsWith(${ REF }, 'refs/heads/develop') }} == true ] then
-        artifact_ref        = "http://%8/nexus/service/local/artifact/maven/redirect?r=${PATH-SNAPSHOTS}&g=%5&a=%6&v=%7&p=jar"
-    elif [ ${{ startsWith(${ REF }, 'refs/heads/main') }} == true ] then
-        artifact_ref        = "http://%8/nexus/service/local/artifact/maven/redirect?r=${PATH-RELEASE}&g=%5&a=%6&v=%7&p=jar"
-    if
-elif [ ${lenguage} == "angular"] then 
-    # use main
-    if [ ${{ startsWith(${ REF }, 'refs/heads/main') }} == true ] then
-        artifact_ref        = "http://%8/nexus/service/local/artifact/maven/redirect?r=${PATH-NPM-PRIVATE}&g=%5&a=%6&v=%7&p=zip"
-    if
-
-if
-
+# the path repository is present in var  
+artifact_ref        = "http://${HOST}/nexus/service/local/artifact/maven/redirect?r=${REPOSITORY}&g=${GROUP}&a=${ARTIFACT}&v=${VERSION}&p=${PACKAGE}"
+ 
 # return url for lenguar in artifact_ref: terraform have script shell use curl -u by download file
 
 echo "***************************************************"

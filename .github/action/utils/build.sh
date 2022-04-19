@@ -15,11 +15,11 @@ then
 
   if [ ${{ startsWith(github.ref, 'refs/heads/main') }} == true ] then 
   
-    mvn -B package --file ${ workspace }/pom.xml    
+    mvn -B package --batch-mode --file ${ workspace }/pom.xml
   
   elif [ ${{ startsWith(github.ref, 'refs/heads/develop') }} == true ]
    
-    mvn -B package --file ${ workspace }/pom.xml    
+    mvn -B package --batch-mode --file ${ workspace }/pom.xml
   
   fi
 
@@ -27,6 +27,7 @@ then
   echo "::set-output name=package-group::$(sed -n 's,.*<groupId>\(.*\)</groupId>.*,\1,p' ${ WORKSPACE }/pom.xml | head -1)"  
   echo "::set-output name=package-artifact::$(sed -n 's,.*<artifactId>\(.*\)</artifactId>.*,\1,p' ${ WORKSPACE }/pom.xml | head -1)"  
   echo "::set-output name=package-version::$(sed -n 's,.*<version>\(.*\)</version>.*,\1,p' ${ WORKSPACE }/pom.xml | head -1)"  
+  echo "::set-output name=package-type-id::$(sed -n 's,.*<packaging>\(.*\)</packaging>.*,\1,p' ${ WORKSPACE }/pom.xml | head -1)"
 
   echo "***************************************************"
   echo "End Building"
@@ -50,6 +51,12 @@ then
   # get information from package.json and create package name 
   echo "::set-output name=package-artifact::$(sed -n 's,.*"name":"\([^"]*\)".*,\1,p' ${ WORKSPACE }/package.json)"  
   echo "::set-output name=package-version::$(sed -n 's,.*"version":"\([^"]*\)".*,\1,p' ${ WORKSPACE }/package.json)"  
+  
+  # node deploy is simple package to web /dist. so it isn't library, check packaging type angular
+  package = "zip"
+  echo "::set-output name=package-type-id::$(echo ${package})"
+
+
 
   echo "***************************************************"
   echo "End Angular Building"

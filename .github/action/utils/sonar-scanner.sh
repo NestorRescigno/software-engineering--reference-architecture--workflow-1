@@ -21,7 +21,7 @@ if [ ${SONAR_URL} != "" && ${{ startsWith(${ REF }, 'refs/heads/main') }} == tru
   echo "Sonar scanner started..."
   echo "***************************************************"
   
-  # install cliente version
+  # install client version
   apt-get update
   apt-get install unzip wget nodejs
   mkdir /downloads/sonarqube -p

@@ -88,7 +88,13 @@ jobs:
         value: ${{ steps.package-generator-name.outputs.package-artifact }}
       package-version-name:
         description: "Package build generator version"
-        value: ${{ steps.package-generator-name.outputs.package-version }}  
+        value: ${{ steps.package-generator-name.outputs.package-version }} 
+      package-type-name:
+        description: "package type example: jar, war, zip"
+        value: ${{ steps.package-generator-name.outputs.package-type-id }}
+      package-repository:
+        description: "package repository path"
+        value: ${{ steps.registry-repository.outputs.registry-repository-id }}    
     env:
       SCRIPT: ${{ github.workspace }}/.github/action/utils/
       LANGUAGE:
@@ -122,9 +128,10 @@ jobs:
       - name: Scan
         shell: bash
         env:
-          GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   # get package name generate front step build
-          ARTIFACT:  ${{ jobs.build.outputs.package-artifactid-name }}   # get package name generate front step build
-          VERSION:  ${{ jobs.build.outputs.package-version-name }}   # get package name generate front step build
+          GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   # get package name generate from step build
+          ARTIFACT:  ${{ jobs.build.outputs.package-artifactid-name }}   # get package name generate from step build
+          VERSION:  ${{ jobs.build.outputs.package-version-name }}   # get package name generate from step build
+          PACKAGE: ${{ jobs.build.outputs.package-type-name }} # get package type extention from step build
           SONAR_URL: inputs.sonarqube-host
           SONAR_USER: inputs.sonarqube-user
           SONAR_SECRET: inputs.sonarqube-token
@@ -133,19 +140,21 @@ jobs:
         ${{ env.SCRIPT }}/sonar-scanner.sh ${{ env.SONAR_URL }} ${{ env.SONAR_USER }} ${{ env.SONAR_SECRET }} ${{ env.SONAR_CLI }} ${{ env.LANGUAGE }} ${{ github.ref }} ${{ github.GROUP }} ${{ github.ARTIFACT }} ${{ github.VERSION }} 
     steps:
       # deploy artifact to registry repository
-      - name: Registy Artifact
+      - name: Registy artifact
+        id: registry-repository
         shell: bash
         env:
-          GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   # get package name generate front step build
-          ARTIFACT:  ${{ jobs.build.outputs.package-artifactid-name }}   # get package name generate front step build
-          VERSION:  ${{ jobs.build.outputs.package-version-name }}   # get package name generate front step build
-         # DNS hasn't content http:// or https://
+          GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   # get package name generate from step build
+          ARTIFACT:  ${{ jobs.build.outputs.package-artifactid-name }}   # get package name generate from step build
+          VERSION:  ${{ jobs.build.outputs.package-version-name }}   # get package name generate from step build
+          PACKAGE: ${{ jobs.build.outputs.package-type-name }} # get package type extention from step build
+          # DNS hasn't content http:// or https://
           REPOSITORY_DNS: inputs.repository-host
           REPOSITORY_USER: inputs.repository-user
           REPOSITORY_SECRET: inputs.repository-token
         run: |
-        # path in script repository nexus is /repository/snapshots/ and /repository/releases/
-        ${{ env.SCRIPT }}/nexus-registry.sh ${{ env.REPOSITORY_DNS }} ${{ env.REPOSITORY_USER }} ${{ env.REPOSITORY_SECRET }} ${{ env.LANGUAGE }} ${{ github.ref }}
+        # path in script repository nexus defaults is /repository/snapshots/ and /repository/releases/ for java and npm-private for angular node package
+        ${{ env.SCRIPT }}/nexus-registry.sh ${{ env.REPOSITORY_DNS }} ${{ env.REPOSITORY_USER }} ${{ env.REPOSITORY_SECRET }} ${{ env.LANGUAGE }} ${{ github.ref }} ${{GROUP}} ${{ARTIFACT}} ${{VERSION}}
   image:
     name: image
     runs-on: [self-hosted]
@@ -158,9 +167,11 @@ jobs:
       USER:
       DEPARTAMENT:
       LANGUAGE:
-      GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   # get package name generate front step build
-      ARTIFACT:  ${{ jobs.build.outputs.package-artifactid-name }}   # get package name generate front step build
-      VERSION:  ${{ jobs.build.outputs.package-version-name }}   # get package name generate front step build
+      GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   # get package name generate from step build
+      ARTIFACT:  ${{ jobs.build.outputs.package-artifactid-name }}   # get package name generate fromstep build
+      VERSION:  ${{ jobs.build.outputs.package-version-name }}   # get package name generate from step build
+      PACKAGE: ${{ jobs.build.outputs.package-type-name }} # get package type extention from step build
+      REPOSITORY_PATH:  ${{ jobs.build.outputs.package-repository }}   # get path repository package generate font step build
       REPOSITORY_HOST: inputs.repository-host
       REPOSITORY_USER: inputs.repository-user    # change user to read, now use write
       REPOSITORY_SECRET: inputs.repository-token   # change token to read, now use write
@@ -171,7 +182,7 @@ jobs:
         id: image-generator
         shell: bash
         run: |
-        ${{ env.SCRIPT }}/build-image.sh ${{ env.USER }} ${{ env.DEPARTAMENT }} ${{ env.LANGUAGE }} ${{ env.GROUP }} ${{ env.ARTIFACT }} ${{ env.VERSION }} ${{ env.REPOSITORY_HOST }} ${{ env.REPOSITORY_USER }} ${{ env.REPOSITORY_SECRET }}   
+        ${{ env.SCRIPT }}/build-image.sh ${{ env.USER }} ${{ env.DEPARTAMENT }} ${{ env.LANGUAGE }} ${{ env.GROUP }} ${{ env.ARTIFACT }} ${{ env.VERSION }} ${{ env.PACKAGE}} ${{ env.REPOSITORY_HOST }} ${{ env.REPOSITORY_USER }} ${{ env.REPOSITORY_SECRET }}  ${{ env.REPOSITORY_PATH }}  
   deploy:
     name: deploy
     runs-on: [self-hosted]
