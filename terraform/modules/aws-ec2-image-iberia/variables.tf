@@ -27,6 +27,11 @@ variable "ref" {
   description = "The reference register artifact. example: Nexus"
 }
 
+# reference register 
+variable "package" {
+  description = "The reference type of package artifact. example: jar"
+}
+
 # user read to reference register 
 variable "artifact_user" {
   description = "the user access to read register artifact. example: Nexus"

@@ -21,6 +21,7 @@ ubuntu/image/hvm-ssd/ubuntu-xenial-20.08-amf64-server-**
 * lenguage_code: "lenguage code origin for example java, angular , go , etc."
 > default: "t4g.micro"
 * ref :"The reference register artifact"
+* package : "
 * artifact_user:"The user access to read register artifact. example: Nexus"
 * artifact_secret :"The secret key access to read register artifact. example: Nexus"
 

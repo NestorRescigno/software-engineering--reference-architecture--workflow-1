@@ -168,7 +168,7 @@ jobs:
         value: ${{ steps.image-generator.outputs.image-id }}
     env:
       SCRIPT: ${{ github.workspace }}/.github/action/utils/
-      USER:
+      USER:    
       DEPARTAMENT:
       LANGUAGE:
       GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   # get package name generate from step build
