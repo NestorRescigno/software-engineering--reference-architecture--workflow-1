@@ -32,7 +32,7 @@ echo "Creating image"
 echo "***************************************************"
 
 # pull request to develop event create instance in aws but it don't registry image of snapshot
-# if [ ${SONAR_URL} != "" && ${{ startsWith(${ REF }, 'refs/heads/main') }} == true ] then  
+# if [ ${{ startsWith(${ REF }, 'refs/heads/main') }} == true ] then  
      cd ${{ github.workspace }}/terraform/module/aws-ec2-image-iberia
 # else
 #    cd ${{ github.workspace }}/terraform/module/aws-ec2-instance-iberia
