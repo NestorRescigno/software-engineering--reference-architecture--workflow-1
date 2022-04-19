@@ -121,13 +121,14 @@ can be referenced as follows:
 
 - uses: ./.github/action/action.yml@v1.0
   with:
+    project-name                                      # Product global name example: 'bestpratices' - require true, use in dns name  
     testIntegration:                                  # run integration test, soap request or rest  default: false
     testIntegration-path:                             # test xml integration path default: '${{ github.workspace }}'
     scancode:                                         # control scan code default: false
     sonarqube-host: ${{secret.sonar-url}}             # host control quality code with sonar - optional
     sonarqube-user: ${{secret.sonar-user}}            # user control quality code with sonar - optional
     sonarqube-token:${{secret.sonar-token}}           # pwd control quality code with sonar - optional
-    sonarqube_client_version:                         # client sonar-scanner use. see https://binaries.sonarsource.com/?prefix=Distribution/sonar-scanner-cli/
+    sonarqube-client-version:                         # client sonar-scanner use. see https://binaries.sonarsource.com/?prefix=Distribution/sonar-scanner-cli/
     kiuwan-host:                                      # host control vulnerability code with kiuwan - optional
     kiuwan-user:                                      # user control vulnerability code with kiuwan - optional
     kiuwan-token:                                     # pwd control vulnerability code with kiuwan - optional

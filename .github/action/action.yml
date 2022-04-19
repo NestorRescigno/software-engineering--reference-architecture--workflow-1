@@ -13,6 +13,10 @@ name: CICD
 description: 'continuos integration'
 # setting input
 inputs:
+  # project name, eguals to product name example ancillaries
+  project-name:
+    description: 'project global name'
+    required: true
   # ejecute integration test, soap request or rest
   testIntegration:
     description: 'active test integration'
@@ -37,7 +41,7 @@ inputs:
   sonarqube-token:
     description: 'sonar token parameter'
     required: false
-  sonarqube_client_version:
+  sonarqube-client-version:
     description: 'sonar-scanner client version parameter v.r.f.build'
     required: false
   # control vulnerability code with kiuwan
@@ -189,18 +193,16 @@ jobs:
     env:
       SCRIPT: ${{ github.workspace }}/.github/action/utils/
       TEST: inputs.testIntegration
-      LANGUAGE:
+      LANGUAGE: 
       AMI_ID: ${{ jobs.image.outputs.image-number-id }}
+      PROJECT:  ${{ inputs.project-name }}   # get input name, this name use in dns site and global value. project = product business
+      AMI_VERSION:  ${{ jobs.build.outputs.package-version-name }}   # get package version generate from step build
     steps:
       # instance software.
       # Step 1
       - name: Deploy
         shell: bash
         run: |
-        # NOTE OF DEVELOP
-        # ${{ env.PROJECT }} from file configuration
-        # ${{ env.AMI_VERSION }} from pom version
-         
         ${{ env.SCRIPT }}/terraform-deploy.sh ${{ env.PROJECT }} ${{ env.AMI_VERSION }} ${{ env.AMI_ID }} 
       # Step 2
       - name: Health Check
