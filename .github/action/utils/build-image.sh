@@ -52,6 +52,7 @@ terraform plan
 -var "instance_type=${instance_type}" 
 -var "lenguage_code=${lenguage}"
 -var "ref=${artifact_ref}" 
+-var "package=${PACKAGE}"
 -var "artifact_user=${artifact_user}"
 -var "artifact_secret=${artifact_secret}"
 
@@ -62,6 +63,7 @@ terraform apply -auto-approve
 -var "user_departament=${user_departament}" 
 -var "instance_type=${instance_type}" 
 -var "ref=${artifact_ref}" 
+-var "package=${PACKAGE}"
 -var "artifact_user=${artifact_user}"
 -var "artifact_secret=${artifact_secret}"
 

@@ -41,6 +41,7 @@ resource "aws_instance" "app" {
         name = var.user_name, 
         lenguage= var.lenguage_code,
         artifact= var.ref , 
+        package = var.package , 
         user   = var.artifact_user,
         secret = var.artifact_secret
       })

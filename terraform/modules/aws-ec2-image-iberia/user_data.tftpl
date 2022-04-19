@@ -61,7 +61,7 @@ elif[ ${lenguage} == "java"] then
     # run spring boot
     cd $JARPATH
     curl -X GET -u ${user}:${secret} ${artifact} && clear
-    java -jar 
+    java -jar $(echo find . -name *.${package})
 else 
     echo "Not complete process, lenguage code selected isn't implement to script"
 if
