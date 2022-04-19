@@ -187,7 +187,7 @@ jobs:
         id: image-generator
         shell: bash
         run: |
-        ${{ env.SCRIPT }}/build-image.sh ${{ env.USER }} ${{ env.DEPARTAMENT }} ${{ env.LANGUAGE }} ${{ env.GROUP }} ${{ env.ARTIFACT }} ${{ env.VERSION }} ${{ env.PACKAGE}} ${{ env.REPOSITORY_HOST }} ${{ env.REPOSITORY_USER }} ${{ env.REPOSITORY_SECRET }} ${{ env.REPOSITORY_PATH }} ${{ env.PROJECT }} 
+        ${{ env.SCRIPT }}/build-image.sh ${{ env.USER }} ${{ env.DEPARTAMENT }} ${{ env.LANGUAGE }} ${{ env.GROUP }} ${{ env.ARTIFACT }} ${{ env.VERSION }} ${{ env.PACKAGE}} ${{ env.REPOSITORY_HOST }} ${{ env.REPOSITORY_USER }} ${{ env.REPOSITORY_SECRET }} ${{ env.REPOSITORY_PATH }} ${{ env.PROJECT }} ${{ github.workspace }}
   deploy:
     name: deploy
     runs-on: [self-hosted]
