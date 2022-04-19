@@ -17,6 +17,11 @@ inputs:
   project-name:
     description: 'project global name'
     required: true
+  # project name, eguals to product name example ancillaries
+  lenguage-code:
+    description: 'lenguage  programming code for example: java or angular'
+    required: true
+    default: 'java'  
   # ejecute integration test, soap request or rest
   testIntegration:
     description: 'active test integration'
@@ -64,13 +69,6 @@ inputs:
   repository-token:
     description: 'repository artifact token parameter'
     required: true  
-  # terraform module
-  terraform-version:
-    description: 'terraform module'
-    required: false
-  terraform-module-path:
-    description: 'path modules terraform'
-    required: false
 
 on: [pull_request]
   pull_request:
@@ -101,7 +99,7 @@ jobs:
         value: ${{ steps.registry-repository.outputs.registry-repository-id }}    
     env:
       SCRIPT: ${{ github.workspace }}/.github/action/utils/
-      LANGUAGE:
+      LANGUAGE: ${{ inputs.lenguage-code }}
     steps:
       # Nota: 
       # Remplace action's with custom shell script to future
@@ -168,9 +166,7 @@ jobs:
         value: ${{ steps.image-generator.outputs.image-id }}
     env:
       SCRIPT: ${{ github.workspace }}/.github/action/utils/
-      USER:    
-      DEPARTAMENT:
-      LANGUAGE:
+      LANGUAGE: ${{ inputs.lenguage-code }}
       PROJECT:  ${{ inputs.project-name }}   # get input name, this name use in dns site and global value. project = product business
       GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   # get package name generate from step build
       ARTIFACT:  ${{ jobs.build.outputs.package-artifactid-name }}   # get package name generate fromstep build
@@ -187,14 +183,14 @@ jobs:
         id: image-generator
         shell: bash
         run: |
-        ${{ env.SCRIPT }}/build-image.sh ${{ env.USER }} ${{ env.DEPARTAMENT }} ${{ env.LANGUAGE }} ${{ env.GROUP }} ${{ env.ARTIFACT }} ${{ env.VERSION }} ${{ env.PACKAGE}} ${{ env.REPOSITORY_HOST }} ${{ env.REPOSITORY_USER }} ${{ env.REPOSITORY_SECRET }} ${{ env.REPOSITORY_PATH }} ${{ env.PROJECT }} ${{ github.workspace }}
+        ${{ env.SCRIPT }}/build-image.sh ${{ env.LANGUAGE }} ${{ env.GROUP }} ${{ env.ARTIFACT }} ${{ env.VERSION }} ${{ env.PACKAGE}} ${{ env.REPOSITORY_HOST }} ${{ env.REPOSITORY_USER }} ${{ env.REPOSITORY_SECRET }} ${{ env.REPOSITORY_PATH }} ${{ env.PROJECT }} ${{ github.workspace }}
   deploy:
     name: deploy
     runs-on: [self-hosted]
     env:
       SCRIPT: ${{ github.workspace }}/.github/action/utils/
       TEST: inputs.testIntegration
-      LANGUAGE: 
+      LANGUAGE: ${{ inputs.lenguage-code }}
       AMI_ID: ${{ jobs.image.outputs.image-number-id }}
       PROJECT:  ${{ inputs.project-name }}   # get input name, this name use in dns site and global value. project = product business
       AMI_VERSION:  ${{ jobs.build.outputs.package-version-name }}   # get package version generate from step build

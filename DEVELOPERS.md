@@ -121,7 +121,8 @@ can be referenced as follows:
 
 - uses: ./.github/action/action.yml@v1.0
   with:
-    project-name                                      # Product global name example: 'bestpratices' - require true, use in dns name  
+    project-name:                                     # Product global name example: 'bestpratices' - require true, use in dns name
+    lenguage-code:                                    # lenguage programming code for example: java or angular - require true  
     testIntegration:                                  # run integration test, soap request or rest  default: false
     testIntegration-path:                             # test xml integration path default: '${{ github.workspace }}'
     scancode:                                         # control scan code default: false

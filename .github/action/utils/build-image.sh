@@ -4,28 +4,29 @@
 # *********************************************************************
 
 
-USER_NAME           = %1
-USER_DEPARTAMENT    = %2
+# USER_NAME           = %1
+# USER_DEPARTAMENT    = %2
 
-# INSTANCE_TYPE     = %3 
-LANGUAGE            = %3
+# INSTANCE_TYPE     = %3
+
+LANGUAGE            = %1
 
 # artifact param
-GROUP               = %4     
-ARTIFACT            = %5
-VERSION             = %6
-PACKAGE             = %7
+GROUP               = %2     
+ARTIFACT            = %3
+VERSION             = %4
+PACKAGE             = %5
 
 # get artifact image of differente type for lenguage
-HOST                = %8
-USER                = %9
-SECRET              = %10
-REPOSITORY          = %11 
+HOST                = %7
+USER                = %8
+SECRET              = %9
+REPOSITORY          = %10 
 
 # product name      
-PROJECT             = %12     
+PROJECT             = %11     
 
-workspace           = %13
+workspace           = %12
 
 # the path repository is present in var  
 ARTIFACTREF        = "http://${HOST}/nexus/service/local/artifact/maven/redirect?r=${REPOSITORY}&g=${GROUP}&a=${ARTIFACT}&v=${VERSION}&p=${PACKAGE}"
@@ -53,8 +54,8 @@ terraform init
 # create plan terrafom
 terraform plan 
 -var "lenguage_code=${LANGUAGE}"
--var "user_name=${USER_NAME}"
--var "user_departament=${USER_DEPARTAMENT}" 
+# -var "user_name=${USER_NAME}"
+# -var "user_departament=${USER_DEPARTAMENT}" 
 -var "instance_type=${INSTANCE_TYPE}" 
 -var "ref=${ARTIFACTREF}" 
 -var "package=${PACKAGE}"
@@ -67,8 +68,8 @@ terraform plan
 # apply plan terrafom
 terraform apply -auto-approve
 -var "lenguage_code=${LANGUAGE}"
--var "user_name=${USER_NAME}"
--var "user_departament=${USER_DEPARTAMENT}" 
+# -var "user_name=${USER_NAME}"
+# -var "user_departament=${USER_DEPARTAMENT}" 
 -var "instance_type=${INSTANCE_TYPE}" 
 -var "ref=${ARTIFACTREF}" 
 -var "package=${PACKAGE}"
