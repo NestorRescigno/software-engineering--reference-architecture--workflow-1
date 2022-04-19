@@ -10,9 +10,18 @@ then
   echo "***************************************************"
   echo "Artifact java Building with maven"
   echo "***************************************************"
+  
+  # get information from pom.xml and create package name 
+  GROUPID=$(sed -n 's,.*<groupId>\(.*\)</groupId>.*,\1,p' ${ WORKSPACE }/pom.xml | head -1)
+  ARTIFACTID=$(sed -n 's,.*<artifactId>\(.*\)</artifactId>.*,\1,p' ${ WORKSPACE }/pom.xml | head -1)
+  VERSION=$(sed -n 's,.*<version>\(.*\)</version>.*,\1,p' ${ WORKSPACE }/pom.xml | head -1)
+  PACKAGE = "${ARTIFACTID}.${VERSION}"
+  
+  echo "::set-output name=package-Id::$(echo $PACKAGE)"  
+
   if [ ${{ startsWith(github.ref, 'refs/heads/main') }} = true ]
   then 
-    #pom.xml maven compile, it's need present in root repository. 
+    #pom.xml maven compile, it's need present in root repository.  
     mvn -B package --file ${ workspace }/pom.xml    
   else
     #pom.xml maven compile, it's need present in root repository.
@@ -26,6 +35,14 @@ then
   echo "***************************************************"
   echo "Artifact Angular Building"
   echo "***************************************************"
+  
+  # get information from package.json and create package name 
+  ARTIFACTID=$(sed -n 's,.*"name":"\([^"]*\)".*,\1,p' ${ WORKSPACE }/package.json)
+  VERSION=$(sed -n 's,.*"version":"\([^"]*\)".*,\1,p' ${ WORKSPACE }/package.json)
+  PACKAGE = "${ARTIFACTID}.${VERSION}"
+  
+  echo "::set-output name=package-Id::$(echo $PACKAGE)"  
+
   if [ ${{ startsWith(github.ref, 'refs/heads/main') }} = true ]
   then 
     # not implement

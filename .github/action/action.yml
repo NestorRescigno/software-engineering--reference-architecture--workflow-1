@@ -75,6 +75,10 @@ jobs:
   build:
     name: build
     runs-on: [self-hosted]
+    outputs:
+      package-name:
+        description: "Package build generator name"
+        value: ${{ steps.package-generator-name.outputs.package-Id }}
     env:
       SCRIPT: ${{ github.workspace }}/.github/action/utils/
       LANGUAGE:
@@ -98,6 +102,7 @@ jobs:
           node-version: '14'
       # Step 4
       - name: Building Artifact
+        id: package-generator-name
         shell: bash
         run: |
         ${{ env.SCRIPT }}/build.sh ${{ github.workspace }} ${{ env.LANGUAGE }}
@@ -139,14 +144,14 @@ jobs:
       USER:
       DEPARTAMENT:
       LANGUAGE:
-      ARTIFACT: 
+      ARTIFACT:  ${{ jobs.build.outputs.package-name }}   # get package name generate front step build
       REPOSITORY_USER: inputs.repository_user    # change user to read, now use write
       REPOSITORY_SECRET: inputs.repository_token   # change token to read, now use write
     steps:
       # build image
       # Step 1
-      - id: image-generator
       - name: build image
+        id: image-generator
         shell: bash
         run: |
         ${{ env.SCRIPT }}/build-image.sh ${{ env.USER }} ${{ env.DEPARTAMENT }} ${{ env.LANGUAGE }} ${{ env.ARTIFACT }} ${{ env.REPOSITORY_USER }} ${{ env.REPOSITORY_SECRET }}
@@ -181,4 +186,3 @@ jobs:
         run: |
         ${{ env.SCRIPT }}/get-tools.sh ${{ env.TEST }}
         ${{ env.SCRIPT }}/integration-tests.sh ${{ env.TEST }}
-        
