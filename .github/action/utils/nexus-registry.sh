@@ -27,7 +27,7 @@ if [${REPOSITORY_URL} != ""] then
         echo "artifact type java"
         echo "***************************************************"
         
-        if [ ${{ startsWith(${ REF }, 'refs/heads/develop') }} == true ] then
+        if [ ${ startsWith(${ REF }, 'refs/heads/develop') } == true ] then
             echo "***************************************************"
             echo "upload snapshop"
             echo "***************************************************"
@@ -49,7 +49,7 @@ if [${REPOSITORY_URL} != ""] then
             echo "***************************************************"
             echo "upload complete"
             echo "***************************************************"
-        elif [${{ startsWith(${ ref }, 'refs/heads/main') }} == true ] then
+        elif [${ startsWith(${ ref }, 'refs/heads/main') } == true ] then
             echo "***************************************************"
             echo "upload release"
             echo "***************************************************"
@@ -80,7 +80,7 @@ if [${REPOSITORY_URL} != ""] then
       echo "Artifact type angular"
       echo "***************************************************"
       
-      if [${{ startsWith(${ REF }, 'refs/heads/main') }} == true ] then
+      if [${ startsWith(${ REF }, 'refs/heads/main') } == true ] then
    
         echo "***************************************************"
         echo "upload npm private release"
