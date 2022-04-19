@@ -122,9 +122,9 @@ jobs:
       - name: Scan
         shell: bash
         env:
-          GROUP:  ${{ jobs.build.outputs.package-group }}   # get package name generate front step build
-          ARTIFACT:  ${{ jobs.build.outputs.package-artifact }}   # get package name generate front step build
-          VERSION:  ${{ jobs.build.outputs.package-version }}   # get package name generate front step build
+          GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   # get package name generate front step build
+          ARTIFACT:  ${{ jobs.build.outputs.package-artifactid-name }}   # get package name generate front step build
+          VERSION:  ${{ jobs.build.outputs.package-version-name }}   # get package name generate front step build
           SONAR_URL: inputs.sonarqube_host
           SONAR_USER: inputs.sonarqube_user
           SONAR_SECRET: inputs.sonarqube_token
@@ -135,10 +135,10 @@ jobs:
       - name: Registy Artifact
         shell: bash
         env:
-          GROUP:  ${{ jobs.build.outputs.package-group }}   # get package name generate front step build
-          ARTIFACT:  ${{ jobs.build.outputs.package-artifact }}   # get package name generate front step build
-          VERSION:  ${{ jobs.build.outputs.package-version }}   # get package name generate front step build
-          # DNS hasn't content http:// or https://
+          GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   # get package name generate front step build
+          ARTIFACT:  ${{ jobs.build.outputs.package-artifactid-name }}   # get package name generate front step build
+          VERSION:  ${{ jobs.build.outputs.package-version-name }}   # get package name generate front step build
+         # DNS hasn't content http:// or https://
           REPOSITORY_DNS: inputs.repository_host
           REPOSITORY_USER: inputs.repository_user
           REPOSITORY_SECRET: inputs.repository_token
@@ -157,9 +157,9 @@ jobs:
       USER:
       DEPARTAMENT:
       LANGUAGE:
-      GROUP:  ${{ jobs.build.outputs.package-group }}   # get package name generate front step build
-      ARTIFACT:  ${{ jobs.build.outputs.package-artifact }}   # get package name generate front step build
-      VERSION:  ${{ jobs.build.outputs.package-version }}   # get package name generate front step build
+      GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   # get package name generate front step build
+      ARTIFACT:  ${{ jobs.build.outputs.package-artifactid-name }}   # get package name generate front step build
+      VERSION:  ${{ jobs.build.outputs.package-version-name }}   # get package name generate front step build
       REPOSITORY_HOST: inputs.repository_host
       REPOSITORY_USER: inputs.repository_user    # change user to read, now use write
       REPOSITORY_SECRET: inputs.repository_token   # change token to read, now use write
