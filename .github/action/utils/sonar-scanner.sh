@@ -15,7 +15,7 @@ ARTIFACTID      = %8
 VERSION         = %9
 
 # if url isn't empty then allow sonar for scanner code
-if [ ${SONAR_URL} != "" && ${{ startsWith(${ REF }, 'refs/heads/main') }} = true ] then  
+if [ ${SONAR_URL} != "" && ${{ startsWith(${ REF }, 'refs/heads/main') }} == true ] then  
  
   echo "***************************************************"
   echo "Sonar scanner started..."
@@ -34,7 +34,7 @@ if [ ${SONAR_URL} != "" && ${{ startsWith(${ REF }, 'refs/heads/main') }} = true
   # env | grep PATH
   sonar-scanner -v 
 
-  if [${SONAR_LANGUAGE}="java"] then
+  if [${SONAR_LANGUAGE}=="java"] then
 
     # sonar scannar java setup
     sonar-scanner
@@ -47,7 +47,7 @@ if [ ${SONAR_URL} != "" && ${{ startsWith(${ REF }, 'refs/heads/main') }} = true
       -Dsonar.java.binaries=**/target/classes
       -Dsonar.language=java
   
-  elif [${SONAR_LANGUAGE}="angular"] then
+  elif [${SONAR_LANGUAGE}=="angular"] then
   
     # sonar scannar angular setup
     sonar-scanner

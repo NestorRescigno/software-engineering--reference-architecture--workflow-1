@@ -10,7 +10,7 @@ echo "***************************************************"
 TYPE=%1
 ID=%2
 TOKEN=%3
-if [${TYPE} = "aws"]
+if [${TYPE} == "aws"]
 then
   echo "***************************************************"
   echo "Account "+${ID}
@@ -20,13 +20,13 @@ then
   echo "***************************************************"
   echo "configure complete"
   echo "***************************************************"
-elif [${TYPE} = "azure"]
+elif [${TYPE} == "azure"]
 then
   echo "***************************************************"
   echo "configure azure cloud isn't implement"
   echo "***************************************************"
   exit -1
-elif [${TYPE} = "google"]
+elif [${TYPE} == "google"]
   echo "***************************************************"
   echo "configure google cloud isn't implement"
   echo "***************************************************"

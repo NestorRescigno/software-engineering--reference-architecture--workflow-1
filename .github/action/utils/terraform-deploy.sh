@@ -11,10 +11,10 @@ AMI_ID=%3
 
 # setting enviroment and prefix with conditional reference branchs
 # pull request event from action
-if [ ${{ startsWith(${ REF }, 'refs/heads/main') }} = true ] then  
+if [ ${{ startsWith(${ REF }, 'refs/heads/main') }} == true ] then  
     ENVIROMENT="integration"  # may be change to preproduction or production 
     PREFIX="int"
-elif [${{ startsWith(${ REF }, 'refs/heads/develop') }} = true ] then  
+elif [${{ startsWith(${ REF }, 'refs/heads/develop') }} == true ] then  
     ENVIROMENT="develoment"
     PREFIX="dev"
 if 
