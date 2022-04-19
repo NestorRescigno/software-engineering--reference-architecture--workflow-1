@@ -37,7 +37,7 @@ inputs:
   sonarqube-token:
     description: 'sonar token parameter'
     required: false
-  sonarqube_client_varsion:
+  sonarqube_client_version:
     description: 'sonar-scanner client version parameter v.r.f.build'
     required: false
   # control vulnerability code with kiuwan
@@ -128,7 +128,7 @@ jobs:
           SONAR_URL: inputs.sonarqube-host
           SONAR_USER: inputs.sonarqube-user
           SONAR_SECRET: inputs.sonarqube-token
-          SONAR_CLI: inputs.sonarqube-client-varsion
+          SONAR_CLI: inputs.sonarqube-client-version
         run: |
         ${{ env.SCRIPT }}/sonar-scanner.sh ${{ env.SONAR_URL }} ${{ env.SONAR_USER }} ${{ env.SONAR_SECRET }} ${{ env.SONAR_CLI }} ${{ env.LANGUAGE }} ${{ github.ref }} ${{ github.GROUP }} ${{ github.ARTIFACT }} ${{ github.VERSION }} 
     steps:
