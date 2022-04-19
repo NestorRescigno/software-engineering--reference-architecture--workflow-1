@@ -30,7 +30,7 @@ locals {
   health_check_type         = "ELB"
   wait_for_capacity_timeout = "30m"
   cluster_name          = var.service_name
-  instance_type         = "t4g.micro"
+  instance_type         = var.instance_type  # example "t4g.micro" or "t2.micro"
   asg_min               = 1
   asg_desired           = 1
   asg_max               = 2
@@ -49,7 +49,7 @@ locals {
   data = {
     sg-common-microservices = ""
     vpc = {
-      vpc-product = "${var.project}-${var.environment}"
+      vpc-product = join("-",[var.project, var.environment])
       amber = {
         subnet  = "*amber*"
         subneta = join("-",[var.project,"snet","amber", provider.aws.region,"a"])

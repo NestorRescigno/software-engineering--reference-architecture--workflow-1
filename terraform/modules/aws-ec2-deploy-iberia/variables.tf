@@ -36,8 +36,14 @@ variable "project" {
   type        = string
 }
 
+variable instance_type {
+  description = "type of instance up"
+  type        = string
+  default     = "t2.micro"
+}
+
 variable "environment" {
-  description = "Environment"
+  description = "Environment name"
   type        = string
 }
 
@@ -47,18 +53,18 @@ variable "environment_prefix" {
 }
 
 variable "global_dns" {
-  description = "dns."
+  description = "mian domain dns."
   type        = string
   default     = "cloud.iberia.local"
 }
 
 variable "bucket_name" {
-  description = "bucket_name."
+  description = "bucket aws name."
   type        = string
 }
 
 variable "bucket_key" {
-  description = "bucket_key."
+  description = "bucket aws key."
   type        = string
 }
 
@@ -73,6 +79,6 @@ variable "kms_key_id" {
 }
 
 variable "role_arn" {
-  description = "role aim arn."
+  description = "aws role aim arn."
   type        = string
 }

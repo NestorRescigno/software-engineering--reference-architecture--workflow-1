@@ -24,7 +24,8 @@ resource "aws_launch_template" "launch" {
     resource_type = "instance"
     tags = merge(
       local.global_common_tags,
-      tomap({ #AWSInspector = "True",
+      tomap({ 
+        #AWSInspector = "True",
         Version = var.version
       })
     )
@@ -35,7 +36,7 @@ resource "aws_launch_template" "launch" {
     tags = merge(
       local.global_common_tags,
       tomap({
-        Name    = "${var.environment_prefix}",
+        Name    = var.environment_prefix,
         Version = var.version
       })
     )
@@ -44,7 +45,7 @@ resource "aws_launch_template" "launch" {
   tags = merge(
     local.global_common_tags,
     tomap({
-      Name = "${var.environment_prefix}"
+      Name = var.environment_prefix
     })
   )
 }
@@ -55,7 +56,7 @@ resource "aws_autoscaling_group" "asg" {
   
   # Decision Server ASG
   
-  name             = "${var.environment_prefix}-${var.service_name}-asg"
+  name             = join("-",[var.environment_prefix,var.service_name,"asg"])
   min_size         = local.asg_min
   max_size         = local.asg_max
   desired_capacity = local.asg_desired
@@ -93,7 +94,7 @@ resource "aws_autoscaling_group" "asg" {
   tags = [
     {
       key                 = "Name"
-      value               = "${var.environment_prefix}-${var.service_name}-asg"
+      value               = join("-",[var.environment_prefix,var.service_name,"asg"])
       propagate_at_launch = true
     }
   ]
