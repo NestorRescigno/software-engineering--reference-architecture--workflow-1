@@ -136,7 +136,8 @@ elif [ ${ startsWith(${ REF }, 'refs/heads/develop') } == true ] then
      -var "subnet_target=${SUBNET}" 
 
      # apply plan terrafom
-     terraform apply -auto-approve
+     terraform apply 
+     #-auto-approve
      #terraform apply -auto-approve
      #-var "lenguage_code=${LANGUAGE}"
      #-var "instance_type=${INSTANCE_TYPE}" 
