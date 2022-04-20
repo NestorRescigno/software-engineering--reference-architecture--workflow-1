@@ -111,7 +111,7 @@ kms_key_id         = "<kms id>"
 role_arn           = "<regione name>"                     # AIM role aws
 `````
 
-to create an instance from an **ubuntu** image the following module [aws-ec2-instance-iberia](https://github.com/Iberia-Ent/software-engineering--reference-architecture--workflow/blob/main/terraform/modules/aws-ec2-intance-iberia/README.md)  is used , this allows to obtain an instance ready for application without keeping an image, while the image module [aws-ec2-image-iberia](https://github.com/Iberia-Ent/software-engineering--reference-architecture--workflow/blob/main/terraform/modules/aws-ec2-image-iberia/README.md)  is complementary to the instance module and It'll create an image from instance generate.
+to create an instance from an **ubuntu** image the following module [aws-ec2-instance-iberia](https://github.com/Iberia-Ent/software-engineering--reference-architecture--workflow/blob/main/terraform/modules/aws-ec2-instance-iberia/README.md)  is used , this allows to obtain an instance ready for application without keeping an image, while the image module [aws-ec2-image-iberia](https://github.com/Iberia-Ent/software-engineering--reference-architecture--workflow/blob/main/terraform/modules/aws-ec2-image-iberia/README.md)  is complementary to the instance module and It'll create an image from instance generate.
 
 the deployment step of the workflow receives the publish aws AMI image and instantiates it on ec2, use module [aws-ec2-deploy-iberia](https://github.com/Iberia-Ent/software-engineering--reference-architecture--workflow/blob/main/terraform/modules/aws-ec2-deploy-iberia/README.md) 
 
