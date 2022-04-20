@@ -14,9 +14,9 @@ AMI_ID=%3
 if [ ${{ startsWith(${ REF }, 'refs/heads/main') }} == true ] then  
     ENVIROMENT="integration"  # may be change to preproduction or production 
     PREFIX="int"
-elif [${{ startsWith(${ REF }, 'refs/heads/develop') }} == true ] then  
-    ENVIROMENT="develoment"
-    PREFIX="dev"
+# elif [${{ startsWith(${ REF }, 'refs/heads/develop') }} == true ] then  
+#    PREFIX="dev"
+#    ENVIROMENT="develoment"
 if 
 
 cd ${{ github.workspace }}/terraform/module/aws-ec2-vpc-iberia

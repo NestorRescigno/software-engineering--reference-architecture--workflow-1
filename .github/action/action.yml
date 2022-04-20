@@ -194,6 +194,7 @@ jobs:
       AMI_ID: ${{ jobs.image.outputs.image-number-id }}
       PROJECT:  ${{ inputs.project-name }}   # get input name, this name use in dns site and global value. project = product business
       AMI_VERSION:  ${{ jobs.build.outputs.package-version-name }}   # get package version generate from step build
+    if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }} 
     steps:
       # instance software.
       # Step 1
