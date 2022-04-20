@@ -65,18 +65,19 @@ terraform plan
 -var "environment_prefix=${PREFIX}"
 
 # apply plan terrafom
-terraform apply -auto-approve
--var "ami_id=${AMI_ID}" 
--var "version=${AMI_VERSION}" 
--var "project=${PROJECT}" 
--var "environment=${ENVIROMENT}" 
--var "environment_prefix=${PREFIX}"
+terraform apply 
+#-auto-approve
+#-var "ami_id=${AMI_ID}" 
+#-var "version=${AMI_VERSION}" 
+#-var "project=${PROJECT}" 
+#-var "environment=${ENVIROMENT}" 
+#-var "environment_prefix=${PREFIX}"
 
 
 # set terrafom arn aws target group output to environment
 echo "aws_alb_target_group_arn=$(terraform output aws_alb_target_group_arn)" >> $GITHUB_ENV  #test in shell or move to run action
 
 echo "***************************************************"
-echo "Deploying end..."
+echo "Deploying complete..."
 echo "***************************************************"
 
