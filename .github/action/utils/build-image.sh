@@ -2,6 +2,12 @@
 # *************           IBERIA L.A.E.                   *************
 # *************       by software Engineering             *************
 # *********************************************************************
+#
+# This script performs the action of creating an instance 
+# from a base image for a vpc as a development environment 
+# when it executes a pull request on the develop branch. 
+# while for the main branch it performs both 
+# the action of creating an instance and generating an image from it.
 
 
 # USER_NAME           = %1
@@ -24,63 +30,114 @@ SECRET              = %9
 REPOSITORY          = %10 
 
 # product name      
-PROJECT             = %11     
+PROJECT             = %11
 
+# repository reference
 workspace           = %12
+REF                 = %13
 
 # the path repository is present in var  
 ARTIFACTREF        = "http://${HOST}/nexus/service/local/artifact/maven/redirect?r=${REPOSITORY}&g=${GROUP}&a=${ARTIFACT}&v=${VERSION}&p=${PACKAGE}"
  
-# return url for lenguar in artifact_ref: terraform have script shell use curl -u by download file
-
-echo "***************************************************"
-echo "Creating image"
-echo "***************************************************"
 
 # pull request to develop event create instance in aws but it don't registry image of snapshot
-# if [ ${{ startsWith(${ REF }, 'refs/heads/main') }} == true ] then  
+if [ ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then  
+     echo "***************************************************"
+     echo "Creating image"
+     echo "***************************************************"
+
+     cd ${workspace}/terraform/module/aws-ec2-instance-iberia
+     # init terraform module
+     terraform init
+     # create plan terrafom
+     terraform plan 
+     -var "lenguage_code=${LANGUAGE}"
+     -var "instance_type=${INSTANCE_TYPE}" 
+     -var "ref=${ARTIFACTREF}" 
+     -var "package=${PACKAGE}"
+     -var "project_name=${PROJECT}"
+     -var "service_name=${ARTIFACT}"
+     -var "service_version=${VERSION}"
+     -var "artifact_user=${USER}"
+     -var "artifact_secret=${SECRET}"
+
+     # apply plan terrafom
+     terraform apply -auto-approve
+     -var "lenguage_code=${LANGUAGE}"
+     -var "instance_type=${INSTANCE_TYPE}" 
+     -var "ref=${ARTIFACTREF}" 
+     -var "package=${PACKAGE}"
+     -var "project_name=${PROJECT}"
+     -var "service_name=${ARTIFACT}"
+     -var "service_version=${VERSION}"
+     -var "artifact_user=${USER}"
+     -var "artifact_secret=${SECRET}"
+
      cd ${workspace}/terraform/module/aws-ec2-image-iberia
-# else
-#    cd ${{ github.workspace }}/terraform/module/aws-ec2-instance-iberia
-# if
 
-echo "***************************************************"
-echo "Deploying with terraform..."
-echo "***************************************************"
+     # echo "::set-output name=instance-id::$(terraform output instance_id)" # Note to develop: verify pass var
+     # init terraform module
+     terraform init
 
-# init terraform module
-terraform init
+     # create plan terrafom
+     terraform plan 
+     -var "project_name=${PROJECT}"
+     -var "service_name=${ARTIFACT}"
+     -var "service_version=${VERSION}"
+     -var "source_instance_id=$(terraform output instance_id)" # Note to develop: verify pass var
 
-# create plan terrafom
-terraform plan 
--var "lenguage_code=${LANGUAGE}"
-# -var "user_name=${USER_NAME}"
-# -var "user_departament=${USER_DEPARTAMENT}" 
--var "instance_type=${INSTANCE_TYPE}" 
--var "ref=${ARTIFACTREF}" 
--var "package=${PACKAGE}"
--var "project_name=${PROJECT}"
--var "service_name=${ARTIFACT}"
--var "service_version=${VERSION}"
--var "artifact_user=${USER}"
--var "artifact_secret=${SECRET}"
+     # apply plan terrafom
+     terraform apply -auto-approve
+     -var "project_name=${PROJECT}"
+     -var "service_name=${ARTIFACT}"
+     -var "service_version=${VERSION}"
+     -var "source_instance_id=$(terraform output instance_id)" # Note to develop: verify pass var
 
-# apply plan terrafom
-terraform apply -auto-approve
--var "lenguage_code=${LANGUAGE}"
-# -var "user_name=${USER_NAME}"
-# -var "user_departament=${USER_DEPARTAMENT}" 
--var "instance_type=${INSTANCE_TYPE}" 
--var "ref=${ARTIFACTREF}" 
--var "package=${PACKAGE}"
--var "project_name=${PROJECT}"
--var "service_name=${ARTIFACT}"
--var "service_version=${VERSION}"
--var "artifact_user=${USER}"
--var "artifact_secret=${SECRET}"
 
-echo "::set-output name=image-id::$(terraform output ami_id)"
+     echo "::set-output name=image-id::$(terraform output ami_id)"
 
-echo "***************************************************"
-echo "Created image"
-echo "***************************************************"
+     echo "***************************************************"
+     echo "Created image"
+     echo "***************************************************"
+
+elif [ ${ startsWith(${ REF }, 'refs/heads/develop') } == true ] then 
+
+     echo "***************************************************"
+     echo "create instance form image base to develoment"
+     echo "***************************************************"
+     
+     cd ${workspace}/terraform/module/aws-ec2-instance-iberia
+     # init terraform module
+     terraform init
+     # create plan terrafom
+     terraform plan 
+     -var "lenguage_code=${LANGUAGE}"
+     -var "instance_type=${INSTANCE_TYPE}" 
+     -var "ref=${ARTIFACTREF}" 
+     -var "package=${PACKAGE}"
+     -var "project_name=${PROJECT}"
+     -var "service_name=${ARTIFACT}"
+     -var "service_version=${VERSION}"
+     -var "artifact_user=${USER}"
+     -var "artifact_secret=${SECRET}"
+
+     # apply plan terrafom
+     terraform apply -auto-approve
+     -var "lenguage_code=${LANGUAGE}"
+     -var "instance_type=${INSTANCE_TYPE}" 
+     -var "ref=${ARTIFACTREF}" 
+     -var "package=${PACKAGE}"
+     -var "project_name=${PROJECT}"
+     -var "service_name=${ARTIFACT}"
+     -var "service_version=${VERSION}"
+     -var "artifact_user=${USER}"
+     -var "artifact_secret=${SECRET}"
+
+     echo "***************************************************"
+     echo " instance_id: $(terraform output instance_id)"
+     echo "***************************************************"
+     
+if
+     
+
+
