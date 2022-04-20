@@ -167,6 +167,9 @@ jobs:
       subnet-number-ids:
         description: "subnets numbers ids"
         value: ${{ steps.build-environment-generator.subnets-ids }}
+      alb-target-group-number-arn:
+        description: "load balancer targer group numbers ids"
+        value: ${{ steps.build-environment-generator.alb-target-group-arn }}
     env:
       SCRIPT: ${{ github.workspace }}/.github/action/utils/
       PROJECT:  ${{ inputs.project-name }}   # get input name, this name use in dns site and global value. project = product business
@@ -223,6 +226,7 @@ jobs:
       AMI_VERSION:  ${{ jobs.build.outputs.package-version-name }}   # get package version generate from step build
       SECURITY_GROUPS: ${{ jobs.environment.outputs.security-group-number-ids }}
       SUBNETS: ${{ jobs.environment.outputs.subnet-number-ids }}
+      ALB_TARGET_GROUP: ${{ jobs.environment.outputs.alb-target-group-number-arn}}
     if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }} 
     steps:
       # instance software.
@@ -230,7 +234,7 @@ jobs:
       - name: Deploy
         shell: bash
         run: |
-        ${{ env.SCRIPT }}/terraform-deploy.sh ${{ env.PROJECT }} ${{ env.AMI_VERSION }} ${{ env.AMI_ID }} ${{ github.workspace }} ${{ github.ref }} ${{ env.SECURITY_GROUPS }} ${{ env.SUBNETS }} 
+        ${{ env.SCRIPT }}/terraform-deploy.sh ${{ env.PROJECT }} ${{ env.AMI_VERSION }} ${{ env.AMI_ID }} ${{ github.workspace }} ${{ github.ref }} ${{ env.SECURITY_GROUPS }} ${{ env.SUBNETS }} ${{ env.ALB_TARGET_GROUP}} 
       # Step 2
       - name: Health Check
         shell: bash

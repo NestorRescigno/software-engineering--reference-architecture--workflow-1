@@ -14,7 +14,8 @@ resource "aws_launch_template" "launch" {
   name          = format("lt-%s-${var.service_name}", var.environment_prefix)
   image_id      = var.ami_id
   instance_type = local.instance_type
-  vpc_security_group_ids = [aws_security_group.instances.id, data.aws_security_group.sg_common_microservices.id]
+  vpc_security_group_ids = var.security_group
+  
   # user_data              = filebase64("files/prelive_env.sh")       # use to set enviroment var for arcoservices
   iam_instance_profile {
     name = data.aws_iam_instance_profile.ip.name
@@ -71,7 +72,7 @@ resource "aws_autoscaling_group" "asg" {
   default_cooldown          = local.default_cooldown
   health_check_type         = local.health_check_type
   wait_for_capacity_timeout = local.wait_for_capacity_timeout
-  target_group_arns         = [resource.aws_alb_target_group.alb.arn]
+  target_group_arns         = [var.aws_alb_target_group_arn]
   termination_policies      = ["OldestInstance"]
   enabled_metrics = [
     "GroupDesiredCapacity",
@@ -105,5 +106,5 @@ resource "aws_autoscaling_group" "asg" {
 # autoscaling attachment 
 resource "aws_autoscaling_attachment" "alb_autoscale" {
   alb_target_group_arn   = var.aws_alb_target_group_arn
-  autoscaling_group_name = resource.aws_autoscaling_group.asg.id
+  autoscaling_group_name = aws_autoscaling_group.asg.id
 }

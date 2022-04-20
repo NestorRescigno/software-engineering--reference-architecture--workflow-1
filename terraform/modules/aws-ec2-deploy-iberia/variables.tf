@@ -58,6 +58,21 @@ variable "global_dns" {
   default     = "cloud.iberia.local"
 }
 
+# array security group
+variable "security_group" {
+  description = "the security group aws"
+}
+
+# arry subnet ids
+variable "subnet_target" {
+  description = "the subnet aws"
+}
+
+variable "aws_alb_target_group_arn" {
+  description = "aws target group arn."
+  type        = string
+}
+
 variable "bucket_name" {
   description = "bucket aws name."
   type        = string
@@ -80,10 +95,5 @@ variable "kms_key_id" {
 
 variable "role_arn" {
   description = "aws role aim arn."
-  type        = string
-}
-
-variable "aws_alb_target_group_arn" {
-  description = "aws target group arn."
   type        = string
 }

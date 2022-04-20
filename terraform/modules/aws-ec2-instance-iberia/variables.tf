@@ -63,15 +63,16 @@ variable "artifact_secret" {
   description = "the secret key access to read register artifact. example: Nexus"
 }
 
-# secret read to reference register 
+# array security group
 variable "security_group" {
   description = "the security group aws"
 }
 
-# secret read to reference register 
+# arry subnet ids
 variable "subnet_target" {
   description = "the subnet aws"
 }
+
 
 variable "lenguage_code" {
   description ="lenguage code origin for example java, angular , go , etc."

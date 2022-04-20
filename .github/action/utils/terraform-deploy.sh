@@ -9,6 +9,9 @@ AMI_VERSION=%2
 AMI_ID=%3
 WORKSPACE=%4
 REF=%5
+SECURITY_GROUPS}=%6
+SUBNETS=%7
+ALB_TARGET_GROUP_ARN=%8
 
 # setting enviroment and prefix with conditional reference branchs
 # pull request event from action
@@ -63,6 +66,9 @@ terraform plan
 -var "project=${PROJECT}" 
 -var "environment=${ENVIROMENT}" 
 -var "environment_prefix=${PREFIX}"
+-var "security_group=${SECURITY_GROUPS}"
+-var "subnet_target=${SUBNETS}"
+-var "aws_alb_target_group_arn=${ALB_TARGET_GROUP_ARN}"
 
 # apply plan terrafom
 terraform apply 
