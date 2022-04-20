@@ -132,7 +132,12 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14'
-      # Step 4
+      # Step 4  
+      # NOTE OF DEVELOPER: control step pending. example: control version. 
+      # the correct artifact version in main is very important because represent tag release ending process. 
+      # if exist version release then the artifact version is oblicatory incremente number. example in pom.xml or package.json.
+      - name: control
+      # Step 5
       - name: Building Artifact
         id: package-generator-name
         shell: bash
@@ -274,3 +279,12 @@ jobs:
         shell: bash
         run: |
         ${{ env.SCRIPT }}/integration-tests.sh ${{ env.TEST }} ${{ github.workspace }}
+  # create de tag release en github. use same release and put image id in description or release note. necessary to next environment 
+  # NOTE OF DEVELOPER: pending release process
+  tagging:
+    name: taggin 
+    runs-on: [self-hosted]      
+  # clean workspace and other reference. end process. NOTE OF DEVELOPER: pending clean
+  clean:
+    name: clean
+    runs-on: [self-hosted]
