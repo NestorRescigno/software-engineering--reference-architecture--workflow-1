@@ -40,6 +40,13 @@ REF                 = %13
 SG                  = %14      # NOTE OF DEVELOP : Pending find in code or workflow
 SUBNET              = %15      # NOTE OF DEVELOP : Pending find in code or workflow
 
+# access key cloud
+aws_access_key_op          = %6
+aws_access_key_op          = %7
+
+aws_access_key_dev          = %8
+aws_secret_access_key_dev   = %9 
+
 
 # the path repository is present in var  
 ARTIFACTREF        = "http://${HOST}/nexus/service/local/artifact/maven/redirect?r=${REPOSITORY}&g=${GROUP}&a=${ARTIFACT}&v=${VERSION}&p=${PACKAGE}"
@@ -50,7 +57,8 @@ if [ ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then
      echo "***************************************************"
      echo "Creating image"
      echo "***************************************************"
-
+      
+     . could-configure.sh ${aws_access_key_op} ${aws_secret_access_key_op }  # configure operational account, generate image and shared with instance 
      cd ${workspace}/terraform/module/aws-ec2-instance-iberia
      # init terraform module
      terraform init
@@ -90,7 +98,8 @@ if [ ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then
      # init terraform module
      terraform init
 
-     # create plan terrafom
+     # create plan terrafom 
+     #Note of developer: control module for shared image to diference environment account, this generate in operational account.
      terraform plan 
      -var "project_name=${PROJECT}"
      -var "service_name=${ARTIFACT}"
@@ -117,7 +126,8 @@ elif [ ${ startsWith(${ REF }, 'refs/heads/develop') } == true ] then
      echo "***************************************************"
      echo "create instance form image base to develoment"
      echo "***************************************************"
-     
+     . could-configure.sh ${aws_access_key_dev } ${aws_secret_access_key_dev } # create instance in developmente enviroment, need this account access.
+
      cd ${workspace}/terraform/module/aws-ec2-instance-iberia
      # init terraform module
      terraform init

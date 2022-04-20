@@ -4,20 +4,31 @@
 # *********************************************************************
 
 # setting variable
-PROJECT=%1
-GROUP=%2
-SERVICE=%3
-WORKSPACE=%4
-REF=%5
+PROJECT     =%1
+GROUP       =%2
+SERVICE     =%3
+WORKSPACE   =%4
+REF         =%5
+# access key cloud
+aws_access_key_int          = %6
+aws_access_key_int          = %7
+
+aws_access_key_dev          = %8
+aws_secret_access_key_dev   = %9 
 
 # setting enviroment and prefix with conditional reference branchs
 # pull request event from action
 if [ ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then  
     ENVIROMENT="integration"  # may be change to preproduction or production 
     PREFIX="int"
+
+    . could-configure.sh ${aws_access_key_int } ${aws_secret_access_key_int } 
+
 elif [${ startsWith(${ REF }, 'refs/heads/develop') } == true ] then  
     ENVIROMENT="development"
     PREFIX="dev"
+
+    . could-configure.sh ${aws_access_key_dev} ${aws_secret_access_key_dev } 
 if 
 
 
