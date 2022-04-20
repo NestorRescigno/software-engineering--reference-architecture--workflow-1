@@ -50,6 +50,11 @@ main
 |                 └───main.tf                                     # princial code of module core
 |                 └───outputs.tf                                  # terraform output declarative of module core
 |                 └───variables.tf                                # terraform variables of module core
+|           └───aws-ec2-instance-iberia                           # terraform module instance up iberia: base ubuntu
+|                 └───README.md                                   # document declarative of module
+|                 └───main.tf                                     # princial code of module core
+|                 └───outputs.tf                                  # terraform output declarative of module core
+|                 └───variables.tf                                # terraform variables of module core
 |           └───aws-ec2-vpc-iberia                                # terraform module vpn iberia for create environment
 |                 └───README.md                                   # document declarative of module
 |                 └───data.tf                                     # terraform data source of module core
@@ -106,9 +111,9 @@ kms_key_id         = "<kms id>"
 role_arn           = "<regione name>"                     # AIM role aws
 `````
 
-To create an image, the [aws-ec2-image-iberia](https://github.com/Iberia-Ent/software-engineering--reference-architecture--workflow/blob/main/terraform/modules/aws-ec2-vpc-iberia/README.md) module will be used, which creates a new image starting from an ubuntu base, configuring it according to the artifact
+to create an instance from an **ubuntu** image the following module [aws-ec2-instance-iberia](https://github.com/Iberia-Ent/software-engineering--reference-architecture--workflow/blob/main/terraform/modules/aws-ec2-intance-iberia/README.md)  is used , this allows to obtain an instance ready for application without keeping an image, while the image module [aws-ec2-image-iberia](https://github.com/Iberia-Ent/software-engineering--reference-architecture--workflow/blob/main/terraform/modules/aws-ec2-image-iberia/README.md)  is complementary to the instance module and I will create an image from it
 
-the deployment step of the workflow receives the aws AMI image and instantiates it on EC2, use module [aws-ec2-deploy-iberia](https://github.com/Iberia-Ent/software-engineering--reference-architecture--workflow/blob/main/terraform/modules/aws-ec2-deploy-iberia/README.md) 
+the deployment step of the workflow receives the publish aws AMI image and instantiates it on ec2, use module [aws-ec2-deploy-iberia](https://github.com/Iberia-Ent/software-engineering--reference-architecture--workflow/blob/main/terraform/modules/aws-ec2-deploy-iberia/README.md) 
 
 
 Usages
