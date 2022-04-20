@@ -82,7 +82,7 @@ if [ ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then
 
      cd ${workspace}/terraform/module/aws-ec2-image-iberia
 
-     # echo "::set-output name=instance-id::$(terraform output instance_id)" # Note to develop: verify pass var
+     echo "::set-output name=instance-id::$(terraform output instance_id)" # Note to develop: verify pass var
      # init terraform module
      terraform init
 
@@ -91,14 +91,14 @@ if [ ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then
      -var "project_name=${PROJECT}"
      -var "service_name=${ARTIFACT}"
      -var "service_version=${VERSION}"
-     -var "source_instance_id=$(terraform output instance_id)" # Note to develop: verify pass var
+     -var "source_instance_id=${instance-id}" # Note to develop: verify pass var
 
      # apply plan terrafom
      terraform apply -auto-approve
      -var "project_name=${PROJECT}"
      -var "service_name=${ARTIFACT}"
      -var "service_version=${VERSION}"
-     -var "source_instance_id=$(terraform output instance_id)" # Note to develop: verify pass var
+     -var "source_instance_id=${instance-id}" # Note to develop: verify pass var
 
 
      echo "::set-output name=image-id::$(terraform output ami_id)"
