@@ -16,8 +16,8 @@ if [ ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then
     ENVIROMENT="integration"  # may be change to preproduction or production 
     PREFIX="int"
 elif [${ startsWith(${ REF }, 'refs/heads/develop') } == true ] then  
+    ENVIROMENT="development"
     PREFIX="dev"
-    ENVIROMENT="develoment"
 if 
 
 
