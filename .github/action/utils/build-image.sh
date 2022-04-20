@@ -67,18 +67,20 @@ if [ ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then
      -var "subnet_target=${SUBNET}" 
 
      # apply plan terrafom
-     terraform apply -auto-approve
-     -var "lenguage_code=${LANGUAGE}"
-     -var "instance_type=${INSTANCE_TYPE}" 
-     -var "ref=${ARTIFACTREF}" 
-     -var "package=${PACKAGE}"
-     -var "project_name=${PROJECT}"
-     -var "service_name=${ARTIFACT}"
-     -var "service_version=${VERSION}"
-     -var "artifact_user=${USER}"
-     -var "artifact_secret=${SECRET}"
-     -var "security_group=${SG}" # array 
-     -var "subnet_target=${SUBNET}" 
+     terraform apply
+     # apply plan terrafom
+     # terraform apply -auto-approve
+     #-var "lenguage_code=${LANGUAGE}"
+     #-var "instance_type=${INSTANCE_TYPE}" 
+     #-var "ref=${ARTIFACTREF}" 
+     #-var "package=${PACKAGE}"
+     #-var "project_name=${PROJECT}"
+     #-var "service_name=${ARTIFACT}"
+     #-var "service_version=${VERSION}"
+     #-var "artifact_user=${USER}"
+     #-var "artifact_secret=${SECRET}"
+     #-var "security_group=${SG}" # array 
+     #-var "subnet_target=${SUBNET}" 
 
      cd ${workspace}/terraform/module/aws-ec2-image-iberia
 
@@ -94,11 +96,12 @@ if [ ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then
      -var "source_instance_id=${instance-id}" # Note to develop: verify pass var
 
      # apply plan terrafom
-     terraform apply -auto-approve
-     -var "project_name=${PROJECT}"
-     -var "service_name=${ARTIFACT}"
-     -var "service_version=${VERSION}"
-     -var "source_instance_id=${instance-id}" # Note to develop: verify pass var
+     terraform apply
+     #terraform apply -auto-approve
+     #-var "project_name=${PROJECT}"
+     #-var "service_name=${ARTIFACT}"
+     #-var "service_version=${VERSION}"
+     #-var "source_instance_id=${instance-id}" # Note to develop: verify pass var
 
 
      echo "::set-output name=image-id::$(terraform output ami_id)"
@@ -132,17 +135,18 @@ elif [ ${ startsWith(${ REF }, 'refs/heads/develop') } == true ] then
 
      # apply plan terrafom
      terraform apply -auto-approve
-     -var "lenguage_code=${LANGUAGE}"
-     -var "instance_type=${INSTANCE_TYPE}" 
-     -var "ref=${ARTIFACTREF}" 
-     -var "package=${PACKAGE}"
-     -var "project_name=${PROJECT}"
-     -var "service_name=${ARTIFACT}"
-     -var "service_version=${VERSION}"
-     -var "artifact_user=${USER}"
-     -var "artifact_secret=${SECRET}"
-     -var "security_group=${SG}" # array 
-     -var "subnet_target=${SUBNET}" 
+     #terraform apply -auto-approve
+     #-var "lenguage_code=${LANGUAGE}"
+     #-var "instance_type=${INSTANCE_TYPE}" 
+     #-var "ref=${ARTIFACTREF}" 
+     #-var "package=${PACKAGE}"
+     #-var "project_name=${PROJECT}"
+     #-var "service_name=${ARTIFACT}"
+     #-var "service_version=${VERSION}"
+     #-var "artifact_user=${USER}"
+     #-var "artifact_secret=${SECRET}"
+     #-var "security_group=${SG}" # array 
+     #-var "subnet_target=${SUBNET}" 
 
      echo "***************************************************"
      echo " instance_id: $(terraform output instance_id)"
