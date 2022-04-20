@@ -13,6 +13,9 @@
 # USER_NAME           = %1
 # USER_DEPARTAMENT    = %2
 
+SG                  =       # NOTE OF DEVELOP : Pending find in code or workflow
+SUBNET              =       # NOTE OF DEVELOP : Pending find in code or workflow
+
 # INSTANCE_TYPE     = %3
 
 LANGUAGE            = %1
@@ -60,6 +63,8 @@ if [ ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then
      -var "service_version=${VERSION}"
      -var "artifact_user=${USER}"
      -var "artifact_secret=${SECRET}"
+     -var "security_group=${SG}" # array 
+     -var "subnet_target=${SUBNET}" 
 
      # apply plan terrafom
      terraform apply -auto-approve
@@ -72,6 +77,8 @@ if [ ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then
      -var "service_version=${VERSION}"
      -var "artifact_user=${USER}"
      -var "artifact_secret=${SECRET}"
+     -var "security_group=${SG}" # array 
+     -var "subnet_target=${SUBNET}" 
 
      cd ${workspace}/terraform/module/aws-ec2-image-iberia
 
@@ -120,6 +127,8 @@ elif [ ${ startsWith(${ REF }, 'refs/heads/develop') } == true ] then
      -var "service_version=${VERSION}"
      -var "artifact_user=${USER}"
      -var "artifact_secret=${SECRET}"
+     -var "security_group=${SG}" # array 
+     -var "subnet_target=${SUBNET}" 
 
      # apply plan terrafom
      terraform apply -auto-approve
@@ -132,6 +141,8 @@ elif [ ${ startsWith(${ REF }, 'refs/heads/develop') } == true ] then
      -var "service_version=${VERSION}"
      -var "artifact_user=${USER}"
      -var "artifact_secret=${SECRET}"
+     -var "security_group=${SG}" # array 
+     -var "subnet_target=${SUBNET}" 
 
      echo "***************************************************"
      echo " instance_id: $(terraform output instance_id)"

@@ -64,13 +64,13 @@ variable "artifact_secret" {
 }
 
 # secret read to reference register 
-variable "segurity_group" {
-  description = "the segurity group aws"
+variable "security_group" {
+  description = "the security group aws"
 }
 
 # secret read to reference register 
 variable "subnet_target" {
-  description = "the segurity group aws"
+  description = "the subnet aws"
 }
 
 variable "lenguage_code" {
