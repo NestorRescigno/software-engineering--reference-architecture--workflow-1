@@ -244,5 +244,4 @@ jobs:
       - name: Integration tests
         shell: bash
         run: |
-        ${{ env.SCRIPT }}/get-tools.sh ${{ env.TEST }} ${{ github.workspace }} 
-        ${{ env.SCRIPT }}/integration-tests.sh ${{ env.TEST }}
+        ${{ env.SCRIPT }}/integration-tests.sh ${{ env.TEST }} ${{ github.workspace }}
