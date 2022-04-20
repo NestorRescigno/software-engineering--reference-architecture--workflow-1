@@ -18,6 +18,7 @@ module "vpc" {
 ````
 
 or configure the variables for use directly through the tfvars file
+
 ````
 ## Global variables
 service_name       = "<service name>"
@@ -33,9 +34,7 @@ kms_key_id         = "<kms id>"
 role_arn           = "<regione name>"                     # AIM role aws
 ````
 
-The deployment step of the workflow continous integration this modules receives the aws AMI image and instantiates it on EC2 with next param
-````
-ami_id  = "<ami id >" 
-version = "<version>" 
-````
-
+**outputs**
+* aws_alb_target_group_arn:  "loadbalancer group target arn" 
+* aws_security_groups:       "security groups ids"
+* aws_subnets_ids:           "subnets ids"

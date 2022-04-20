@@ -82,3 +82,8 @@ variable "role_arn" {
   description = "aws role aim arn."
   type        = string
 }
+
+variable "aws_alb_target_group_arn" {
+  description = "aws target group arn."
+  type        = string
+}

@@ -10,5 +10,5 @@
 
 # output id new instance
 output "instance_id" {
-  value = resource.aws_instance.app.id
+  value = aws_instance.app.id
 }

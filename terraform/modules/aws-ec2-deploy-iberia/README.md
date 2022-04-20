@@ -27,4 +27,4 @@ This module allows you to deploy an aws image with template_lanch.
 * dynamodb_table:           "dynamo db table."
 * kms_key_id:               "kms key id."
 * role_arn:                 "aws role aim arn."
-
+* aws_alb_target_group_arn: "aws loadbalancer target group arn"

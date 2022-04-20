@@ -13,8 +13,6 @@
 # USER_NAME           = %1
 # USER_DEPARTAMENT    = %2
 
-SG                  =       # NOTE OF DEVELOP : Pending find in code or workflow
-SUBNET              =       # NOTE OF DEVELOP : Pending find in code or workflow
 
 # INSTANCE_TYPE     = %3
 
@@ -38,6 +36,10 @@ PROJECT             = %11
 # repository reference
 workspace           = %12
 REF                 = %13
+
+SG                  = %14      # NOTE OF DEVELOP : Pending find in code or workflow
+SUBNET              = %15      # NOTE OF DEVELOP : Pending find in code or workflow
+
 
 # the path repository is present in var  
 ARTIFACTREF        = "http://${HOST}/nexus/service/local/artifact/maven/redirect?r=${REPOSITORY}&g=${GROUP}&a=${ARTIFACT}&v=${VERSION}&p=${PACKAGE}"

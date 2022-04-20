@@ -62,8 +62,8 @@ resource "aws_autoscaling_group" "asg" {
   desired_capacity = local.asg_desired
   
   launch_template {
-    id      = aws_launch_template.launch.id
-    version = aws_launch_template.launch.latest_version
+    id      = resource.aws_launch_template.launch.id
+    version = resource.aws_launch_template.launch.latest_version
   }
   
   vpc_zone_identifier       = [data.aws_subnet.snet_amber_eu_central_1a.id, data.aws_subnet.snet_amber_eu_central_1b.id, data.aws_subnet.snet_amber_eu_central_1c.id]
@@ -71,7 +71,7 @@ resource "aws_autoscaling_group" "asg" {
   default_cooldown          = local.default_cooldown
   health_check_type         = local.health_check_type
   wait_for_capacity_timeout = local.wait_for_capacity_timeout
-  target_group_arns         = [aws_alb_target_group.alb.arn]
+  target_group_arns         = [resource.aws_alb_target_group.alb.arn]
   termination_policies      = ["OldestInstance"]
   enabled_metrics = [
     "GroupDesiredCapacity",
@@ -100,4 +100,10 @@ resource "aws_autoscaling_group" "asg" {
   ]
 
   lifecycle { create_before_destroy = false }
+}
+
+# autoscaling attachment 
+resource "aws_autoscaling_attachment" "alb_autoscale" {
+  alb_target_group_arn   = var.aws_alb_target_group_arn
+  autoscaling_group_name = resource.aws_autoscaling_group.asg.id
 }

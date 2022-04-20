@@ -3,28 +3,6 @@
 # *************       by Software Engineering             *************
 # *********************************************************************
 # 000 - Global variables
-
-variable "ami_id" {
-  description = "AMI id"
-  type        = string
-}
-
-variable "version" {
-  description = "Version ID"
-  type        = string
-}
-
-variable "service_groupid" {
-  description = "The name of groupid application service."
-  type        = string
-}
-
-
-variable "service_name" {
-  description = "The name of the service to be created"
-  type        = string
-}
-
 variable "aws_region" {
   description = "Region"
   type        = string
@@ -36,14 +14,21 @@ variable "project" {
   type        = string
 }
 
+variable "service_name" {
+  description = "The name of the service to be created"
+  type        = string
+}
+
 variable "environment" {
   description = "Environment"
   type        = string
+  default     = "development"
 }
 
 variable "environment_prefix" {
   description = "Environment Prefix."
   type        = string
+  default     = "dev"
 }
 
 variable "global_dns" {
@@ -52,6 +37,12 @@ variable "global_dns" {
   default     = "cloud.iberia.local"
 }
 
+variable "service_groupid" {
+  description = "The name of groupid application service."
+  type        = string
+}
+
+# backet setup and other 
 variable "bucket_name" {
   description = "bucket_name."
   type        = string

@@ -40,10 +40,7 @@ resource "aws_alb_target_group" "alb" {
     })
   )
 }
-resource "aws_autoscaling_attachment" "alb_autoscale" {
-  alb_target_group_arn   = aws_alb_target_group.alb.arn
-  autoscaling_group_name = aws_autoscaling_group.asg.id
-}
+
 
 ###########################
 ## New Resource listener
@@ -91,7 +88,7 @@ resource "aws_lb" "alb" {
       Cluster                  = local.cluster_name
       "tf:Used"                = "True"
       "Application:ArtifactId" = join("-",[var.service_name,"core"])      
-      "Application:GroupId"    = var.service_groupid
+      "Application:GroupId"    = var.service_groupid   # Note of develops: use other var
     })
   )
 }
