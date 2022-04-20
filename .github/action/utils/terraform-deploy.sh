@@ -20,31 +20,32 @@ if [ ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then
     #    ENVIROMENT="develoment"
 if 
 
-cd ${WORKSPACE }/terraform/module/aws-ec2-vpc-iberia
+#cd ${WORKSPACE }/terraform/module/aws-ec2-vpc-iberia
 
-echo "***************************************************"
-echo "Deploying with terraform..."
-echo "***************************************************"
+#echo "***************************************************"
+#echo "Deploying with terraform..."
+#echo "***************************************************"
 # This module have lifecycle { create_before_destroy = false }
 
 # init terraform module
-terraform init
+#terraform init
 
 # create plan terrafom
-terraform plan 
--var "version=${AMI_VERSION}"
--var "ami_id=${AMI_ID}" 
--var "project=${PROJECT}" 
--var "environment=${ENVIROMENT}" 
--var "environment_prefix=${PREFIX}"
+#terraform plan 
+#-var "version=${AMI_VERSION}"
+#-var "ami_id=${AMI_ID}" 
+#-var "project=${PROJECT}" 
+#-var "environment=${ENVIROMENT}" 
+#-var "environment_prefix=${PREFIX}"
 
 # apply plan terrafom 
-terraform apply -auto-approve
--var "ami_id=${AMI_ID}" 
--var "version=${AMI_VERSION}" 
--var "project=${PROJECT}" 
--var "environment=${ENVIROMENT}" 
--var "environment_prefix=${PREFIX}"
+#terraform apply 
+#-auto-approve
+#-var "ami_id=${AMI_ID}" 
+#-var "version=${AMI_VERSION}" 
+#-var "project=${PROJECT}" 
+#-var "environment=${ENVIROMENT}" 
+#-var "environment_prefix=${PREFIX}"
 
 cd ${ WORKSPACE }/terraform/module/aws-ec2-deploy-iberia
 

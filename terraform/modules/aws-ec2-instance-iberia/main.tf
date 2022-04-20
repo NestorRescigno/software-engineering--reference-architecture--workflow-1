@@ -50,7 +50,7 @@ resource "aws_instance" "app" {
     intance_type            = var.instance_type
     count                   = 1
     subnet_id               = var.subnet_target
-    vpc_security_group_ids  = [var.security_group]  # Note of developer: find correct group , use instance security group
+    vpc_security_group_ids  = var.security_group  # Note of developer: find correct group , use instance security group
     user_data               = templatefile("user_data.tftpl", {
         department = var.user_department, 
         name = var.user_name, 
