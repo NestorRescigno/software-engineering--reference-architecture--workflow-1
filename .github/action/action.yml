@@ -201,7 +201,7 @@ jobs:
       - name: Deploy
         shell: bash
         run: |
-        ${{ env.SCRIPT }}/terraform-deploy.sh ${{ env.PROJECT }} ${{ env.AMI_VERSION }} ${{ env.AMI_ID }} 
+        ${{ env.SCRIPT }}/terraform-deploy.sh ${{ env.PROJECT }} ${{ env.AMI_VERSION }} ${{ env.AMI_ID }} ${{ github.workspace }} ${{ github.ref }} 
       # Step 2
       - name: Health Check
         shell: bash

@@ -7,19 +7,20 @@
 PROJECT=%1
 AMI_VERSION=%2
 AMI_ID=%3
-
+WORKSPACE=%4
+REF=%5
 
 # setting enviroment and prefix with conditional reference branchs
 # pull request event from action
-if [ ${{ startsWith(${ REF }, 'refs/heads/main') }} == true ] then  
+if [ ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then  
     ENVIROMENT="integration"  # may be change to preproduction or production 
     PREFIX="int"
-# elif [${{ startsWith(${ REF }, 'refs/heads/develop') }} == true ] then  
-#    PREFIX="dev"
-#    ENVIROMENT="develoment"
+    # elif [${{ startsWith(${ REF }, 'refs/heads/develop') }} == true ] then  
+    #    PREFIX="dev"
+    #    ENVIROMENT="develoment"
 if 
 
-cd ${{ github.workspace }}/terraform/module/aws-ec2-vpc-iberia
+cd ${WORKSPACE }/terraform/module/aws-ec2-vpc-iberia
 
 echo "***************************************************"
 echo "Deploying with terraform..."
@@ -45,7 +46,7 @@ terraform apply -auto-approve
 -var "environment=${ENVIROMENT}" 
 -var "environment_prefix=${PREFIX}"
 
-cd ${{ github.workspace }}/terraform/module/aws-ec2-deploy-iberia
+cd ${ WORKSPACE }/terraform/module/aws-ec2-deploy-iberia
 
 echo "***************************************************"
 echo "Deploying with terraform..."
