@@ -201,7 +201,7 @@ jobs:
       REPOSITORY_HOST: inputs.repository-host
       REPOSITORY_USER: inputs.repository-user    # change user to read, now use write
       REPOSITORY_SECRET: inputs.repository-token   # change token to read, now use write
-      SEGURITY_GROUPS: ${{ jobs.environment.outputs.security-group-number-ids }}
+      SECURITY_GROUPS: ${{ jobs.environment.outputs.security-group-number-ids }}
       SUBNETS: ${{ jobs.environment.outputs.subnet-number-ids }}
     steps:
       # build image
@@ -210,7 +210,7 @@ jobs:
         id: image-generator
         shell: bash
         run: |
-        ${{ env.SCRIPT }}/build-image.sh ${{ env.LANGUAGE }} ${{ env.GROUP }} ${{ env.ARTIFACT }} ${{ env.VERSION }} ${{ env.PACKAGE}} ${{ env.REPOSITORY_HOST }} ${{ env.REPOSITORY_USER }} ${{ env.REPOSITORY_SECRET }} ${{ env.REPOSITORY_PATH }} ${{ env.PROJECT }} ${{ github.workspace }} ${{ env.SEGURITY_GROUPS }} ${{ env.SUBNETS }} 
+        ${{ env.SCRIPT }}/build-image.sh ${{ env.LANGUAGE }} ${{ env.GROUP }} ${{ env.ARTIFACT }} ${{ env.VERSION }} ${{ env.PACKAGE}} ${{ env.REPOSITORY_HOST }} ${{ env.REPOSITORY_USER }} ${{ env.REPOSITORY_SECRET }} ${{ env.REPOSITORY_PATH }} ${{ env.PROJECT }} ${{ github.workspace }} ${{ env.SECURITY_GROUPS }} ${{ env.SUBNETS }} 
   deploy:
     name: deploy
     runs-on: [self-hosted]
@@ -221,7 +221,7 @@ jobs:
       AMI_ID: ${{ jobs.image.outputs.image-number-id }}
       PROJECT:  ${{ inputs.project-name }}   # get input name, this name use in dns site and global value. project = product business
       AMI_VERSION:  ${{ jobs.build.outputs.package-version-name }}   # get package version generate from step build
-      SEGURITY_GROUPS: ${{ jobs.environment.outputs.security-group-number-ids }}
+      SECURITY_GROUPS: ${{ jobs.environment.outputs.security-group-number-ids }}
       SUBNETS: ${{ jobs.environment.outputs.subnet-number-ids }}
     if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }} 
     steps:
@@ -230,7 +230,7 @@ jobs:
       - name: Deploy
         shell: bash
         run: |
-        ${{ env.SCRIPT }}/terraform-deploy.sh ${{ env.PROJECT }} ${{ env.AMI_VERSION }} ${{ env.AMI_ID }} ${{ github.workspace }} ${{ github.ref }} ${{ env.SEGURITY_GROUPS }} ${{ env.SUBNETS }} 
+        ${{ env.SCRIPT }}/terraform-deploy.sh ${{ env.PROJECT }} ${{ env.AMI_VERSION }} ${{ env.AMI_ID }} ${{ github.workspace }} ${{ github.ref }} ${{ env.SECURITY_GROUPS }} ${{ env.SUBNETS }} 
       # Step 2
       - name: Health Check
         shell: bash
