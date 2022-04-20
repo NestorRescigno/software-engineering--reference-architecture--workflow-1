@@ -2,17 +2,19 @@
 # *************           IBERIA L.A.E.                   *************
 # *************       by Software Engineering             *************
 # *********************************************************************
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+  }
+}
 
 provider "aws" {
   region = var.aws_region
 }
 
-terraform {
-  required_providers {
-    aws = { source = "hashicorp/aws"
-    version = "3.61.0" }
-  }
-}
 
 ####################################################################
 ## Change value key service_name with same value in terraform.tfvars

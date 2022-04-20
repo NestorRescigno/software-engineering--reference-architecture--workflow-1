@@ -4,6 +4,14 @@
 # *********************************************************************
 ACTIVE = %1
 
+
+# client aws download without action github
+# curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+# unzip awscliv2.zip
+# sudo ./aws/install 
+# aws --version
+# aws 
+
 if [${ ACTIVE }==true] then
   echo "++++++++++++++++++++++++++++++++++++++++++++++++++"
   echo "Getting SoapUI 5.6.0..."
