@@ -43,12 +43,14 @@ then
       unzip awscliv2.zip
       sudo ./aws/install 
       aws --version
-      #Note of developer: is good to file ? boh! depends path and access privilage to magine. find more information.
+     
   else
       echo "Continuing with aws."
   fi
-    # get credencial access to aws cloud
-     aws configure -aws_access_key_id=${ID_KEY_ACCESSS} -aws_secret_access_key=${ID_KEY_SECRET} && clear
+    # get credencial access to aws cloud  
+    # Note of developer: is good to file ? boh! depends path and access privilage to magine. find more information.
+    # test enviroment param
+     aws configure -Daws_access_key_id=${ID_KEY_ACCESSS} -Daws_secret_access_key=${ID_KEY_SECRET} && clear
   
   echo "***************************************************"
   echo "configure complete"
