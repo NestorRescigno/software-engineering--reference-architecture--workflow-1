@@ -181,18 +181,24 @@ jobs:
     name: environment
     runs-on: [self-hosted]
     outputs:
+      shared-number-ids-arn_suffix:
+        description: "ami shered numbers ids"
+        value: ${{ steps.build-environment-generator.shared-ids }} 
       security-group-number-ids:
         description: "security groups numbers ids"
         value: ${{ steps.build-environment-generator.security-group-ids }}
       subnet-number-ids:
         description: "subnets numbers ids"
-        value: ${{ steps.build-environment-generator.subnets-ids }}
+        value: ${{ steps.build-environment-generator.subnets-ids }}   
       alb-target-group-number-arn:
         description: "load balancer targer group numbers ids"
         value: ${{ steps.build-environment-generator.alb-target-group-arn }}
-      shared-number-ids:
-        description: "ami shered numbers ids"
-        value: ${{ steps.build-environment-generator.shared-ids }} 
+      alb-target-group-number-arn-suffix:
+        description: "load balancer targer group arn sufix"
+        value: ${{ steps.build-environment-generator.alb-target-group-arn-suffix }}
+      lb-number-arn-suffix:
+        description: "load balancer arn suffix"
+        value: ${{ steps.build-environment-generator.lb-arn-suffix }}
     env:
       SCRIPT: ${{ github.workspace }}/.github/action/utils/
       PROJECT:  ${{ inputs.project-name }}   # get input name, this name use in dns site and global value. project = product business
@@ -263,6 +269,9 @@ jobs:
       SECURITY_GROUPS: ${{ jobs.environment.outputs.security-group-number-ids }}
       SUBNETS: ${{ jobs.environment.outputs.subnet-number-ids }}
       ALB_TARGET_GROUP: ${{ jobs.environment.outputs.alb-target-group-number-arn}}
+      ALB_TARGET_GROUP_SUFFIX: ${{ jobs.environment.outputs.alb-target-group-number-arn-suffix}}
+      LB_SUFFIX: ${{ jobs.environment.outputs.lb-number-arn-suffix}}
+
       # input account integration/preproduction environment
       AWS_ACCESS_KEY: ${{ inputs.aws-access-key }}
       AWS_SECRET_ACCESS_KEY: ${{ inputs.aws-secret-access-key }}

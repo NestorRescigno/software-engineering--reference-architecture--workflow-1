@@ -12,6 +12,9 @@ REF=${{ github.ref }}
 SECURITY_GROUPS}=${{ env.SECURITY_GROUPS }} 
 SUBNETS=${{ env.SUBNETS }}
 ALB_TARGET_GROUP_ARN=${{ env.ALB_TARGET_GROUP}} 
+ALB_TARGET_GROUP_ARN_SUFFIX= ${{ env.ALB_TARGET_GROUP_SUFFIX}}                
+LB_ARN_SUFFIX=${{ env.LB_SUFFIX}} 
+
 aws_access_key=${{ env.AWS_ACCESS_KEY }}
 aws_secret_access_key=${{ env.AWS_SECRETE_ACCESS_KEY }}
 
@@ -42,6 +45,8 @@ if [ ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then
     -var "security_group=${SECURITY_GROUPS}"
     -var "subnet_target=${SUBNETS}"
     -var "aws_alb_target_group_arn=${ALB_TARGET_GROUP_ARN}"
+    -var "aws_alb_target_group_arn_suffix=${ALB_TARGET_GROUP_ARN_SUFFIX}"
+    -var "aws_lb_alb_arn_suffix=${LB_ARN_SUFFIX}"
 
     # apply plan terrafom
     terraform apply 

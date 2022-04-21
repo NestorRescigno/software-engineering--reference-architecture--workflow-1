@@ -73,6 +73,16 @@ variable "aws_alb_target_group_arn" {
   type        = string
 }
 
+variable "aws_lb_alb_arn_suffix" {
+  description = "aws target group arn."
+  type        = string
+}
+
+variable "aws_alb_target_group_arn_suffix" {
+  description = "aws target group arn."
+  type        = string
+}
+
 variable "bucket_name" {
   description = "bucket aws name."
   type        = string

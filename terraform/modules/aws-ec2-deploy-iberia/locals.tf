@@ -44,30 +44,4 @@ locals {
   estimated_instance_warmup   = 130
 }
 
-locals {
 
-  data = {
-    sg-common-microservices = ""
-    vpc = {
-      vpc-product = join("-",[var.project, var.environment])
-      amber = {
-        subnet  = "*amber*"
-        subneta = join("-",[var.project,"snet","amber", provider.aws.region,"a"])
-        subnetb = join("-",[var.project,"snet","amber", provider.aws.region,"b"])
-        subnetc = join("-",[var.project,"snet","amber", provider.aws.region,"c"])
-      }
-      green = {
-        subnet  = "*green*"
-        subneta = join("-",[var.project,"snet","green", provider.aws.region,"a"])
-        subnetb = join("-",[var.project,"snet","green", provider.aws.region,"b"])
-        subnetc = join("-",[var.project,"snet","green", provider.aws.region,"c"])
-      }
-      red = {
-        subnet  = "*red*"
-        subneta = join("-",[var.project,"snet","red", provider.aws.region,"a"])
-        subnetb = join("-",[var.project,"snet","red", provider.aws.region,"b"])
-        subnetc = join("-",[var.project,"snet","red", provider.aws.region,"c"])
-      }
-    }
-  }
-}

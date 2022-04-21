@@ -6,6 +6,16 @@
 
 data "aws_caller_identity" "current" {}
 
+#########################
+## VPC 
+#########################
+
+data "aws_vpc" "vpc_product" {
+  tags = {
+    Name = local.data.vpc.vpc_product
+  }
+}
+
 ###########################
 ## data Route53 Hosted Zone
 ###########################
@@ -47,15 +57,7 @@ data "aws_iam_instance_profile" "ip" {
   name = join("-",[var.project,var.environment,"instanceprofile",var.service_name])
 }
 
-#########################
-## VPC 
-#########################
 
-data "aws_vpc" "vpc_product" {
-  tags = {
-    Name = local.data.vpc.vpc_product
-  }
-}
 
 #########################
 ###### Amber Subnets data
