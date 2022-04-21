@@ -31,9 +31,9 @@ resource "aws_alb_target_group" "alb" {
       Name                     = lower(format("%s-%s-alb-tg", var.environment_prefix, var.service_name)),
       Side                     = "alb"
       Terraform                = "True"
-      Project                  = var.project
-      Environment              = var.environment
-      Cluster                  = local.cluster_name
+      Project                  = "${var.project}"
+      Environment              = "${var.environment}"
+      Cluster                  = "${local.cluster_name}"
       "tf:Used"                = "True"
       "Application:ArtifactId" = join("-",[var.service_name,"core"])      
       "Application:GroupId"    = var.service_groupid
@@ -83,12 +83,12 @@ resource "aws_lb" "alb" {
       Name = lower(format("%s-%s-ap-lb", var.environment_prefix, var.service_name)),
       Side                     = "alb"
       Terraform                = "True"
-      Project                  = var.project
-      Environment              = var.environment
-      Cluster                  = local.cluster_name
+      Project                  = "${var.project}"
+      Environment              = "${var.environment}"
+      Cluster                  = "${local.cluster_name}"
       "tf:Used"                = "True"
       "Application:ArtifactId" = join("-",[var.service_name,"core"])      
-      "Application:GroupId"    = var.service_groupid   # Note of develops: use other var
+      "Application:GroupId"    = "${var.service_groupid}"   # Note of develops: use other var
     })
   )
 }
