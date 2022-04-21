@@ -36,7 +36,7 @@ resource "aws_alb_target_group" "alb" {
       Cluster                  = "${local.cluster_name}"
       "tf:Used"                = "True"
       "Application:ArtifactId" = join("-",[var.service_name,"core"])      
-      "Application:GroupId"    = var.service_groupid
+      "Application:GroupId"    = "${var.service_groupid}"
     })
   )
 }

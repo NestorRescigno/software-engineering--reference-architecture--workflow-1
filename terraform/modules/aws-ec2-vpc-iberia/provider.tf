@@ -14,6 +14,7 @@ terraform {
 
 # Configure the AWS Provider
 provider "aws" {
+  alias = "aws"
   region = var.aws_region
 }
 
@@ -27,7 +28,7 @@ terraform {
     bucket = var.bucket_name  # bucket = "terraform-backend-ancill-accounts"
     key = var.bucket_key   # key= "prelive/terraform.[service_name].tfstate" 
 
-    region = provider.aws.region
+    region = var.aws_region
 
     dynamodb_table = var.dynamodb_table
     encrypt        = true

@@ -76,8 +76,8 @@ variable "subnet_target" {
 
 variable "lenguage_code" {
   description ="lenguage code origin for example java, angular , go , etc."
-  validation{
-    condition     = can(regex("", var.lenguage_code))
-    error_message = "the lenguage value must be a valid: java, angular, go"
-  }
+  # validation{
+  #   condition     = can(regex("", var.lenguage_code))
+  #   error_message = "the lenguage value must be a valid: java, angular, go"
+  # }
 }

@@ -24,6 +24,7 @@ terraform {
 
 # Configure the AWS Provider
 provider "aws" {
+  alias = "aws"
   region = var.aws_region
 }
 
@@ -41,7 +42,7 @@ data "aws_ami" "base_ami" {
       value = ["hvm"]
     }
     
-    owner = provider.aws.project
+    owner = var.aws_region
 }
 
 # instance aws with script configuration bash on instance
@@ -52,13 +53,13 @@ resource "aws_instance" "app" {
     subnet_id               = var.subnet_target
     vpc_security_group_ids  = var.security_group  # Note of developer: find correct group , use instance security group
     user_data               = templatefile("user_data.tftpl", {
-        department = var.user_department, 
-        name = var.user_name, 
-        lenguage= var.lenguage_code,
-        artifact= var.ref , 
-        package = var.package , 
-        user   = var.artifact_user,
-        secret = var.artifact_secret
+        department = "${var.user_department}", 
+        name = "${var.user_name}", 
+        lenguage= "${var.lenguage_code}",
+        artifact= "${var.ref}" , 
+        package = "${var.package}" , 
+        user   = "${var.artifact_user}",
+        secret = "${var.artifact_secret}"
       })
 }
 
