@@ -286,7 +286,14 @@ jobs:
   tagging:
     name: tagging
     runs-on: [self-hosted]      
+    env:
+      TAG: ${{ jobs.build.outputs.package-version-name }}   # version artifact  = VERSION  
+      RELEASE:  ${{ jobs.build.outputs.package-version-name }}  # funtional version of product. now default use tag version.
+      BODY: "build image id: ${{ jobs.image.outputs.image-number-id }}"
+      run: |
+        # pending code. 
+        # git tag ${TAG}
   # clean workspace and other reference. end process. NOTE OF DEVELOPER: pending clean
-  clean:
-    name: clean
-    runs-on: [self-hosted]
+  # clean:
+  #   name: clean
+  #   runs-on: [self-hosted]
