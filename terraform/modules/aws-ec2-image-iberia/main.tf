@@ -27,11 +27,23 @@ provider "aws" {
   region = var.aws_region
 }
 
+data "aws_caller_identity" "current" {}
+
+## Change these values if neccesary
+locals {
+  sharedId = [data.aws_caller_identity.current.id, var.shareds_id]
+}
 
 # resource ami form instance
 resource "aws_ami_from_instance" "app_ami" {
     name = join("-",[((var.lenguage_code=="java")?"ms":"web"), var.project_name, var.service_name, var.service_version, formatdate("YYMMMDDhhmmss", timestamp)])
     source_instance_id = var.source_instance_id
+    
 }
 
-# destroy instance app
+# shared ami other account
+resource "aws_ami_launch_permission" "shared" {
+      count = length(local.sharedId)
+      image_id = aws_ami_from_instance.app_ami.id
+      account_id  = local.sharedId[count.id]
+}

@@ -38,6 +38,7 @@ REF                 = ${{ github.ref }}
 
 SG                  = ${{ env.SECURITY_GROUPS }}      # NOTE OF DEVELOP : Pending find in code or workflow
 SUBNET              = ${{ env.SUBNETS }}      # NOTE OF DEVELOP : Pending find in code or workflow
+SHARED              = ${{ env.SHARED }}
 
 # access key cloud
 aws_access_key_op          = ${{ env.AWS_ACCESS_KEY_OP }}
@@ -103,7 +104,8 @@ if [ ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then
      -var "project_name=${PROJECT}"
      -var "service_name=${ARTIFACT}"
      -var "service_version=${VERSION}"
-     -var "source_instance_id=${instance-id}" # Note to develop: verify pass var
+     -var "source_instance_id=${instance-id}"
+     -var "shareds_id=${SHARED}" # Note to develop: verify pass var
 
      # apply plan terrafom
      terraform apply

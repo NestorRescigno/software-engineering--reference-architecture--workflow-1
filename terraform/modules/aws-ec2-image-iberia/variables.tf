@@ -28,6 +28,11 @@ variable "source_instance_id" {
   description = "the EC2 instance aws id"
 }
 
+# secret read to reference register 
+variable "shareds_id" {
+  description = "the ami shared to other account" 
+}
+
 variable "lenguage_code" {
   description ="lenguage code origin for example java, angular , go , etc."
   validation{

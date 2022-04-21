@@ -68,8 +68,7 @@ inputs:
     required: true
   repository-token:
     description: 'repository artifact token parameter'
-    required: true  
-
+    required: true 
   # configuration cloud secret by enviroment
   aws-access-key:
     description: 'access key aws publish environment'
@@ -191,6 +190,9 @@ jobs:
       alb-target-group-number-arn:
         description: "load balancer targer group numbers ids"
         value: ${{ steps.build-environment-generator.alb-target-group-arn }}
+      shared-number-ids:
+        description: "ami shered numbers ids"
+        value: ${{ steps.build-environment-generator.shared-ids }} 
     env:
       SCRIPT: ${{ github.workspace }}/.github/action/utils/
       PROJECT:  ${{ inputs.project-name }}   # get input name, this name use in dns site and global value. project = product business
@@ -233,6 +235,7 @@ jobs:
       REPOSITORY_SECRET: inputs.repository-token   # change token to read, now use write
       SECURITY_GROUPS: ${{ jobs.environment.outputs.security-group-number-ids }}
       SUBNETS: ${{ jobs.environment.outputs.subnet-number-ids }}
+      SHARED: ${{ jobs.environment.outputs.shared-number-ids }}  # shared ami with environment.
       # secret account operational. it isn't present in input but en secret repository owner.
       AWS_ACCESS_KEY_OP: ${{secret.aws-access-key-op}}                   
       AWS_SECRET_ACCESS_KEY_OP: ${{ secret.aws-secret-access-key-op}}
@@ -283,16 +286,20 @@ jobs:
         ${{ env.SCRIPT }}/integration-tests.sh 
   # create de tag release en github. use same release and put image id in description or release note. necessary to next environment 
   # NOTE OF DEVELOPER: pending release process
-  tagging:
-    name: tagging
+  tag:
+    name: tag
     runs-on: [self-hosted]      
     env:
       TAG: ${{ jobs.build.outputs.package-version-name }}   # version artifact  = VERSION  
       RELEASE:  ${{ jobs.build.outputs.package-version-name }}  # funtional version of product. now default use tag version.
       BODY: "build image id: ${{ jobs.image.outputs.image-number-id }}"
-      run: |
-        # pending code. 
-        # git tag ${TAG}
+    if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }} 
+    steps:
+      - name: upload
+        shell: bash
+        run: |
+          # pending code. 
+          # git tag ${TAG}
   # clean workspace and other reference. end process. NOTE OF DEVELOPER: pending clean
   # clean:
   #   name: clean
