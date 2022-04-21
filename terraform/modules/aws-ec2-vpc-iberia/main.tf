@@ -148,7 +148,6 @@ resource "aws_route53_zone" "main_domain_local" {
 
 resource "aws_route53_record" "alb-record" {
   zone_id = aws_route53_zone.main_domain_local.zone_id  
-  # zone_id = data.aws_route53_zone.ancillaries_cloud_iberia_local.id
   name    = join(".",[var.service_name, var.environment, var.project. var.global_dns])
   type    = "A"
  
@@ -164,7 +163,6 @@ resource "aws_route53_record" "alb-record" {
 ###########################################
 resource "aws_route53_record" "blue-record" {
   zone_id = aws_route53_zone.main_domain_local.zone_id
-  # zone_id = data.aws_route53_zone.ancillaries_cloud_iberia_local.id
   name    = join(".",[var.service_name, "blue",var.environment, var.project. var.global_dns])
   type    = "A"
   allow_overwrite = true
@@ -181,7 +179,6 @@ resource "aws_route53_record" "blue-record" {
 ############################################
 resource "aws_route53_record" "green-record" {
   zone_id = aws_route53_zone.main_domain_local.zone_id
-  # zone_id = data.aws_route53_zone.ancillaries_cloud_iberia_local.id
   name    = join(".",[var.service_name, "green",var.environment, var.project. var.global_dns])
   type    = "A"
   allow_overwrite = true
