@@ -132,17 +132,20 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14'
-      # Step 4  
-      # NOTE OF DEVELOPER: control step pending. example: control version. 
-      # the correct artifact version in main is very important because represent tag release ending process. 
-      # if exist version release then the artifact version is oblicatory incremente number. example in pom.xml or package.json.
-      - name: control
-      # Step 5
+      # Step 4 
       - name: Building Artifact
         id: package-generator-name
         shell: bash
         run: |
         ${{ env.SCRIPT }}/build.sh
+      # Step 5  
+      - name: control
+        id: control-version
+        shell: bash
+        env:
+          VERSION:  ${{ jobs.build.outputs.package-version-name }}   # get package name generate from step build
+        run: |
+        ${{ env.SCRIPT }}/control-version.sh
     steps:
       # implement sonar
       # Step 1

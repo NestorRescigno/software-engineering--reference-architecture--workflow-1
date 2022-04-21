@@ -9,11 +9,11 @@
 # while for the main branch it performs both 
 # the action of creating an instance and generating an image from it.
      
-# USER_NAME           = %1
-# USER_DEPARTAMENT    = %2
+# USER_NAME           = $1
+# USER_DEPARTAMENT    = $2
 
 
-# INSTANCE_TYPE     = %3
+# INSTANCE_TYPE     = $3
 
 LANGUAGE            = ${{ env.LANGUAGE }}
 

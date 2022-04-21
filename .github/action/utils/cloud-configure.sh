@@ -7,9 +7,9 @@
 echo "***************************************************"
 echo " configure cloud credentials..."
 echo "***************************************************"
-TYPE=%1
-ID_KEY_ACCESSS=%2
-ID_KEY_SECRET=%3
+TYPE=$1
+ID_KEY_ACCESSS=$2
+ID_KEY_SECRET=$3
 
 echo "***************************************************"
 echo " configure terraform                               "
