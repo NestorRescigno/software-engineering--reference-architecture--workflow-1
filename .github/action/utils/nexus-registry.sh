@@ -4,15 +4,19 @@
 # *********************************************************************
 
 if [${REPOSITORY_URL} != ""] then
-
+    # setting credencials
+    REPOSITORY_USER   = ${{ env.REPOSITORY_USER }}
+    REPOSITORY_SECRET = ${{ env.REPOSITORY_SECRET }}
+    REPOSITORY_DNS    = ${{ env.REPOSITORY_DNS }}
+    REPOSITORY_URL    ="https://${REPOSITORY_USER}:${REPOSITORY_SECRET}@${REPOSITORY_DNS}"      # DNS can't content http or https, is necesary certificate 
+  
     # setting variable
-    REPOSITORY_URL  ="https://%2:%3@%1"      # DNS can't content http or https, is necesary certificate 
-    LANGUAGE        =%4
-    REF             =%5
-    GROUPID         =%6
-    ARTIFACTID      =%7
-    VERSION         =%8
-    PACKAGE-TYPE    =%9
+    LANGUAGE          =${{ env.LANGUAGE }} 
+    REF               =${{ github.ref }} 
+    GROUPID           =${{ env.GROUP}}
+    ARTIFACTID        =${{ env.ARTIFACT}} 
+    VERSION           =${{ env.VERSION}}
+    PACKAGE-TYPE      =${{ env.PACKAGE}}
     # setting contants
     PATH-SNAPSHOTS      = "/repository/snapshots/"
     PATH-RELEASE        = "/repository/releases/"

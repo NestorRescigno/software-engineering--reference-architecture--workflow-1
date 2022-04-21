@@ -3,9 +3,11 @@
 # *************       by software Engineering             *************
 # *********************************************************************
 # setting variable
-workspace = %1
-lenguage = %2
-ref = %3
+# ${{ env.SCRIPT }}/build.sh ${{ github.workspace }} ${{ env.LANGUAGE }} ${{ github.ref }}
+ 
+workspace = ${{ github.workspace }}
+lenguage = ${{ env.LANGUAGE }}
+ref = ${{ github.ref }}
 
 if [${lenguage}=="java"]
 then

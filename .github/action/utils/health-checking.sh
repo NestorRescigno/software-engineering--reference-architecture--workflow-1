@@ -2,10 +2,14 @@
 # *************           IBERIA L.A.E.                   *************
 # *************       by software Engineering             *************
 # *********************************************************************
+
+# set load balancer and
+ALB_ARN: ${{ env.aws_alb_target_group_arn }}
+
 echo "***************************************************"
 echo "Health Checking..."
 echo "***************************************************"
-ALB_ARN: %1
+
 sleep 30
 echo "1st instance state:"
 HEALTH_STATUS=0

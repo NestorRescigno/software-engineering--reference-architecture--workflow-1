@@ -4,17 +4,18 @@
 # *********************************************************************
 
 # setting variable
-PROJECT     =%1
-GROUP       =%2
-SERVICE     =%3
-WORKSPACE   =%4
-REF         =%5
-# access key cloud
-aws_access_key_int          = %6
-aws_access_key_int          = %7
+PROJECT     =${{ env.PROJECT }}
+GROUP       =${{ env.GROUP }} 
+SERVICE     =${{ env.SERVICE }} 
+WORKSPACE   =${{ github.workspace }}
+REF         =${{ github.ref }}
 
-aws_access_key_dev          = %8
-aws_secret_access_key_dev   = %9 
+# access key cloud
+aws_access_key_int          = ${{ env.AWS_ACCESS_KEY }}
+aws_secret_access_key_int   = ${{ env.AWS_SECRETE_ACCESS_KEY }}
+
+aws_access_key_dev          = ${{ env.AWS_ACCESS_KEY_DEV }}
+aws_secret_access_key_dev   = ${{ env.AWS_SECRETE_ACCESS_KEY_DEV }}  
 
 # setting enviroment and prefix with conditional reference branchs
 # pull request event from action

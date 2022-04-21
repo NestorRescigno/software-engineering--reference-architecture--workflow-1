@@ -8,44 +8,43 @@
 # when it executes a pull request on the develop branch. 
 # while for the main branch it performs both 
 # the action of creating an instance and generating an image from it.
-
-
+     
 # USER_NAME           = %1
 # USER_DEPARTAMENT    = %2
 
 
 # INSTANCE_TYPE     = %3
 
-LANGUAGE            = %1
+LANGUAGE            = ${{ env.LANGUAGE }}
 
 # artifact param
-GROUP               = %2     
-ARTIFACT            = %3
-VERSION             = %4
-PACKAGE             = %5
+GROUP               = ${{ env.GROUP }}     
+ARTIFACT            = ${{ env.ARTIFACT }} 
+VERSION             = ${{ env.VERSION }} 
+PACKAGE             = ${{ env.PACKAGE}}
 
 # get artifact image of differente type for lenguage
-HOST                = %7
-USER                = %8
-SECRET              = %9
-REPOSITORY          = %10 
+HOST                = ${{ env.REPOSITORY_HOST }} 
+USER                = ${{ env.REPOSITORY_USER }} 
+SECRET              = ${{ env.REPOSITORY_SECRET }}
+REPOSITORY          = ${{ env.REPOSITORY_PATH }} 
 
 # product name      
-PROJECT             = %11
+PROJECT             = ${{ env.PROJECT }}
 
 # repository reference
-workspace           = %12
-REF                 = %13
+workspace           = ${{ github.workspace }}
+REF                 = ${{ github.ref }}
 
-SG                  = %14      # NOTE OF DEVELOP : Pending find in code or workflow
-SUBNET              = %15      # NOTE OF DEVELOP : Pending find in code or workflow
+SG                  = ${{ env.SECURITY_GROUPS }}      # NOTE OF DEVELOP : Pending find in code or workflow
+SUBNET              = ${{ env.SUBNETS }}      # NOTE OF DEVELOP : Pending find in code or workflow
 
 # access key cloud
-aws_access_key_op          = %6
-aws_access_key_op          = %7
+aws_access_key_op          = ${{ env.AWS_ACCESS_KEY_OP }}
+aws_access_key_op          = ${{ env.AWS_SECRETE_ACCESS_KEY_OP }} 
 
-aws_access_key_dev          = %8
-aws_secret_access_key_dev   = %9 
+aws_access_key_dev          = ${{ env.AWS_ACCESS_KEY_DEV }}
+aws_secret_access_key_dev   = ${{ env.AWS_SECRETE_ACCESS_KEY_DEV }} 
 
 
 # the path repository is present in var  

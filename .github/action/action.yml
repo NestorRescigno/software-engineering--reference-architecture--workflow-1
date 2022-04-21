@@ -142,7 +142,7 @@ jobs:
         id: package-generator-name
         shell: bash
         run: |
-        ${{ env.SCRIPT }}/build.sh ${{ github.workspace }} ${{ env.LANGUAGE }} ${{ github.ref }}
+        ${{ env.SCRIPT }}/build.sh
     steps:
       # implement sonar
       # Step 1
@@ -158,7 +158,7 @@ jobs:
           SONAR_SECRET: inputs.sonarqube-token
           SONAR_CLI: inputs.sonarqube-client-version
         run: |
-        ${{ env.SCRIPT }}/sonar-scanner.sh ${{ env.SONAR_URL }} ${{ env.SONAR_USER }} ${{ env.SONAR_SECRET }} ${{ env.SONAR_CLI }} ${{ env.LANGUAGE }} ${{ github.ref }} ${{ github.GROUP }} ${{ github.ARTIFACT }} ${{ github.VERSION }} 
+        ${{ env.SCRIPT }}/sonar-scanner.sh
     steps:
       # deploy artifact to registry repository
       - name: Registy artifact
@@ -174,8 +174,7 @@ jobs:
           REPOSITORY_USER: inputs.repository-user
           REPOSITORY_SECRET: inputs.repository-token
         run: |
-        # path in script repository nexus defaults is /repository/snapshots/ and /repository/releases/ for java and npm-private for angular node package
-        ${{ env.SCRIPT }}/nexus-registry.sh ${{ env.REPOSITORY_DNS }} ${{ env.REPOSITORY_USER }} ${{ env.REPOSITORY_SECRET }} ${{ env.LANGUAGE }} ${{ github.ref }} ${{GROUP}} ${{ARTIFACT}} ${{VERSION}}
+        ${{ env.SCRIPT }}/nexus-registry.sh
   environment:
     name: environment
     runs-on: [self-hosted]
@@ -209,7 +208,7 @@ jobs:
         id: build-environment-generator
         shell: bash
         run: |
-        ${{ env.SCRIPT }}/build-environment.sh ${{ env.PROJECT }} ${{ env.GROUP }} ${{ env.SERVICE }} ${{ env.WORKSPACE }} ${{ env.REF }} ${{ env.AWS_ACCESS_KEY }} ${{ env.AWS_SECRETE_ACCESS_KEY }} ${{ env.AWS_ACCESS_KEY_DEV }} ${{ env.AWS_SECRETE_ACCESS_KEY_DEV }} 
+        ${{ env.SCRIPT }}/build-environment.sh
   image:
     name: image
     runs-on: [self-hosted]
@@ -244,7 +243,7 @@ jobs:
         id: image-generator
         shell: bash
         run: |
-        ${{ env.SCRIPT }}/build-image.sh ${{ env.LANGUAGE }} ${{ env.GROUP }} ${{ env.ARTIFACT }} ${{ env.VERSION }} ${{ env.PACKAGE}} ${{ env.REPOSITORY_HOST }} ${{ env.REPOSITORY_USER }} ${{ env.REPOSITORY_SECRET }} ${{ env.REPOSITORY_PATH }} ${{ env.PROJECT }} ${{ github.workspace }} ${{ env.SECURITY_GROUPS }} ${{ env.SUBNETS }} ${{ env.AWS_ACCESS_KEY_OP }} ${{ env.AWS_SECRETE_ACCESS_KEY_OP }} ${{ env.AWS_ACCESS_KEY_DEV }} ${{ env.AWS_SECRETE_ACCESS_KEY_DEV }} 
+        ${{ env.SCRIPT }}/build-image.sh
   deploy:
     name: deploy
     runs-on: [self-hosted]
@@ -268,21 +267,21 @@ jobs:
       - name: Deploy
         shell: bash
         run: |
-        ${{ env.SCRIPT }}/terraform-deploy.sh ${{ env.PROJECT }} ${{ env.AMI_VERSION }} ${{ env.AMI_ID }} ${{ github.workspace }} ${{ github.ref }} ${{ env.SECURITY_GROUPS }} ${{ env.SUBNETS }} ${{ env.ALB_TARGET_GROUP}} ${{ env.AWS_ACCESS_KEY_OP }} ${{ env.AWS_SECRETE_ACCESS_KEY_OP }}
+        ${{ env.SCRIPT }}/terraform-deploy.sh 
       # Step 2
       - name: Health Check
         shell: bash
         run: |
-        ${{ env.SCRIPT }}/health-checking.sh ${{ env.aws_alb_target_group_arn }}
+        ${{ env.SCRIPT }}/health-checking.sh
       # Step 3
       - name: Integration tests
         shell: bash
         run: |
-        ${{ env.SCRIPT }}/integration-tests.sh ${{ env.TEST }} ${{ github.workspace }}
+        ${{ env.SCRIPT }}/integration-tests.sh 
   # create de tag release en github. use same release and put image id in description or release note. necessary to next environment 
   # NOTE OF DEVELOPER: pending release process
   tagging:
-    name: taggin 
+    name: tagging
     runs-on: [self-hosted]      
   # clean workspace and other reference. end process. NOTE OF DEVELOPER: pending clean
   clean:

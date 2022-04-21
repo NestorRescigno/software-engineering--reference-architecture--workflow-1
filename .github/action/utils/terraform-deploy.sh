@@ -4,16 +4,17 @@
 # *********************************************************************
 
 # setting variable
-PROJECT=%1
-AMI_VERSION=%2
-AMI_ID=%3
-WORKSPACE=%4
-REF=%5
-SECURITY_GROUPS}=%6
-SUBNETS=%7
-ALB_TARGET_GROUP_ARN=%8
-aws_access_key=%9
-aws_secret_access_key=%10
+PROJECT=${{ env.PROJECT }} 
+AMI_VERSION=${{ env.AMI_VERSION }}
+AMI_ID=${{ env.AMI_ID }}
+WORKSPACE=${{ github.workspace }}
+REF=${{ github.ref }}
+SECURITY_GROUPS}=${{ env.SECURITY_GROUPS }} 
+SUBNETS=${{ env.SUBNETS }}
+ALB_TARGET_GROUP_ARN=${{ env.ALB_TARGET_GROUP}} 
+aws_access_key=${{ env.AWS_ACCESS_KEY }}
+aws_secret_access_key=${{ env.AWS_SECRETE_ACCESS_KEY }}
+
 # setting enviroment and prefix with conditional reference branchs
 # pull request event from action
 if [ ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then  
