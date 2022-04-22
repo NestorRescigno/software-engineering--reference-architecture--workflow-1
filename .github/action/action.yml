@@ -71,10 +71,10 @@ inputs:
     required: true 
   # configuration cloud secret by enviroment
   aws-access-key:
-    description: 'access key aws publish environment'
+    description: 'access key aws publish environment: example: production'
     required: true
   aws-secret-acesss-key:
-    description: 'secret access key aws publish environment'
+    description: 'secret access key aws publish environment example: production'
     required: true
   aws-access-key-dev:
     description: 'access key aws development environment'
@@ -82,7 +82,6 @@ inputs:
   aws-secret-acesss-key-dev:
     description: 'secret access key aws development environment'
     required: true
-
 on: [pull_request]
   pull_request:
     # Sequence of patterns matched against refs/heads
@@ -220,8 +219,37 @@ jobs:
         shell: bash
         run: |
         ${{ env.SCRIPT }}/build-environment.sh
+  instance:
+    name: development-instance
+    env:
+      SCRIPT: ${{ github.workspace }}/.github/action/utils/
+      LANGUAGE: ${{ inputs.lenguage-code }}
+      PROJECT:  ${{ inputs.project-name }}   # get input name, this name use in dns site and global value. project = product business
+      GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   # get package name generate from step build
+      ARTIFACT:  ${{ jobs.build.outputs.package-artifactid-name }}   # get package name generate fromstep build
+      VERSION:  ${{ jobs.build.outputs.package-version-name }}   # get package name generate from step build
+      PACKAGE: ${{ jobs.build.outputs.package-type-name }} # get package type extention from step build
+      REPOSITORY_PATH:  ${{ jobs.build.outputs.package-repository }}   # get path repository package generate font step build
+      REPOSITORY_HOST: inputs.repository-host
+      REPOSITORY_USER: inputs.repository-user    # change user to read, now use write
+      REPOSITORY_SECRET: inputs.repository-token   # change token to read, now use write
+      SECURITY_GROUPS: ${{ jobs.environment.outputs.security-group-number-ids }}
+      SUBNETS: ${{ jobs.environment.outputs.subnet-number-ids }}
+      
+      # input account development environment
+      AWS_ACCESS_KEY_DEV: ${{ inputs.aws-access-key-dev }}
+      AWS_SECRET_ACCESS_KEY_DEV: ${{ inputs.aws-secret-access-key-dev }}
+    if: ${{ startsWith(${ github.ref }, 'refs/heads/develop') == true }}
+    steps:    
+      # build image
+      # Step 1
+      - name: build instance
+        id: instance-generator
+        shell: bash
+        run: |
+        ${{ env.SCRIPT }}/build-instance.sh  
   image:
-    name: image
+    name: build-image
     runs-on: [self-hosted]
     outputs:
       image-number-id:
@@ -245,9 +273,7 @@ jobs:
       # secret account operational. it isn't present in input but en secret repository owner.
       AWS_ACCESS_KEY_OP: ${{secret.aws-access-key-op}}                   
       AWS_SECRET_ACCESS_KEY_OP: ${{ secret.aws-secret-access-key-op}}
-      # input account development environment
-      AWS_ACCESS_KEY_DEV: ${{ inputs.aws-access-key-dev }}
-      AWS_SECRET_ACCESS_KEY_DEV: ${{ inputs.aws-secret-access-key-dev }}
+    if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }}  
     steps:
       # build image
       # Step 1
@@ -257,7 +283,7 @@ jobs:
         run: |
         ${{ env.SCRIPT }}/build-image.sh
   deploy:
-    name: deploy
+    name: production-deploy
     runs-on: [self-hosted]
     env:
       SCRIPT: ${{ github.workspace }}/.github/action/utils/
@@ -296,7 +322,7 @@ jobs:
   # create de tag release en github. use same release and put image id in description or release note. necessary to next environment 
   # NOTE OF DEVELOPER: pending release process
   tag:
-    name: tag
+    name: create-tag
     runs-on: [self-hosted]      
     env:
       TAG: ${{ jobs.build.outputs.package-version-name }}   # version artifact  = VERSION  
