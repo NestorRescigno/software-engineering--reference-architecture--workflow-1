@@ -36,8 +36,8 @@ PROJECT             = ${{ env.PROJECT }}
 workspace           = ${{ github.workspace }}
 REF                 = ${{ github.ref }}
 
-SG                  = ${{ env.SECURITY_GROUPS }}      # NOTE OF DEVELOP : Pending find in code or workflow
-SUBNET              = ${{ env.SUBNETS }}      # NOTE OF DEVELOP : Pending find in code or workflow
+SG                  = ${{ env.SECURITY_GROUPS }}      
+SUBNET              = ${{ env.SUBNETS }}      
 SHARED              = ${{ env.SHARED }}
 
 # access key cloud
@@ -47,16 +47,18 @@ aws_access_key_op          = ${{ env.AWS_SECRETE_ACCESS_KEY_OP }}
 # the path repository is present in var  
 ARTIFACTREF        = "http://${HOST}/nexus/service/local/artifact/maven/redirect?r=${REPOSITORY}&g=${GROUP}&a=${ARTIFACT}&v=${VERSION}&p=${PACKAGE}"
  
-
 # pull request to develop event create instance in aws but it don't registry image of snapshot
 echo "***************************************************"
 echo "Creating image"
 echo "***************************************************"
-      
-. could-configure.sh ${aws_access_key_op} ${aws_secret_access_key_op }  # configure operational account, generate image and shared with instance 
-cd ${workspace}/terraform/module/aws-ec2-instance-iberia
+
+# configure operational account, generate image and shared with instance       
+. could-configure.sh ${aws_access_key_op} ${aws_secret_access_key_op }  
+
 # init terraform module
+cd ${workspace}/terraform/module/aws-ec2-instance-iberia
 terraform init
+
 # create plan terrafom
 terraform plan 
      -var "lenguage_code=${LANGUAGE}"

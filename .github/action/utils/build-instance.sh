@@ -34,8 +34,8 @@ PROJECT             = ${{ env.PROJECT }}
 workspace           = ${{ github.workspace }}
 REF                 = ${{ github.ref }}
 
-SG                  = ${{ env.SECURITY_GROUPS }}      # NOTE OF DEVELOP : Pending find in code or workflow
-SUBNET              = ${{ env.SUBNETS }}      # NOTE OF DEVELOP : Pending find in code or workflow
+SG                  = ${{ env.SECURITY_GROUPS }}      
+SUBNET              = ${{ env.SUBNETS }}      
 SHARED              = ${{ env.SHARED }}
 
 # access key cloud
@@ -46,10 +46,11 @@ echo "***************************************************"
 echo "create instance form image base to develoment"
 echo "***************************************************"
 
-. could-configure.sh ${aws_access_key_dev } ${aws_secret_access_key_dev } # create instance in developmente enviroment, need this account access.
+# create instance in developmente enviroment, need this account access.
+. could-configure.sh ${aws_access_key_dev } ${aws_secret_access_key_dev } 
 
-cd ${workspace}/terraform/module/aws-ec2-instance-iberia
 # init terraform module
+cd ${workspace}/terraform/module/aws-ec2-instance-iberia
 terraform init
 # create plan terrafom
 terraform plan 

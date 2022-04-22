@@ -141,7 +141,8 @@ jobs:
         id: control-version
         shell: bash
         env:
-          VERSION:  ${{ jobs.build.outputs.package-version-name }}   # get package name generate from step build
+          # get package name generate from step build
+          VERSION:  ${{ jobs.build.outputs.package-version-name }}  
         run: |
         ${{ env.SCRIPT }}/control-version.sh
     steps:
@@ -150,10 +151,14 @@ jobs:
       - name: Scan
         shell: bash
         env:
-          GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   # get package name generate from step build
-          ARTIFACT:  ${{ jobs.build.outputs.package-artifactid-name }}   # get package name generate from step build
-          VERSION:  ${{ jobs.build.outputs.package-version-name }}   # get package name generate from step build
-          PACKAGE: ${{ jobs.build.outputs.package-type-name }} # get package type extention from step build
+          # get package name generate from step build
+          GROUP:  ${{ jobs.build.outputs.package-groupid-name }}  
+          # get package name generate from step build
+          ARTIFACT:  ${{ jobs.build.outputs.package-artifactid-name }}  
+          # get package name generate from step build
+          VERSION:  ${{ jobs.build.outputs.package-version-name }}  
+          # get package type extention from step build
+          PACKAGE: ${{ jobs.build.outputs.package-type-name }} 
           SONAR_URL: inputs.sonarqube-host
           SONAR_USER: inputs.sonarqube-user
           SONAR_SECRET: inputs.sonarqube-token
@@ -166,10 +171,14 @@ jobs:
         id: registry-repository
         shell: bash
         env:
-          GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   # get package name generate from step build
-          ARTIFACT:  ${{ jobs.build.outputs.package-artifactid-name }}   # get package name generate from step build
-          VERSION:  ${{ jobs.build.outputs.package-version-name }}   # get package name generate from step build
-          PACKAGE: ${{ jobs.build.outputs.package-type-name }} # get package type extention from step build
+          # get package name generate from step build
+          GROUP:  ${{ jobs.build.outputs.package-groupid-name }}  
+          # get package name generate from step build
+          ARTIFACT:  ${{ jobs.build.outputs.package-artifactid-name }}  
+          # get package name generate from step build
+          VERSION:  ${{ jobs.build.outputs.package-version-name }}  
+          # get package type extention from step build
+          PACKAGE: ${{ jobs.build.outputs.package-type-name }} 
           # DNS hasn't content http:// or https://
           REPOSITORY_DNS: inputs.repository-host
           REPOSITORY_USER: inputs.repository-user
@@ -200,8 +209,10 @@ jobs:
         value: ${{ steps.build-environment-generator.lb-arn-suffix }}
     env:
       SCRIPT: ${{ github.workspace }}/.github/action/utils/
-      PROJECT:  ${{ inputs.project-name }}   # get input name, this name use in dns site and global value. project = product business
-      GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   # get package name generate from step build
+       # get input name, this name use in dns site and global value. project = product business
+      PROJECT:  ${{ inputs.project-name }}  
+      GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   
+      # get artifcat name generate from step build
       SERVICE:  ${{ jobs.build.outputs.package-artifactid-name }}
       WORKSPACE: ${{ github.workspace }}
       REF:  ${{ github.ref }}
@@ -224,15 +235,23 @@ jobs:
     env:
       SCRIPT: ${{ github.workspace }}/.github/action/utils/
       LANGUAGE: ${{ inputs.lenguage-code }}
-      PROJECT:  ${{ inputs.project-name }}   # get input name, this name use in dns site and global value. project = product business
-      GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   # get package name generate from step build
-      ARTIFACT:  ${{ jobs.build.outputs.package-artifactid-name }}   # get package name generate fromstep build
-      VERSION:  ${{ jobs.build.outputs.package-version-name }}   # get package name generate from step build
-      PACKAGE: ${{ jobs.build.outputs.package-type-name }} # get package type extention from step build
-      REPOSITORY_PATH:  ${{ jobs.build.outputs.package-repository }}   # get path repository package generate font step build
+      # get input name, this name use in dns site and global value. project = product business
+      PROJECT:  ${{ inputs.project-name }}   
+      # get package name generate from step build
+      GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   
+      # get package name generate fromstep build
+      ARTIFACT:  ${{ jobs.build.outputs.package-artifactid-name }}   
+      # get package name generate from step build
+      VERSION:  ${{ jobs.build.outputs.package-version-name }}   
+       # get package type extention from step build
+      PACKAGE: ${{ jobs.build.outputs.package-type-name }}
+      # get path repository package generate font step build
+      REPOSITORY_PATH:  ${{ jobs.build.outputs.package-repository }}   
       REPOSITORY_HOST: inputs.repository-host
-      REPOSITORY_USER: inputs.repository-user    # change user to read, now use write
-      REPOSITORY_SECRET: inputs.repository-token   # change token to read, now use write
+      # change user to read, now use write
+      REPOSITORY_USER: inputs.repository-user    
+      # change token to read, now use write
+      REPOSITORY_SECRET: inputs.repository-token   
       SECURITY_GROUPS: ${{ jobs.environment.outputs.security-group-number-ids }}
       SUBNETS: ${{ jobs.environment.outputs.subnet-number-ids }}
       
@@ -258,18 +277,27 @@ jobs:
     env:
       SCRIPT: ${{ github.workspace }}/.github/action/utils/
       LANGUAGE: ${{ inputs.lenguage-code }}
-      PROJECT:  ${{ inputs.project-name }}   # get input name, this name use in dns site and global value. project = product business
-      GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   # get package name generate from step build
-      ARTIFACT:  ${{ jobs.build.outputs.package-artifactid-name }}   # get package name generate fromstep build
-      VERSION:  ${{ jobs.build.outputs.package-version-name }}   # get package name generate from step build
-      PACKAGE: ${{ jobs.build.outputs.package-type-name }} # get package type extention from step build
-      REPOSITORY_PATH:  ${{ jobs.build.outputs.package-repository }}   # get path repository package generate font step build
+      # get input name, this name use in dns site and global value. project = product business
+      PROJECT:  ${{ inputs.project-name }}
+      # get package name generate from step build   
+      GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   
+      # get package name generate fromstep build
+      ARTIFACT:  ${{ jobs.build.outputs.package-artifactid-name }}   
+      # get package name generate from step build
+      VERSION:  ${{ jobs.build.outputs.package-version-name }} 
+      # get package type extention from step build  
+      PACKAGE: ${{ jobs.build.outputs.package-type-name }} 
+       # get path repository package generate font step build
+      REPOSITORY_PATH:  ${{ jobs.build.outputs.package-repository }}  
       REPOSITORY_HOST: inputs.repository-host
-      REPOSITORY_USER: inputs.repository-user    # change user to read, now use write
-      REPOSITORY_SECRET: inputs.repository-token   # change token to read, now use write
+      # change user to read, now use write
+      REPOSITORY_USER: inputs.repository-user  
+      # change token to read, now use write  
+      REPOSITORY_SECRET: inputs.repository-token   
       SECURITY_GROUPS: ${{ jobs.environment.outputs.security-group-number-ids }}
       SUBNETS: ${{ jobs.environment.outputs.subnet-number-ids }}
-      SHARED: ${{ jobs.environment.outputs.shared-number-ids }}  # shared ami with environment.
+      # shared ami with environment.
+      SHARED: ${{ jobs.environment.outputs.shared-number-ids }}  
       # secret account operational. it isn't present in input but en secret repository owner.
       AWS_ACCESS_KEY_OP: ${{secret.aws-access-key-op}}                   
       AWS_SECRET_ACCESS_KEY_OP: ${{ secret.aws-secret-access-key-op}}
@@ -290,8 +318,10 @@ jobs:
       TEST: inputs.testIntegration
       LANGUAGE: ${{ inputs.lenguage-code }}
       AMI_ID: ${{ jobs.image.outputs.image-number-id }}
-      PROJECT:  ${{ inputs.project-name }}   # get input name, this name use in dns site and global value. project = product business
-      AMI_VERSION:  ${{ jobs.build.outputs.package-version-name }}   # get package version generate from step build
+      # get input name, this name use in dns site and global value. project = product business
+      PROJECT:  ${{ inputs.project-name }}
+      # get package version generate from step build   
+      AMI_VERSION:  ${{ jobs.build.outputs.package-version-name }}  
       SECURITY_GROUPS: ${{ jobs.environment.outputs.security-group-number-ids }}
       SUBNETS: ${{ jobs.environment.outputs.subnet-number-ids }}
       ALB_TARGET_GROUP: ${{ jobs.environment.outputs.alb-target-group-number-arn}}
@@ -319,14 +349,18 @@ jobs:
         shell: bash
         run: |
         ${{ env.SCRIPT }}/integration-tests.sh 
-  # create de tag release en github. use same release and put image id in description or release note. necessary to next environment 
+  # create de tag release en github. 
+  # use same release and put image id in description 
+  # or release note. necessary to next environment 
   # NOTE OF DEVELOPER: pending release process
   tag:
     name: create-tag
     runs-on: [self-hosted]      
     env:
-      TAG: ${{ jobs.build.outputs.package-version-name }}   # version artifact  = VERSION  
-      RELEASE:  ${{ jobs.build.outputs.package-version-name }}  # funtional version of product. now default use tag version.
+      # version artifact  = VERSION
+      TAG: ${{ jobs.build.outputs.package-version-name }}
+      # funtional version of product. now default use tag version.    
+      RELEASE:  ${{ jobs.build.outputs.package-version-name }}  
       BODY: "build image id: ${{ jobs.image.outputs.image-number-id }}"
     if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }} 
     steps:
