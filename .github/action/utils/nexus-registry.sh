@@ -2,6 +2,7 @@
 # *************           IBERIA L.A.E.                   *************
 # *************       by software Engineering             *************
 # *********************************************************************
+. setup.sh
 
 if [${REPOSITORY_URL} != ""] then
     # setting credencials

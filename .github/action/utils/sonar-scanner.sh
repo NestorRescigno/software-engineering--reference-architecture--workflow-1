@@ -4,6 +4,8 @@
 # *********************************************************************
 #
 # Setting variable
+. setup.sh
+
 SONAR_URL       = ${{ env.SONAR_URL }}
 SONAR_USER      = ${{ env.SONAR_USER }}
 SONAR_PASS      = ${{ env.SONAR_SECRET }} 

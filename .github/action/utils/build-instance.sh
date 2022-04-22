@@ -43,7 +43,7 @@ aws_access_key_dev          = ${{ env.AWS_ACCESS_KEY_DEV }}
 aws_secret_access_key_dev   = ${{ env.AWS_SECRETE_ACCESS_KEY_DEV }} 
 
 echo "***************************************************"
-echo "create instance form image base to develoment"
+echo " create instance form image base to develoment     "
 echo "***************************************************"
 
 # create instance in developmente enviroment, need this account access.
@@ -70,6 +70,6 @@ terraform plan
 terraform apply 
 
 echo "***************************************************"
-echo " instance_id: $(terraform output instance_id)"
+echo " instance id: $(terraform output instance_id)"
 echo "***************************************************"
      
