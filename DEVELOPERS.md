@@ -135,14 +135,15 @@ can be referenced as follows:
     sonarqube-user: ${{secret.sonar-user}}            # user control quality code with sonar - optional
     sonarqube-token:${{secret.sonar-token}}           # pwd control quality code with sonar - optional
     sonarqube-client-version:                         # client sonar-scanner use. see https://binaries.sonarsource.com/?prefix=Distribution/sonar-scanner-cli/
-    kiuwan-host:                                      # host control vulnerability code with kiuwan - optional
-    kiuwan-user:                                      # user control vulnerability code with kiuwan - optional
-    kiuwan-token:                                     # pwd control vulnerability code with kiuwan - optional
     repository-DNS:  ${{secret.nexus-url}}            # host registry artifact
     repository-user: ${{secret.nexus-user}}           # user registry artifact
     repository-token:${{secret.nexus-pass}}           # pass registry artifact
+    aws-environment-name:                             # Environment name for default: 'production'
+    aws-environment-prefix:                           # Environment prefix name for default: 'pro'
     aws-access-key:                                   # access key aws publish environment ( example: Integration, preproduction, quality)
     aws-secret-acesss-key:                            # secret access key aws publish environment ( example: Integration, preproduction, quality)
+    aws-environment-dev-name:                         # Development environment name for default: 'development'
+    aws-environment-dev-prefix:                       # Development environment prefix name for default: 'dev'
     aws-access-key-dev:                               # access key aws development environment
     aws-secret-acesss-key-dev:                        # secret access key aws development environment 
 ````

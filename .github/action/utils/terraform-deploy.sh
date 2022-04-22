@@ -15,14 +15,18 @@ ALB_TARGET_GROUP_ARN=${{ env.ALB_TARGET_GROUP}}
 ALB_TARGET_GROUP_ARN_SUFFIX= ${{ env.ALB_TARGET_GROUP_SUFFIX}}                
 LB_ARN_SUFFIX=${{ env.LB_SUFFIX}} 
 
+
+ENVIROMENT=${{env.ENVIROMENT}}  # may be change to preproduction or production 
+PREFIX=${{env.ENVIROMENT_PREFIX}} 
 aws_access_key=${{ env.AWS_ACCESS_KEY }}
 aws_secret_access_key=${{ env.AWS_SECRETE_ACCESS_KEY }}
+
+
 
 # setting enviroment and prefix with conditional reference branchs
 # pull request event from action
 if [ ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then  
-    ENVIROMENT="integration"  # may be change to preproduction or production 
-    PREFIX="int"
+
     . could-configure.sh ${aws_access_key} ${aws_secret_access_key } 
 
 

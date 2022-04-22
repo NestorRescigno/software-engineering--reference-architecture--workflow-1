@@ -49,17 +49,20 @@ inputs:
   sonarqube-client-version:
     description: 'sonar-scanner client version parameter v.r.f.build'
     required: false
-  # control vulnerability code with kiuwan
-  kiuwan-host:
-    description: 'kiuwan host parameter'
-    required: false
-  kiuwan-user:
-    description: 'kiuwan user parameter'
-    required: false
-  kiuwan-token:
-    description: 'kiuwan token parameter'
-    required: false
-   # control vulnerability code with kiuwan
+
+  # Note of developer: pending define referece tool.
+  # control vulnerability code for example: kiuwan
+  # vulnerability-host:
+  #  description: 'kiuwan host parameter'
+  #  required: false
+  # vulnerability-user:
+  #  description: 'kiuwan user parameter'
+  #  required: false
+  # vulnerability-token:
+  #  description: 'kiuwan token parameter'
+  #  required: false
+  # control vulnerability code
+  
   repository-host:
     description: 'repository artifact host parameter'
     required: true
@@ -69,13 +72,33 @@ inputs:
   repository-token:
     description: 'repository artifact token parameter'
     required: true 
-  # configuration cloud secret by enviroment
+  # configuration cloud name enviroment
+  aws-environment-name:
+    description: 'Environment name for example: production'
+    required: true
+    required: false
+    default: 'production'
+  aws-environment-prefix:
+    description: 'Environment prefix name for example: pro'
+    required: false
+    default: 'pro'
+   # configuration cloud secret by enviroment  
   aws-access-key:
     description: 'access key aws publish environment: example: production'
     required: true
   aws-secret-acesss-key:
     description: 'secret access key aws publish environment example: production'
     required: true
+  # configuration cloud name enviroment
+  aws-environment-dev-name:
+    description: 'Development nvironment name for example: development'
+    required: false
+    default: 'development'
+  aws-environment-dev-prefix:
+    description: 'Environment prefix name for example: dev'
+    required: false
+    default: 'dev'
+   # configuration cloud secret by enviroment  
   aws-access-key-dev:
     description: 'access key aws development environment'
     required: true
@@ -217,9 +240,13 @@ jobs:
       WORKSPACE: ${{ github.workspace }}
       REF:  ${{ github.ref }}
       # input account integration/preproduction environment
+      ENVIROMENT: ${{inputs.aws-environment-name}}
+      ENVIROMENT_PREFIX: ${{inputs.aws-environment-prefix}}
       AWS_ACCESS_KEY: ${{ inputs.aws-access-key }}
       AWS_SECRET_ACCESS_KEY: ${{ inputs.aws-secret-access-key }}
       # input account development environment
+      ENVIROMENT_DEV: ${{inputs.aws-aws-environment-dev-name}}
+      ENVIROMENT_PREFIX_DEV: ${{inputs.aws-environment-dev-prefix}}
       AWS_ACCESS_KEY_DEV: ${{ inputs.aws-access-key-dev }}
       AWS_SECRET_ACCESS_KEY_DEV: ${{ inputs.aws-secret-access-key-dev }}
     steps:
@@ -329,6 +356,8 @@ jobs:
       LB_SUFFIX: ${{ jobs.environment.outputs.lb-number-arn-suffix}}
 
       # input account integration/preproduction environment
+      ENVIROMENT: ${{inputs.aws-aws-environment-name}}
+      ENVIROMENT_PREFIX: ${{inputs.aws-environment-prefix}}
       AWS_ACCESS_KEY: ${{ inputs.aws-access-key }}
       AWS_SECRET_ACCESS_KEY: ${{ inputs.aws-secret-access-key }}
     if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }} 

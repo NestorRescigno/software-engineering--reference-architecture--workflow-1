@@ -11,23 +11,23 @@ WORKSPACE   =${{ github.workspace }}
 REF         =${{ github.ref }}
 
 # access key cloud
-aws_access_key_int          = ${{ env.AWS_ACCESS_KEY }}
-aws_secret_access_key_int   = ${{ env.AWS_SECRETE_ACCESS_KEY }}
+aws_access_key             = ${{ env.AWS_ACCESS_KEY }}
+aws_secret_access_key      = ${{ env.AWS_SECRETE_ACCESS_KEY }}
 
-aws_access_key_dev          = ${{ env.AWS_ACCESS_KEY_DEV }}
-aws_secret_access_key_dev   = ${{ env.AWS_SECRETE_ACCESS_KEY_DEV }}  
+aws_access_key_dev         = ${{ env.AWS_ACCESS_KEY_DEV }}
+aws_secret_access_key_dev  = ${{ env.AWS_SECRETE_ACCESS_KEY_DEV }}  
 
 # setting enviroment and prefix with conditional reference branchs
 # pull request event from action
 if [ ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then  
-    ENVIROMENT="integration"  # may be change to preproduction or production 
-    PREFIX="int"
+    ENVIROMENT=${{env.ENVIROMENT}}  # may be change to preproduction or production 
+    PREFIX=${{env.ENVIROMENT_PREFIX}} 
 
-    . could-configure.sh ${aws_access_key_int } ${aws_secret_access_key_int } 
+    . could-configure.sh ${aws_access_key } ${aws_secret_access_key } 
 
 elif [${ startsWith(${ REF }, 'refs/heads/develop') } == true ] then  
-    ENVIROMENT="development"
-    PREFIX="dev"
+    ENVIROMENT=${{env.ENVIROMENT_DEV}}  # may be change to preproduction or production 
+    PREFIX=${{env.ENVIROMENT_PREFIX_DEV}} 
 
     . could-configure.sh ${aws_access_key_dev} ${aws_secret_access_key_dev } 
 if 
@@ -37,7 +37,9 @@ echo "***************************************************"
 echo "prepare enviroment with terraform..."
 echo "***************************************************"
 
-cd ${WORKSPACE }/terraform/module/aws-ec2-vpc-iberia  # This module have lifecycle { create_before_destroy = false }
+# This module have lifecycle { create_before_destroy = false }
+cd ${WORKSPACE }/terraform/module/aws-ec2-vpc-iberia  
+
 # init terraform module
 terraform init
 
