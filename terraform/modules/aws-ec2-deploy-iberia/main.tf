@@ -7,6 +7,10 @@
 ################################
 ### New Resource launch Template
 ################################
+
+# Provides an EC2 launch template resource. 
+# Can be used to create instances or auto scaling groups.
+
 resource "aws_launch_template" "launch" { 
   
   # Decision Server launch template
@@ -16,11 +20,12 @@ resource "aws_launch_template" "launch" {
   instance_type = local.instance_type
   vpc_security_group_ids = var.security_group
   
-  # user_data              = filebase64("files/prelive_env.sh")       # use to set enviroment var for arcoservices
+  # The IAM Instance Profile to launch the instance with.
   iam_instance_profile {
     name = data.aws_iam_instance_profile.ip.name
   }
 
+  # The tags to apply to the resources during launch. 
   tag_specifications {
     resource_type = "instance"
     tags = merge(
@@ -50,9 +55,12 @@ resource "aws_launch_template" "launch" {
     })
   )
 }
+
+
 #############################################################
 ### New Resource AutoScaling Group   
 #############################################################
+
 resource "aws_autoscaling_group" "asg" { 
   
   # Decision Server ASG
@@ -102,7 +110,7 @@ resource "aws_autoscaling_group" "asg" {
       propagate_at_launch = true
     }
   ]
-
+  # destroy is disable, can't new create with other param.
   lifecycle { create_before_destroy = false }
 }
 
@@ -110,14 +118,21 @@ resource "aws_autoscaling_group" "asg" {
 # ##############################
 # ## New resource ASG CPU Policy
 # ##############################
+
+# Provides an Application AutoScaling Policy resource.
+
 resource "aws_autoscaling_policy" "cpu" {
-  #count = var.asg.autoscaling_policy_cpu_value != null ? 1 : 0
+  # count = var.asg.autoscaling_policy_cpu_value != null ? 1 : 0
+  
+  # asign name example: dev-demo-cpu-scaling
 
   name                      = lower(format("%s-%s-cpu-scaling", var.environment_prefix, var.service_name))
   policy_type               = "TargetTrackingScaling"
   estimated_instance_warmup = 130
 
+  # A target tracking policy, requires 
   target_tracking_configuration {
+    # The metric type.
     predefined_metric_specification {
       predefined_metric_type = "ASGAverageCPUUtilization"
     }
@@ -131,9 +146,11 @@ resource "aws_autoscaling_policy" "cpu" {
 # ## New resource ASG Request Policy
 # ##############################
 
+# Provides an Application AutoScaling Policy resource.
 resource "aws_autoscaling_policy" "requests" {
   #count = var.asg.autoscaling_policy_requests_value != null ? 1 : 0
 
+  # asign name example: dev-demo-requests-scaling
   name                      = lower(format("%s-%s-requests-scaling", var.environment_prefix, var.service_name))
   policy_type               = "TargetTrackingScaling"
   estimated_instance_warmup = 130
