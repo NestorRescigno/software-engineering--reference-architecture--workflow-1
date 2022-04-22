@@ -35,3 +35,22 @@ Output:
     "ImageId": "ami-066877671789bd71b"
 }
 ````
+
+action checkout 
+----
+action checkout use simple git with diferente stage.
+value:
+* this.tokenPlaceholderConfigValue = `AUTHORIZATION: basic ***`
+* this.tokenConfigValue = `AUTHORIZATION: basic ${basicCredential}`
+
+command:
+- this settings with persist credentials
+git config --local '${this.tokenConfigKey}' '${this.tokenPlaceholderConfigValue}' 
+git config --local --show-origin --name-only --get-regexp remote.origin.url`,
+- this settings ssh Key
+git config --local '${SSH_COMMAND_KEY}' '${this.sshCommand}
+- this configure HTTPS instead of SSH
+git config --local --add '${this.insteadOfKey}' '${insteadOfValue}
+- this git submodule Foreach
+git config --local --name-only --get-regexp '${pattern}'
+git config --local --unset-all '${configKey}'

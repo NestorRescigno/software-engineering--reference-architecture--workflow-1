@@ -10,7 +10,7 @@
 # two types of languages "java and angular"
 
 name: CICD
-description: 'continuos integration'
+description: 'continuos integration and deployment'
 # setting input
 inputs:
   # project name, eguals to product name example ancillaries
@@ -142,24 +142,13 @@ jobs:
       # Step 1 
       - name: checkout
         uses: actions/checkout@v2
-      # Step 2 - Reemplace with install process jdk and configure path environment
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
-          distribution: 'adopt'
-      # Step 3 - Reemplace with install process node.js
-      - name: Set up Node 14
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-      # Step 4 
+      # Step 3 
       - name: Building Artifact
         id: package-generator-name
         shell: bash
         run: |
         ${{ env.SCRIPT }}/build.sh
-      # Step 5  
+      # Step 4  
       - name: control
         id: control-version
         shell: bash
@@ -252,7 +241,7 @@ jobs:
     steps:
       # build image
       # Step 1
-      - name: build image
+      - name: build-environment
         id: build-environment-generator
         shell: bash
         run: |
