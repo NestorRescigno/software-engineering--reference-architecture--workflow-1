@@ -10,7 +10,7 @@
 # this shell is run in main branch, this branch hasn't snapshot version. control to remove by developers in code.
 VERCHECK = $(echo ${env.VERSION} | grep -o '^------+'); #NOTE OF DEVELOPER pending expresion implement
 
-if[${VERCHECK,,}=="snapshot"] then
+if [${VERCHECK,,}=="snapshot"] then
  echo "************************************************"
  echo "Error: Remove snapshot word in project version!."
  echo "************************************************"
