@@ -31,7 +31,7 @@ resource "aws_cloudwatch_log_subscription_filter" "logfilter" {
   # for granting access from CloudWatch logs to the destination Lambda function.
   role_arn        = aws_iam_role.iam_for_lambda.arn
   # The name of the log group to associate the subscription filter with
-  log_group_name  = "/aws/lambda/example_lambda_name"
+  log_group_name  = join("/", [var.project, var.service_name]) 
   # A valid CloudWatch Logs filter pattern for subscribing to a filtered stream of log events.
   filter_pattern  = "logtype test"
   # The ARN of the destination to deliver matching log events to. Kinesis stream or Lambda function ARN.
