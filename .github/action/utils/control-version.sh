@@ -7,7 +7,7 @@
       # the correct artifact version in main is very important because represent tag release ending process. 
       # if exist version release then the artifact version is oblicatory incremente number. example in pom.xml or package.json.
       
-arg1=${env.VERSION}
+arg1=$(echo $VERSION | grep -o '^[0-9]\+\.[0-9]\+\.[0-9]\+') 
 arg2=$(git describe --tags $(git rev-list --tags --max-count=1)) # NOTE of develop: test code! may be need reference repository first. find last tag version 
 conditional='>'
 
@@ -52,6 +52,7 @@ testvercomp () {
     if [[ $op != $3 ]]
     then
         echo "FAIL: Expected '$3', Actual '$op', Arg1 '$1', Arg2 '$2'"
+        exit -1
     else
         echo "Pass: '$1 $op $2'"
     fi
