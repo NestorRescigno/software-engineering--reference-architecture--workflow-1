@@ -3,12 +3,28 @@
 # *************       by Software Engineering             *************
 # *********************************************************************
 
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+  }
+}
+
+# Configure the AWS Provider
+provider "aws" {
+  alias = "aws"
+  region = var.aws_region
+}
+
+
 # ##############################
 # ## cloudwatch log subscription
 # ##############################
-resource "aws_cloudwatch_log_subscription_filter" "lambda_logfilter" {
-  # A name for the subscription filter
-  name            = "test_lambdafunction_logfilter"
+resource "aws_cloudwatch_log_subscription_filter" "logfilter" {
+  # A name for the subscription filter example demo-dev-logfilter
+  name            = join("-", [var.service_name, var.environment_prefix, "logfilter"]) 
   # The ARN of an IAM role that grants Amazon CloudWatch Logs permissions 
   # to deliver ingested log events to the destination. If you use Lambda as a destination, 
   # you should skip this argument and use aws_lambda_permission resource 
@@ -33,9 +49,9 @@ resource "aws_cloudwatch_log_subscription_filter" "lambda_logfilter" {
 # ## cloudwatch alarm subscription 
 # ## to aws autoscaling group
 # ##############################
-resource "aws_cloudwatch_metric_alarm" "bat" {
-  # The descriptive name for the alarm. This name must be unique within the user's AWS account
-  alarm_name          = "terraform-test-foobar5"
+resource "aws_cloudwatch_metric_alarm" "asg" {
+  # The descriptive name for the alarm. This name must be unique within the user's AWS account example demo-dev-alarm
+  alarm_name          = join("-", [var.service_name, var.environment_prefix, "alarm"]) 
   # The arithmetic operation to use when comparing the specified Statistic and Threshold. The specified Statistic value is used as the first operand.
   comparison_operator = "GreaterThanOrEqualToThreshold"
   # The number of periods over which data is compared to the specified threshold
@@ -54,12 +70,12 @@ resource "aws_cloudwatch_metric_alarm" "bat" {
   threshold           = "80"
   # The dimensions for the alarm's associated metric. 
   dimensions = {
-    AutoScalingGroupName = aws_autoscaling_group.bar.name
+    AutoScalingGroupName = var.aws_autoscaling_group_name
   }
   # The description for the alarm.
   alarm_description = "This metric monitors ec2 cpu utilization"
   # The list of actions to execute when this alarm transitions 
   # into an ALARM state from any other state. 
   # Each action is specified as an Amazon Resource Name (ARN).
-  alarm_actions     = [aws_autoscaling_policy.bat.arn]
+  alarm_actions     = [var.aws_autoscaling_policy_arn]
 }
