@@ -53,13 +53,13 @@ inputs:
   # Note of developer: pending define referece tool.
   # control vulnerability code for example: veracode
   # vulnerability-host:
-  #  description: 'kiuwan host parameter'
+  #  description: 'veracode host parameter'
   #  required: false
   # vulnerability-user:
-  #  description: 'kiuwan user parameter'
+  #  description: 'veracode user parameter'
   #  required: false
   # vulnerability-token:
-  #  description: 'kiuwan token parameter'
+  #  description: 'veracode token parameter'
   #  required: false
   # control vulnerability code
   
