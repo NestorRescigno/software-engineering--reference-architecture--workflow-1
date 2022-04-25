@@ -95,20 +95,3 @@ data "aws_subnet" "snet_amber_eu_central_1c" {
   }
 }
 
-##################
-# global policies
-##################
-
-data "aws_iam_policy" "cloudwatch_agent" {
-  name        = "${var.environment_prefix}-policy-cloudwatch-agent"
-}
-
-
-data "aws_iam_policy" "ssm" {
-  name   = "${var.environment_prefix}-policy-ssm"            
-}
-
-data "aws_iam_policy" "common-microservices" {
-  name   = "${var.environment_prefix}-policy-common-microservices"
-}
-
