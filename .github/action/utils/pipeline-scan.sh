@@ -1,5 +1,23 @@
+# *********************************************************************
+# *************           IBERIA L.A.E.                   *************
+# *************       by software Engineering             *************
+# *********************************************************************
+#
+# Setting variable
+VERACODE_API_ID =
+VERACODE_API_SECRET =
+CI_TIMEOUT =
+CI_BASELINE_PATH =
+CI_PROJECT_PATH =
+CI_REPOSITORY_URL =
+CI_COMMIT_REF_NAME =
+
+. setup.sh
+
 curl -O https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
 unzip pipeline-scan-LATEST.zip pipeline-scan.jar
+
+# run vera code with java.
 # java -jar pipeline-scan.jar
       --veracode_api_id "${VERACODE_API_ID}"
       --veracode_api_key "${VERACODE_API_SECRET}"
