@@ -11,7 +11,7 @@ output "aws_autoscaling_group_name" {
   value = aws_autoscaling_group.asg.name
 }
 
-output "aws_autoscaling_policy_arn_requests" {
-  value = aws_autoscaling_policy.requests.arn
+output "aws_autoscaling_policy_arn_cpu" {
+  value = aws_autoscaling_policy.cpu.arn
 }
 
