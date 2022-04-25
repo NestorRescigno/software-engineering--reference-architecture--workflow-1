@@ -6,7 +6,18 @@
 # NOTE OF DEVELOPER: control step pending. example: control version. 
       # the correct artifact version in main is very important because represent tag release ending process. 
       # if exist version release then the artifact version is oblicatory incremente number. example in pom.xml or package.json.
-      
+
+# this shell is run in main branch, this branch hasn't snapshot version. control to remove by developers in code.
+VERCHECK = $(echo ${env.VERSION} | grep -o '^------+'); #NOTE OF DEVELOPER pending expresion implement
+
+if[${VERCHECK,,}=="snapshot"] then
+ echo "************************************************"
+ echo "Error: Remove snapshot word in project version!."
+ echo "************************************************"
+ exit -1
+if 
+
+
 arg1=$(echo ${env.VERSION} | grep -o '^[0-9]\+\.[0-9]\+\.[0-9]\+') 
 arg2=$(git describe --tags $(git rev-list --tags --max-count=1)) # NOTE of develop: test code! may be need reference repository first. find last tag version 
 conditional='>'
