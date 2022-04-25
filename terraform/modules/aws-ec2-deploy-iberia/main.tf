@@ -8,7 +8,8 @@
 # ##############################
 
 resource "aws_iam_instance_profile" "service" {
-  name = "${var.service_name}-instanceprofile-${var.environment_prefix}"
+  # asign name profile IAM example: demo-instanceprofile-dev
+  name = join("-"[var.service_name,"instanceprofile",var.environment_prefix])
   role = aws_iam_role.service.name
 }
 
