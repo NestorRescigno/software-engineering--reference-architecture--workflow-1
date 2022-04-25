@@ -87,7 +87,7 @@ resource "aws_cloudwatch_log_subscription_filter" "logfilter" {
   # to deliver ingested log events to the destination. If you use Lambda as a destination, 
   # you should skip this argument and use aws_lambda_permission resource 
   # for granting access from CloudWatch logs to the destination Lambda function.
-  role_arn        = aws_iam_role.iam_for_lambda.arn
+  role_arn        = aws_iam_role.service.arn
   # The name of the log group to associate the subscription filter with
   log_group_name  = join("/", [var.project, var.service_name]) 
   # A valid CloudWatch Logs filter pattern for subscribing to a filtered stream of log events.
