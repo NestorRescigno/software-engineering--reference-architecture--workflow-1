@@ -7,7 +7,7 @@
       # the correct artifact version in main is very important because represent tag release ending process. 
       # if exist version release then the artifact version is oblicatory incremente number. example in pom.xml or package.json.
       
-arg1=$(echo $VERSION | grep -o '^[0-9]\+\.[0-9]\+\.[0-9]\+') 
+arg1=$(echo ${env.VERSION} | grep -o '^[0-9]\+\.[0-9]\+\.[0-9]\+') 
 arg2=$(git describe --tags $(git rev-list --tags --max-count=1)) # NOTE of develop: test code! may be need reference repository first. find last tag version 
 conditional='>'
 
