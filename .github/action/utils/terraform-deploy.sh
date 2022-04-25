@@ -4,6 +4,7 @@
 # *********************************************************************
 
 # setting variable
+SERVICE=${{ env.SERVICE }}
 PROJECT=${{ env.PROJECT }} 
 AMI_VERSION=${{ env.AMI_VERSION }}
 AMI_ID=${{ env.AMI_ID }}
@@ -68,5 +69,29 @@ if [ ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then
     echo "***************************************************"
     echo "Deploying complete..."
     echo "***************************************************"
+    
+    echo "***************************************************"
+    echo "create cloudwatch alarm and log subcription..."
+    echo "***************************************************"
+    
+    cd ${ WORKSPACE }/terraform/module/aws-ec2-monitoring
+    
+    # init terraform module
+    terraform init
 
+    # create plan terrafom
+    terraform plan 
+    -var "service_name=${SERVICE}"
+    -var "project=${PROJECT}" 
+    -var "environment=${ENVIROMENT}"
+    -var "environment_prefix=${PREFIX}"
+    -var "aws_autoscaling_group_name=$(terraform output aws_autoscaling_group_name)"
+    -var "aws_autoscaling_policy_arn=$(terraform output aws_autoscaling_policy_arn_cpu)"
+  
+    # apply plan terrafom
+    terraform apply 
+   
+    echo "***************************************************"
+    echo "Complete cloudwatch..."
+    echo "***************************************************"
 if 
