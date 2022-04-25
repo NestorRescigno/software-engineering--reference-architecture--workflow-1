@@ -8,7 +8,7 @@
       # if exist version release then the artifact version is oblicatory incremente number. example in pom.xml or package.json.
 
 # this shell is run in main branch, this branch hasn't snapshot version. control to remove by developers in code.
-VERCHECK = $(echo ${env.VERSION,,} | grep -o '(snapshot)'); 
+VERCHECK = $(echo ${env.VERSION,,} | grep -o 'snapshot'); 
 
 if [${VERCHECK,,}=="snapshot"] then
  echo "************************************************"
