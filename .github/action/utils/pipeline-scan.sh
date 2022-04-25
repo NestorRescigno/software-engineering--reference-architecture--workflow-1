@@ -19,14 +19,14 @@ unzip pipeline-scan-LATEST.zip pipeline-scan.jar
 
 # run vera code with java.
 # java -jar pipeline-scan.jar
-      --veracode_api_id "${VERACODE_API_ID}"
-      --veracode_api_key "${VERACODE_API_SECRET}"
-      --file "build/libs/sample.jar"
-      --fail_on_severity="Very High, High"
-      --fail_on_cwe="80"
-      --baseline_file "${CI_BASELINE_PATH}"
-      --timeout "${CI_TIMEOUT}"
-      --project_name "${CI_PROJECT_PATH}"
-      --project_url "${CI_REPOSITORY_URL}"
-      --project_ref "${CI_COMMIT_REF_NAME}"
-      --gl_vulnerability_generation true
+#      --veracode_api_id "${VERACODE_API_ID}"
+#      --veracode_api_key "${VERACODE_API_SECRET}"
+#      --file "build/libs/sample.jar"
+#      --fail_on_severity="Very High, High"
+#      --fail_on_cwe="80"
+#      --baseline_file "${CI_BASELINE_PATH}"
+#      --timeout "${CI_TIMEOUT}"
+#      --project_name "${CI_PROJECT_PATH}"
+#      --project_url "${CI_REPOSITORY_URL}"
+#      --project_ref "${CI_COMMIT_REF_NAME}"
+#      --gl_vulnerability_generation true
