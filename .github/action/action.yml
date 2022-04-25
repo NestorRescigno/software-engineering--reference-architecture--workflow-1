@@ -51,7 +51,7 @@ inputs:
     required: false
 
   # Note of developer: pending define referece tool.
-  # control vulnerability code for example: kiuwan
+  # control vulnerability code for example: veracode
   # vulnerability-host:
   #  description: 'kiuwan host parameter'
   #  required: false
@@ -158,26 +158,6 @@ jobs:
         run: |
         ${{ env.SCRIPT }}/control-version.sh
     steps:
-      # implement sonar
-      # Step 1
-      - name: Scan
-        shell: bash
-        env:
-          # get package name generate from step build
-          GROUP:  ${{ jobs.build.outputs.package-groupid-name }}  
-          # get package name generate from step build
-          ARTIFACT:  ${{ jobs.build.outputs.package-artifactid-name }}  
-          # get package name generate from step build
-          VERSION:  ${{ jobs.build.outputs.package-version-name }}  
-          # get package type extention from step build
-          PACKAGE: ${{ jobs.build.outputs.package-type-name }} 
-          SONAR_URL: inputs.sonarqube-host
-          SONAR_USER: inputs.sonarqube-user
-          SONAR_SECRET: inputs.sonarqube-token
-          SONAR_CLI: inputs.sonarqube-client-version
-        run: |
-        ${{ env.SCRIPT }}/sonar-scanner.sh
-    steps:
       # deploy artifact to registry repository
       - name: Registy artifact
         id: registry-repository
@@ -197,6 +177,53 @@ jobs:
           REPOSITORY_SECRET: inputs.repository-token
         run: |
         ${{ env.SCRIPT }}/nexus-registry.sh
+  scan:
+    name: scan-code
+    runs-on: [self-hosted]
+    steps:
+      # implement sonar
+      # Step 1
+      - name: sonar
+        shell: bash
+        env:
+          # get package name generate from step build
+          GROUP:  ${{ jobs.build.outputs.package-groupid-name }}  
+          # get package name generate from step build
+          ARTIFACT:  ${{ jobs.build.outputs.package-artifactid-name }}  
+          # get package name generate from step build
+          VERSION:  ${{ jobs.build.outputs.package-version-name }}  
+          # get package type extention from step build
+          PACKAGE: ${{ jobs.build.outputs.package-type-name }} 
+          SONAR_URL: inputs.sonarqube-host
+          SONAR_USER: inputs.sonarqube-user
+          SONAR_SECRET: inputs.sonarqube-token
+          SONAR_CLI: inputs.sonarqube-client-version
+        run: |
+        ${{ env.SCRIPT }}/sonar-scanner.sh
+  # Note of develop: pendieng testing and tool implement      
+  # vulnerability:
+  #  name: scan-code
+  #  runs-on: [self-hosted]
+    # implement veracode
+  #  if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }}
+  #  steps:
+  #     # Step 2
+  #    - name: vulnerability-scan
+  #      shell: bash
+  #      env:
+  #        # get package name generate from step build
+  #        GROUP:  ${{ jobs.build.outputs.package-groupid-name }}  
+  #        # get package name generate from step build
+  #        ARTIFACT:  ${{ jobs.build.outputs.package-artifactid-name }}  
+  #        # get package name generate from step build
+  #        VERSION:  ${{ jobs.build.outputs.package-version-name }}  
+  #        # get package type extention from step build
+  #        PACKAGE: ${{ jobs.build.outputs.package-type-name }} 
+  #        vulnerability-host: inputs.vulnerability-host
+  #        vulnerability-usr: inputs.vulnerability-user
+  #        vulnerability-key: inputs.vulnerability-token
+  #      run: |
+  #      ${{ env.SCRIPT }}/pipeline-scan.sh
   environment:
     name: environment
     runs-on: [self-hosted]
