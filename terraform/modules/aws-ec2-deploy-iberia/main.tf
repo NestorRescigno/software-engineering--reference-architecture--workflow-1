@@ -4,6 +4,34 @@
 # *********************************************************************
 
 # ##############################
+# ## IAM Role
+# ##############################
+
+resource "aws_iam_role" "service" {
+  # asign name role iam example: demo-dev-role
+  name        = join("-",[var.service_name,var.environment_prefix,"role"])
+  path               = "/"
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+      {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+          "Service": "ec2.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+      }
+  ]
+}
+EOF
+
+  tags = local.global_common_tags
+}
+  
+
+# ##############################
 # ## IAM Instance profile Role
 # ##############################
 
@@ -32,6 +60,7 @@ resource "aws_iam_role_policy_attachment" "common-microservices" {
   role       = aws_iam_role.service.name
   policy_arn = data.aws_iam_policy.common-microservices.arn
 
+    
 ################################
 ### New Resource launch Template
 ################################
