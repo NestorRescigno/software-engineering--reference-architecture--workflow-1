@@ -18,6 +18,7 @@ provider "aws" {
   region = var.aws_region
 }
 
+
 # ##############################
 # ## IAM Role
 # ##############################
@@ -49,7 +50,6 @@ EOF
 # ##############################
 # ## IAM Instance profile Role
 # ##############################
-
 resource "aws_iam_instance_profile" "service" {
   # asign name profile IAM example: demo-instanceprofile-dev
   name = join("-", [var.service_name,"instanceprofile",var.environment_prefix])
