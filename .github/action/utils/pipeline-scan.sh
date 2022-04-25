@@ -16,6 +16,7 @@ CI_COMMIT_REF_NAME =
 
 curl -O https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
 unzip pipeline-scan-LATEST.zip pipeline-scan.jar
+rm pipeline-scan-LATEST.zip
 
 # run vera code with java.
 # java -jar pipeline-scan.jar
