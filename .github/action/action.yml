@@ -361,6 +361,8 @@ jobs:
       TEST: inputs.testIntegration
       LANGUAGE: ${{ inputs.lenguage-code }}
       AMI_ID: ${{ jobs.image.outputs.image-number-id }}
+      # get package name generate from step build
+      SERVICE:  ${{ jobs.build.outputs.package-artifactid-name }}  
       # get input name, this name use in dns site and global value. project = product business
       PROJECT:  ${{ inputs.project-name }}
       # get package version generate from step build   
