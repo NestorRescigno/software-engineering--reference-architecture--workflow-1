@@ -10,7 +10,7 @@ CI_TIMEOUT =
 CI_BASELINE_PATH =
 CI_PROJECT_PATH =
 CI_REPOSITORY_URL =
-CI_COMMIT_REF_NAME =
+CI_COMMIT_REF_NAME = $(echo ${{ github.ref}} | cut -c -63 | sed -E 's/[^a-z0-9-]+/-/g' | sed -E 's/^-*([a-z0-9-]+[a-z0-9])-*$$/\1/g')
 
 . setup.sh
 
