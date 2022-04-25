@@ -37,7 +37,7 @@ EOF
 
 resource "aws_iam_instance_profile" "service" {
   # asign name profile IAM example: demo-instanceprofile-dev
-  name = join("-"[var.service_name,"instanceprofile",var.environment_prefix])
+  name = join("-", [var.service_name,"instanceprofile",var.environment_prefix])
   role = aws_iam_role.service.name
 }
 
@@ -59,7 +59,7 @@ resource "aws_iam_role_policy_attachment" "ssm" {
 resource "aws_iam_role_policy_attachment" "common-microservices" {
   role       = aws_iam_role.service.name
   policy_arn = data.aws_iam_policy.common-microservices.arn
-
+}
     
 ################################
 ### New Resource launch Template
