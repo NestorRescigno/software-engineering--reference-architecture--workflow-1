@@ -66,7 +66,7 @@ jobs:
 ````
 - **Configure runner with profile connection:** In this configuration, the runner contains its own cloud access credentials under profiles. When executing the workflow, it uses the profile instead of the secret directly. this allows you to remove the github secrets. see [configure profile]( https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)
 
->If the github secrets aren't configured to access the cloud client, the system considers that there is a pre-existing configuration and uses that configuration.
+>If the github secrets are not configured to access the cloud client, the system considers that there is a pre-existing configuration and uses that configuration. this is valid for the first option as long as the runners are well configured in the workflow. for the second option it will be necessary to adapt the configuration scripts with each profile.
 
 Getting started
 ---
