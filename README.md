@@ -57,14 +57,15 @@ see [module terraform common infra]( https://github.com/Iberia-Ent/software-engi
 The runner server can have a trusted connection configured for the different accounts of the new one. this allows not having secrets configured in the organization or repositories, but rather the runner itself makes the connection through profiles through the cloud client. 
 Assuming that the servers themselves contain the installed [aws clients](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html), the runners and the workflow can be configured in different ways, for example:
 
-- **Configure runner for environment:** For this type of configuration, one runner per environment is considered. each runner has access to the cloud account of the environment. this forces the workflow to have configured in each job the runner that corresponds to the environment where it must connect.
+- **Configure runner for environment:** For this type of configuration, one runner per environment is considered. each runner has access to the cloud account of the environment. this forces the workflow to have configured in each job the runner that corresponds to the environment where it must connect. An AWS Identity and Access Management (IAM) role is an authorization tool that lets an IAM user gain additional (or different) permissions, or get permissions to perform actions in a different AWS account. 
 ````
 jobs:
   build:
     name: build
     runs-on: [self-hosted, dev]
 ````
-- **Configure runner with profile connection:** In this configuration, the runner contains its own cloud access credentials under profiles. When executing the workflow, it uses the profile instead of the secret directly. this allows you to remove the github secrets. see [configure profile]( https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)
+- **Configure runner with profile connection:** In this configuration, the runner contains its own cloud access credentials under profiles.  
+When executing the workflow, it uses the profile instead of the secret directly. this allows you to remove the github secrets. see [configure profile]( https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html). You can configure the AWS Command Line Interface (AWS CLI) to use an IAM role by defining a profile for the role in the ~/.aws/config file.
 
 >If the github secrets aren't configured to access the cloud client, the system considers that there is a pre-existing configuration and uses that configuration. this is valid for the first option as long as the runners are'll configured in the workflow. for the second option it'll be necessary to adapt the configuration scripts with each profile.
 
