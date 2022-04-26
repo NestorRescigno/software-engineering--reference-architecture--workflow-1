@@ -47,9 +47,11 @@ A self-hosted runner is a system that you deploy and manage to execute jobs from
 
 For this purpose, a workflow has been designed that performs the creation of the runner itself.
 
-Below is a design of the workflow for creating a host server hosted in the cloud itself and associated with the repositories. when the source code repository workflow runs, all processing will be done on top of this selft-hosted runner server
+Below is a workflow for creating a runner server hosted in the cloud itself and associated with the source code repositories. when the source code repository workflow runs, all processing will be done on top of these runner servers.
 
 ![runner installed](./images/docs/project-template/Deployment-Infrastructure.png)
+
+>the runner server can have a trusted connection configured for the different accounts of the new one. this allows not having secrets configured in the organization or repositories, but rather the runner itself makes the connection through profiles through the cloud client
 
 
 Getting started
