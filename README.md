@@ -64,7 +64,7 @@ jobs:
     name: build
     runs-on: [self-hosted, dev]
 ````
-- **configure runner with profile connection:** In this configuration, the runner contains its own cloud access credentials under profiles. When executing the workflow, it uses the profile instead of the secret directly. this allows you to remove the github secrets.
+- **configure runner with profile connection:** In this configuration, the runner contains its own cloud access credentials under profiles. When executing the workflow, it uses the profile instead of the secret directly. this allows you to remove the github secrets. see [configure profile]( https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)
 
 Getting started
 ---
