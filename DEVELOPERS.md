@@ -63,7 +63,15 @@ main
 |                 └───outputs.tf                                  # terraform output declarative of module core
 |                 └───provider.tf                                 # terraform provider of module core
 |                 └───variables.tf                                # terraform variables of module core
-|                 └───terraform.tfvars                            # terraform pricipal parameter of module core
+|                 └───terraform.tfvars                            # terraform pricipal parameter of module coreç
+|           └───aws-ec2-monitoring-iberia                         # terraform module monitoring iberia asigned to service and environment
+|                 └───README.md                                   # document declarative of module
+|                 └───data.tf                                     # terraform data source of module core
+|                 └───locals.tf                                   # terraform locals declarative module core
+|                 └───main.tf                                     # princial code of module core
+|                 └───outputs.tf                                  # terraform output declarative of module core
+|                 └───provider.tf                                 # terraform provider of module core
+|                 └───variables.tf                                # terraform variables of module core
 │___docs                                                          # document attached
 │     └───decisions                                               # strategy decisions 
 │___images
