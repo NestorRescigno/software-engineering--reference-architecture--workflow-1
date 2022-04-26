@@ -50,8 +50,9 @@ then
     # get credencial access to aws cloud  
     # Note of developer: is good to file ? boh! depends path and access privilage to magine. find more information.
     # test enviroment param
-     aws configure -Daws_access_key_id=${ID_KEY_ACCESSS} -Daws_secret_access_key=${ID_KEY_SECRET} && clear
-  
+    if [${ID_KEY_ACCESSS}!="" && ${ID_KEY_SECRET}!=""] then
+        aws configure -Daws_access_key_id=${ID_KEY_ACCESSS} -Daws_secret_access_key=${ID_KEY_SECRET} && clear
+    fi
   echo "***************************************************"
   echo "configure complete"
   echo "***************************************************"
