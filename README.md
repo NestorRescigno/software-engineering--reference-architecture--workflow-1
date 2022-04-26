@@ -51,7 +51,7 @@ Below is a workflow for creating a runner server hosted in the cloud itself and 
 
 ![runner installed](./images/docs/project-template/Deployment-Infrastructure.png)
 
->the runner server can have a trusted connection configured for the different accounts of the new one. this allows not having secrets configured in the organization or repositories, but rather the runner itself makes the connection through profiles through the cloud client.
+>the runner server can have a trusted connection configured for the different accounts of the new one. this allows not having secrets configured in the organization or repositories, but rather the runner itself makes the connection through profiles through the cloud client. see [module terraform common infra]( https://github.com/Iberia-Ent/software-engineering--deployments-sdlc-common--infra)
 
 
 Getting started
