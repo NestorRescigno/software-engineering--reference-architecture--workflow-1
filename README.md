@@ -57,8 +57,14 @@ see [module terraform common infra]( https://github.com/Iberia-Ent/software-engi
 The runner server can have a trusted connection configured for the different accounts of the new one. this allows not having secrets configured in the organization or repositories, but rather the runner itself makes the connection through profiles through the cloud client. 
 Assuming that the servers themselves contain the installed [aws clients](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html), the runners and the workflow can be configured in different ways, for example:
 
-- configure runner for environment:
-- configure runner with profile connection:
+- configure runner for environment: For this type of configuration, one runner per environment is considered. each runner has access to the cloud account of the environment. this forces the workflow to have configured in each job the runner that corresponds to the environment where it must connect.
+````
+jobs:
+  build:
+    name: build
+    runs-on: [self-hosted, dev]
+````
+- configure runner with profile connection:In this configuration, the runner contains its own cloud access credentials under profiles. When executing the workflow, it uses the profile instead of the secret directly. this allows you to remove the github secrets.
 
 Getting started
 ---
