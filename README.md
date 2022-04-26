@@ -38,6 +38,20 @@ in next picture show workflow action
 
 ![Deploy software](./images/docs/project-template/DeveloperFlow.png)
 
+Every workflow needs a server to be able to execute and perform all the necessary calculation operations. for this purpose the use of hosted runner is recommended. the hosted runner is posible configure and install tool and apply security access to cloud account. 
+
+Hosted runner
+---
+You can host your own runners and customize the environment used to run jobs in your GitHub Actions workflows. see [About self-hosted runners](https://docs.github.com/en/enterprise-server@3.3/actions/hosting-your-own-runners/about-self-hosted-runners) 
+A self-hosted runner is a system that you deploy and manage to execute jobs from GitHub Actions on your GitHub Enterprise Server instance.
+
+For this purpose, a workflow has been designed that performs the creation of the runner itself.
+
+Below is a design of the workflow for creating a host server hosted in the cloud itself and associated with the repositories. when the source code repository workflow runs, all processing will be done on top of this selft-hosted runner server
+
+![runner installed](./images/docs/project-template/Deployment-Infrastructure.png)
+
+
 Getting started
 ---
 This repository contains the core modules that are referenced in the workflow templates for each purpose.
