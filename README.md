@@ -57,7 +57,7 @@ see [module terraform common infra]( https://github.com/Iberia-Ent/software-engi
 The runner server can have a trusted connection configured for the different accounts of the new one. this allows not having secrets configured in the organization or repositories, but rather the runner itself makes the connection through profiles through the cloud client. 
 Assuming that the servers themselves contain the installed [aws clients](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html), the runners and the workflow can be configured in different ways, for example:
 
-- **Configure runner for environment:** For this type of configuration, one runner per environment is considered. each runner has access to the cloud account of the environment. this forces the workflow to have configured in each job the runner that corresponds to the environment where it must connect. An AWS Identity and Access Management (IAM) role is an authorization tool that lets an IAM user gain additional (or different) permissions, or get permissions to perform actions in a different AWS account. 
+- **Configure runner for environment:** For this type of configuration, one runner per environment is considered. each runner has access to the cloud account of the environment. this forces the workflow to have configured in each job the runner that corresponds to the environment where it must connect. this runner have configure connection by role IAM. An AWS Identity and Access Management (IAM) role is an authorization tool that lets an IAM user gain additional (or different) permissions, or get permissions to perform actions in a different AWS account. 
 ````
 jobs:
   build:
