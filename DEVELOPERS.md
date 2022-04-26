@@ -123,7 +123,7 @@ to create an instance from an **ubuntu** image the following module [aws-ec2-ins
 
 the deployment step of the workflow receives the publish aws AMI image and instantiates it on ec2, use module [aws-ec2-deploy-iberia](https://github.com/Iberia-Ent/software-engineering--reference-architecture--workflow/blob/main/terraform/modules/aws-ec2-deploy-iberia/README.md) 
 
-To finish the monitoring module [aws-ec2-monitoring](https://github.com/Iberia-Ent/software-engineering--reference-architecture--workflow/blob/main/terraform/modules/aws-ec2-monitoring/README.md), associate the service and infrastructure to the monitoring tools of alert, logging, etc. for example cloudwatch.
+To finish the monitoring module [aws-ec2-monitoring-iberia](https://github.com/Iberia-Ent/software-engineering--reference-architecture--workflow/blob/main/terraform/modules/aws-ec2-monitoring-iberia/README.md), associate the service and infrastructure to the monitoring tools of alert, logging, etc. for example cloudwatch.
 
 
 Usages
