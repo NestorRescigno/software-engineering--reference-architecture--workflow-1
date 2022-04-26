@@ -57,7 +57,7 @@ see [module terraform common infra]( https://github.com/Iberia-Ent/software-engi
 The runner server can have a trusted connection configured for the different accounts of the new one. this allows not having secrets configured in the organization or repositories, but rather the runner itself makes the connection through profiles through the cloud client. 
 Assuming that the servers themselves contain the installed [aws clients](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html), the runners and the workflow can be configured in different ways, for example:
 
-- configure runner with environment:
+- configure runner for environment:
 - configure runner with profile connection:
 
 Getting started
