@@ -40,7 +40,7 @@ in next picture show workflow action
 
 Every workflow needs a server to be able to execute and perform all the necessary calculation operations. for this purpose the use of hosted runner is recommended. the hosted runner is posible configure and install tool and apply security access to cloud account. 
 
-Hosted runner
+Self-hosted runners
 ---
 You can host your own runners and customize the environment used to run jobs in your GitHub Actions workflows. see [About self-hosted runners](https://docs.github.com/en/enterprise-server@3.3/actions/hosting-your-own-runners/about-self-hosted-runners) 
 A self-hosted runner is a system that you deploy and manage to execute jobs from GitHub Actions on your GitHub Enterprise Server instance.
