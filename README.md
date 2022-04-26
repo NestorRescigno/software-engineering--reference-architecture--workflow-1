@@ -65,7 +65,7 @@ jobs:
     runs-on: [self-hosted, dev]
 ````
 - **Configure runner with profile connection:** In this configuration, the runner contains its own cloud access credentials under profiles.  
-When executing the workflow, it uses the profile instead of the secret directly. this allows you to remove the github secrets. see [configure profile]( https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html). You can configure the AWS Command Line Interface (AWS CLI) to use an IAM role by defining a profile for the role in the ~/.aws/config file.
+When executing the workflow, it uses the profile instead of the secret directly. this allows you to remove the github secrets.  You can configure the AWS Command Line Interface (AWS CLI) to use an IAM role by defining a profile for the role in the ~/.aws/config file. see [configure profile]( https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html).
 
 >If the github secrets aren't configured to access the cloud client, the system considers that there is a pre-existing configuration and uses that configuration. this is valid for the first option as long as the runners are'll configured in the workflow. for the second option it'll be necessary to adapt the configuration scripts with each profile.
 
