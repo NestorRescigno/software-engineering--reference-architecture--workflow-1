@@ -53,18 +53,20 @@ Below is a workflow for creating a runner server hosted in the cloud itself and 
 
 see [module terraform common infra]( https://github.com/Iberia-Ent/software-engineering--deployments-sdlc-common--infra)
 
-## configure runner with cloud config
+## Configure runner with cloud config
 The runner server can have a trusted connection configured for the different accounts of the new one. this allows not having secrets configured in the organization or repositories, but rather the runner itself makes the connection through profiles through the cloud client. 
 Assuming that the servers themselves contain the installed [aws clients](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html), the runners and the workflow can be configured in different ways, for example:
 
-- **configure runner for environment:** For this type of configuration, one runner per environment is considered. each runner has access to the cloud account of the environment. this forces the workflow to have configured in each job the runner that corresponds to the environment where it must connect.
+- **Configure runner for environment:** For this type of configuration, one runner per environment is considered. each runner has access to the cloud account of the environment. this forces the workflow to have configured in each job the runner that corresponds to the environment where it must connect.
 ````
 jobs:
   build:
     name: build
     runs-on: [self-hosted, dev]
 ````
-- **configure runner with profile connection:** In this configuration, the runner contains its own cloud access credentials under profiles. When executing the workflow, it uses the profile instead of the secret directly. this allows you to remove the github secrets. see [configure profile]( https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)
+- **Configure runner with profile connection:** In this configuration, the runner contains its own cloud access credentials under profiles. When executing the workflow, it uses the profile instead of the secret directly. this allows you to remove the github secrets. see [configure profile]( https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)
+
+>If the github secrets aren't configured to access the cloud client, the system considers that there is a pre-existing configuration and uses that configuration.
 
 Getting started
 ---
