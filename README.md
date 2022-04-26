@@ -51,8 +51,14 @@ Below is a workflow for creating a runner server hosted in the cloud itself and 
 
 ![runner installed](./images/docs/project-template/Deployment-Infrastructure.png)
 
->the runner server can have a trusted connection configured for the different accounts of the new one. this allows not having secrets configured in the organization or repositories, but rather the runner itself makes the connection through profiles through the cloud client. see [module terraform common infra]( https://github.com/Iberia-Ent/software-engineering--deployments-sdlc-common--infra)
+see [module terraform common infra]( https://github.com/Iberia-Ent/software-engineering--deployments-sdlc-common--infra)
 
+## configure runner with cloud config
+The runner server can have a trusted connection configured for the different accounts of the new one. this allows not having secrets configured in the organization or repositories, but rather the runner itself makes the connection through profiles through the cloud client. 
+Assuming that the servers themselves contain the installed [aws clients](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html), the runners and the workflow can be configured in different ways, for example:
+
+- configure runner with environment:
+- configure runner with profile connection:
 
 Getting started
 ---
