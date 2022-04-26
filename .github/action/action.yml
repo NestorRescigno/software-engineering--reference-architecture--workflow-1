@@ -76,7 +76,6 @@ inputs:
   aws-environment-name:
     description: 'Environment name for example: production'
     required: true
-    required: false
     default: 'production'
   aws-environment-prefix:
     description: 'Environment prefix name for example: pro'
@@ -85,10 +84,10 @@ inputs:
    # configuration cloud secret by enviroment  
   aws-access-key:
     description: 'access key aws publish environment: example: production'
-    required: true
+    required: false
   aws-secret-acesss-key:
     description: 'secret access key aws publish environment example: production'
-    required: true
+    required: false
   # configuration cloud name enviroment
   aws-environment-dev-name:
     description: 'Development nvironment name for example: development'
@@ -101,10 +100,10 @@ inputs:
    # configuration cloud secret by enviroment  
   aws-access-key-dev:
     description: 'access key aws development environment'
-    required: true
+    required: false
   aws-secret-acesss-key-dev:
     description: 'secret access key aws development environment'
-    required: true
+    required: false
 on: [pull_request]
   pull_request:
     # Sequence of patterns matched against refs/heads
@@ -131,7 +130,10 @@ jobs:
         value: ${{ steps.package-generator-name.outputs.package-type-id }}
       package-repository:
         description: "package repository path"
-        value: ${{ steps.registry-repository.outputs.registry-repository-id }}    
+        value: ${{ steps.registry-repository.outputs.registry-repository-id }}
+#      environment-select:
+#        description: "environment select"
+#        value: ${{ steps.package-generator-name.outputs.environment-select-id }}
     env:
       SCRIPT: ${{ github.workspace }}/.github/action/utils/
       LANGUAGE: ${{ inputs.lenguage-code }}
@@ -145,7 +147,7 @@ jobs:
       # Step 3 
       - name: Building Artifact
         id: package-generator-name
-        shell: bash
+        shell: bash 
         run: |
         ${{ env.SCRIPT }}/build.sh
       # Step 4  
@@ -226,6 +228,7 @@ jobs:
   #      ${{ env.SCRIPT }}/pipeline-scan.sh
   environment:
     name: environment
+    #  runs-on: [self-hosted,  ${{ jobs.build.outputs.environment-select }} ]
     runs-on: [self-hosted]
     outputs:
       shared-number-ids-arn_suffix:
@@ -312,7 +315,7 @@ jobs:
         ${{ env.SCRIPT }}/build-instance.sh  
   image:
     name: build-image
-    runs-on: [self-hosted]
+    runs-on: [self-hosted, op]
     outputs:
       image-number-id:
         description: "image number id"
@@ -355,7 +358,7 @@ jobs:
         ${{ env.SCRIPT }}/build-image.sh
   deploy:
     name: production-deploy
-    runs-on: [self-hosted]
+    runs-on: [self-hosted, pro]
     env:
       SCRIPT: ${{ github.workspace }}/.github/action/utils/
       TEST: inputs.testIntegration
