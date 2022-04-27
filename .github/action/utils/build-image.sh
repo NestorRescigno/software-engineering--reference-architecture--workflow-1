@@ -24,6 +24,7 @@ VERSION             = ${{ env.VERSION }}
 PACKAGE             = ${{ env.PACKAGE}}
 
 # get artifact image of differente type for lenguage
+CODEARTIFACT        = ${{ env.CODEARTIFACT }}               # active download artifact form aws codeartifact 
 HOST                = ${{ env.REPOSITORY_HOST }} 
 USER                = ${{ env.REPOSITORY_USER }} 
 SECRET              = ${{ env.REPOSITORY_SECRET }}
@@ -82,6 +83,7 @@ terraform plan
      -var "artifact_secret=${SECRET}"
      -var "security_group=${SG}" # array 
      -var "subnet_target=${SUBNET}" 
+     -var "codeartifact_allow=${CODEARTIFACT}"
 
 # apply plan terrafom
 terraform apply
