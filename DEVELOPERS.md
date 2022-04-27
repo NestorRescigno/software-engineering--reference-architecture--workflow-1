@@ -102,11 +102,11 @@ The implementation of the workflow in the different repositories of the source c
 
 > **Recommendation:** Don't directly implement this flow in source repositories. Use an intermediate repository where you can configure the different tools (exemple sonar, veracode, etc). and that it can be executed, for example, by means of [weebhook](https://docs.github.com/en/github-ae@latest/developers/webhooks-and-events/webhooks/about-webhooks). This configuration allows to separate the repository from the workflow.
 
-the workflow uses different tools to complete different scenarios such as checking in to derivative repositories or running a code scan. to configure the tools it is necessary to configure the authentication secrets. more information to [secret github](https://docs.github.com/en/actions/security-guides/encrypted-secrets)
-see [Usages](#usages) implementation
+the workflow uses different tools to complete different scenarios such as checking in to derivative repositories or running a code scan. to configure the tools it is necessary to configure the authentication secrets. more information to [secret github](https://docs.github.com/en/actions/security-guides/encrypted-secrets).
+see [usages](#usages) for implementation
 
 ### Terraform modules:
-github workflow using terraform to creates and applies an infrastructure using the vpc module firt time. the [aws-ec2-vpc-iberia](https://github.com/Iberia-Ent/software-engineering--reference-architecture--workflow/blob/main/terraform/modules/aws-ec2-vpc-iberia/README.md) module is configured by environment through the file **terraform.tfvars** content:
+github workflow using terraform to creates and applies an infrastructure using the vpc module first time. the [aws-ec2-vpc-iberia](https://github.com/Iberia-Ent/software-engineering--reference-architecture--workflow/blob/main/terraform/modules/aws-ec2-vpc-iberia/README.md) module is configured by environment through the file **terraform.tfvars** content:
 `````
 ## Global variables
 service_name       = "<service name>"
