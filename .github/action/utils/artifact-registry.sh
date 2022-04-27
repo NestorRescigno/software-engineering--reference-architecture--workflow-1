@@ -7,20 +7,15 @@
 
 # setting credencials 
 if [ ${env.CODEARTIFACT}}==false ] then
-
     REPOSITORY_USER   = ${{ env.REPOSITORY_USER }}
-    REPOSITORY_SECRET = ${{ env.REPOSITORY_SECRET }}
-    REPOSITORY_DNS    = ${{ env.REPOSITORY_DNS }}
-    
+    REPOSITORY_SECRET = ${{ env.REPOSITORY_SECRET }}   
 else 
-
     export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain ${{ env.PROJECT }} --domain-owner ${{ env.REPOSITORY_USER }} --query authorizationToken --output text`
     REPOSITORY_USER   = "aws"
-    REPOSITORY_SECRET = ${{ CODEARTIFACT_AUTH_TOKEN }}
-    REPOSITORY_DNS    = ${{ env.REPOSITORY_DNS }}
-    
+    REPOSITORY_SECRET = ${{ CODEARTIFACT_AUTH_TOKEN }} 
 fi
-    
+
+REPOSITORY_DNS    = ${{ env.REPOSITORY_DNS }}    
 REPOSITORY_URL    ="https://${REPOSITORY_USER}:${REPOSITORY_SECRET}@${REPOSITORY_DNS}"      # DNS can't content http or https, is necesary certificate 
   
 # setting variable
