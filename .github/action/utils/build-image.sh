@@ -55,8 +55,15 @@ echo "***************************************************"
 echo "Creating image"
 echo "***************************************************"
 
-# configure operational account, generate image and shared with instance       
-. could-configure.sh "aws" ${aws_access_key_op} ${aws_secret_access_key_op }  
+if [${aws-profile} != "" ] then
+     echo "****************************************"
+     echo "**    profile connect: ${aws-profile}       *"
+     echo "****************************************"
+     export AWS_PROFILE= ${aws-profile}
+else
+     # configure operational account, generate image and shared with instance       
+     . could-configure.sh "aws" ${aws_access_key_op} ${aws_secret_access_key_op }  
+fi
 
 # init terraform module
 cd ${workspace}/terraform/module/aws-ec2-instance-iberia
