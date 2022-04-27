@@ -264,6 +264,8 @@ jobs:
       ENVIROMENT_PREFIX_DEV: ${{inputs.aws-environment-dev-prefix}}
       AWS_ACCESS_KEY_DEV: ${{ inputs.aws-access-key-dev }}
       AWS_SECRET_ACCESS_KEY_DEV: ${{ inputs.aws-secret-access-key-dev }}
+      # reemplace aws secret and access key to profile
+      AWS_PROFILE:
     if: ${{ startsWith(${ github.ref }, 'refs/heads/develop') == true }}  
     steps:
       # build image
@@ -314,6 +316,8 @@ jobs:
       ENVIROMENT_PREFIX_DEV: ${{inputs.aws-environment-dev-prefix}}
       AWS_ACCESS_KEY_DEV: ${{ inputs.aws-access-key-dev }}
       AWS_SECRET_ACCESS_KEY_DEV: ${{ inputs.aws-secret-access-key-dev }}
+      # reemplace aws secret and access key to profile
+      AWS_PROFILE:
     if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }}
     steps:
       # build image
@@ -351,6 +355,8 @@ jobs:
       # input account development environment
       AWS_ACCESS_KEY_DEV: ${{ inputs.aws-access-key-dev }}
       AWS_SECRET_ACCESS_KEY_DEV: ${{ inputs.aws-secret-access-key-dev }}
+       # reemplace aws secret and access key to profile
+      AWS_PROFILE:
     if: ${{ startsWith(${ github.ref }, 'refs/heads/develop') == true }}
     steps:    
       # build image
@@ -394,6 +400,8 @@ jobs:
       # secret account operational. it isn't present in input but en secret repository owner.
       AWS_ACCESS_KEY_OP: ${{secret.aws-access-key-op}}                   
       AWS_SECRET_ACCESS_KEY_OP: ${{ secret.aws-secret-access-key-op}}
+      # reemplace aws secret and access key to profile
+      AWS_PROFILE:
     if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }}  
     steps:
       # build image
@@ -428,6 +436,8 @@ jobs:
       ENVIROMENT_PREFIX: ${{inputs.aws-environment-prefix}}
       AWS_ACCESS_KEY: ${{ inputs.aws-access-key }}
       AWS_SECRET_ACCESS_KEY: ${{ inputs.aws-secret-access-key }}
+       # reemplace aws secret and access key to profile
+      AWS_PROFILE:
     if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }} 
     steps:
       # instance software.
