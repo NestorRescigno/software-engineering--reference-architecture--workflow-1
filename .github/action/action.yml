@@ -273,7 +273,7 @@ jobs:
         shell: bash
         run: |
         ${{ env.SCRIPT }}/build-environment.sh
-   environment:
+  environment:
     name: environment-production
     runs-on: [self-hosted, pro]
     outputs:
