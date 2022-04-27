@@ -49,8 +49,16 @@ echo "***************************************************"
 echo " create instance form image base to develoment     "
 echo "***************************************************"
 
-# create instance in developmente enviroment, need this account access.
-. could-configure.sh "aws" ${aws_access_key_dev } ${aws_secret_access_key_dev } 
+if [${aws-profile} != "" ] then
+     echo "****************************************"
+     echo "**    profile connect: ${aws-profile}       *"
+     echo "****************************************"
+     export AWS_PROFILE= ${aws-profile}
+else
+    # create instance in developmente enviroment, need this account access.
+    . could-configure.sh "aws" ${aws_access_key_dev } ${aws_secret_access_key_dev } 
+fi
+
 
 # init terraform module
 cd ${workspace}/terraform/module/aws-ec2-instance-iberia
