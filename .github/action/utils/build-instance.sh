@@ -42,6 +42,9 @@ SHARED              = ${{ env.SHARED }}
 aws_access_key_dev          = ${{ env.AWS_ACCESS_KEY_DEV }}
 aws_secret_access_key_dev   = ${{ env.AWS_SECRETE_ACCESS_KEY_DEV }} 
 
+# access enviroment profile 
+aws-profile                = ${{ env.AWS_PROFILE }}
+
 echo "***************************************************"
 echo " create instance form image base to develoment     "
 echo "***************************************************"
