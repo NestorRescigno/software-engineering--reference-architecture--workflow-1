@@ -23,13 +23,13 @@ if [ ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then
     ENVIROMENT=${{env.ENVIROMENT}}  # may be change to preproduction or production 
     PREFIX=${{env.ENVIROMENT_PREFIX}} 
 
-    . could-configure.sh ${aws_access_key } ${aws_secret_access_key } 
+    . could-configure.sh "aws" ${aws_access_key } ${aws_secret_access_key } 
 
 elif [${ startsWith(${ REF }, 'refs/heads/develop') } == true ] then  
     ENVIROMENT=${{env.ENVIROMENT_DEV}}  # may be change to preproduction or production 
     PREFIX=${{env.ENVIROMENT_PREFIX_DEV}} 
 
-    . could-configure.sh ${aws_access_key_dev} ${aws_secret_access_key_dev } 
+    . could-configure.sh "aws" ${aws_access_key_dev} ${aws_secret_access_key_dev } 
 if 
 
 
