@@ -79,7 +79,7 @@ if [ ${CODEARTIFACT}==true] then
      
      ARTIFACTREF = "https://${HOST}/v1/package/version/asset?asset=asset&domain=${PROJECT}&domain-owner=${OWNER}&format=${FORMAT}&namespace=${GROUP}&package=${ARTIFACT}&repository=${REPOSITORY}&version=${VERSION} HTTP/1.1"
 else
-     ARTIFACTREF = "https://${HOST}/nexus/service/local/artifact/maven/content?g=${GROUP}&a=${ARTIFACT}&v=${VERSION}&r=${REPOSITORY}"
+     ARTIFACTREF = "https://${HOST}/nexus/service/local/artifact/maven/redirect?r=${REPOSITORY}&g=${GROUP}&a=${ARTIFACT}&v=${VERSION}&p=${PACKAGE}" 
 fi
 
 
@@ -101,10 +101,6 @@ terraform plan
 -var "artifact_secret=${SECRET}"
 -var "security_group=${SG}" # array 
 -var "subnet_target=${SUBNET}" 
-# Note of developer: comment because change login access in internal terraform.
-# check image build process and comment
-# -var "codeartifact_allow=${CODEARTIFACT}" 
-##########################################
 
 # apply plan terrafom
 terraform apply 
