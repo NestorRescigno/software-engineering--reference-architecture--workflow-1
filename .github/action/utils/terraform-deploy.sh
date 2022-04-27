@@ -28,8 +28,17 @@ aws-profile                = ${{ env.AWS_PROFILE }}
 # setting enviroment and prefix with conditional reference branchs
 # pull request event from action
 if [ ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then  
-
-    . could-configure.sh "aws" ${aws_access_key} ${aws_secret_access_key } 
+    
+   if [${aws-profile} != "" ] then
+        echo "****************************************"
+        echo "**    profile connect: ${aws-profile}       *"
+        echo "****************************************"
+        export AWS_PROFILE= ${aws-profile}
+   else
+        # create instance in developmente enviroment, need this account access.
+        . could-configure.sh "aws" ${aws_access_key} ${aws_secret_access_key } 
+   fi
+   
 
 
     cd ${ WORKSPACE }/terraform/module/aws-ec2-deploy-iberia
