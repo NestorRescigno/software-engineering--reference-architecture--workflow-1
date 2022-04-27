@@ -26,3 +26,9 @@ format = $3
 #    "packageVersion": "4.0.0",
 #    "packageVersionRevision": "Ciqe5/9yicvkJT13b5/LdLpCyE6fqA7poa9qp+FilPs="
 #}
+
+# aws codeartifact get-package-version-asset --domain my_domain --domain-owner 111122223333 --repository my_repo \
+#   --format maven --namespace com.google.guava --package guava --package-version 27.1-jre \
+#   --asset guava-27.1-jre.jar \
+#   guava-27.1-jre.jar
+
