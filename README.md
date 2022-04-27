@@ -18,7 +18,7 @@ For the deployment of any software, it is necessary to design an infrastructure 
 Concepts
 ---
 This repository contains all the workflow, modules and scripts standard necessary for the deployment of a product. 
-It will be the basis for best practices and the basis for the deployment of the company.
+It'll be the basis for best practices and the basis for the deployment of the company.
 
 In general, a company that develops software needs an environment for its own development as well as software, certification environments, as well as production environments. in this last, it is where more control is needed.
 That is why the balancing is applied to a hidden environment to test the new functional release before presenting it to the market. in next picture show architecture standard network.
@@ -33,7 +33,7 @@ A Terraform configuration is a complete document in the Terraform language that 
 
 This repository have diferente terraform standars modules by create infraestructure by code. more information to see [DEVELOPERS.md](./DEVELOPERS.md)
 
-Finally, the developer uses a workflow that allows quality control and the deployment of his software in the environments or cluster, generating an image that will be kept in a registry and that allows maintaining a standard software and magine in all environments.
+Finally, the developer uses a workflow that allows quality control and the deployment of his software in the environments or cluster, generating an image that will be kept in a registry and that allows maintaining a standard software and magine in all environments. 
 in next picture show workflow action
 
 ![Deploy software](./images/docs/project-template/DeveloperFlow.png)
