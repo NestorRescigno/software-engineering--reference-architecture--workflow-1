@@ -356,8 +356,6 @@ jobs:
       PACKAGE: ${{ jobs.build.outputs.package-type-name }}
       # active code artifact and reemplace nexus
       CODEARTIFACT:  ${{ inputs.codeartifact-allow }
-      # project name is domain in codeartifact
-      PROJECT:  ${{ inputs.project-name }
       # get path repository package generate font step build
       REPOSITORY_PATH:  ${{ jobs.build.outputs.package-repository }}   
       REPOSITORY_HOST: inputs.repository-host
@@ -403,9 +401,7 @@ jobs:
       # get package type extention from step build  
       PACKAGE: ${{ jobs.build.outputs.package-type-name }}
       # active code artifact and reemplace nexus
-      CODEARTIFACT:  ${{ inputs.codeartifact-allow }
-      # project name is domain in codeartifact
-      PROJECT:  ${{ inputs.project-name } 
+      CODEARTIFACT:  ${{ inputs.codeartifact-allow } 
       # get path repository package generate font step build
       REPOSITORY_PATH:  ${{ jobs.build.outputs.package-repository }}  
       REPOSITORY_HOST: inputs.repository-host
