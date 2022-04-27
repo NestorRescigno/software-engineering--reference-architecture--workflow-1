@@ -44,6 +44,9 @@ SHARED              = ${{ env.SHARED }}
 aws_access_key_op          = ${{ env.AWS_ACCESS_KEY_OP }}
 aws_access_key_op          = ${{ env.AWS_SECRETE_ACCESS_KEY_OP }} 
 
+# access enviroment profile 
+aws-profile                = ${{ env.AWS_PROFILE }}
+
 # the path repository is present in var  
 ARTIFACTREF        = "http://${HOST}/nexus/service/local/artifact/maven/redirect?r=${REPOSITORY}&g=${GROUP}&a=${ARTIFACT}&v=${VERSION}&p=${PACKAGE}"
  
