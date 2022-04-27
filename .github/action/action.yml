@@ -131,9 +131,6 @@ jobs:
       package-repository:
         description: "package repository path"
         value: ${{ steps.registry-repository.outputs.registry-repository-id }}
-#      environment-select:
-#        description: "environment select"
-#        value: ${{ steps.package-generator-name.outputs.environment-select-id }}
     env:
       SCRIPT: ${{ github.workspace }}/.github/action/utils/
       LANGUAGE: ${{ inputs.lenguage-code }}
@@ -227,9 +224,8 @@ jobs:
   #      run: |
   #      ${{ env.SCRIPT }}/pipeline-scan.sh
   environment:
-    name: environment
-    #  runs-on: [self-hosted,  ${{ jobs.build.outputs.environment-select }} ]
-    runs-on: [self-hosted]
+    name: environment-development
+    runs-on: [self-hosted, dev]
     outputs:
       shared-number-ids-arn_suffix:
         description: "ami shered numbers ids"
@@ -268,6 +264,7 @@ jobs:
       ENVIROMENT_PREFIX_DEV: ${{inputs.aws-environment-dev-prefix}}
       AWS_ACCESS_KEY_DEV: ${{ inputs.aws-access-key-dev }}
       AWS_SECRET_ACCESS_KEY_DEV: ${{ inputs.aws-secret-access-key-dev }}
+    if: ${{ startsWith(${ github.ref }, 'refs/heads/develop') == true }}  
     steps:
       # build image
       # Step 1
@@ -276,6 +273,56 @@ jobs:
         shell: bash
         run: |
         ${{ env.SCRIPT }}/build-environment.sh
+   environment:
+    name: environment-production
+    runs-on: [self-hosted, pro]
+    outputs:
+      shared-number-ids-arn_suffix:
+        description: "ami shered numbers ids"
+        value: ${{ steps.build-environment-generator.shared-ids }} 
+      security-group-number-ids:
+        description: "security groups numbers ids"
+        value: ${{ steps.build-environment-generator.security-group-ids }}
+      subnet-number-ids:
+        description: "subnets numbers ids"
+        value: ${{ steps.build-environment-generator.subnets-ids }}   
+      alb-target-group-number-arn:
+        description: "load balancer targer group numbers ids"
+        value: ${{ steps.build-environment-generator.alb-target-group-arn }}
+      alb-target-group-number-arn-suffix:
+        description: "load balancer targer group arn sufix"
+        value: ${{ steps.build-environment-generator.alb-target-group-arn-suffix }}
+      lb-number-arn-suffix:
+        description: "load balancer arn suffix"
+        value: ${{ steps.build-environment-generator.lb-arn-suffix }}
+    env:
+      SCRIPT: ${{ github.workspace }}/.github/action/utils/
+       # get input name, this name use in dns site and global value. project = product business
+      PROJECT:  ${{ inputs.project-name }}  
+      GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   
+      # get artifcat name generate from step build
+      SERVICE:  ${{ jobs.build.outputs.package-artifactid-name }}
+      WORKSPACE: ${{ github.workspace }}
+      REF:  ${{ github.ref }}
+      # input account integration/preproduction environment
+      ENVIROMENT: ${{inputs.aws-environment-name}}
+      ENVIROMENT_PREFIX: ${{inputs.aws-environment-prefix}}
+      AWS_ACCESS_KEY: ${{ inputs.aws-access-key }}
+      AWS_SECRET_ACCESS_KEY: ${{ inputs.aws-secret-access-key }}
+      # input account development environment
+      ENVIROMENT_DEV: ${{inputs.aws-aws-environment-dev-name}}
+      ENVIROMENT_PREFIX_DEV: ${{inputs.aws-environment-dev-prefix}}
+      AWS_ACCESS_KEY_DEV: ${{ inputs.aws-access-key-dev }}
+      AWS_SECRET_ACCESS_KEY_DEV: ${{ inputs.aws-secret-access-key-dev }}
+    if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }}
+    steps:
+      # build image
+      # Step 1
+      - name: build-environment
+        id: build-environment-generator
+        shell: bash
+        run: |
+        ${{ env.SCRIPT }}/build-environment.sh      
   instance:
     name: development-instance
     env:
