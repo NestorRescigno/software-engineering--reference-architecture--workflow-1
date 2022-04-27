@@ -139,6 +139,15 @@ jobs:
       package-repository:
         description: "package repository path"
         value: ${{ steps.registry-repository.outputs.registry-repository-id }}
+      package-usr:
+        description: "package user"
+        value: ${{ steps.registry-repository.outputs.registry-repository-usr }}
+      package-key:
+        description: "package key access"
+        value: ${{ steps.registry-repository.outputs.registry-repository-key }}
+      package-owner:
+        description: "package owner"
+        value: ${{ steps.registry-repository.outputs.registry-repository-owner }}
     env:
       SCRIPT: ${{ github.workspace }}/.github/action/utils/
       LANGUAGE: ${{ inputs.lenguage-code }}
@@ -360,9 +369,10 @@ jobs:
       REPOSITORY_PATH:  ${{ jobs.build.outputs.package-repository }}   
       REPOSITORY_HOST: inputs.repository-host
       # change user to read, now use write
-      REPOSITORY_USER: inputs.repository-user    
-      # change token to read, now use write
-      REPOSITORY_SECRET: inputs.repository-token   
+      REPOSITORY_OWNER:  ${{ jobs.build.outputs.package-owner }}    
+      REPOSITORY_USER:  ${{ jobs.build.outputs.package-usr }}    
+      REPOSITORY_SECRET: ${{ jobs.build.outputs.package-key }}     # change token to read, now use write
+      
       SECURITY_GROUPS: ${{ jobs.environment.outputs.security-group-number-ids }}
       SUBNETS: ${{ jobs.environment.outputs.subnet-number-ids }}
       
@@ -401,14 +411,14 @@ jobs:
       # get package type extention from step build  
       PACKAGE: ${{ jobs.build.outputs.package-type-name }}
       # active code artifact and reemplace nexus
-      CODEARTIFACT:  ${{ inputs.codeartifact-allow } 
+      CODEARTIFACT:  ${{ inputs.codeartifact-allow }
       # get path repository package generate font step build
-      REPOSITORY_PATH:  ${{ jobs.build.outputs.package-repository }}  
+      REPOSITORY_PATH:  ${{ jobs.build.outputs.package-repository }}   
       REPOSITORY_HOST: inputs.repository-host
       # change user to read, now use write
-      REPOSITORY_USER: inputs.repository-user  
-      # change token to read, now use write  
-      REPOSITORY_SECRET: inputs.repository-token   
+      REPOSITORY_OWNER:  ${{ jobs.build.outputs.package-owner }}    
+      REPOSITORY_USER:  ${{ jobs.build.outputs.package-usr }}    
+      REPOSITORY_SECRET: ${{ jobs.build.outputs.package-key }}     # change token to read, now use write
       SECURITY_GROUPS: ${{ jobs.environment.outputs.security-group-number-ids }}
       SUBNETS: ${{ jobs.environment.outputs.subnet-number-ids }}
       # shared ami with environment.
