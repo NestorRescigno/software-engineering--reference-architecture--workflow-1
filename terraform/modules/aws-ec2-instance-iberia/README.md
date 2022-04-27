@@ -28,8 +28,6 @@ ubuntu/image/hvm-ssd/ubuntu-xenial-20.08-amf64-server-**
 * artifact_secret:      "The secret key access to read register artifact. example: Nexus"
 * security_group:       "The security group to deploy"
 * subnet_target:        "The subnet id target to deploy ec2 instance"
-* codeartifact_allow:   "Active codeartifact, if value is false then download software from nexus"
-> default:              "false"
 
 **output**
 * instance_id: "aws magine image id"
