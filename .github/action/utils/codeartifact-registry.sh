@@ -19,13 +19,13 @@ format = $3
 
 # The following get-package-version-asset example retrieves the package.tgz asset for version 4.0.0 of an npm package named test-package.
 # aws codeartifact get-package-version-asset --domain test-domain --repository test-repo --format npm --package test-package --package-version 4.0.0 --asset 'package.tgz' outfileName
-#Output:
-#The output for this command will also store the raw asset in the file provided in place of outfileName.
-#{
+# Output:
+# The output for this command will also store the raw asset in the file provided in place of outfileName.
+# {
 #    "assetName": "package.tgz",
 #    "packageVersion": "4.0.0",
 #    "packageVersionRevision": "Ciqe5/9yicvkJT13b5/LdLpCyE6fqA7poa9qp+FilPs="
-#}
+# }
 
 # aws codeartifact get-package-version-asset --domain my_domain --domain-owner 111122223333 --repository my_repo \
 #   --format maven --namespace com.google.guava --package guava --package-version 27.1-jre \
