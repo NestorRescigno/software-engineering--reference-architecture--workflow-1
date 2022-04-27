@@ -53,7 +53,7 @@ echo "Creating image"
 echo "***************************************************"
 
 # configure operational account, generate image and shared with instance       
-. could-configure.sh ${aws_access_key_op} ${aws_secret_access_key_op }  
+. could-configure.sh "aws" ${aws_access_key_op} ${aws_secret_access_key_op }  
 
 # init terraform module
 cd ${workspace}/terraform/module/aws-ec2-instance-iberia
