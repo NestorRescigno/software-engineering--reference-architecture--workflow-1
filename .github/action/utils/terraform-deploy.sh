@@ -31,7 +31,7 @@ if [ ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then
     
    if [${aws-profile} != "" ] then
         echo "****************************************"
-        echo "**    profile connect: ${aws-profile}       *"
+        echo "**  profile connect: ${aws-profile}   **"
         echo "****************************************"
         export AWS_PROFILE= ${aws-profile}
    else
