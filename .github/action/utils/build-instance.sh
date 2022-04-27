@@ -16,6 +16,7 @@
 
 LANGUAGE            = ${{ env.LANGUAGE }}
 
+
 # artifact param
 GROUP               = ${{ env.GROUP }}     
 ARTIFACT            = ${{ env.ARTIFACT }} 
@@ -25,9 +26,12 @@ PACKAGE             = ${{ env.PACKAGE}}
 # get artifact image of differente type for lenguage
 CODEARTIFACT        = ${{ env.CODEARTIFACT }}                    # active download artifact form aws codeartifact
 HOST                = ${{ env.REPOSITORY_HOST }} 
+OWNER               = ${{ env.REPOSITORY_OWNER }}    
 USER                = ${{ env.REPOSITORY_USER }} 
 SECRET              = ${{ env.REPOSITORY_SECRET }}
 REPOSITORY          = ${{ env.REPOSITORY_PATH }} 
+
+
 
 # product name      
 PROJECT             = ${{ env.PROJECT }}
@@ -61,6 +65,25 @@ else
     . could-configure.sh "aws" ${aws_access_key_dev } ${aws_secret_access_key_dev } 
 fi
 
+#################################
+# create uri artifact reference 
+################################
+if [${LANGUAGE}=="java"] then
+   FORMAT= "maven"  
+else
+   FORMAT= "npm"
+fi
+# example uri aws
+if [ ${CODEARTIFACT}==true] then    
+     # GET /v1/package/version/asset?asset=asset&domain=domain&domain-owner=domainOwner&format=format&namespace=namespace&package=package&repository=repository&revision=packageVersionRevision&version=packageVersion HTTP/1.1
+     
+     ARTIFACTREF = "https://${HOST}/v1/package/version/asset?asset=asset&domain=${PROJECT}&domain-owner=${OWNER}&format=${FORMAT}&namespace=${GROUP}&package=${ARTIFACT}&repository=${REPOSITORY}&version=${VERSION} HTTP/1.1"
+else
+     ARTIFACTREF = "https://${HOST}/nexus/service/local/artifact/maven/content?g=${GROUP}&a=${ARTIFACT}&v=${VERSION}&r=${REPOSITORY}"
+fi
+
+
+##################################
 
 # init terraform module
 cd ${workspace}/terraform/module/aws-ec2-instance-iberia
@@ -78,7 +101,10 @@ terraform plan
 -var "artifact_secret=${SECRET}"
 -var "security_group=${SG}" # array 
 -var "subnet_target=${SUBNET}" 
--var "codeartifact_allow=${CODEARTIFACT}"
+# Note of developer: comment because change login access in internal terraform.
+# check image build process and comment
+# -var "codeartifact_allow=${CODEARTIFACT}" 
+##########################################
 
 # apply plan terrafom
 terraform apply 
