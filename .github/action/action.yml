@@ -354,6 +354,10 @@ jobs:
       VERSION:  ${{ jobs.build.outputs.package-version-name }}   
        # get package type extention from step build
       PACKAGE: ${{ jobs.build.outputs.package-type-name }}
+      # active code artifact and reemplace nexus
+      CODEARTIFACT:  ${{ inputs.codeartifact-allow }
+      # project name is domain in codeartifact
+      PROJECT:  ${{ inputs.project-name }
       # get path repository package generate font step build
       REPOSITORY_PATH:  ${{ jobs.build.outputs.package-repository }}   
       REPOSITORY_HOST: inputs.repository-host
@@ -397,8 +401,12 @@ jobs:
       # get package name generate from step build
       VERSION:  ${{ jobs.build.outputs.package-version-name }} 
       # get package type extention from step build  
-      PACKAGE: ${{ jobs.build.outputs.package-type-name }} 
-       # get path repository package generate font step build
+      PACKAGE: ${{ jobs.build.outputs.package-type-name }}
+      # active code artifact and reemplace nexus
+      CODEARTIFACT:  ${{ inputs.codeartifact-allow }
+      # project name is domain in codeartifact
+      PROJECT:  ${{ inputs.project-name } 
+      # get path repository package generate font step build
       REPOSITORY_PATH:  ${{ jobs.build.outputs.package-repository }}  
       REPOSITORY_HOST: inputs.repository-host
       # change user to read, now use write
