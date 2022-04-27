@@ -1,4 +1,4 @@
-    /* location file in linux or ubuntu sistem
+     /* location file in linux or ubuntu system, reemplace information with correct param for example path log, namespace, etc.
      /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json */
     {
       "agent": {
