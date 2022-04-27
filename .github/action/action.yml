@@ -72,15 +72,13 @@ inputs:
   repository-host:
     description: 'repository artifact host parameter'
     required: true
- 
-  # if use codeartifact then repository-user and repository-token isn't neccesary (automatic authentication)  
+  # if use codeartifact then repository-user is owner account id
   repository-user:
     description: 'repository artifact user parameter'
     required: true
   repository-token:
     description: 'repository artifact token parameter'
-    required: true 
-    
+    required: true
     
   # configuration cloud name enviroment
   aws-environment-name:
@@ -189,11 +187,7 @@ jobs:
           REPOSITORY_USER: inputs.repository-user
           REPOSITORY_SECRET: inputs.repository-token
         run: |
-        if [${{env.CODEARTIFACT}} == false }}] then
-          ${{ env.SCRIPT }}/nexus-registry.sh
-        else 
-          ${{ env.SCRIPT }}/codeartifact-registry.sh
-        fi
+          ${{ env.SCRIPT }}/artifact-registry.sh
   scan:
     name: scan-code
     runs-on: [self-hosted]
