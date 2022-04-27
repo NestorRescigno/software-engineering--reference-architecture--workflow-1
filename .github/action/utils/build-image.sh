@@ -25,11 +25,13 @@ VERSION             = ${{ env.VERSION }}
 PACKAGE             = ${{ env.PACKAGE}}
 
 # get artifact image of differente type for lenguage
-CODEARTIFACT        = ${{ env.CODEARTIFACT }}               # active download artifact form aws codeartifact 
+CODEARTIFACT        = ${{ env.CODEARTIFACT }}                    # active download artifact form aws codeartifact
 HOST                = ${{ env.REPOSITORY_HOST }} 
+OWNER               = ${{ env.REPOSITORY_OWNER }}    
 USER                = ${{ env.REPOSITORY_USER }} 
 SECRET              = ${{ env.REPOSITORY_SECRET }}
 REPOSITORY          = ${{ env.REPOSITORY_PATH }} 
+
 
 # product name      
 PROJECT             = ${{ env.PROJECT }}
@@ -49,9 +51,24 @@ aws_access_key_op          = ${{ env.AWS_SECRETE_ACCESS_KEY_OP }}
 # access enviroment profile 
 aws-profile                = ${{ env.AWS_PROFILE }}
 
-# the path repository is present in var  
-ARTIFACTREF        = "http://${HOST}/nexus/service/local/artifact/maven/redirect?r=${REPOSITORY}&g=${GROUP}&a=${ARTIFACT}&v=${VERSION}&p=${PACKAGE}"
- 
+#################################
+# create uri artifact reference 
+################################
+if [${LANGUAGE}=="java"] then
+   FORMAT= "maven"  
+else
+   FORMAT= "npm"
+fi
+
+# example uri aws
+if [ ${CODEARTIFACT}==true] then    
+     # GET /v1/package/version/asset?asset=asset&domain=domain&domain-owner=domainOwner&format=format&namespace=namespace&package=package&repository=repository&revision=packageVersionRevision&version=packageVersion HTTP/1.1
+     
+     ARTIFACTREF = "https://${HOST}/v1/package/version/asset?asset=asset&domain=${PROJECT}&domain-owner=${OWNER}&format=${FORMAT}&namespace=${GROUP}&package=${ARTIFACT}&repository=${REPOSITORY}&version=${VERSION} HTTP/1.1"
+else
+     ARTIFACTREF = "https://${HOST}/nexus/service/local/artifact/maven/redirect?r=${REPOSITORY}&g=${GROUP}&a=${ARTIFACT}&v=${VERSION}&p=${PACKAGE}" 
+fi
+
 # pull request to develop event create instance in aws but it don't registry image of snapshot
 echo "***************************************************"
 echo "Creating image"
@@ -84,7 +101,6 @@ terraform plan
      -var "artifact_secret=${SECRET}"
      -var "security_group=${SG}" # array 
      -var "subnet_target=${SUBNET}" 
-     -var "codeartifact_allow=${CODEARTIFACT}"
 
 # apply plan terrafom
 terraform apply
