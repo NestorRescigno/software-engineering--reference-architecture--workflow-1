@@ -145,6 +145,7 @@ can be referenced as follows:
     sonarqube-user: ${{secret.sonar-user}}            # user control quality code with sonar - optional
     sonarqube-token:${{secret.sonar-token}}           # pwd control quality code with sonar - optional
     sonarqube-client-version:                         # client sonar-scanner use. see https://binaries.sonarsource.com/?prefix=Distribution/sonar-scanner-cli/
+    codeartifact-allow:                               # active true repositorio codeartifact - required: true - default: false (nexus adopt)
     repository-DNS:  ${{secret.nexus-url}}            # host registry artifact
     repository-user: ${{secret.nexus-user}}           # user registry artifact
     repository-token:${{secret.nexus-pass}}           # pass registry artifact
