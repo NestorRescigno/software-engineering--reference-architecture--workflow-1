@@ -66,7 +66,8 @@ resource "aws_instance" "app" {
         artifact= "${var.ref}" , 
         package = "${var.package}" , 
         user   = "${var.artifact_user}",
-        secret = "${var.artifact_secret}"
+        secret = "${var.artifact_secret}",
+        codeartifact = "${var.codeartifact_allow}"
       })
     tags = {
         #Name = join("-",["i",var.service_name, var.service_version])
