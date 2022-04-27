@@ -125,6 +125,7 @@ the deployment step of the workflow receives the publish aws AMI image and insta
 
 To finish the monitoring module [aws-ec2-monitoring-iberia](https://github.com/Iberia-Ent/software-engineering--reference-architecture--workflow/blob/main/terraform/modules/aws-ec2-monitoring-iberia/README.md), associate the service and infrastructure to the monitoring tools of alert, logging, etc. for example cloudwatch.
 
+The deployment process requires a repository of derivatives. it can only be of two types (nexus or codeartifact). deployment isn't possible if the repository isn't configured.
 
 Usages
 ----
@@ -146,9 +147,10 @@ can be referenced as follows:
     sonarqube-token:${{secret.sonar-token}}           # pwd control quality code with sonar - optional
     sonarqube-client-version:                         # client sonar-scanner use. see https://binaries.sonarsource.com/?prefix=Distribution/sonar-scanner-cli/
     codeartifact-allow:                               # active true repositorio codeartifact - required: true - default: false (nexus adopt)
-    repository-DNS:  ${{secret.nexus-url}}            # host registry artifact
-    repository-user: ${{secret.nexus-user}}           # user registry artifact
-    repository-token:${{secret.nexus-pass}}           # pass registry artifact
+    repository-DNS:  ${{secret.nexus-url}}            # host registry artifact - 
+                                                      # if codeArtifact allow then dns is example: my_domain-111122223333.d.codeartifact.us-west-2.amazonaws.com
+    repository-user: ${{secret.nexus-user}}           # user registry artifact - if codeArtifact allow then user is owner aws id.
+    repository-token:${{secret.nexus-pass}}           # pass registry artifact - if codeArtifact allow then token is auto generate. input is empty
     aws-environment-name:                             # Environment name for default: 'production'
     aws-environment-prefix:                           # Environment prefix name for default: 'pro'
     aws-access-key:                                   # access key aws publish environment ( example: Integration, preproduction, quality)
