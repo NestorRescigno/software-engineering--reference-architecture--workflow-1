@@ -32,7 +32,6 @@ ubuntu/image/hvm-ssd/ubuntu-xenial-20.08-amf64-server-**
 **output**
 * instance_id: "aws magine image id"
 
-
-
 **Other configuration**
+
 To allow cloudwatch to retrieve the metrics from the instance, it is necessary to install the agent. This agent requires a manual configuration of the json. the json file must be hosted in the instance and parameterized by service. see [config Agent](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Agent-Configuration-File-Details.html)
