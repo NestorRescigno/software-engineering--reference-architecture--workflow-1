@@ -22,7 +22,8 @@ PREFIX=${{env.ENVIROMENT_PREFIX}}
 aws_access_key=${{ env.AWS_ACCESS_KEY }}
 aws_secret_access_key=${{ env.AWS_SECRETE_ACCESS_KEY }}
 
-
+# access enviroment profile 
+aws-profile                = ${{ env.AWS_PROFILE }}
 
 # setting enviroment and prefix with conditional reference branchs
 # pull request event from action
