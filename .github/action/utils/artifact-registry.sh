@@ -10,13 +10,18 @@ if [ ${env.CODEARTIFACT}}==false ] then
     REPOSITORY_USER   = ${{ env.REPOSITORY_USER }}
     REPOSITORY_SECRET = ${{ env.REPOSITORY_SECRET }}   
 else 
-    export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain ${{ env.PROJECT }} --domain-owner ${{ env.REPOSITORY_USER }} --query authorizationToken --output text`
+    REPOSITORY_OWNER = ${{ env.REPOSITORY_USER }}
+    export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain ${{ env.PROJECT }} --domain-owner ${ REPOSITORY_OWNER } --query authorizationToken --output text`
     REPOSITORY_USER   = "aws"
     REPOSITORY_SECRET = ${{ CODEARTIFACT_AUTH_TOKEN }} 
 fi
-
 REPOSITORY_DNS    = ${{ env.REPOSITORY_DNS }}    
 REPOSITORY_URL    ="https://${REPOSITORY_USER}:${REPOSITORY_SECRET}@${REPOSITORY_DNS}"      # DNS can't content http or https, is necesary certificate 
+
+# return user and token access to repository because token auto generate in this jobs, phase build image download form codeartifact or nexus.
+echo "::set-output name=registry-repository-owner::$(echo ${REPOSITORY_OWNER})" 
+echo "::set-output name=registry-repository-usr::$(echo ${REPOSITORY_USER})"
+echo "::set-output name=registry-repository-key::$(echo ${REPOSITORY_SECRET})"
   
 # setting variable
 LANGUAGE          =${{ env.LANGUAGE }} 
