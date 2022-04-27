@@ -47,7 +47,7 @@ echo " create instance form image base to develoment     "
 echo "***************************************************"
 
 # create instance in developmente enviroment, need this account access.
-. could-configure.sh ${aws_access_key_dev } ${aws_secret_access_key_dev } 
+. could-configure.sh "aws" ${aws_access_key_dev } ${aws_secret_access_key_dev } 
 
 # init terraform module
 cd ${workspace}/terraform/module/aws-ec2-instance-iberia
