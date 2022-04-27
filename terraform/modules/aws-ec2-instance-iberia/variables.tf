@@ -81,3 +81,8 @@ variable "lenguage_code" {
   #   error_message = "the lenguage value must be a valid: java, angular, go"
   # }
 }
+
+variable "codeartifact_allow" {
+  description ="active download artifact form codeartifact. if value is false then download from nexus repository."
+  default     = false
+}
