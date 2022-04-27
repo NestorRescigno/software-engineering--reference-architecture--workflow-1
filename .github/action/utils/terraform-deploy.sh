@@ -28,7 +28,7 @@ aws_secret_access_key=${{ env.AWS_SECRETE_ACCESS_KEY }}
 # pull request event from action
 if [ ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then  
 
-    . could-configure.sh ${aws_access_key} ${aws_secret_access_key } 
+    . could-configure.sh "aws" ${aws_access_key} ${aws_secret_access_key } 
 
 
     cd ${ WORKSPACE }/terraform/module/aws-ec2-deploy-iberia
