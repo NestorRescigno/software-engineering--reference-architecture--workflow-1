@@ -33,7 +33,7 @@ main
 |           └───get-tools.sh                                      # installe tools cliente.
 |           └───get-version-pom.sh                                # get version form pom.xml maven.
 |           └───health-checking.sh                                # health checking instance in cloud.
-|           └───nexus-registry.sh                                 # script upload artifact to registry nexus
+|           └───artifact-registry.sh                              # script upload artifact to registry nexus or codeartifact
 |           └───script-note.md                                    # diferente note to scripts
 |           └───setup-java.md                                     # install jdk java in runner.
 |           └───sonar-scanner.sh                                  # script scan code with sonarqube
