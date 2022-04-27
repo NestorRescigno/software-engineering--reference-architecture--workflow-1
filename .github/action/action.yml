@@ -63,15 +63,25 @@ inputs:
   #  required: false
   # control vulnerability code
   
+  ## if use code artifact repository-host
+  codeartifact-allow:
+    description: 'active repositorio codeartifact - default: false'
+    required: true
+    default: false
+  
   repository-host:
     description: 'repository artifact host parameter'
     required: true
+ 
+  # if use codeartifact then repository-user and repository-token isn't neccesary (automatic authentication)  
   repository-user:
     description: 'repository artifact user parameter'
     required: true
   repository-token:
     description: 'repository artifact token parameter'
     required: true 
+    
+    
   # configuration cloud name enviroment
   aws-environment-name:
     description: 'Environment name for example: production'
@@ -169,13 +179,21 @@ jobs:
           # get package name generate from step build
           VERSION:  ${{ jobs.build.outputs.package-version-name }}  
           # get package type extention from step build
-          PACKAGE: ${{ jobs.build.outputs.package-type-name }} 
-          # DNS hasn't content http:// or https://
+          PACKAGE: ${{ jobs.build.outputs.package-type-name }}
+          # active code artifact and reemplace nexus
+          CODEARTIFACT:  ${{ inputs.codeartifact-allow }
+          # project name is domain in codeartifact
+          PROJECT:  ${{ inputs.project-name }
+          # DNS hasn't content http:// or https://  
           REPOSITORY_DNS: inputs.repository-host
           REPOSITORY_USER: inputs.repository-user
           REPOSITORY_SECRET: inputs.repository-token
         run: |
-        ${{ env.SCRIPT }}/nexus-registry.sh
+        if [${{env.CODEARTIFACT}} == false }}] then
+          ${{ env.SCRIPT }}/nexus-registry.sh
+        else 
+          ${{ env.SCRIPT }}/codeartifact-registry.sh
+        fi
   scan:
     name: scan-code
     runs-on: [self-hosted]
