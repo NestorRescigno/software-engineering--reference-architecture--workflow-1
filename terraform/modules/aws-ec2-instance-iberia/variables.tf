@@ -82,7 +82,3 @@ variable "lenguage_code" {
   # }
 }
 
-variable "codeartifact_allow" {
-  description ="active download artifact form codeartifact. if value is false then download from nexus repository."
-  default     = false
-}
