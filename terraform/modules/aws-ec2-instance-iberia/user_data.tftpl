@@ -5,6 +5,14 @@
 # *********************************************************************
 
 # Install necessary dependencies
+# Installing the CloudWatch agent
+sudo yum install amazon-cloudwatch-agent
+
+## configure file cloudwatch agent
+# Note of developer: pending configure json file,this file is present in same repository
+## end configure
+
+
 # GO lenguage
 sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
 sudo apt-get -y -qq install curl wget git vim apt-transport-https ca-certificates
