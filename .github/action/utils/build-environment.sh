@@ -17,20 +17,48 @@ aws_secret_access_key      = ${{ env.AWS_SECRETE_ACCESS_KEY }}
 aws_access_key_dev         = ${{ env.AWS_ACCESS_KEY_DEV }}
 aws_secret_access_key_dev  = ${{ env.AWS_SECRETE_ACCESS_KEY_DEV }}  
 
+# access enviroment profile 
+aws-profile                = ${{env.AWS_PROFILE}}
+
 # setting enviroment and prefix with conditional reference branchs
 # pull request event from action
 if [ ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then  
     ENVIROMENT=${{env.ENVIROMENT}}  # may be change to preproduction or production 
-    PREFIX=${{env.ENVIROMENT_PREFIX}} 
-
-    . could-configure.sh "aws" ${aws_access_key } ${aws_secret_access_key } 
-
+    PREFIX=${{env.ENVIROMENT_PREFIX}}    
+    if [${aws-profile} != "" ] then
+        if [${aws-profile}==${PREFIX}] then
+            echo "****************************************"
+            echo "**    profile connect: ${PREFIX}       *"
+            echo "****************************************"
+            export AWS_PROFILE= ${PREFIX}
+        elif [${aws-profile}==${ENVIROMENT}] then
+            echo "****************************************"
+            echo "**    profile connect: ${ENVIROMENT}   *"
+            echo "****************************************"
+            export AWS_PROFILE= ${ENVIROMENT}
+        fi
+    else
+        . could-configure.sh "aws" ${aws_access_key } ${aws_secret_access_key } 
+    fi 
 elif [${ startsWith(${ REF }, 'refs/heads/develop') } == true ] then  
     ENVIROMENT=${{env.ENVIROMENT_DEV}}  # may be change to preproduction or production 
     PREFIX=${{env.ENVIROMENT_PREFIX_DEV}} 
-
-    . could-configure.sh "aws" ${aws_access_key_dev} ${aws_secret_access_key_dev } 
-if 
+    if [${aws-profile} != "" ] then
+        if [${aws-profile}==${PREFIX}] then
+            echo "****************************************"
+            echo "**    profile connect: ${PREFIX}       *"
+            echo "****************************************"
+            export AWS_PROFILE= ${PREFIX}
+        elif [${aws-profile}==${ENVIROMENT}] then
+            echo "****************************************"
+            echo "**    profile connect: ${ENVIROMENT}   *"
+            echo "****************************************"
+            export AWS_PROFILE= ${ENVIROMENT}
+        fi
+    else
+       . could-configure.sh "aws" ${aws_access_key_dev} ${aws_secret_access_key_dev } 
+    fi   
+fi 
 
 
 echo "***************************************************"
