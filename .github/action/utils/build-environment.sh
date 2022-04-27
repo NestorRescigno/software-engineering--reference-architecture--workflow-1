@@ -27,7 +27,7 @@ if [ ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then
     PREFIX=${{env.ENVIROMENT_PREFIX}}    
     if [${aws-profile} != "" ] then
         echo "****************************************"
-        echo "**    profile connect: ${aws-profile}       *"
+        echo "**  profile connect: ${aws-profile}   **"
         echo "****************************************"
         export AWS_PROFILE= ${aws-profile}
     else
