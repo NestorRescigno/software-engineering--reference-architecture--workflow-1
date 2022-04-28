@@ -162,27 +162,10 @@ can be referenced as follows:
     aws-environment-dev-prefix:                       # Development environment prefix name for default: 'dev'
     aws-access-key-dev:                               # access key aws development environment
     aws-secret-acesss-key-dev:                        # secret access key aws development environment 
+    aws-access-key-op:                                # access key aws operational environment, this account containt shared image 
+    aws-secret-acesss-key-op:                         # secret access key aws operational environment, this account containt shared image 
 ````
 
-- **private configuration**
-
-considering that there is an environment dedicated to the operations and preservation of images that may be hosted in another account in the cloud.
-the account setup credentials have been included directly in the "image" step of the workflow as secrets configured in the repo itself. in the following you can see the variables to complete with the secret. more information to [github secret](https://docs.github.com/en/actions/security-guides/encrypted-secrets)
-
-````
-image:
-    name: image
-    runs-on: [self-hosted]
-    outputs:
-      image-number-id:
-        description: "image number id"
-        value: ${{ steps.image-generator.outputs.image-id }}
-    env:
-      ...   
-      AWS_ACCESS_KEY_OP: ${{secret.aws-access-key-op}}                   
-      AWS_SECRET_ACCESS_KEY_OP: ${{ secret.aws-secret-access-key-op}}
-      ...
-````
 Repository flow 
 ----
 We have two working methods within the context of the repositories available in the reference architecture
