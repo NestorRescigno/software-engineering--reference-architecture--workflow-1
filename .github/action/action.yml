@@ -267,7 +267,8 @@ jobs:
   #      ${{ env.SCRIPT }}/pipeline-scan.sh
   environment:
     name: environment-development
-    runs-on: [self-hosted, dev]
+    # runs-on: [self-hosted, dev]
+    runs-on: [self-hosted]
     outputs:
       shared-number-ids-arn_suffix:
         description: "ami shered numbers ids"
@@ -325,7 +326,8 @@ jobs:
         ${{ env.SCRIPT }}/build-environment.sh
   environment:
     name: environment-production
-    runs-on: [self-hosted, pro]
+    # runs-on: [self-hosted, pro]
+    runs-on: [self-hosted]
     outputs:
       shared-number-ids-arn_suffix:
         description: "ami shered numbers ids"
@@ -383,6 +385,7 @@ jobs:
         ${{ env.SCRIPT }}/build-environment.sh      
   instance:
     name: development-instance
+    runs-on: [self-hosted]
     env:
       SCRIPT: ${{ github.workspace }}/.github/action/utils/
       LANGUAGE: ${{ inputs.lenguage-code }}
@@ -431,7 +434,8 @@ jobs:
         ${{ env.SCRIPT }}/build-instance.sh  
   image:
     name: build-image
-    runs-on: [self-hosted, op]
+    # runs-on: [self-hosted, op]
+    runs-on: [self-hosted]
     outputs:
       image-number-id:
         description: "image number id"
@@ -486,7 +490,8 @@ jobs:
         ${{ env.SCRIPT }}/build-image.sh
   deploy:
     name: production-deploy
-    runs-on: [self-hosted, pro]
+    # runs-on: [self-hosted, pro]
+    runs-on: [self-hosted]
     env:
       SCRIPT: ${{ github.workspace }}/.github/action/utils/
       TEST: inputs.testIntegration
@@ -541,7 +546,7 @@ jobs:
   # NOTE OF DEVELOPER: pending release process
   tag:
     name: create-tag
-    runs-on: [self-hosted]      
+    runs-on: [self-hosted]
     env:
       # version artifact  = VERSION
       TAG: ${{ jobs.build.outputs.package-version-name }}
