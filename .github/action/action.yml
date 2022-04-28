@@ -201,6 +201,12 @@ jobs:
     name: scan-code
     runs-on: [self-hosted]
     steps:
+      # Nota: 
+      # Remplace action's with custom shell script to future
+      # for segurity - location in (../utils/)
+      # Step 1 
+      - name: checkout
+        uses: actions/checkout@v3
       # implement sonar
       # Step 1
       - name: sonar
@@ -227,6 +233,12 @@ jobs:
     # implement veracode
   #  if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }}
   #  steps:
+        # Nota: 
+      # Remplace action's with custom shell script to future
+      # for segurity - location in (../utils/)
+      # Step 1 
+    #  - name: checkout
+   #     uses: actions/checkout@v3
   #     # Step 2
   #    - name: vulnerability-scan
   #      shell: bash
@@ -289,8 +301,14 @@ jobs:
       AWS_PROFILE:
     if: ${{ startsWith(${ github.ref }, 'refs/heads/develop') == true }}  
     steps:
+      # Nota: 
+      # Remplace action's with custom shell script to future
+      # for segurity - location in (../utils/)
+      # Step 1 
+      - name: checkout
+        uses: actions/checkout@v3
       # build image
-      # Step 1
+      # Step 2
       - name: build-environment
         id: build-environment-generator
         shell: bash
@@ -341,8 +359,14 @@ jobs:
       AWS_PROFILE:
     if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }}
     steps:
+      # Nota: 
+      # Remplace action's with custom shell script to future
+      # for segurity - location in (../utils/)
+      # Step 1 
+      - name: checkout
+        uses: actions/checkout@v3
       # build image
-      # Step 1
+      # Step 2
       - name: build-environment
         id: build-environment-generator
         shell: bash
@@ -382,9 +406,15 @@ jobs:
        # reemplace aws secret and access key to profile
       AWS_PROFILE:
     if: ${{ startsWith(${ github.ref }, 'refs/heads/develop') == true }}
-    steps:    
-      # build image
-      # Step 1
+    steps:
+      # Nota: 
+      # Remplace action's with custom shell script to future
+      # for segurity - location in (../utils/)
+      # Step 1 
+      - name: checkout
+        uses: actions/checkout@v3
+      # build instance
+      # Step 2
       - name: build instance
         id: instance-generator
         shell: bash
@@ -430,6 +460,12 @@ jobs:
       AWS_PROFILE:
     if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }}  
     steps:
+      e# Nota: 
+      # Remplace action's with custom shell script to future
+      # for segurity - location in (../utils/)
+      # Step 1 
+      - name: checkout
+        uses: actions/checkout@v3
       # build image
       # Step 1
       - name: build image
@@ -466,18 +502,24 @@ jobs:
       AWS_PROFILE:
     if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }} 
     steps:
+      # Nota: 
+      # Remplace action's with custom shell script to future
+      # for segurity - location in (../utils/)
+      # Step 1 
+      - name: checkout
+        uses: actions/checkout@v3
       # instance software.
-      # Step 1
+      # Step 2
       - name: Deploy
         shell: bash
         run: |
         ${{ env.SCRIPT }}/terraform-deploy.sh 
-      # Step 2
+      # Step 3
       - name: Health Check
         shell: bash
         run: |
         ${{ env.SCRIPT }}/health-checking.sh
-      # Step 3
+      # Step 4
       - name: Integration tests
         shell: bash
         run: |
@@ -497,6 +539,13 @@ jobs:
       BODY: "build image id: ${{ jobs.image.outputs.image-number-id }}"
     if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }} 
     steps:
+      # Nota: 
+      # Remplace action's with custom shell script to future
+      # for segurity - location in (../utils/)
+      # Step 1 
+      - name: checkout
+        uses: actions/checkout@v3
+      # Step 2 
       - name: upload
         shell: bash
         run: |
