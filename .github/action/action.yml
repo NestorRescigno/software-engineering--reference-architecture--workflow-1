@@ -454,8 +454,8 @@ jobs:
       # shared ami with environment.
       SHARED: ${{ jobs.environment.outputs.shared-number-ids }}  
       # secret account operational. it isn't present in input but en secret repository owner.
-      AWS_ACCESS_KEY_OP: ${{secret.aws-access-key-op}}                   
-      AWS_SECRET_ACCESS_KEY_OP: ${{ secret.aws-secret-access-key-op}}
+      AWS_ACCESS_KEY_OP: ${{secrets.aws_access_key_op}}                   
+      AWS_SECRET_ACCESS_KEY_OP: ${{ secrets.aws_secret_access_key_op}}
       # reemplace aws secret and access key to profile
       AWS_PROFILE:
     if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }}  
