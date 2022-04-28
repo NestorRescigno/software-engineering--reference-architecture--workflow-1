@@ -112,6 +112,15 @@ inputs:
   aws-secret-acesss-key-dev:
     description: 'secret access key aws development environment'
     required: false
+    
+  # configuration operational account, this containt shared image 
+  aws-access-key-op:
+    description: 'access key aws operational environment'
+    required: false
+  aws-secret-acesss-key-op:
+    description: 'secret access key aws operational environment'
+    required: false
+    
 on: [pull_request]
   pull_request:
     # Sequence of patterns matched against refs/heads
@@ -453,9 +462,11 @@ jobs:
       SUBNETS: ${{ jobs.environment.outputs.subnet-number-ids }}
       # shared ami with environment.
       SHARED: ${{ jobs.environment.outputs.shared-number-ids }}  
-      # secret account operational. it isn't present in input but en secret repository owner.
-      AWS_ACCESS_KEY_OP: ${{secrets.aws_access_key_op}}                   
-      AWS_SECRET_ACCESS_KEY_OP: ${{ secrets.aws_secret_access_key_op}}
+      
+      # secret account operational. 
+      AWS_ACCESS_KEY_OP:  ${{ inputs.aws-access-key-op }}                   
+      AWS_SECRET_ACCESS_KEY_OP: ${{ inputs.aws-secret-access-key-op }}
+      
       # reemplace aws secret and access key to profile
       AWS_PROFILE:
     if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }}  
