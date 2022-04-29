@@ -158,7 +158,7 @@ jobs:
         description: "package owner"
         value: ${{ steps.registry-repository.outputs.registry-repository-owner }}
     env:
-      SCRIPT: ${{ github.workspace }}/.github/action/utils/
+      SCRIPT: ${{ github.workspace }}/.github/workflows/scripts/
       LANGUAGE: ${{ inputs.lenguage-code }}
     steps:
       # Nota: 
@@ -221,6 +221,7 @@ jobs:
       - name: sonar
         shell: bash
         env:
+          SCRIPT: ${{ github.workspace }}/.github/workflows/scripts/
           # get package name generate from step build
           GROUP:  ${{ jobs.build.outputs.package-groupid-name }}  
           # get package name generate from step build
@@ -289,7 +290,7 @@ jobs:
         description: "load balancer arn suffix"
         value: ${{ steps.build-environment-generator.lb-arn-suffix }}
     env:
-      SCRIPT: ${{ github.workspace }}/.github/action/utils/
+      SCRIPT: ${{ github.workspace }}/.github/workflows/scripts/
        # get input name, this name use in dns site and global value. project = product business
       PROJECT:  ${{ inputs.project-name }}  
       GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   
@@ -348,7 +349,7 @@ jobs:
         description: "load balancer arn suffix"
         value: ${{ steps.build-environment-generator.lb-arn-suffix }}
     env:
-      SCRIPT: ${{ github.workspace }}/.github/action/utils/
+      SCRIPT: ${{ github.workspace }}/.github/workflows/scripts/
        # get input name, this name use in dns site and global value. project = product business
       PROJECT:  ${{ inputs.project-name }}  
       GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   
@@ -387,7 +388,7 @@ jobs:
     name: development-instance
     runs-on: [self-hosted]
     env:
-      SCRIPT: ${{ github.workspace }}/.github/action/utils/
+      SCRIPT: ${{ github.workspace }}/.github/workflows/scripts/
       LANGUAGE: ${{ inputs.lenguage-code }}
       # get input name, this name use in dns site and global value. project = product business
       PROJECT:  ${{ inputs.project-name }}   
@@ -441,7 +442,7 @@ jobs:
         description: "image number id"
         value: ${{ steps.image-generator.outputs.image-id }}
     env:
-      SCRIPT: ${{ github.workspace }}/.github/action/utils/
+      SCRIPT: ${{ github.workspace }}/.github/workflows/scripts/
       LANGUAGE: ${{ inputs.lenguage-code }}
       # get input name, this name use in dns site and global value. project = product business
       PROJECT:  ${{ inputs.project-name }}
@@ -493,7 +494,7 @@ jobs:
     # runs-on: [self-hosted, pro]
     runs-on: [self-hosted]
     env:
-      SCRIPT: ${{ github.workspace }}/.github/action/utils/
+      SCRIPT: ${{ github.workspace }}/.github/workflows/scripts/
       TEST: inputs.testIntegration
       LANGUAGE: ${{ inputs.lenguage-code }}
       AMI_ID: ${{ jobs.image.outputs.image-number-id }}
