@@ -10,7 +10,6 @@
 # two types of languages "java and angular"
 
 name: CICD
-description: 'continuos integration and deployment'
 # setting input
 inputs:
   # project name, eguals to product name example ancillaries
