@@ -23,9 +23,9 @@ Repository structure
 ----
 ````
 main
-│.github/action                                                   # workflow github action core
+│.github/workflows                                                # workflow github action core
 |     └───action.yml                                              # workflow deploy to environment with pull request
-|     └───utils                                                   # utils script core for step action
+|     └───scripts                                                 # utils script core for step action
 |           └───artifact-registry.sh                              # script upload artifact to registry nexus or codeartifact
 |           └───build-environment.sh                              # build vpc environment - terraform vpc module - plan and apply. 
 |           └───build-image.sh                                    # build image ami aws - terraform instance and image module - plan and apply.
@@ -138,7 +138,7 @@ can be referenced as follows:
 ````
 # Implementation for deployment to environment ( pull request event to branch )
 
-- uses: ./.github/action/action.yml@v1.0
+- uses: ./.github/workflows/action.yml@v1.0
   with:
     project-name:                                     # Product global name example: 'bestpratices' - require true, use in dns name
     lenguage-code:                                    # lenguage programming code for example: java or angular - require true  
