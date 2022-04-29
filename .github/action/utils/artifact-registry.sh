@@ -33,7 +33,7 @@ PACKAGE-TYPE      =${{ env.PACKAGE}}
 # setting contants
 PATH-SNAPSHOTS      = "/repository/snapshots/"
 PATH-RELEASE        = "/repository/releases/"
-PATH-NPM-PRIVATE    = "/npm-private/release/" 
+PATH-NPM-PRIVATE    = "/npm-private/releases/" 
     
 echo "***************************************************"
 echo "Registy artifact to nexus repository"
