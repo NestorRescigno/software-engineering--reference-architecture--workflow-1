@@ -15,4 +15,4 @@ runs:
     - name: testing-run
       shell: bash
       run: |
-            echo "en la variable $PROJECT_ENV en el input " & echo ${{input.project}}
+            echo "en la variable $PROJECT_ENV en el input " & echo ${{inputs.project}}
