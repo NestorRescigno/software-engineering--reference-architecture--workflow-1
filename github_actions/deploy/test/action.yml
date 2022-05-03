@@ -4,12 +4,11 @@ on:
     inputs:
       # project name, eguals to product name example ancillaries
       project-name:
-        type: string  
-        description: 'project global name'
+        type: string
         required: true
         default: "MyProyect"
 env:
-  PROJECT:  "no le gusta" 
+  PROJECT: "no le gusta" 
 jobs:
   test-inputs:
     runs-on: [self-hosted]
@@ -19,5 +18,5 @@ jobs:
           working-directory: scripts
     steps:
       - name: testing-run
-        run: echo "en la variable $PROJECT en el input ${{ needs.inputs.project-name }}"
+        run: echo "en la variable $PROJECT en el input ${{ inputs.project-name }}"
     
