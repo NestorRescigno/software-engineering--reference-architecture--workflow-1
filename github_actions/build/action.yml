@@ -30,7 +30,7 @@ runs:
   using: "composite"
   steps:
     - id: package-generator-name
-      working-directory: scripts
+      working-directory: .github/cicd/scripts
       run: build.sh
       shell: sh
    
