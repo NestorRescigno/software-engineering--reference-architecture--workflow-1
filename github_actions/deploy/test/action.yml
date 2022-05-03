@@ -3,7 +3,7 @@ on:
     # setting input
     inputs:
       # project name, eguals to product name example ancillaries
-      project-name:
+      project_name:
         type: string
         required: true
         default: "MyProyect"       
