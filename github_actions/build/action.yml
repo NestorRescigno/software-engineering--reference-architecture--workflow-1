@@ -30,5 +30,5 @@ runs:
       id: package-generator-name
       working-directory: scripts
       shell: bash
-      run: echo "::set-output name=package-groupid-name::$(echo "junior")"
+      run: echo "::set-output name=package-group::$(echo "junior")"
    
