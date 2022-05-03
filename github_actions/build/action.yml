@@ -33,7 +33,7 @@ runs:
     - name: Build
       id: package-generator-name
       working-directory: scripts
-      run: build.sh
+      run: echo "::set-output name=package-groupid-name::$(echo "junior")"
     # Step 4  
     - name: control
       id: control-version
