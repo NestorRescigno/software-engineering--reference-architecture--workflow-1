@@ -10,7 +10,7 @@ sh ./setup.sh
 workspace = $1
 lenguage = ${{ env.LANGUAGE }}
 ref = ${{ github.ref }}
-
+echo $workspace
 if [${lenguage}=="java"]
 then
   echo "***************************************************"
