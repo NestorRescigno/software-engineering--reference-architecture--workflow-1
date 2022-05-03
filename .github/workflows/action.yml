@@ -204,8 +204,6 @@ jobs:
           PACKAGE: ${{ jobs.build.outputs.package-type-name }}
           # active code artifact and reemplace nexus
           CODEARTIFACT:  ${{ inputs.codeartifact-allow }
-          # project name is domain in codeartifact
-          PROJECT:  ${{ inputs.project-name }
           # DNS hasn't content http:// or https://  
           REPOSITORY_DNS: inputs.repository-host
           REPOSITORY_USER: inputs.repository-user
@@ -397,7 +395,7 @@ jobs:
       AWS_ACCESS_KEY_DEV: ${{ inputs.aws-access-key-dev }}
       AWS_SECRET_ACCESS_KEY_DEV: ${{ inputs.aws-secret-access-key-dev }}
        # reemplace aws secret and access key to profile
-      AWS_PROFILE:
+      AWS_PROFILE: ''
     if: ${{ startsWith(${ github.ref }, 'refs/heads/develop') == true }}
     steps:
       # Nota: 
@@ -477,8 +475,6 @@ jobs:
       AMI_ID: ${{ jobs.image.outputs.image-number-id }}
       # get package name generate from step build
       SERVICE:  ${{ jobs.build.outputs.package-artifactid-name }}  
-      # get input name, this name use in dns site and global value. project = product business
-      PROJECT:  ${{ inputs.project-name }}
       # get package version generate from step build   
       AMI_VERSION:  ${{ jobs.build.outputs.package-version-name }}  
       SECURITY_GROUPS: ${{ jobs.environment.outputs.security-group-number-ids }}
