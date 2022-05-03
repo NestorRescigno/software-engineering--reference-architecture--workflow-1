@@ -6,7 +6,7 @@
 sh ./setup.sh
 
 # setting credencials 
-if [ $CODEARTIFACT==false ] then
+if [ $CODEARTIFACT==false ] ; then
     REPOSITORY_USER=$REPOSITORY_USER
     REPOSITORY_SECRET=$REPOSITORY_SECRET   
 else 
@@ -24,16 +24,16 @@ echo "::set-output name=registry-repository-usr::$(echo ${REPOSITORY_USER})"
 echo "::set-output name=registry-repository-key::$(echo ${REPOSITORY_SECRET})"
   
 # setting variable
-LANGUAGE          =$LANGUAGE 
-REF               =$REF
-GROUPID           =$GROUP
-ARTIFACTID        =$ARTIFACT 
-VERSION           =$VERSION
-PACKAGE-TYPE      =$PACKAGE
+LANGUAGE=$LANGUAGE 
+REF=$REF
+GROUPID=$GROUP
+ARTIFACTID=$ARTIFACT 
+VERSION=$VERSION
+PACKAGE_TYPE=$PACKAGE
 # setting contants
-PATH-SNAPSHOTS="/repository/snapshots/"
-PATH-RELEASE="/repository/releases/"
-PATH-NPM-PRIVATE="/npm-private/releases/" 
+PATH_SNAPSHOTS="/repository/snapshots/"
+PATH_RELEASE="/repository/releases/"
+PATH_NPM_PRIVATE="/npm-private/releases/" 
     
 echo "***************************************************"
 echo "Registy artifact to nexus repository"
@@ -48,19 +48,19 @@ if [$LANGUAGE=="java"] ; then
         echo "upload snapshop"
         echo "***************************************************"
             
-        SNAPSHOTS_REPOSITORY_URL=${REPOSITORY_URL}+${PATH-SNAPSHOTS} # --batch-mode
+        SNAPSHOTS_REPOSITORY_URL=${REPOSITORY_URL}+${PATH_SNAPSHOTS} # --batch-mode
         # example deploy file with maven
         mvn deploy:deploy-file 
             -DgroupId=${GROUPID}
             -DartifactId=${ARTIFACTID} 
             -Dversion=${VERSION}
             -DgeneratePom=true 
-            -Dpackaging=${PACKAGE-TYPE} 
+            -Dpackaging=${PACKAGE_TYPE} 
              # -DrepositoryId=nexus 
             -Durl=${ SNAPSHOTS_REPOSITORY_URL }
-            -Dfile=target/${ARTIFACTID}-${VERSION}.${PACKAGE-TYPE}
+            -Dfile=target/${ARTIFACTID}-${VERSION}.${PACKAGE_TYPE}
             
-        echo "::set-output name=registry-repository-id::$(echo ${PATH-SNAPSHOTS})" 
+        echo "::set-output name=registry-repository-id::$(echo ${PATH_SNAPSHOTS})" 
         echo "***************************************************"
         echo "upload complete"
         echo "***************************************************"
@@ -69,19 +69,19 @@ if [$LANGUAGE=="java"] ; then
         echo "upload release"
         echo "***************************************************"
             
-        RELEASE_REPOSITORY_URL=${REPOSITORY_URL}+${PATH-RELEASE}
+        RELEASE_REPOSITORY_URL=${REPOSITORY_URL}+${PATH_RELEASE}
         # example deploy file with maven
         mvn deploy:deploy-file 
             -DgroupId=${GROUPID}
             -DartifactId=${ARTIFACTID} 
             -Dversion=${VERSION}
             -DgeneratePom=true 
-            -Dpackaging=${PACKAGE-TYPE} 
+            -Dpackaging=${PACKAGE_TYPE} 
             # -DrepositoryId=nexus 
             -Durl=${RELEASE_REPOSITORY_URL}
-            -Dfile=target/${ARTIFACTID}-${VERSION}.${PACKAGE-TYPE}
+            -Dfile=target/${ARTIFACTID}-${VERSION}.${PACKAGE_TYPE}
             
-        echo "::set-output name=registry-repository-id::$(echo ${PATH-RELEASE})" 
+        echo "::set-output name=registry-repository-id::$(echo ${PATH_RELEASE})" 
         echo "***************************************************"
         echo "upload complete"
         echo "***************************************************"
@@ -95,7 +95,7 @@ elif [$LANGUAGE=="angular"] ; then
         echo "upload npm private release"
         echo "***************************************************"
         
-        NPM_REPOSITORY_URL=${REPOSITORY_URL}+${PATH-NPM-PRIVATE}   
+        NPM_REPOSITORY_URL=${REPOSITORY_URL}+${PATH_NPM_PRIVATE}   
         
         # node compile method
         # ng build
@@ -110,7 +110,7 @@ elif [$LANGUAGE=="angular"] ; then
         # run npm publish
         npm publish --registry "${NPM_REPOSITORY_URL}"   # Nexus configure npm proxy and private registry.
 
-        echo "::set-output name=registry-repository-id::$(echo ${PATH-NPM-PRIVATE})" 
+        echo "::set-output name=registry-repository-id::$(echo ${PATH_NPM_PRIVATE})" 
         echo "***************************************************"
         echo "upload complete"
         echo "***************************************************"
