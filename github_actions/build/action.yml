@@ -33,6 +33,8 @@ runs:
       working-directory: .github/cicd/scripts
       env:
         WORKSPACE: ${{ github.workspace }}
+        LENGUAGE: ${{ env.LANGUAGE }}
+        REF:${{ github.ref }}
       run: sh build.sh 
       shell: sh
    
