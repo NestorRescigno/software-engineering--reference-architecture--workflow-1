@@ -7,7 +7,7 @@
 # ${{ env.SCRIPT }}/build.sh ${{ github.workspace }} ${{ env.LANGUAGE }} ${{ github.ref }}
 sh ./setup.sh
  
-workspace = ${{ github.workspace }}
+workspace = $1
 lenguage = ${{ env.LANGUAGE }}
 ref = ${{ github.ref }}
 
