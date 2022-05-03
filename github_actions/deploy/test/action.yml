@@ -11,7 +11,7 @@ env:
   PROJECT_ENV: "no le gusta" 
 jobs:
   test-inputs:
-    runs-on: [self-hosted]
+    using: "composite"
     defaults:
         run:
           shell: bash
