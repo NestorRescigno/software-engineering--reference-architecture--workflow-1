@@ -12,4 +12,5 @@ jobs:
     runs-on: [ancillaries]
     steps:
       - name: testing-run
-        run: echo "en la variable en el input ${{ inputs.project_name }} "
+        run: |
+          echo "en la variable en el input ${{ inputs.project_name }} "
