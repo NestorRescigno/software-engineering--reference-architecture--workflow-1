@@ -7,11 +7,10 @@ on:
         type: string
         required: true
         default: "MyProyect"
-
+env:
+  PROJECT_ENV: "no le gusta" 
 runs:
   using: "composite"
-  env:
-    PROJECT_ENV: "no le gusta" 
   steps:
     - name: testing-run
       shell: bash
