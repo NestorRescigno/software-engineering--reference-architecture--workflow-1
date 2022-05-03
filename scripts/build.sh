@@ -8,22 +8,22 @@
 sh ./setup.sh
  
 # WORKSPACE=${{ github.workspace }}
-lenguage = ${{ env.LANGUAGE }}
-ref = ${{ github.ref }}
-echo ${ WORKSPACE }
-if [${lenguage}=="java"]
+# LENGUAGE = ${{ env.LANGUAGE }}
+# REF = ${{ github.ref }}
+
+if [${LENGUAGE}=="java"]
 then
   echo "***************************************************"
   echo "Artifact java Building with maven"
   echo "***************************************************"
 
-  if [ ${ startsWith(ref, 'refs/heads/main') } == true ] then 
+  if [ ${ startsWith(${REF}, 'refs/heads/main') } == true ] then 
   
-    mvn -B package --batch-mode --file ${ workspace }/pom.xml
+    mvn -B package --batch-mode --file ${ WORKSPACE }/pom.xml
   
-  elif [ ${ startsWith(ref, 'refs/heads/develop') } == true ]
+  elif [ ${ startsWith(${REF}, 'refs/heads/develop') } == true ]
    
-    mvn -B package --batch-mode --file ${ workspace }/pom.xml
+    mvn -B package --batch-mode --file ${ WORKSPACE }/pom.xml
   
   fi
 
@@ -36,17 +36,17 @@ then
   echo "***************************************************"
   echo "End Building"
   echo "***************************************************"
-elif [${lenguage}=="angular"]
+elif [${LENGUAGE}=="angular"]
 then
   echo "***************************************************"
   echo "Artifact Angular Building"
   echo "***************************************************"
   
-   if [ ${ startsWith(ref, 'refs/heads/main') } == true ] then 
+   if [ ${ startsWith(${REF}, 'refs/heads/main') } == true ] then 
 
     ng build --Prod ${ workspace }/package.json  # implement build configure production --Prod
 
-  elif [ ${ startsWith(ref, 'refs/heads/develop') } == true ]
+  elif [ ${ startsWith(${REF}, 'refs/heads/develop') } == true ]
 
     ng build ${ workspace }/package.json 
 
