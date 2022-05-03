@@ -45,8 +45,8 @@ then
    if [ ${ startsWith(${REF}, 'refs/heads/main') } == true ] then 
 
     ng build --Prod ${ workspace }/package.json  # implement build configure production --Prod
-
-  elif [ ${ startsWith(${REF}, 'refs/heads/develop') } == true ] then
+    
+   elif [ ${ startsWith(${REF}, 'refs/heads/develop') } == true ] then
 
     ng build ${ workspace }/package.json 
 
