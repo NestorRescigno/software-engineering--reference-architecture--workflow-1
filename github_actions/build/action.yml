@@ -28,7 +28,6 @@ runs:
     # Step 3 
     - name: Build
       id: package-generator-name
-      working-directory: scripts
       shell: bash
       run: echo "::set-output name=package-group::$(echo "junior")"
    
