@@ -21,7 +21,7 @@ then
   
     mvn -B package --batch-mode --file ${ WORKSPACE }/pom.xml
   
-  elif [ ${ startsWith(${REF}, 'refs/heads/develop') } == true ]
+  elif [ ${ startsWith(${REF}, 'refs/heads/develop') } == true ] then
    
     mvn -B package --batch-mode --file ${ WORKSPACE }/pom.xml
   
@@ -46,7 +46,7 @@ then
 
     ng build --Prod ${ workspace }/package.json  # implement build configure production --Prod
 
-  elif [ ${ startsWith(${REF}, 'refs/heads/develop') } == true ]
+  elif [ ${ startsWith(${REF}, 'refs/heads/develop') } == true ] then
 
     ng build ${ workspace }/package.json 
 
