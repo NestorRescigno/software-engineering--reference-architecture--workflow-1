@@ -272,7 +272,7 @@ jobs:
   #        vulnerability-key: inputs.vulnerability-token
   #      run: |
   #      ${{ env.SCRIPT }}/pipeline-scan.sh
-  environment:
+  environment-development:
     name: environment-development
     # runs-on: [self-hosted, dev]
     runs-on: [self-hosted]
@@ -281,9 +281,7 @@ jobs:
         shell: bash
         working-directory:  ${{ github.workspace }}/scripts/
     outputs:
-      shared-number-ids-arn_suffix:
-        description: "ami shered numbers ids"
-        value: ${{ steps.build-environment-generator.shared-ids }} 
+      shared-number-ids-arn_suffix: ${{ steps.build-environment-generator.shared-ids }} 
       security-group-number-ids: ${{ steps.build-environment-generator.security-group-ids }}
       subnet-number-ids: ${{ steps.build-environment-generator.subnets-ids }}   
       alb-target-group-number-arn: ${{ steps.build-environment-generator.alb-target-group-arn }}
@@ -320,7 +318,7 @@ jobs:
       - name: build-environment
         id: build-environment-generator
         run: build-environment.sh
-  environment-dev:
+  environment-production:
     name: environment-production
     # runs-on: [self-hosted, pro]
     runs-on: [self-hosted]
