@@ -2,7 +2,11 @@
 name: 'build'
 description: 'building artifact'
 inputs:
-  ## if use code artifact repository-host
+  lenguage-code:
+    type: string
+    required: true
+    default: "java"
+  # if use code artifact repository-host
   codeartifact-allow:
     type: string
     required: true
@@ -10,7 +14,7 @@ inputs:
   repository-host:
     type: string
     required: true
-    # if use codeartifact then repository-user is owner account id
+  # if use codeartifact then repository-user is owner account id
   repository-user:
     type: string
     required: true
@@ -26,6 +30,14 @@ outputs:
     value: ${{ steps.package-generator-name.outputs.package-version }} 
   package-type-name:
     value: ${{ steps.package-generator-name.outputs.package-type-id }}
+  package-repository: 
+    value: ${{ steps.registry-repository.outputs.registry-repository-id }}
+  package-usr: 
+    value: ${{ steps.registry-repository.outputs.registry-repository-usr }}
+  package-key: 
+    value: ${{ steps.registry-repository.outputs.registry-repository-key }}
+  package-owner: 
+    value: ${{ steps.registry-repository.outputs.registry-repository-owner }}  
 runs:
   using: "composite"
   steps:
@@ -33,8 +45,34 @@ runs:
       working-directory: .github/cicd/scripts
       env:
         WORKSPACE: ${{ github.workspace }}
-        LENGUAGE: "java"
+        LENGUAGE: ${{inputs.lenguage-code}}
         REF: ${{ github.ref }}
-      run: sh build.sh 
+      run: sh build.sh
       shell: sh
-   
+    - id: control-version
+      working-directory: .github/cicd/scripts
+      env:
+        # get package name generate from step build
+        VERSION: ${{ steps.package-generator-name.outputs.package-version }}  
+      run: sh control-version.sh
+      # deploy artifact to registry repository
+    - id: registry-repository
+      working-directory: .github/cicd/scripts
+      env:
+        LENGUAGE: ${{inputs.lenguage-code}}
+        REF: ${{ github.ref }}
+        # get package name generate from step build
+        GROUP: ${{ steps.package-generator-name.outputs.package-group }} 
+        # get package name generate from step build
+        ARTIFACT: ${{ steps.package-generator-name.outputs.package-artifact }} 
+        # get package name generate from step build
+        VERSION: ${{ steps.package-generator-name.outputs.package-version }}   
+        # get package type extention from step build
+        PACKAGE: ${{ steps.package-generator-name.outputs.package-type-id }}
+        # active code artifact and reemplace nexus
+        CODEARTIFACT: ${{ inputs.codeartifact-allow }}
+        # DNS hasn't content http:// or https://  
+        REPOSITORY_DNS: ${{ inputs.repository-host }}
+        REPOSITORY_USER: ${{ inputs.repository-user }}
+        REPOSITORY_SECRET: ${{ inputs.repository-token }}
+      run: sh artifact-registry.sh
