@@ -8,7 +8,7 @@ on:
         required: true
         default: "MyProyect"
 runs:
-   using: 'composite'
+   using: "composite"
    steps:
     - run: echo "project_name = ${{ inputs.project_name }}" >> $GITHUB_ENV
       shell: bash
