@@ -10,122 +10,146 @@
 # two types of languages "java and angular"
 
 name: CICD
-# setting input
-inputs:
-  # project name, eguals to product name example ancillaries
-  project-name:
-    description: 'project global name'
-    required: true
-  # project name, eguals to product name example ancillaries
-  lenguage-code:
-    description: 'lenguage  programming code for example: java or angular'
-    required: true
-    default: 'java'  
-  # ejecute integration test, soap request or rest
-  testIntegration:
-    description: 'active test integration'
-    required: false
-    default: false
-  testIntegration-path:
-    description: 'path'
-    required: false
-    default: '${{ github.workspace }}'
-  # control scan code
-  scancode:
-    description: 'scan code'
-    required: true
-    default: false
-  # control quality code with sonar
-  sonarqube-host:
-    description: 'sonar host parameter'
-    required: false
-  sonarqube-user:
-    description: 'sonar user parameter'
-    required: false
-  sonarqube-token:
-    description: 'sonar token parameter'
-    required: false
-  sonarqube-client-version:
-    description: 'sonar-scanner client version parameter v.r.f.build'
-    required: false
 
-  # Note of developer: pending define referece tool.
-  # control vulnerability code for example: veracode
-  # vulnerability-host:
-  #  description: 'veracode host parameter'
-  #  required: false
-  # vulnerability-user:
-  #  description: 'veracode user parameter'
-  #  required: false
-  # vulnerability-token:
-  #  description: 'veracode token parameter'
-  #  required: false
-  # control vulnerability code
-  
-  ## if use code artifact repository-host
-  codeartifact-allow:
-    description: 'active repositorio codeartifact - default: false'
-    required: true
-    default: false
-  
-  repository-host:
-    description: 'repository artifact host parameter'
-    required: true
-  # if use codeartifact then repository-user is owner account id
-  repository-user:
-    description: 'repository artifact user parameter'
-    required: true
-  repository-token:
-    description: 'repository artifact token parameter'
-    required: true
-    
-  # configuration cloud name enviroment
-  aws-environment-name:
-    description: 'Environment name for example: production'
-    required: true
-    default: 'production'
-  aws-environment-prefix:
-    description: 'Environment prefix name for example: pro'
-    required: false
-    default: 'pro'
-   # configuration cloud secret by enviroment  
-  aws-access-key:
-    description: 'access key aws publish environment: example: production'
-    required: false
-  aws-secret-acesss-key:
-    description: 'secret access key aws publish environment example: production'
-    required: false
-  # configuration cloud name enviroment
-  aws-environment-dev-name:
-    description: 'Development nvironment name for example: development'
-    required: false
-    default: 'development'
-  aws-environment-dev-prefix:
-    description: 'Environment prefix name for example: dev'
-    required: false
-    default: 'dev'
-   # configuration cloud secret by enviroment  
-  aws-access-key-dev:
-    description: 'access key aws development environment'
-    required: false
-  aws-secret-acesss-key-dev:
-    description: 'secret access key aws development environment'
-    required: false
-    
-  # configuration operational account, this containt shared image 
-  aws-access-key-op:
-    description: 'access key aws operational environment'
-    required: false
-  aws-secret-acesss-key-op:
-    description: 'secret access key aws operational environment'
-    required: false
-    
 on:
   pull_request:
-    # Sequence of patterns matched against refs/heads
-    branches:    
-      - main
-      - develop
+      # Sequence of patterns matched against refs/heads
+      branches:    
+        - main
+        - develop    
+  workflow_call:
+    # setting input
+    inputs:
+      # project name, eguals to product name example ancillaries
+      project-name:
+        type: string  
+        description: 'project global name'
+        required: true
+      # project name, eguals to product name example ancillaries
+      lenguage-code:
+        type: string
+        description: 'lenguage  programming code for example: java or angular'
+        required: true
+        default: 'java'  
+      # ejecute integration test, soap request or rest
+      testIntegration:
+        type: boolean
+        description: 'active test integration'
+        required: false
+        default: false
+      testIntegration-path:
+        type: string
+        description: 'path'
+        required: false
+        default: '${{ github.workspace }}'
+      # control scan code
+      scancode:
+        type: boolean
+        description: 'scan code'
+        required: true
+        default: false
+      # control quality code with sonar
+      sonarqube-host:
+        type: string
+        description: 'sonar host parameter'
+        required: false
+      sonarqube-user:
+        type: string
+        description: 'sonar user parameter'
+        required: false
+      sonarqube-token:
+        type: string
+        description: 'sonar token parameter'
+        required: false
+      sonarqube-client-version:
+        type: string
+        description: 'sonar-scanner client version parameter v.r.f.build'
+        required: false
+
+      # Note of developer: pending define referece tool.
+      # control vulnerability code for example: veracode
+      # vulnerability-host:
+      #  description: 'veracode host parameter'
+      #  required: false
+      # vulnerability-user:
+      #  description: 'veracode user parameter'
+      #  required: false
+      # vulnerability-token:
+      #  description: 'veracode token parameter'
+      #  required: false
+      # control vulnerability code
+
+      ## if use code artifact repository-host
+      codeartifact-allow:
+        type: string
+        description: 'active repositorio codeartifact - default: false'
+        required: true
+        default: false
+
+      repository-host:
+        type: string
+        description: 'repository artifact host parameter'
+        required: true
+      # if use codeartifact then repository-user is owner account id
+      repository-user:
+        type: string
+        description: 'repository artifact user parameter'
+        required: true
+      repository-token:
+        type: string
+        description: 'repository artifact token parameter'
+        required: true
+
+      # configuration cloud name enviroment
+      aws-environment-name:
+        type: string
+        description: 'Environment name for example: production'
+        required: true
+        default: 'production'
+      aws-environment-prefix:
+        type: string
+        description: 'Environment prefix name for example: pro'
+        required: false
+        default: 'pro'
+       # configuration cloud secret by enviroment  
+      aws-access-key:
+        type: string
+        description: 'access key aws publish environment: example: production'
+        required: false
+      aws-secret-acesss-key:
+        type: string
+        description: 'secret access key aws publish environment example: production'
+        required: false
+      # configuration cloud name enviroment
+      aws-environment-dev-name:
+        type: string
+        description: 'Development nvironment name for example: development'
+        required: false
+        default: 'development'
+      aws-environment-dev-prefix:
+        type: string
+        description: 'Environment prefix name for example: dev'
+        required: false
+        default: 'dev'
+       # configuration cloud secret by enviroment  
+      aws-access-key-dev:
+        type: string
+        description: 'access key aws development environment'
+        required: false
+      aws-secret-acesss-key-dev:
+        type: string
+        description: 'secret access key aws development environment'
+        required: false
+
+      # configuration operational account, this containt shared image 
+      aws-access-key-op:
+        type: string
+        description: 'access key aws operational environment'
+        required: false
+      aws-secret-acesss-key-op:
+        type: string
+        description: 'secret access key aws operational environment'
+        required: false
 env:
   LANGUAGE: ${{ inputs.lenguage-code }}
   # get input name, this name use in dns site and global value. project = product business
@@ -140,30 +164,14 @@ jobs:
         working-directory:  ${{ github.workspace }}/scripts/
     # setting output step build to use other jobs steps
     outputs:
-      package-groupid-name:
-        description: "Package build generator Group Id"
-        value: ${{ steps.package-generator-name.outputs.package-group }}
-      package-artifactid-name:
-        description: "Package build generator artifact Id"
-        value: ${{ steps.package-generator-name.outputs.package-artifact }}
-      package-version-name:
-        description: "Package build generator version"
-        value: ${{ steps.package-generator-name.outputs.package-version }} 
-      package-type-name:
-        description: "package type example: jar, war, zip"
-        value: ${{ steps.package-generator-name.outputs.package-type-id }}
-      package-repository:
-        description: "package repository path"
-        value: ${{ steps.registry-repository.outputs.registry-repository-id }}
-      package-usr:
-        description: "package user"
-        value: ${{ steps.registry-repository.outputs.registry-repository-usr }}
-      package-key:
-        description: "package key access"
-        value: ${{ steps.registry-repository.outputs.registry-repository-key }}
-      package-owner:
-        description: "package owner"
-        value: ${{ steps.registry-repository.outputs.registry-repository-owner }}
+      package-groupid-name: ${{ steps.package-generator-name.outputs.package-group }}
+      package-artifactid-name: ${{ steps.package-generator-name.outputs.package-artifact }}
+      package-version-name: ${{ steps.package-generator-name.outputs.package-version }} 
+      package-type-name: ${{ steps.package-generator-name.outputs.package-type-id }}
+      package-repository: ${{ steps.registry-repository.outputs.registry-repository-id }}
+      package-usr: ${{ steps.registry-repository.outputs.registry-repository-usr }}
+      package-key: ${{ steps.registry-repository.outputs.registry-repository-key }}
+      package-owner: ${{ steps.registry-repository.outputs.registry-repository-owner }}
     steps:
       # Nota: 
       # Remplace action's with custom shell script to future
@@ -276,21 +284,11 @@ jobs:
       shared-number-ids-arn_suffix:
         description: "ami shered numbers ids"
         value: ${{ steps.build-environment-generator.shared-ids }} 
-      security-group-number-ids:
-        description: "security groups numbers ids"
-        value: ${{ steps.build-environment-generator.security-group-ids }}
-      subnet-number-ids:
-        description: "subnets numbers ids"
-        value: ${{ steps.build-environment-generator.subnets-ids }}   
-      alb-target-group-number-arn:
-        description: "load balancer targer group numbers ids"
-        value: ${{ steps.build-environment-generator.alb-target-group-arn }}
-      alb-target-group-number-arn-suffix:
-        description: "load balancer targer group arn sufix"
-        value: ${{ steps.build-environment-generator.alb-target-group-arn-suffix }}
-      lb-number-arn-suffix:
-        description: "load balancer arn suffix"
-        value: ${{ steps.build-environment-generator.lb-arn-suffix }}
+      security-group-number-ids: ${{ steps.build-environment-generator.security-group-ids }}
+      subnet-number-ids: ${{ steps.build-environment-generator.subnets-ids }}   
+      alb-target-group-number-arn: ${{ steps.build-environment-generator.alb-target-group-arn }}
+      alb-target-group-number-arn-suffix: ${{ steps.build-environment-generator.alb-target-group-arn-suffix }}
+      lb-number-arn-suffix: ${{ steps.build-environment-generator.lb-arn-suffix }}
     env:
       GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   
       # get artifcat name generate from step build
@@ -331,24 +329,12 @@ jobs:
         shell: bash
         working-directory:  ${{ github.workspace }}/scripts/
     outputs:
-      shared-number-ids-arn_suffix:
-        description: "ami shered numbers ids"
-        value: ${{ steps.build-environment-generator.shared-ids }} 
-      security-group-number-ids:
-        description: "security groups numbers ids"
-        value: ${{ steps.build-environment-generator.security-group-ids }}
-      subnet-number-ids:
-        description: "subnets numbers ids"
-        value: ${{ steps.build-environment-generator.subnets-ids }}   
-      alb-target-group-number-arn:
-        description: "load balancer targer group numbers ids"
-        value: ${{ steps.build-environment-generator.alb-target-group-arn }}
-      alb-target-group-number-arn-suffix:
-        description: "load balancer targer group arn sufix"
-        value: ${{ steps.build-environment-generator.alb-target-group-arn-suffix }}
-      lb-number-arn-suffix:
-        description: "load balancer arn suffix"
-        value: ${{ steps.build-environment-generator.lb-arn-suffix }}
+      shared-number-ids-arn_suffix: ${{ steps.build-environment-generator.shared-ids }} 
+      security-group-number-ids: ${{ steps.build-environment-generator.security-group-ids }}
+      subnet-number-ids: ${{ steps.build-environment-generator.subnets-ids }}   
+      alb-target-group-number-arn: ${{ steps.build-environment-generator.alb-target-group-arn }}
+      alb-target-group-number-arn-suffix: ${{ steps.build-environment-generator.alb-target-group-arn-suffix }}
+      lb-number-arn-suffix: ${{ steps.build-environment-generator.lb-arn-suffix }}
     env:
       GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   
       # get artifcat name generate from step build
@@ -436,9 +422,7 @@ jobs:
         shell: bash
         working-directory:  ${{ github.workspace }}/scripts/
     outputs:
-      image-number-id:
-        description: "image number id"
-        value: ${{ steps.image-generator.outputs.image-id }}
+      image-number-id: ${{ steps.image-generator.outputs.image-id }}
     env:
       # get package name generate from step build   
       GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   
