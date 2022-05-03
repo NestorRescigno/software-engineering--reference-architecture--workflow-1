@@ -24,7 +24,6 @@ outputs:
       package-type-name: ${{ steps.package-generator-name.outputs.package-type-id }}
 runs:
   using: "composite"
-  shell: bash
   steps:
     # Step 1 
     - name: checkout
@@ -33,6 +32,7 @@ runs:
     - name: Build
       id: package-generator-name
       working-directory: scripts
+      shell: bash
       run: echo "::set-output name=package-groupid-name::$(echo "junior")"
     # Step 4  
     - name: control
@@ -40,5 +40,6 @@ runs:
       working-directory: scripts
       env:
           # get package name generate from step build
-          VERSION:  ${{ steps.package-generator-name.outputs.package-version }} 
+          VERSION:  ${{ steps.package-generator-name.outputs.package-version }}
+      shell: bash    
       run: control-version.sh & echo "version $VERSION"
