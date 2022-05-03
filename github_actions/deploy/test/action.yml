@@ -3,7 +3,7 @@ on:
     # setting input
     inputs:
       # project name, eguals to product name example ancillaries
-      project-name:
+      project:
         type: string
         required: true
         default: "MyProyect"
@@ -18,5 +18,5 @@ jobs:
           working-directory: scripts
     steps:
       - name: testing-run
-        run: echo "en la variable $PROJECT en el input ${{ inputs.project-name }}"
+        run: echo "en la variable $PROJECT en el input ${{ inputs.project }}"
     
