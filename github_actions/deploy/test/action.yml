@@ -12,12 +12,12 @@ env:
   PROJECT:  "no le gusta" 
 jobs:
   test-inputs:
-  runs-on: [self-hosted]
-  defaults:
-      run:
-        shell: bash
-        working-directory: scripts
-  steps:
-    - name: testing-run
-      run: echo "en la variable $PROJECT en el input ${{ inputs.project-name }}"
+    runs-on: [self-hosted]
+    defaults:
+        run:
+          shell: bash
+          working-directory: scripts
+    steps:
+      - name: testing-run
+        run: echo "en la variable $PROJECT en el input ${{ needs.inputs.project-name }}"
     
