@@ -41,7 +41,7 @@ on:
         type: string
         description: 'path'
         required: false
-        default: '${{ github.workspace }}'
+        # default: '${{ github.workspace }}'
       # control scan code
       scancode:
         type: boolean
@@ -203,7 +203,7 @@ jobs:
           # get package type extention from step build
           PACKAGE: ${{ jobs.build.outputs.package-type-name }}
           # active code artifact and reemplace nexus
-          CODEARTIFACT:  ${{ inputs.codeartifact-allow }
+          CODEARTIFACT:  ${{ inputs.codeartifact-allow }}
           # DNS hasn't content http:// or https://  
           REPOSITORY_DNS: inputs.repository-host
           REPOSITORY_USER: inputs.repository-user
@@ -379,7 +379,7 @@ jobs:
        # get package type extention from step build
       PACKAGE: ${{ jobs.build.outputs.package-type-name }}
       # active code artifact and reemplace nexus
-      CODEARTIFACT:  ${{ inputs.codeartifact-allow }
+      CODEARTIFACT:  ${{ inputs.codeartifact-allow }}
       # get path repository package generate font step build
       REPOSITORY_PATH:  ${{ jobs.build.outputs.package-repository }}   
       REPOSITORY_HOST: inputs.repository-host
@@ -432,7 +432,7 @@ jobs:
       CODEARTIFACT:  ${{ inputs.codeartifact-allow }
       # get path repository package generate font step build
       REPOSITORY_PATH:  ${{ jobs.build.outputs.package-repository }}   
-      REPOSITORY_HOST: inputs.repository-host
+      REPOSITORY_HOST:  ${{ inputs.repository-host  }} 
       # change user to read, now use write
       REPOSITORY_OWNER:  ${{ jobs.build.outputs.package-owner }}    
       REPOSITORY_USER:  ${{ jobs.build.outputs.package-usr }}    
