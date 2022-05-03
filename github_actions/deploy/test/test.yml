@@ -1,0 +1,23 @@
+on:   
+  workflow_call:
+    # setting input
+    inputs:
+      # project name, eguals to product name example ancillaries
+      project-name:
+        type: string  
+        description: 'project global name'
+        required: true
+        default: "MyProyect"
+env:
+  PROJECT:  ${{ inputs.project-name }}  
+jobs:
+  test-inputs:
+  runs-on: [self-hosted]
+  defaults:
+      run:
+        shell: bash
+        working-directory:  ${{ github.workspace }}/scripts/
+  steps:
+    - name: testing-run
+      run: echo "en la variable ${{ env.PROJECT }} en el input ${{ inputs.project-name }}"
+    
