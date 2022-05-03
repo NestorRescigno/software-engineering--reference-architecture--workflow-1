@@ -120,16 +120,24 @@ inputs:
     description: 'secret access key aws operational environment'
     required: false
     
-on: [pull_request]
+on:
   pull_request:
     # Sequence of patterns matched against refs/heads
     branches:    
       - main
       - develop
+env:
+  LANGUAGE: ${{ inputs.lenguage-code }}
+  # get input name, this name use in dns site and global value. project = product business
+  PROJECT:  ${{ inputs.project-name }}  
 jobs:
   build:
     name: build
     runs-on: [self-hosted]
+    defaults:
+      run:
+        shell: bash
+        working-directory:  ${{ github.workspace }}/scripts/
     # setting output step build to use other jobs steps
     outputs:
       package-groupid-name:
@@ -156,9 +164,6 @@ jobs:
       package-owner:
         description: "package owner"
         value: ${{ steps.registry-repository.outputs.registry-repository-owner }}
-    env:
-      SCRIPT: ${{ github.workspace }}/.github/workflows/scripts/
-      LANGUAGE: ${{ inputs.lenguage-code }}
     steps:
       # Nota: 
       # Remplace action's with custom shell script to future
@@ -169,23 +174,17 @@ jobs:
       # Step 3 
       - name: Building Artifact
         id: package-generator-name
-        shell: bash 
-        run: |
-        ${{ env.SCRIPT }}/build.sh
+        run: build.sh
       # Step 4  
       - name: control
         id: control-version
-        shell: bash
         env:
           # get package name generate from step build
           VERSION:  ${{ jobs.build.outputs.package-version-name }}  
-        run: |
-        ${{ env.SCRIPT }}/control-version.sh
-    steps:
+        run: control-version.sh
       # deploy artifact to registry repository
       - name: Registy artifact
         id: registry-repository
-        shell: bash
         env:
           # get package name generate from step build
           GROUP:  ${{ jobs.build.outputs.package-groupid-name }}  
@@ -203,11 +202,14 @@ jobs:
           REPOSITORY_DNS: inputs.repository-host
           REPOSITORY_USER: inputs.repository-user
           REPOSITORY_SECRET: inputs.repository-token
-        run: |
-          ${{ env.SCRIPT }}/artifact-registry.sh
+        run: artifact-registry.sh
   scan:
     name: scan-code
     runs-on: [self-hosted]
+    defaults:
+      run:
+        shell: bash
+        working-directory:  ${{ github.workspace }}/scripts/
     steps:
       # Nota: 
       # Remplace action's with custom shell script to future
@@ -218,9 +220,7 @@ jobs:
       # implement sonar
       # Step 1
       - name: sonar
-        shell: bash
         env:
-          SCRIPT: ${{ github.workspace }}/.github/workflows/scripts/
           # get package name generate from step build
           GROUP:  ${{ jobs.build.outputs.package-groupid-name }}  
           # get package name generate from step build
@@ -233,8 +233,7 @@ jobs:
           SONAR_USER: inputs.sonarqube-user
           SONAR_SECRET: inputs.sonarqube-token
           SONAR_CLI: inputs.sonarqube-client-version
-        run: |
-        ${{ env.SCRIPT }}/sonar-scanner.sh
+        run: sonar-scanner.sh
   # Note of develop: pendieng testing and tool implement      
   # vulnerability:
   #  name: scan-code
@@ -269,6 +268,10 @@ jobs:
     name: environment-development
     # runs-on: [self-hosted, dev]
     runs-on: [self-hosted]
+    defaults:
+      run:
+        shell: bash
+        working-directory:  ${{ github.workspace }}/scripts/
     outputs:
       shared-number-ids-arn_suffix:
         description: "ami shered numbers ids"
@@ -289,9 +292,6 @@ jobs:
         description: "load balancer arn suffix"
         value: ${{ steps.build-environment-generator.lb-arn-suffix }}
     env:
-      SCRIPT: ${{ github.workspace }}/.github/workflows/scripts/
-       # get input name, this name use in dns site and global value. project = product business
-      PROJECT:  ${{ inputs.project-name }}  
       GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   
       # get artifcat name generate from step build
       SERVICE:  ${{ jobs.build.outputs.package-artifactid-name }}
@@ -308,7 +308,7 @@ jobs:
       AWS_ACCESS_KEY_DEV: ${{ inputs.aws-access-key-dev }}
       AWS_SECRET_ACCESS_KEY_DEV: ${{ inputs.aws-secret-access-key-dev }}
       # reemplace aws secret and access key to profile
-      AWS_PROFILE:
+      AWS_PROFILE: ''
     if: ${{ startsWith(${ github.ref }, 'refs/heads/develop') == true }}  
     steps:
       # Nota: 
@@ -321,13 +321,15 @@ jobs:
       # Step 2
       - name: build-environment
         id: build-environment-generator
-        shell: bash
-        run: |
-        ${{ env.SCRIPT }}/build-environment.sh
-  environment:
+        run: build-environment.sh
+  environment-dev:
     name: environment-production
     # runs-on: [self-hosted, pro]
     runs-on: [self-hosted]
+    defaults:
+      run:
+        shell: bash
+        working-directory:  ${{ github.workspace }}/scripts/
     outputs:
       shared-number-ids-arn_suffix:
         description: "ami shered numbers ids"
@@ -348,9 +350,6 @@ jobs:
         description: "load balancer arn suffix"
         value: ${{ steps.build-environment-generator.lb-arn-suffix }}
     env:
-      SCRIPT: ${{ github.workspace }}/.github/workflows/scripts/
-       # get input name, this name use in dns site and global value. project = product business
-      PROJECT:  ${{ inputs.project-name }}  
       GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   
       # get artifcat name generate from step build
       SERVICE:  ${{ jobs.build.outputs.package-artifactid-name }}
@@ -367,7 +366,7 @@ jobs:
       AWS_ACCESS_KEY_DEV: ${{ inputs.aws-access-key-dev }}
       AWS_SECRET_ACCESS_KEY_DEV: ${{ inputs.aws-secret-access-key-dev }}
       # reemplace aws secret and access key to profile
-      AWS_PROFILE:
+      AWS_PROFILE: ''
     if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }}
     steps:
       # Nota: 
@@ -380,17 +379,15 @@ jobs:
       # Step 2
       - name: build-environment
         id: build-environment-generator
-        shell: bash
-        run: |
-        ${{ env.SCRIPT }}/build-environment.sh      
+        run: build-environment.sh      
   instance:
     name: development-instance
     runs-on: [self-hosted]
+    defaults:
+      run:
+        shell: bash
+        working-directory:  ${{ github.workspace }}/scripts/
     env:
-      SCRIPT: ${{ github.workspace }}/.github/workflows/scripts/
-      LANGUAGE: ${{ inputs.lenguage-code }}
-      # get input name, this name use in dns site and global value. project = product business
-      PROJECT:  ${{ inputs.project-name }}   
       # get package name generate from step build
       GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   
       # get package name generate fromstep build
@@ -429,22 +426,20 @@ jobs:
       # Step 2
       - name: build instance
         id: instance-generator
-        shell: bash
-        run: |
-        ${{ env.SCRIPT }}/build-instance.sh  
+        run: build-instance.sh  
   image:
     name: build-image
     # runs-on: [self-hosted, op]
     runs-on: [self-hosted]
+    defaults:
+      run:
+        shell: bash
+        working-directory:  ${{ github.workspace }}/scripts/
     outputs:
       image-number-id:
         description: "image number id"
         value: ${{ steps.image-generator.outputs.image-id }}
     env:
-      SCRIPT: ${{ github.workspace }}/.github/workflows/scripts/
-      LANGUAGE: ${{ inputs.lenguage-code }}
-      # get input name, this name use in dns site and global value. project = product business
-      PROJECT:  ${{ inputs.project-name }}
       # get package name generate from step build   
       GROUP:  ${{ jobs.build.outputs.package-groupid-name }}   
       # get package name generate fromstep build
@@ -472,10 +467,10 @@ jobs:
       AWS_SECRET_ACCESS_KEY_OP: ${{ inputs.aws-secret-access-key-op }}
       
       # reemplace aws secret and access key to profile
-      AWS_PROFILE:
+      AWS_PROFILE: ''
     if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }}  
     steps:
-      e# Nota: 
+      # Nota: 
       # Remplace action's with custom shell script to future
       # for segurity - location in (../utils/)
       # Step 1 
@@ -486,16 +481,17 @@ jobs:
       - name: build image
         id: image-generator
         shell: bash
-        run: |
-        ${{ env.SCRIPT }}/build-image.sh
+        run: build-image.sh
   deploy:
     name: production-deploy
     # runs-on: [self-hosted, pro]
     runs-on: [self-hosted]
+    defaults:
+      run:
+        shell: bash
+        working-directory:  ${{ github.workspace }}/scripts/
     env:
-      SCRIPT: ${{ github.workspace }}/.github/workflows/scripts/
       TEST: inputs.testIntegration
-      LANGUAGE: ${{ inputs.lenguage-code }}
       AMI_ID: ${{ jobs.image.outputs.image-number-id }}
       # get package name generate from step build
       SERVICE:  ${{ jobs.build.outputs.package-artifactid-name }}  
@@ -515,7 +511,7 @@ jobs:
       AWS_ACCESS_KEY: ${{ inputs.aws-access-key }}
       AWS_SECRET_ACCESS_KEY: ${{ inputs.aws-secret-access-key }}
        # reemplace aws secret and access key to profile
-      AWS_PROFILE:
+      AWS_PROFILE: ''
     if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }} 
     steps:
       # Nota: 
@@ -527,19 +523,13 @@ jobs:
       # instance software.
       # Step 2
       - name: Deploy
-        shell: bash
-        run: |
-        ${{ env.SCRIPT }}/terraform-deploy.sh 
+        run: terraform-deploy.sh 
       # Step 3
       - name: Health Check
-        shell: bash
-        run: |
-        ${{ env.SCRIPT }}/health-checking.sh
+        run: health-checking.sh
       # Step 4
       - name: Integration tests
-        shell: bash
-        run: |
-        ${{ env.SCRIPT }}/integration-tests.sh 
+        run: integration-tests.sh 
   # create de tag release en github. 
   # use same release and put image id in description 
   # or release note. necessary to next environment 
@@ -547,6 +537,10 @@ jobs:
   tag:
     name: create-tag
     runs-on: [self-hosted]
+    defaults:
+      run:
+        shell: bash
+        working-directory:  ${{ github.workspace }}/scripts/
     env:
       # version artifact  = VERSION
       TAG: ${{ jobs.build.outputs.package-version-name }}
