@@ -18,7 +18,8 @@ inputs:
     type: string
     required: true
 outputs:
-      package-groupid-name: ${{ steps.package-generator-name.outputs.package-group }}
+  package-groupid-name: 
+    value: ${{ steps.package-generator-name.outputs.package-group }}
 runs:
   using: "composite"
   steps:
