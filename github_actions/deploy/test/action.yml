@@ -11,10 +11,6 @@ env:
   PROJECT_ENV: "no le gusta" 
 runs:
   using: "composite"
-  defaults:
-      run:
-      shell: bash
-      working-directory: scripts
   steps:
     - name: testing-run
       run: |
