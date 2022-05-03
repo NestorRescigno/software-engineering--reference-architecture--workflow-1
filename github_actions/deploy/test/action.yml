@@ -7,13 +7,13 @@ on:
         type: string
         required: true
         default: "MyProyect"
+env:
+  PROJECT_ENV: "hola"        
 jobs:
   work:
     runs:
       using: "composite"
       steps:
         - name: testing-run
-          env:
-            PROJECT_ENV: "hola"
           shell: bash
           run: echo "en la variable ${{env.PROJECT_ENV}} en el input " & echo ${{ inputs.project-name }}
