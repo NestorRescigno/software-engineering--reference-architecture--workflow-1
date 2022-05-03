@@ -16,4 +16,4 @@ jobs:
       steps:
         - name: testing-run
           shell: bash
-          run: echo "en la variable $PROJECT_ENV en el input " & echo ${{ inputs.project-name }}
+          run: echo "en la variable $PROJECT_ENV en el input " & echo ${{ inputs.project_name }}
