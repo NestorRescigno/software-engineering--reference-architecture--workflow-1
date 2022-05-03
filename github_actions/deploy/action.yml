@@ -173,9 +173,6 @@ jobs:
       package-key: ${{ steps.registry-repository.outputs.registry-repository-key }}
       package-owner: ${{ steps.registry-repository.outputs.registry-repository-owner }}
     steps:
-      # Nota: 
-      # Remplace action's with custom shell script to future
-      # for segurity - location in (../utils/)
       # Step 1 
       - name: checkout
         uses: actions/checkout@v3
@@ -429,7 +426,7 @@ jobs:
       # get package type extention from step build  
       PACKAGE: ${{ jobs.build.outputs.package-type-name }}
       # active code artifact and reemplace nexus
-      CODEARTIFACT:  ${{ inputs.codeartifact-allow }
+      CODEARTIFACT:  ${{ inputs.codeartifact-allow }}
       # get path repository package generate font step build
       REPOSITORY_PATH:  ${{ jobs.build.outputs.package-repository }}   
       REPOSITORY_HOST:  ${{ inputs.repository-host  }} 
