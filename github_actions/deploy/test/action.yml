@@ -9,7 +9,6 @@ on:
         default: "MyProyect"       
 jobs:
   work:
-    runs-on: [ancillaries]
     steps:
       - name: testing-run
         run: |
