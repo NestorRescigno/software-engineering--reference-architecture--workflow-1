@@ -6,10 +6,14 @@ on:
       project_name:
         type: string
         required: true
-        default: "MyProyect"       
+        default: "MyProyect"
+runs:
+   usign: 'composite'
+   steps:
+    - run: echo "project_name = ${{ inputs.project_name }}" >> $GITHUB_ENV
 jobs:
   work:
     steps:
       - name: testing-run
         run: |
-          echo "en la variable en el input ${inputs.project_name} "
+          echo "en la variable en el input ${{ env.project_name }} "
