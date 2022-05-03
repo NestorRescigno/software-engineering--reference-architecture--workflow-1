@@ -11,6 +11,7 @@ runs:
    usign: 'composite'
    steps:
     - run: echo "project_name = ${{ inputs.project_name }}" >> $GITHUB_ENV
+      shell: bash
 jobs:
   work:
     steps:
