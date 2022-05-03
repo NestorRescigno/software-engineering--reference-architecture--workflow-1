@@ -10,10 +10,10 @@ on:
 runs:
    using: "composite"
    steps:
-    - run: echo "project_name = ${{ inputs.project_name }}" >> $GITHUB_ENV
+    - run: echo "projectname = ${{ inputs.project_name }}" >> $GITHUB_ENV
       shell: bash
 jobs:
   work:
     steps:
       - name: testing-run
-        run: echo "en la variable en el input $project_name"
+        run: echo "en la variable en el input $projectname"
