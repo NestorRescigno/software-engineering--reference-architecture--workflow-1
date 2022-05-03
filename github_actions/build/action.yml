@@ -31,6 +31,6 @@ runs:
   steps:
     - id: package-generator-name
       working-directory: .github/cicd/scripts
-      run: build.sh
+      run: sh build.sh
       shell: sh
    
