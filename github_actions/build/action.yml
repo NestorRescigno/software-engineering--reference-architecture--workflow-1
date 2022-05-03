@@ -19,9 +19,6 @@ inputs:
     required: true
 outputs:
       package-groupid-name: ${{ steps.package-generator-name.outputs.package-group }}
-      package-artifactid-name: ${{ steps.package-generator-name.outputs.package-artifact }}
-      package-version-name: ${{ steps.package-generator-name.outputs.package-version }} 
-      package-type-name: ${{ steps.package-generator-name.outputs.package-type-id }}
 runs:
   using: "composite"
   steps:
@@ -34,12 +31,4 @@ runs:
       working-directory: scripts
       shell: bash
       run: echo "::set-output name=package-groupid-name::$(echo "junior")"
-    # Step 4  
-    - name: control
-      id: control-version
-      working-directory: scripts
-      env:
-          # get package name generate from step build
-          VERSION:  ${{ steps.package-generator-name.outputs.package-version }}
-      shell: bash    
-      run: control-version.sh & echo "version $VERSION"
+   
