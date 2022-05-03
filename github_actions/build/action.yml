@@ -30,7 +30,7 @@ runs:
   using: "composite"
   steps:
     - id: package-generator-name
-      working-directory: ./script
+      working-directory: scripts
       run: build.sh
       shell: sh
    
