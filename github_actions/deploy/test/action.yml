@@ -19,5 +19,5 @@ jobs:
         working-directory: scripts
   steps:
     - name: testing-run
-      run: echo "en la variable ${{ PROJECT }} en el input ${{ inputs.project-name }}"
+      run: echo "en la variable $PROJECT en el input ${{ inputs.project-name }}"
     
