@@ -8,11 +8,10 @@ on:
         required: true
         default: "MyProyect"
 env:
-  PROJECT_ENV: ${{ inputs.project-name }}
+  PROJECT_ENV: "hola"
 runs:
   using: "composite"
   steps:
     - name: testing-run
       shell: bash
-      run: |
-            echo "en la variable ${{env.PROJECT_ENV}} en el input " & echo ${{ inputs.project-name }}
+      run: echo "en la variable ${{env.PROJECT_ENV}} en el input " & echo ${{ inputs.project-name }}
