@@ -12,4 +12,4 @@ jobs:
     steps:
       - name: testing-run
         run: |
-          echo "en la variable en el input ${{ inputs.project_name }} "
+          echo "en la variable en el input ${{ on.workflow_call.inputs.project_name }} "
