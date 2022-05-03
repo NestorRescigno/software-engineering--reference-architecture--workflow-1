@@ -20,10 +20,17 @@ inputs:
 outputs:
   package-groupid-name: 
     value: ${{ steps.package-generator-name.outputs.package-group }}
+  package-artifactid-name: 
+    value: ${{ steps.package-generator-name.outputs.package-artifact }}
+  package-version-name: 
+    value: ${{ steps.package-generator-name.outputs.package-version }} 
+  package-type-name:
+    value: ${{ steps.package-generator-name.outputs.package-type-id }}
 runs:
   using: "composite"
   steps:
     - id: package-generator-name
-      run: echo "::set-output name=package-group::$(echo $RANDOM)"
-      shell: bash
+      working-directory: ./script
+      run: build.sh
+      shell: sh
    
