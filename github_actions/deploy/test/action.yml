@@ -8,7 +8,7 @@ on:
         required: true
         default: "MyProyect"
 env:
-  PROJECT_ENV: "no le gusta" 
+  PROJECT_ENV: ${{ inputs.project-name }}
 runs:
   using: "composite"
   steps:
