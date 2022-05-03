@@ -32,12 +32,12 @@ runs:
     # Step 3 
     - name: Build
       id: package-generator-name
-      working-directory: ./scripts
+      working-directory: scripts
       run: build.sh
     # Step 4  
     - name: control
       id: control-version
-      working-directory: ./scripts
+      working-directory: scripts
       env:
           # get package name generate from step build
           VERSION:  ${{ steps.package-generator-name.outputs.package-version }} 
