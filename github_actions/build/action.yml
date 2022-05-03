@@ -2,6 +2,9 @@
 name: 'build'
 description: 'building artifact'
 inputs:
+  project_name:
+    type: string
+    required: true
   lenguage-code:
     type: string
     required: true
@@ -61,6 +64,7 @@ runs:
       env:
         LENGUAGE: ${{inputs.lenguage-code}}
         REF: ${{ github.ref }}
+        PROJECT: ${{inputs.project_name}}
         # get package name generate from step build
         GROUP: ${{ steps.package-generator-name.outputs.package-group }} 
         # get package name generate from step build
