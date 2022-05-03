@@ -34,7 +34,7 @@ runs:
       env:
         WORKSPACE: ${{ github.workspace }}
         LENGUAGE: "java"
-        REF:${{ github.ref }}
+        REF: ${{ github.ref }}
       run: sh build.sh 
       shell: sh
    
