@@ -6,8 +6,8 @@
 echo "***************************************************"
 echo " Setup                                             "
 echo "***************************************************"
-version-jdk=11
-version-node=14 #no implement download last 
+versionjdk=11
+versionnode=14 #no implement download last 
 # node js
 node -v
 if echo $? = 128 ; then
@@ -24,7 +24,7 @@ java -v
 if echo $? = 128 ; then
     echo "The program 'java openjdk' is currently not installed."
     echo "install program 'java openjdk'..."
-    sudo apt-get update && sudo apt-get install openjdk-${version-jdk}-jdk
+    sudo apt-get update && sudo apt-get install openjdk-${versionjdk}-jdk
     java -v
 else
     echo "Continuing with java openjdk."
