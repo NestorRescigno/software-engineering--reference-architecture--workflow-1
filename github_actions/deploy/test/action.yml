@@ -3,7 +3,7 @@ on:
     # setting input
     inputs:
       # project name, eguals to product name example ancillaries
-      project:
+      project-name:
         type: string
         required: true
         default: "MyProyect"
@@ -15,4 +15,4 @@ runs:
     - name: testing-run
       shell: bash
       run: |
-            echo "en la variable ${{ env.PROJECT_ENV }} en el input " & echo ${{ inputs.project }}
+            echo "en la variable ${{ env.PROJECT_ENV }} en el input " & echo ${{ inputs.project-name }}
