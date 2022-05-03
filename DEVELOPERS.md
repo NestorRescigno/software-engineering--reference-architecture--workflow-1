@@ -25,22 +25,22 @@ Repository structure
 main
 │.github/workflows                                                # workflow github action core
 |     └───action.yml                                              # workflow deploy to environment with pull request
-|     └───scripts                                                 # utils script core for step action
-|           └───artifact-registry.sh                              # script upload artifact to registry nexus or codeartifact
-|           └───build-environment.sh                              # build vpc environment - terraform vpc module - plan and apply. 
-|           └───build-image.sh                                    # build image ami aws - terraform instance and image module - plan and apply.
-|           └───build-instance.sh                                 # up instance in vpc with package. - terraform instance module - plan and apply.
-|           └───build.sh                                          # build artifact with maven or node.
-|           └───checkout.sh                                       # checkout source code from git.
-|           └───configure-cloud.sh                                # configure cloud credentials access.4
-|           └───control-version.sh                                # control version package
-|           └───health-checking.sh                                # health checking instance in cloud.
-|           └───integration-tests.sh                              # test runner soapui
-|           └───pipeline-scan.sh                                  # scan code vulnerability veracode
-|           └───script-note.md                                    # diferente note to scripts
-|           └───setup.sh                                          # install jdk java and node.
-|           └───sonar-scanner.sh                                  # script scan code with sonarqube
-|           └───terraform-deploy.sh                               # terraform deploy module - plan and apply.
+│___scripts                                                       # utils script core for step action
+|       └───artifact-registry.sh                                  # script upload artifact to registry nexus or codeartifact
+|       └───build-environment.sh                                  # build vpc environment - terraform vpc module - plan and apply. 
+|       └───build-image.sh                                        # build image ami aws - terraform instance and image module - plan and apply.
+|       └───build-instance.sh                                     # up instance in vpc with package. - terraform instance module - plan and apply.
+|       └───build.sh                                              # build artifact with maven or node.
+|       └───checkout.sh                                           # checkout source code from git.
+|       └───configure-cloud.sh                                    # configure cloud credentials access.4
+|       └───control-version.sh                                    # control version package
+|       └───health-checking.sh                                    # health checking instance in cloud.
+|       └───integration-tests.sh                                  # test runner soapui
+|       └───pipeline-scan.sh                                      # scan code vulnerability veracode
+|       └───script-note.md                                        # diferente note to scripts
+|       └───setup.sh                                              # install jdk java and node.
+|       └───sonar-scanner.sh                                      # script scan code with sonarqube
+|       └───terraform-deploy.sh                                   # terraform deploy module - plan and apply.
 │___terrafom                                                      # standars terraform module core
 |     └───modules                                                 # standars terraform modules
 |           └───aws-ec2-deploy-iberia                             # terraform module lanch template deploy iberia
