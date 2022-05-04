@@ -65,7 +65,7 @@ if [ $LANGUAGE=="java" ] ; then
         SNAPSHOTS_REPOSITORY_URL="${REPOSITORY_URL}${PATH_SNAPSHOTS}"
         # example deploy file with maven
         
-        sed -i -e '/<server>/,/<\/server>/ s|<password>[0-9a-z.]\{1,\}</password>|<password>${CODEARTIFACT_AUTH_TOKEN}</password>|g' settings.xml
+        sed -i -e '/<server>/,/<\/server>/ s|<password>[0-9a-z.]\{1,\}</password>|<password>$('aws codeartifact get-authorization-token --domain $PROJECT --domain-owner $REPOSITORY_OWNER --query authorizationToken --output text')</password>|g' settings.xml
         vi settings.xml
         mvn -s settings.xml --batch-mode deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$SNAPSHOTS_REPOSITORY_URL
          
