@@ -4,7 +4,6 @@
 # *************       by software Engineering             *************
 # *********************************************************************
 # sh ./setup.sh
-
 # setting credencials 
 if [ $CODEARTIFACT==false ] ; then
     REPOSITORY_USER=$REPOSITORY_USER
@@ -38,6 +37,9 @@ PATH_NPM_PRIVATE="/npm-private/releases/"
 echo "***************************************************"
 echo "Registy artifact to nexus repository"
 echo "***************************************************"
+
+# set path work
+cd $WORKSPACE
 
 if [ $LANGUAGE=="java" ] ; then
     echo "***************************************************"
