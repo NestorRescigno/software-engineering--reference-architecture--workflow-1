@@ -25,6 +25,9 @@ if [ $LENGUAGE=="java" ] ; then
     mvn -B package --batch-mode --file ${WORKSPACE}/pom.xml
   
   fi
+  echo "show directory file"
+  ls ${WORKSPACE}
+  echo "test directory"
   
   # get information from pom.xml and create package name 
   echo "::set-output name=package-group::$(sed -n 's,.*<groupId>\(.*\)</groupId>.*,\1,p' ${WORKSPACE}/pom.xml | head -1)"  
