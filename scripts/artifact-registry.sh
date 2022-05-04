@@ -43,7 +43,7 @@ PATH_SNAPSHOTS="/maven/snapshots/"
  
    
 echo "***************************************************"
-echo "Registy artifact to nexus repository"
+echo "Registy artifact to repository"
 echo "***************************************************"
 
 # set path work
@@ -64,7 +64,6 @@ if [ $LANGUAGE=="java" ] ; then
         
         mvn -s settings.xml deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$SNAPSHOTS_REPOSITORY_URL
          
-        
         echo "::set-output name=registry-repository-id::$(echo ${PATH_SNAPSHOTS})" 
         echo "***************************************************"
         echo "upload complete"
