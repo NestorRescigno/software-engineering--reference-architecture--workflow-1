@@ -68,7 +68,7 @@ if [ $LANGUAGE=="java" ] ; then
        
         curl --request PUT SNAPSHOTS_REPOSITORY_URL/$GROUPID/$ARTIFACTID/$VERSION/$ARTIFACTID-$VERSION.$PACKAGE_TYPE \
         --user "aws:$CODEARTIFACT_AUTH_TOKEN" --header "Content-Type: application/octet-stream" \
-         --data-binary @$ARTIFACTID-$VERSION.$PACKAGE_TYPE
+         --data-binary "@target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE"
 
         # mvn -s settings.xml --batch-mode deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$SNAPSHOTS_REPOSITORY_URL
          
