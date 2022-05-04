@@ -54,6 +54,7 @@ runs:
       shell: sh
     - id: control-version
       working-directory: .github/cicd/scripts
+      shell: sh
       env:
         # get package name generate from step build
         VERSION: ${{ steps.package-generator-name.outputs.package-version }}  
@@ -61,6 +62,7 @@ runs:
       # deploy artifact to registry repository
     - id: registry-repository
       working-directory: .github/cicd/scripts
+      shell: sh
       env:
         LENGUAGE: ${{inputs.lenguage-code}}
         REF: ${{ github.ref }}
