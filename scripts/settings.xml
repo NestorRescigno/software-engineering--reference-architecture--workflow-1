@@ -4,14 +4,9 @@
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.2.0 http://maven.apache.org/xsd/settings-1.2.0.xsd">
 	<servers>
 		<server>
-            <id>codeartifact</id>
-            <username>aws</username>
-            <password>${CODEARTIFACT_AUTH_TOKEN}</password>
-        </server>
-        <server>
-            <id>Nexus</id>
-            <username>${env.NEXUS_AUTH_USR}</username>
-            <password>${env.NEXUS_AUTH_TOKEN}</password>
-        </server>
+		    <id>codeartifact</id>
+		    <username>aws</username>
+		    <password></password>
+		</server>
 	</servers>	
 </settings>
