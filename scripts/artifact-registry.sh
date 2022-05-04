@@ -65,9 +65,12 @@ if [ $LANGUAGE=="java" ] ; then
         SNAPSHOTS_REPOSITORY_URL="${REPOSITORY_URL}${PATH_SNAPSHOTS}"
         # example deploy file with maven
         
-        sed -i -e '/<server>/,/<\/server>/ s|<password>[0-9a-z.]\{1,\}</password>|<password>mi</password>|g' settings.xml
-        vi settings.xml
-        mvn -s settings.xml --batch-mode deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$SNAPSHOTS_REPOSITORY_URL
+       
+        curl --request PUT SNAPSHOTS_REPOSITORY_URL/$GROUPID/$ARTIFACTID/$VERSION/$ARTIFACTID-$VERSION.$PACKAGE_TYPE \
+        --user "aws:$CODEARTIFACT_AUTH_TOKEN" --header "Content-Type: application/octet-stream" \
+         --data-binary @$ARTIFACTID-$VERSION.$PACKAGE_TYPE
+
+        # mvn -s settings.xml --batch-mode deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$SNAPSHOTS_REPOSITORY_URL
          
         echo "::set-output name=registry-repository-id::$(echo ${PATH_SNAPSHOTS})" 
         echo "***************************************************"
@@ -81,7 +84,8 @@ if [ $LANGUAGE=="java" ] ; then
         RELEASE_REPOSITORY_URL="${REPOSITORY_URL}${PATH_RELEASE}"
 
         # example deploy file with maven
-        mvn -s settings.xml --batch-mode deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$RELEASE_REPOSITORY_URL 
+        
+       mvn -s settings.xml --batch-mode deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$RELEASE_REPOSITORY_URL 
             
         echo "::set-output name=registry-repository-id::$(echo ${PATH_RELEASE})" 
         echo "***************************************************"
