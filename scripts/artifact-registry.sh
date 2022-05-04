@@ -66,7 +66,7 @@ if [ $LANGUAGE=="java" ] ; then
         # example deploy file with maven
         
        
-        curl --request PUT SNAPSHOTS_REPOSITORY_URL/$GROUPID/$ARTIFACTID/$VERSION/$ARTIFACTID-$VERSION.$PACKAGE_TYPE \
+        curl --request PUT $SNAPSHOTS_REPOSITORY_URL/$GROUPID/$ARTIFACTID/$VERSION/$ARTIFACTID-$VERSION.$PACKAGE_TYPE \
         --user "aws:$CODEARTIFACT_AUTH_TOKEN" --header "Content-Type: application/octet-stream" \
          --data-binary "@target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE"
 
