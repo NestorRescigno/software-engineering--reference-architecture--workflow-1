@@ -9,8 +9,12 @@ if [ $CODEARTIFACT==false ] ; then
     REPOSITORY_USER=$REPOSITORY_USER
     REPOSITORY_SECRET=$REPOSITORY_SECRET   
 else 
+    echo "datos"
+    echo $PROJECT
+    echo $REPOSITORY_OWNER
     REPOSITORY_OWNER=$REPOSITORY_USER
     export CODEARTIFACT_AUTH_TOKEN='aws codeartifact get-authorization-token --domain ${PROJECT} --domain-owner ${REPOSITORY_OWNER} --query authorizationToken --output text'
+    echo $CODEARTIFACT_AUTH_TOKEN
     REPOSITORY_USER='aws'
     REPOSITORY_SECRET=$CODEARTIFACT_AUTH_TOKEN 
 fi    
