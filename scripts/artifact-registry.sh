@@ -7,10 +7,6 @@
 # setting credencials 
 if $CODEARTIFACT
 then
-    echo "entro por nexus"
-    REPOSITORY_USER=$REPOSITORY_USER
-    REPOSITORY_SECRET=$REPOSITORY_SECRET   
-else 
     echo "datos"
     echo $PROJECT
     echo $REPOSITORY_USER
@@ -18,6 +14,10 @@ else
     echo $CODEARTIFACT_AUTH_TOKEN
     REPOSITORY_USER='aws'
     REPOSITORY_SECRET=$CODEARTIFACT_AUTH_TOKEN 
+else 
+    echo "entro por nexus"
+    REPOSITORY_USER=$REPOSITORY_USER
+    REPOSITORY_SECRET=$REPOSITORY_SECRET   
 fi    
 REPOSITORY_URL="https://${REPOSITORY_USER}:${REPOSITORY_SECRET}@${REPOSITORY_DNS}"      # DNS can't content http or https, is necesary certificate 
 
