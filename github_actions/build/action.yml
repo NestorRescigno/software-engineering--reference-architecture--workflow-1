@@ -81,6 +81,7 @@ runs:
       working-directory: .github/cicd/scripts
       shell: sh
       env:
+        WORKSPACE: ${{ github.workspace }}
         LENGUAGE: ${{inputs.lenguage-code}}
         REF: ${{ github.ref }}
         PROJECT: ${{inputs.project_name}}
