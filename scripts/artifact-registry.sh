@@ -11,10 +11,6 @@ then
     echo "use codeArtifact"
     echo "***************************************************"
     REPOSITORY_OWNER=$REPOSITORY_USER
-    echo "prueba:"
-    echo $(aws codeartifact get-repository-endpoint --domain best-practice --repository snapshots --format maven)
-    echo "otra prueba:"
-    echo $(aws codeartifact get-authorization-token --domain $PROJECT --domain-owner $REPOSITORY_OWNER --query authorizationToken --output text)
     export CODEARTIFACT_AUTH_TOKEN='aws codeartifact get-authorization-token --domain $PROJECT --domain-owner $REPOSITORY_OWNER --query authorizationToken --output text'
     REPOSITORY_USER='aws'
     REPOSITORY_SECRET=$CODEARTIFACT_AUTH_TOKEN 
@@ -28,7 +24,7 @@ else
     REPOSITORY_SECRET=$REPOSITORY_SECRET   
 fi    
 # REPOSITORY_URL="https://${REPOSITORY_USER}:${REPOSITORY_SECRET}@${REPOSITORY_DNS}"      # DNS can't content http or https, is necesary certificate 
-REPOSITORY_URL="https://${REPOSITORY_DNS}"
+REPOSITORY_URL="https://best-practice-158115648020.d.codeartifact.eu-central-1.amazonaws.com"
 # return user and token access to repository because token auto generate in this jobs, phase build image download form codeartifact or nexus.
 echo "::set-output name=registry-repository-owner::$(echo ${REPOSITORY_OWNER})" 
 echo "::set-output name=registry-repository-usr::$(echo ${REPOSITORY_USER})"
@@ -68,6 +64,9 @@ if [ $LANGUAGE=="java" ] ; then
             
         SNAPSHOTS_REPOSITORY_URL="${REPOSITORY_URL}${PATH_SNAPSHOTS}"
         # example deploy file with maven
+        echo "prueba:"
+        echo $SNAPSHOTS_REPOSITORY_URL
+        echo $(aws codeartifact get-repository-endpoint --domain best-practice --repository snapshots --format maven)
         
         mvn -s settings.xml --batch-mode deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$SNAPSHOTS_REPOSITORY_URL
          
