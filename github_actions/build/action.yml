@@ -119,4 +119,4 @@ runs:
       run: |
          # sh artifact-registry.sh
          export CODEARTIFACT_AUTH_TOKEN='aws codeartifact get-authorization-token --domain $PROJECT --domain-owner $REPOSITORY_USER --query authorizationToken --output text'
-         mvn -s settings.xml --batch-mode deploy:deploy-file -DgroupId=$GROUP -DartifactId=$ARTIFACT -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE -Dfile=./././target/$ARTIFACT-$VERSION.$PACKAGE -DrepositoryId=codeartifact -Durl=https://best-practice-158115648020.d.codeartifact.eu-central-1.amazonaws.com/maven/snapshots/
+         mvn -s settings.xml --batch-mode deploy:deploy-file -DgroupId=$GROUP -DartifactId=$ARTIFACT -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE -Dfile=$WORKSPACE/target/$ARTIFACT-$VERSION.$PACKAGE -DrepositoryId=codeartifact -Durl=https://best-practice-158115648020.d.codeartifact.eu-central-1.amazonaws.com/maven/snapshots/
