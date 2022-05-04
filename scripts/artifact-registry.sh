@@ -68,7 +68,9 @@ if [ $LANGUAGE=="java" ] ; then
         echo $SNAPSHOTS_REPOSITORY_URL
         echo $(aws codeartifact get-repository-endpoint --domain best-practice --repository snapshots --format maven)
         echo "prueba2:"
-        echo $(${CODEARTIFACT_AUTH_TOKEN})
+        
+        sed -i -e '/<server>/,/<\/server>/ s|<password>[0-9a-z.]\{1,\}</password>|<node>${CODEARTIFACT_AUTH_TOKEN}</node>|g' settings.xml
+        vi settings.xml
         mvn -s settings.xml --batch-mode deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$SNAPSHOTS_REPOSITORY_URL
          
         echo "::set-output name=registry-repository-id::$(echo ${PATH_SNAPSHOTS})" 
