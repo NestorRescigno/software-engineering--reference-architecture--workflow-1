@@ -50,7 +50,7 @@ runs:
         WORKSPACE: ${{ github.workspace }}
         LENGUAGE: ${{inputs.lenguage-code}}
         REF: ${{ github.ref }}
-      run: sh build.sh && ls
+      run: sh build.sh
       shell: sh
     - id: control-version
       working-directory: .github/cicd/scripts
