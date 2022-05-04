@@ -10,7 +10,7 @@ versionjdk=11
 versionnode=14 #no implement download last 
 # node js
 node -v
-if $? = 128 ; then
+if [ $?==128 ] ; then
     echo "The program 'node' is currently not installed."
     echo "install program 'node'..."
     sudo apt-get update && sudo apt-get install nodejs
@@ -21,7 +21,7 @@ fi
 
 # java runtime 11
 java -version
-if $? = 128 ; then
+if [ $?==128 ] ; then
     echo "The program 'java openjdk' is currently not installed."
     echo "install program 'java openjdk'..."
     sudo apt-get update && sudo apt-get install openjdk-${versionjdk}-jdk
