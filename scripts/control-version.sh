@@ -98,4 +98,3 @@ EOF
 echo "The following test should fail (test the tester)"
 testvercomp ${arg1} ${arg2} ${conditional}
 
-
