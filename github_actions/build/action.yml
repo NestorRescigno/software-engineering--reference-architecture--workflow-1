@@ -44,6 +44,9 @@ outputs:
 runs:
   using: "composite"
   steps:
+    ########################################################
+    # use temporaly this action but change 
+    # to future with script instal setup or install in magine 
     - name: Set up Node 14
       uses: actions/setup-node@v2
       with:
@@ -53,6 +56,11 @@ runs:
       with:
         distribution: 'temurin'
         java-version: '11' 
+    - name: Set up Maven 3.8.2
+      uses: stCarolas/setup-maven@v4.2
+      with:
+        maven-version: 3.8.2
+    #######################################
     - id: package-generator-name
       working-directory: .github/cicd/scripts
       env:
