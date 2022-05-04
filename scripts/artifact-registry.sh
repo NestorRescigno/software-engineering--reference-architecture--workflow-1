@@ -7,15 +7,16 @@
 # setting credencials 
 if $CODEARTIFACT
 then
-    echo "datos"
-    echo $PROJECT
-    echo $REPOSITORY_USER
+    echo "***************************************************"
+    echo "use codeArtifact"
+    echo "***************************************************"
     export CODEARTIFACT_AUTH_TOKEN='aws codeartifact get-authorization-token --domain $PROJECT --domain-owner $REPOSITORY_USER --query authorizationToken --output text'
-    echo $CODEARTIFACT_AUTH_TOKEN
     REPOSITORY_USER='aws'
     REPOSITORY_SECRET=$CODEARTIFACT_AUTH_TOKEN 
 else 
-    echo "entro por nexus"
+    echo "***************************************************"
+    echo "use Nexus"
+    echo "***************************************************"
     REPOSITORY_USER=$REPOSITORY_USER
     REPOSITORY_SECRET=$REPOSITORY_SECRET   
 fi    
