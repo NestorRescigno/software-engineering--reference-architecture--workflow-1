@@ -50,15 +50,8 @@ if [ $LANGUAGE=="java" ] ; then
             
         SNAPSHOTS_REPOSITORY_URL=${REPOSITORY_URL}+${PATH_SNAPSHOTS} # --batch-mode
         # example deploy file with maven
-        mvn deploy:deploy-file \
-            -DgroupId=${GROUPID} \
-            -DartifactId=${ARTIFACTID} \
-            -Dversion=${VERSION} \
-            -DgeneratePom=true \
-            -Dpackaging=${PACKAGE_TYPE} \
-             # -DrepositoryId=nexus \
-            -Durl=${ SNAPSHOTS_REPOSITORY_URL } \
-            -Dfile=target/${ARTIFACTID}-${VERSION}.${PACKAGE_TYPE}
+        mvn deploy:deploy-file -DgroupId=${GROUPID} -DartifactId=${ARTIFACTID} -Dversion=${VERSION} -DgeneratePom=true -Dpackaging=${PACKAGE_TYPE} -Durl=${ SNAPSHOTS_REPOSITORY_URL } -Dfile=target/${ARTIFACTID}-${VERSION}.${PACKAGE_TYPE}
+            # -DrepositoryId=nexus \
             
         echo "::set-output name=registry-repository-id::$(echo ${PATH_SNAPSHOTS})" 
         echo "***************************************************"
@@ -71,15 +64,8 @@ if [ $LANGUAGE=="java" ] ; then
             
         RELEASE_REPOSITORY_URL=${REPOSITORY_URL}+${PATH_RELEASE}
         # example deploy file with maven
-        mvn deploy:deploy-file \
-            -DgroupId=${GROUPID} \
-            -DartifactId=${ARTIFACTID} \ 
-            -Dversion=${VERSION} \
-            -DgeneratePom=true \
-            -Dpackaging=${PACKAGE_TYPE} \
-            # -DrepositoryId=nexus \
-            -Durl=${RELEASE_REPOSITORY_URL} \
-            -Dfile=target/${ARTIFACTID}-${VERSION}.${PACKAGE_TYPE} \
+        mvn deploy:deploy-file -DgroupId=${GROUPID} -DartifactId=${ARTIFACTID} -Dversion=${VERSION} -DgeneratePom=true -Dpackaging=${PACKAGE_TYPE} -Durl=${RELEASE_REPOSITORY_URL} -Dfile=target/${ARTIFACTID}-${VERSION}.${PACKAGE_TYPE} \
+        # -DrepositoryId=nexus \
             
         echo "::set-output name=registry-repository-id::$(echo ${PATH_RELEASE})" 
         echo "***************************************************"
