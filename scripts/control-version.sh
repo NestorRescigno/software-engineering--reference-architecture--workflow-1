@@ -94,6 +94,5 @@ done << EOF
 1..0         1.0          =
 1.0          1..0         =
 EOF
-
 echo "The following test should fail (test the tester)"
 testvercomp ${arg1} ${arg2} ${conditional}
