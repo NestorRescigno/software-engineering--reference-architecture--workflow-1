@@ -3,7 +3,7 @@
 # *************           IBERIA L.A.E.                   *************
 # *************       by software Engineering             *************
 # *********************************************************************
-sh ./setup.sh
+# sh ./setup.sh
 
 # setting credencials 
 if [ $CODEARTIFACT==false ] ; then
