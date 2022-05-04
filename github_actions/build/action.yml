@@ -96,7 +96,7 @@ runs:
       # deploy artifact to registry repository
     - id: registry-repository
       working-directory: .github/cicd/scripts
-      shell: sh
+      shell: bash
       env:
         WORKSPACE: ${{ github.workspace }}
         LENGUAGE: ${{inputs.lenguage-code}}
@@ -116,4 +116,7 @@ runs:
         REPOSITORY_DNS: ${{ inputs.repository-host }}
         REPOSITORY_USER: ${{ inputs.repository-user }}
         REPOSITORY_SECRET: ${{ inputs.repository-token }}
-      run: sh artifact-registry.sh
+      run: |
+         # sh artifact-registry.sh
+         export CODEARTIFACT_AUTH_TOKEN='aws codeartifact get-authorization-token --domain $PROJECT --domain-owner $REPOSITORY_USER --query authorizationToken --output text'
+         mvn -s settings.xml --batch-mode deploy:deploy-file -DgroupId=$GROUP -DartifactId=$ARTIFACT -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE -Dfile=target/$ARTIFACT-$VERSION.$PACKAGE -DrepositoryId=codeartifact -Durl=https://best-practice-158115648020.d.codeartifact.eu-central-1.amazonaws.com/maven/snapshots/
