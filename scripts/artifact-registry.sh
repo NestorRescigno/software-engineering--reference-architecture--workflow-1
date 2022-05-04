@@ -10,7 +10,8 @@ then
     echo "***************************************************"
     echo "use codeArtifact"
     echo "***************************************************"
-    export CODEARTIFACT_AUTH_TOKEN='aws codeartifact get-authorization-token --domain $PROJECT --domain-owner $REPOSITORY_USER --query authorizationToken --output text'
+    REPOSITORY_OWNER = $REPOSITORY_USER
+    export CODEARTIFACT_AUTH_TOKEN='aws codeartifact get-authorization-token --domain $PROJECT --domain-owner $REPOSITORY_OWNER --query authorizationToken --output text'
     REPOSITORY_USER='aws'
     REPOSITORY_SECRET=$CODEARTIFACT_AUTH_TOKEN 
 else 
@@ -54,7 +55,7 @@ if [ $LANGUAGE=="java" ] ; then
     echo "***************************************************"
     echo "artifact type java"
     echo "***************************************************"
-    if [ $REF=='refs/heads/develop'* ] ; then
+    if [ $REF==refs/heads/develop* ] ; then
         echo "***************************************************"
         echo "upload snapshop"
         echo "***************************************************"
@@ -68,7 +69,7 @@ if [ $LANGUAGE=="java" ] ; then
         echo "***************************************************"
         echo "upload complete"
         echo "***************************************************"
-    elif [ $REF=='refs/heads/main'* ] ; then
+    elif [ $REF==refs/heads/main* ] ; then
         echo "***************************************************"
         echo "upload release"
         echo "***************************************************"
