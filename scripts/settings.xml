@@ -6,7 +6,7 @@
 		<server>
 		    <id>codeartifact</id>
 		    <username>aws</username>
-		    <password></password>
+		    <password>${env.CODEARTIFACT_AUTH_TOKEN}</password>
 		</server>
 	</servers>	
 </settings>
