@@ -20,8 +20,8 @@ else
     REPOSITORY_USER=$REPOSITORY_USER
     REPOSITORY_SECRET=$REPOSITORY_SECRET   
 fi    
-REPOSITORY_URL="https://${REPOSITORY_USER}:${REPOSITORY_SECRET}@${REPOSITORY_DNS}"      # DNS can't content http or https, is necesary certificate 
-
+# REPOSITORY_URL="https://${REPOSITORY_USER}:${REPOSITORY_SECRET}@${REPOSITORY_DNS}"      # DNS can't content http or https, is necesary certificate 
+REPOSITORY_URL="https://${REPOSITORY_DNS}"
 # return user and token access to repository because token auto generate in this jobs, phase build image download form codeartifact or nexus.
 echo "::set-output name=registry-repository-owner::$(echo ${REPOSITORY_OWNER})" 
 echo "::set-output name=registry-repository-usr::$(echo ${REPOSITORY_USER})"
@@ -60,7 +60,7 @@ if [ $LANGUAGE=="java" ] ; then
             
         SNAPSHOTS_REPOSITORY_URL="${REPOSITORY_URL}${PATH_SNAPSHOTS}" # --batch-mode
         # example deploy file with maven
-        $WORKSPACE\mvn deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Durl=$SNAPSHOTS_REPOSITORY_URL -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE
+        $WORKSPACE\mvn deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -Durl=$SNAPSHOTS_REPOSITORY_URL --settings ./settings.xml
         
         # -DrepositoryId=nexus \  
         
@@ -75,7 +75,7 @@ if [ $LANGUAGE=="java" ] ; then
             
         RELEASE_REPOSITORY_URL="${REPOSITORY_URL}${PATH_RELEASE}"
         # example deploy file with maven
-        $WORKSPACE\mvn deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=nexus -Durl=$RELEASE_REPOSITORY_URL --settings ./settings.xml 
+        $WORKSPACE\mvn deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$RELEASE_REPOSITORY_URL --settings ./settings.xml 
             
         echo "::set-output name=registry-repository-id::$(echo ${PATH_RELEASE})" 
         echo "***************************************************"
