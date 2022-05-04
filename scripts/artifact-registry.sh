@@ -60,7 +60,7 @@ if [ $LANGUAGE=="java" ] ; then
             
         SNAPSHOTS_REPOSITORY_URL="${REPOSITORY_URL}${PATH_SNAPSHOTS}" # --batch-mode
         # example deploy file with maven
-        $WORKSPACE\mvn deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -Durl=$SNAPSHOTS_REPOSITORY_URL --settings ./settings.xml
+        $WORKSPACE/mvn deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -Durl=$SNAPSHOTS_REPOSITORY_URL --settings ./settings.xml
         
         # -DrepositoryId=nexus \  
         
@@ -75,7 +75,7 @@ if [ $LANGUAGE=="java" ] ; then
             
         RELEASE_REPOSITORY_URL="${REPOSITORY_URL}${PATH_RELEASE}"
         # example deploy file with maven
-        $WORKSPACE\mvn deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$RELEASE_REPOSITORY_URL --settings ./settings.xml 
+        $WORKSPACE/mvn deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$RELEASE_REPOSITORY_URL --settings ./settings.xml 
             
         echo "::set-output name=registry-repository-id::$(echo ${PATH_RELEASE})" 
         echo "***************************************************"
@@ -104,7 +104,7 @@ elif [ $LANGUAGE=="angular"] ; then
         # sed "s/\('publishConfig':\)/\1\""registry": "${NPM_REPOSITORY_URL}"\"\,/g" package.json
         
         # run npm publish
-        $WORKSPACE\npm publish --registry "${NPM_REPOSITORY_URL}"   # Nexus configure npm proxy and private registry.
+        $WORKSPACE/npm publish --registry "${NPM_REPOSITORY_URL}"   # Nexus configure npm proxy and private registry.
 
         echo "::set-output name=registry-repository-id::$(echo ${PATH_NPM_PRIVATE})" 
         echo "***************************************************"
