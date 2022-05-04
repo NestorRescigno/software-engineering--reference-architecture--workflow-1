@@ -13,6 +13,8 @@ then
     REPOSITORY_OWNER=$REPOSITORY_USER
     echo "prueba:"
     echo $(aws codeartifact get-repository-endpoint --domain best-practice --repository snapshots --format maven)
+    echo "otra prueba:"
+    echo $(aws codeartifact get-authorization-token --domain $PROJECT --domain-owner $REPOSITORY_OWNER --query authorizationToken --output text)
     export CODEARTIFACT_AUTH_TOKEN='aws codeartifact get-authorization-token --domain $PROJECT --domain-owner $REPOSITORY_OWNER --query authorizationToken --output text'
     REPOSITORY_USER='aws'
     REPOSITORY_SECRET=$CODEARTIFACT_AUTH_TOKEN 
