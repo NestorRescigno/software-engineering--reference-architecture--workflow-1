@@ -26,7 +26,7 @@ if [ $LENGUAGE=="java" ] ; then
   
   fi
 
-  echo "encuentra el grupo en el pom $(sed -n 's,.*<project><groupId>\(.*\)</groupId>.*,\1,p' ${WORKSPACE}/pom.xml | head -1)"
+  echo "encuentra el grupo en el pom $(sed -n 's,.*<groupId>\(.*\)</groupId>.*,\1,p' ${WORKSPACE}/pom.xml | head -1)"
   
   # get information from pom.xml and create package name 
   echo "::set-output name=package-group::$(sed -n 's,.*<groupId>\(.*\)</groupId>.*,\1,p' ${WORKSPACE}/pom.xml | head -1)"  
