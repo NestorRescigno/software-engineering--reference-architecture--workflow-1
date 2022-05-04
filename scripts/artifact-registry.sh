@@ -61,7 +61,7 @@ if [ $LANGUAGE=="java" ] ; then
             
         SNAPSHOTS_REPOSITORY_URL="${REPOSITORY_URL}${PATH_SNAPSHOTS}" # --batch-mode
         # example deploy file with maven
-        vi settings.xml
+        
         mvn -s settings.xml deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$SNAPSHOTS_REPOSITORY_URL
          
         
@@ -77,7 +77,7 @@ if [ $LANGUAGE=="java" ] ; then
         RELEASE_REPOSITORY_URL="${REPOSITORY_URL}${PATH_RELEASE}"
 
         # example deploy file with maven
-         mvn -s settings.xml deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$RELEASE_REPOSITORY_URL 
+        mvn -s settings.xml deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$RELEASE_REPOSITORY_URL 
             
         echo "::set-output name=registry-repository-id::$(echo ${PATH_RELEASE})" 
         echo "***************************************************"
