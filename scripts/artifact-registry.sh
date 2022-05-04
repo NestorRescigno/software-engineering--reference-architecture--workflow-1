@@ -10,7 +10,7 @@ then
     echo "***************************************************"
     echo "use codeArtifact"
     echo "***************************************************"
-    REPOSITORY_OWNER = $REPOSITORY_USER
+    REPOSITORY_OWNER=$REPOSITORY_USER
     export CODEARTIFACT_AUTH_TOKEN='aws codeartifact get-authorization-token --domain $PROJECT --domain-owner $REPOSITORY_OWNER --query authorizationToken --output text'
     REPOSITORY_USER='aws'
     REPOSITORY_SECRET=$CODEARTIFACT_AUTH_TOKEN 
@@ -60,7 +60,7 @@ if [ $LANGUAGE=="java" ] ; then
         echo "upload snapshop"
         echo "***************************************************"
             
-        SNAPSHOTS_REPOSITORY_URL="${REPOSITORY_URL}${PATH_SNAPSHOTS}" # --batch-mode
+        SNAPSHOTS_REPOSITORY_URL="${REPOSITORY_URL}${PATH_SNAPSHOTS}"
         # example deploy file with maven
         
         mvn -s settings.xml --batch-mode deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$SNAPSHOTS_REPOSITORY_URL
