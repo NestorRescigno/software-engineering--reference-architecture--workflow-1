@@ -29,10 +29,13 @@ ARTIFACTID=$ARTIFACT
 VERSION=$VERSION
 PACKAGE_TYPE=$PACKAGE
 # setting contants
-PATH_SNAPSHOTS="/repository/snapshots/"
-PATH_RELEASE="/repository/releases/"
-PATH_NPM_PRIVATE="/npm-private/releases/" 
-    
+#PATH_SNAPSHOTS="/repository/snapshots/"
+#PATH_RELEASE="/repository/releases/"
+PATH_NPM_PRIVATE="/npm-private/releases/"
+PATH_RELEASE="/maven/releases/" 
+PATH_SNAPSHOTS="/maven/snapshots/"
+ 
+   
 echo "***************************************************"
 echo "Registy artifact to nexus repository"
 echo "***************************************************"
