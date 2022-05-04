@@ -6,6 +6,7 @@
 # sh ./setup.sh
 # setting credencials 
 if [ $CODEARTIFACT==false ] ; then
+    echo "entro por nexus"
     REPOSITORY_USER=$REPOSITORY_USER
     REPOSITORY_SECRET=$REPOSITORY_SECRET   
 else 
