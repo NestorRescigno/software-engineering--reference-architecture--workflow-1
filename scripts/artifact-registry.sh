@@ -13,9 +13,8 @@ else
     export CODEARTIFACT_AUTH_TOKEN='aws codeartifact get-authorization-token --domain ${PROJECT} --domain-owner ${REPOSITORY_OWNER} --query authorizationToken --output text'
     REPOSITORY_USER='aws'
     REPOSITORY_SECRET=$CODEARTIFACT_AUTH_TOKEN 
-fi
-REPOSITORY_DNS=$REPOSITORY_DNS    
-REPOSITORY_URL='https://${REPOSITORY_USER}:${REPOSITORY_SECRET}@${REPOSITORY_DNS}'      # DNS can't content http or https, is necesary certificate 
+fi    
+REPOSITORY_URL="https://${REPOSITORY_USER}:${REPOSITORY_SECRET}@${REPOSITORY_DNS}"      # DNS can't content http or https, is necesary certificate 
 
 # return user and token access to repository because token auto generate in this jobs, phase build image download form codeartifact or nexus.
 echo "::set-output name=registry-repository-owner::$(echo ${REPOSITORY_OWNER})" 
@@ -50,7 +49,7 @@ if [ $LANGUAGE=="java" ] ; then
         echo "upload snapshop"
         echo "***************************************************"
             
-        SNAPSHOTS_REPOSITORY_URL=${REPOSITORY_URL}+${PATH_SNAPSHOTS} # --batch-mode
+        SNAPSHOTS_REPOSITORY_URL="${REPOSITORY_URL}${PATH_SNAPSHOTS}" # --batch-mode
         # example deploy file with maven
         mvn deploy:deploy-file -DgroupId=${GROUPID} -DartifactId=${ARTIFACTID} -Dversion=${VERSION} -DgeneratePom=true -Dpackaging=${PACKAGE_TYPE} -Durl=${SNAPSHOTS_REPOSITORY_URL} -Dfile=target/${ARTIFACTID}-${VERSION}.${PACKAGE_TYPE}
             # -DrepositoryId=nexus \
@@ -64,7 +63,7 @@ if [ $LANGUAGE=="java" ] ; then
         echo "upload release"
         echo "***************************************************"
             
-        RELEASE_REPOSITORY_URL=${REPOSITORY_URL}+${PATH_RELEASE}
+        RELEASE_REPOSITORY_URL="${REPOSITORY_URL}${PATH_RELEASE}"
         # example deploy file with maven
         mvn deploy:deploy-file -DgroupId=${GROUPID} -DartifactId=${ARTIFACTID} -Dversion=${VERSION} -DgeneratePom=true -Dpackaging=${PACKAGE_TYPE} -Durl=${RELEASE_REPOSITORY_URL} -Dfile=target/${ARTIFACTID}-${VERSION}.${PACKAGE_TYPE} \
         # -DrepositoryId=nexus \
@@ -83,7 +82,7 @@ elif [ $LANGUAGE=="angular"] ; then
         echo "upload npm private release"
         echo "***************************************************"
         
-        NPM_REPOSITORY_URL=${REPOSITORY_URL}+${PATH_NPM_PRIVATE}   
+        NPM_REPOSITORY_URL="${REPOSITORY_URL}${PATH_NPM_PRIVATE}"  
         
         # node compile method
         # ng build
