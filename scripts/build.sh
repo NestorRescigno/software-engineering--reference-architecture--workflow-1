@@ -5,7 +5,7 @@
 # *********************************************************************
 # setting variable
 # ${{ env.SCRIPT }}/build.sh ${{ github.workspace }} ${{ env.LANGUAGE }} ${{ github.ref }}
-sh ./setup.sh
+# sh ./setup.sh
  
 # WORKSPACE=${{ github.workspace }}
 # LENGUAGE="java"
