@@ -54,3 +54,7 @@ git config --local --add '${this.insteadOfKey}' '${insteadOfValue}
 - this git submodule Foreach
 git config --local --name-only --get-regexp '${pattern}'
 git config --local --unset-all '${configKey}'
+
+
+for use codeartifact to write package, may be is necesary policy https://docs.aws.amazon.com/codeartifact/latest/ug/repo-policies.html
+get token and use owner credencial on client but it hasn't authorization to update package.
