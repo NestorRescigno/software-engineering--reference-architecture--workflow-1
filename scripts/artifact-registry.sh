@@ -72,7 +72,7 @@ if [ $LANGUAGE=="java" ] ; then
         # 2 - reemplace point to slash in groupid for it use on path uri
         oldstr="."
         newstr="/"
-        GROUPID=$(echo $GROUP | sed "s/$oldstr/$newstr/")
+        GROUPID=$(echo $GROUP | sed "s/$oldstr/$newstr/g")
         echo $GROUPID
          
          #  curl --request PUT $SNAPSHOTS_REPOSITORY_URL/$GROUPID/$ARTIFACTID/${VERSIONTEMP}/$ARTIFACTID-$VERSION.$PACKAGE_TYPE \
