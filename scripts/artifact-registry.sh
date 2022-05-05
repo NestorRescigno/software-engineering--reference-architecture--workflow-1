@@ -65,9 +65,9 @@ if [ $LANGUAGE=="java" ] ; then
         SNAPSHOTS_REPOSITORY_URL="${REPOSITORY_URL}${PATH_SNAPSHOTS}"
         # example deploy file with maven
         
-      
+         echo "${CODEARTIFACT_AUTH_TOKEN}"
          curl --request PUT $SNAPSHOTS_REPOSITORY_URL/com/aig/swe/$ARTIFACTID/$VERSION/$ARTIFACTID-$VERSION.$PACKAGE_TYPE \
-         --user "aws:${env.CODEARTIFACT_AUTH_TOKEN}" --header "Content-Type: application/octet-stream" \
+         --user "aws:${CODEARTIFACT_AUTH_TOKEN}" --header "Content-Type: application/octet-stream" \
          --data-binary "@target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE"
 
         # mvn -s settings.xml --batch-mode deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$SNAPSHOTS_REPOSITORY_URL
