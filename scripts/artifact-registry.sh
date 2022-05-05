@@ -11,8 +11,8 @@ then
     echo "use codeArtifact"
     echo "***************************************************"
     REPOSITORY_OWNER=$REPOSITORY_USER
-    export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain best-practice --domain-owner 158115648020 --query authorizationToken --output text`
-   # export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain $PROJECT --domain-owner $REPOSITORY_OWNER --query authorizationToken --output text')
+   
+    export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain $PROJECT --domain-owner $REPOSITORY_OWNER --query authorizationToken --output text`)
     REPOSITORY_USER='aws'
     REPOSITORY_SECRET=$CODEARTIFACT_AUTH_TOKEN 
     
@@ -66,7 +66,6 @@ if [ $LANGUAGE=="java" ] ; then
         SNAPSHOTS_REPOSITORY_URL="${REPOSITORY_URL}${PATH_SNAPSHOTS}"
         # example deploy file with maven
         
-         echo "${CODEARTIFACT_AUTH_TOKEN}"
          curl --request PUT $SNAPSHOTS_REPOSITORY_URL/com/aig/swe/$ARTIFACTID/$VERSION/$ARTIFACTID-$VERSION.$PACKAGE_TYPE \
          --user "aws:${CODEARTIFACT_AUTH_TOKEN}" --header "Content-Type: application/octet-stream" \
          --data-binary "@target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE"
