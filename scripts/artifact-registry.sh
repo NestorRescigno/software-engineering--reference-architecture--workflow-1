@@ -25,7 +25,8 @@ else
     REPOSITORY_SECRET=$REPOSITORY_SECRET   
 fi    
 # REPOSITORY_URL="https://${REPOSITORY_USER}:${REPOSITORY_SECRET}@${REPOSITORY_DNS}"      # DNS can't content http or https, is necesary certificate 
-REPOSITORY_URL="https://best-practice-158115648020.d.codeartifact.eu-central-1.amazonaws.com"
+# REPOSITORY_URL="https://best-practice-158115648020.d.codeartifact.eu-central-1.amazonaws.com"
+REPOSITORY_URL=$REPOSITORY_DNS
 # return user and token access to repository because token auto generate in this jobs, phase build image download form codeartifact or nexus.
 echo "::set-output name=registry-repository-owner::$(echo ${REPOSITORY_OWNER})" 
 echo "::set-output name=registry-repository-usr::$(echo ${REPOSITORY_USER})"
@@ -65,10 +66,13 @@ if [ $LANGUAGE=="java" ] ; then
             
         SNAPSHOTS_REPOSITORY_URL="${REPOSITORY_URL}${PATH_SNAPSHOTS}"
         # example deploy file with maven
-        
-         curl --request PUT $SNAPSHOTS_REPOSITORY_URL/com/aig/swe/$ARTIFACTID/1.0.0/$ARTIFACTID-$VERSION \
-         --user "aws:${CODEARTIFACT_AUTH_TOKEN}" --header "Content-Type: application/octet-stream" \
-         --data-binary "@target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE"
+         
+         # the version to repository snapshot codeartifact get name version without snapshot word
+         echo ${VERSION%-SNAPSHOT} 
+         
+         # curl --request PUT $SNAPSHOTS_REPOSITORY_URL/com/aig/swe/$ARTIFACTID/1.0.0/$ARTIFACTID-$VERSION.$PACKAGE_TYPE \
+         # --user "aws:${CODEARTIFACT_AUTH_TOKEN}" --header "Content-Type: application/octet-stream" \
+         # --data-binary "@target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE"
 
         # mvn -s settings.xml --batch-mode deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$SNAPSHOTS_REPOSITORY_URL
          
