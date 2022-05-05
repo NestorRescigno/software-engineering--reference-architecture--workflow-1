@@ -65,15 +65,21 @@ if [ $LANGUAGE=="java" ] ; then
         echo "***************************************************"
             
         SNAPSHOTS_REPOSITORY_URL="${REPOSITORY_URL}${PATH_SNAPSHOTS}"
-        # example deploy file with maven
+   
+        # Adapter variable:
+        # 1 - remove substring snapshot on version because codeartifact can't accept snapshot word
+        VERSIONTEMP=${VERSION%-SNAPSHOT}
+        # 2 - reemplace point to slash in groupid for it use on path uri
+        oldstr="."
+        newstr="/"
+        GROUPID=$(echo $GROUP | sed "s/$oldstr/$newstr/")
+        echo $GROUPID
          
-         # the version to repository snapshot codeartifact get name version without snapshot word
-         echo ${VERSION%-SNAPSHOT} 
-         
-         # curl --request PUT $SNAPSHOTS_REPOSITORY_URL/com/aig/swe/$ARTIFACTID/1.0.0/$ARTIFACTID-$VERSION.$PACKAGE_TYPE \
+         #  curl --request PUT $SNAPSHOTS_REPOSITORY_URL/$GROUPID/$ARTIFACTID/${VERSIONTEMP}/$ARTIFACTID-$VERSION.$PACKAGE_TYPE \
          # --user "aws:${CODEARTIFACT_AUTH_TOKEN}" --header "Content-Type: application/octet-stream" \
          # --data-binary "@target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE"
-
+        
+        # example deploy file with maven
         # mvn -s settings.xml --batch-mode deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$SNAPSHOTS_REPOSITORY_URL
          
         echo "::set-output name=registry-repository-id::$(echo ${PATH_SNAPSHOTS})" 
