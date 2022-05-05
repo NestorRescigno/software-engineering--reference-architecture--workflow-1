@@ -70,8 +70,8 @@ if [ $LANGUAGE=="java" ] ; then
         # 1 - remove substring snapshot on version because codeartifact can't accept snapshot word
         VERSIONTEMP=${VERSION%-SNAPSHOT}
         # 2 - reemplace point to slash in groupid for it use on path uri
-        oldstr="."
-        newstr="/"
+        oldstr="\."
+        newstr="\/"
         GROUPID=$(echo $GROUP | sed "s/$oldstr/$newstr/g")
         echo $GROUPID
          
