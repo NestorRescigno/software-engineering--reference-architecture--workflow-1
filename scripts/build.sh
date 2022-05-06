@@ -16,18 +16,18 @@ if [[ $LENGUAGE -eq "java" ]] ; then
   
   if [[ $REF == refs/heads/main* ]] ; then 
    
-    VERCHECK=$(echo ${VERSION,,} | grep -o 'snapshot'); 
-      
+    #VERCHECK=$(echo ${VERSION,,} | grep -o 'snapshot'); 
+    VERSIONTEMP=${VERSION%-SNAPSHOT}
     echo "***************************************************"
     echo "version in pom.xml: $VERSION"
     echo "In the main branch " 
     echo "the version can't contain the snapshot value,"
-    echo "replace the new version in the build: $VERCHECK"
+    echo "replace the new version in the build: $VERSIONTEMP"
     echo "***************************************************"
       
-    mvn -B clean package --batch-mode --file ${WORKSPACE}/pom.xml versions:set -DnewVersion=$VERCHECK
-    
-    echo "::set-output name=package-version::$(echo $VERCHECK)" 
+    mvn -B clean package --batch-mode --file ${WORKSPACE}/pom.xml versions:set -DnewVersion=$VERSIONTEMP
+
+    echo "::set-output name=package-version::$(echo $VERSIONTEMP)" 
   
   elif [[ $REF == refs/heads/develop* ]]  ; then
     
