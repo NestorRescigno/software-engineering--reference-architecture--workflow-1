@@ -7,7 +7,7 @@
 # ${{ env.SCRIPT }}/build.sh ${{ github.workspace }} ${{ env.LANGUAGE }} ${{ github.ref }}
 # sh ./setup.sh
 
-if [[ $LENGUAGE == "java" ]] ; then
+if [[ $LENGUAGE -eq "java" ]] ; then
   echo "***************************************************"
   echo "Artifact java Building with maven"
   echo "***************************************************"
@@ -16,18 +16,18 @@ if [[ $LENGUAGE == "java" ]] ; then
   
   if [[ $REF == refs/heads/main* ]] ; then 
    
-   VERCHECK=$(echo ${VERSION,,} | grep -o 'snapshot'); 
-    
-   echo "***************************************************"
-   echo "version in pom.xml: $VERSION"
-   echo "In the main branch " 
-   echo "the version can't contain the snapshot value,"
-   echo "replace the new version in the build: $VERCHECK"
-   echo "***************************************************"
-    
-   mvn versions:set -DnewVersion=$VERCHECK
-   mvn -B clean package --batch-mode --file ${WORKSPACE}/pom.xml
-   echo "::set-output name=package-version::$(echo $VERCHECK)" 
+    VERCHECK=$(echo ${VERSION,,} | grep -o 'snapshot'); 
+      
+    echo "***************************************************"
+    echo "version in pom.xml: $VERSION"
+    echo "In the main branch " 
+    echo "the version can't contain the snapshot value,"
+    echo "replace the new version in the build: $VERCHECK"
+    echo "***************************************************"
+      
+    mvn versions:set -DnewVersion=$VERCHECK
+    mvn -B clean package --batch-mode --file ${WORKSPACE}/pom.xml
+    echo "::set-output name=package-version::$(echo $VERCHECK)" 
   
   elif [[ $REF == refs/heads/develop* ]]  ; then
     
@@ -41,21 +41,21 @@ if [[ $LENGUAGE == "java" ]] ; then
   echo "::set-output name=package-artifact::$(sed -n 's,.*<artifactId>\(.*\)</artifactId>.*,\1,p' ${WORKSPACE}/pom.xml | head -1)"    
   echo "::set-output name=package-type-id::$(sed -n 's,.*<packaging>\(.*\)</packaging>.*,\1,p' ${WORKSPACE}/pom.xml | head -1)"
  
-
   echo "***************************************************"
   echo "End Building"
   echo "***************************************************"
   
-elif [ $LENGUAGE == "angular" ] ; then
+elif [[  $LENGUAGE -eq "angular" ]] ; then
+
   echo "***************************************************"
   echo "Artifact Angular Building"
   echo "***************************************************"
   
-   if [[ ${REF}=='refs/heads/main'* ]] ; then 
+  if [[ ${REF} == refs/heads/main* ]] ; then 
 
     ng build --Prod ${workspace}/package.json  # implement build configure production --Prod
     
-   elif [[ ${REF}=='refs/heads/develop'* ]] ; then
+  elif [[ ${REF} == refs/heads/develop* ]] ; then
 
     ng build ${workspace}/package.json 
 
