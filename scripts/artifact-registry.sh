@@ -5,32 +5,7 @@
 # *********************************************************************
 # sh ./setup.sh
 # setting credencials 
-if $CODEARTIFACT
-then
-    echo "***************************************************"
-    echo "use codeArtifact"
-    echo "***************************************************"
-    REPOSITORY_OWNER=$REPOSITORY_USER
-   
-    export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain $PROJECT --domain-owner $REPOSITORY_OWNER --query authorizationToken --output text`
-    REPOSITORY_USER='aws'
-    REPOSITORY_SECRET=$CODEARTIFACT_AUTH_TOKEN 
-    
-   
-   
-else 
-    echo "***************************************************"
-    echo "use Nexus"
-    echo "***************************************************"
-    REPOSITORY_USER=$REPOSITORY_USER
-    REPOSITORY_SECRET=$REPOSITORY_SECRET   
-fi    
 
-# return user and token access to repository because token auto generate in this jobs, phase build image download form codeartifact or nexus.
-echo "::set-output name=registry-repository-owner::$(echo ${REPOSITORY_OWNER})" 
-echo "::set-output name=registry-repository-usr::$(echo ${REPOSITORY_USER})"
-echo "::set-output name=registry-repository-key::$(echo ${REPOSITORY_SECRET})"
-  
 # setting variable
 LANGUAGE=$LANGUAGE 
 REF=$REF
@@ -45,12 +20,39 @@ PATH_NPM_PRIVATE="/npm-private/releases/"
 PATH_RELEASE="/maven/releases/" 
 PATH_SNAPSHOTS="/maven/snapshots/"
 
-################################################################################
-## No implement with codeartifact, use api: get url
-# REPOSITORY_URL="https://${REPOSITORY_USER}:${REPOSITORY_SECRET}@${REPOSITORY_DNS}"      # DNS can't content http or https, is necesary certificate 
-# REPOSITORY_URL=$REPOSITORY_DNS
-################################################################################ 
+if $CODEARTIFACT
+then
+    echo "***************************************************"
+    echo "use codeArtifact"
+    echo "***************************************************"
+    REPOSITORY_OWNER=$REPOSITORY_USER
    
+    export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain $PROJECT --domain-owner $REPOSITORY_OWNER --query authorizationToken --output text`
+    REPOSITORY_USER='aws'
+    REPOSITORY_SECRET=$CODEARTIFACT_AUTH_TOKEN 
+
+else 
+    #################################################################################################################################
+    ####################  NOT IMPLEMENT #############################################################################################
+    # recoment split shell to two script.
+    # echo "***************************************************"
+    # echo "use Nexus"
+    # echo "***************************************************"
+    # REPOSITORY_URL="https://${REPOSITORY_USER}:${REPOSITORY_SECRET}@${REPOSITORY_DNS}"      # DNS can't content http or https, is necesary certificate 
+    # REPOSITORY_USER=$REPOSITORY_USER
+    # REPOSITORY_SECRET=$REPOSITORY_SECRET  
+    ###################################################################################################################################
+    echo "***************************************************"
+    echo "NEXUS NOT IMPLEMENT"
+    echo "***************************************************"
+    exit -1 
+fi    
+
+# return user and token access to repository because token auto generate in this jobs, phase build image download form codeartifact or nexus.
+echo "::set-output name=registry-repository-owner::$(echo ${REPOSITORY_OWNER})" 
+echo "::set-output name=registry-repository-usr::$(echo ${REPOSITORY_USER})"
+echo "::set-output name=registry-repository-key::$(echo ${REPOSITORY_SECRET})"
+
 echo "***************************************************"
 echo "Registy artifact to repository"
 echo "***************************************************"
