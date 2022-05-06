@@ -66,7 +66,7 @@ terraform plan
 -var "service_groupid=${GROUP}"
 
 # apply plan terrafom 
-terraform apply 
+# terraform apply temporal comment for test, NOT CREATE
 # -auto-approve
 
 echo "::set-output name=security-group-ids:$(terraform output aws_security_groups)" 
