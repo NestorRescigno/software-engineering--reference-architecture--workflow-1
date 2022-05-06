@@ -24,12 +24,26 @@ if [[ $LENGUAGE -eq "java" ]] ; then
     echo "the version can't contain the snapshot value,"
     echo "replace the new version in the build: $VERSIONTEMP"
     echo "***************************************************"
-      
-    mvn -B versions:set -DnewVersion=$VERSIONTEMP clean package --file ${WORKSPACE}/pom.xml 
+
+    mvn versions:set -DnewVersion=$VERSIONTEMP
+    mvn -B  clean package --file ${WORKSPACE}/pom.xml 
 
     echo "::set-output name=package-version::$(echo $VERSIONTEMP)" 
   
   elif [[ $REF == refs/heads/develop* ]]  ; then
+    
+    VERCHECK=$(echo ${VERSION,,} | grep -o 'snapshot'); 
+    if [[ $VERCHECK -eq 'snapshot' ]] ; then
+      VERSIONTEMP="$VERSION-SNAPSHOT"
+      echo "***************************************************"
+      echo "version in pom.xml: $VERSION"
+      echo "In the develop branch " 
+      echo "the version has contain the snapshot value,"
+      echo "replace the new version in the build: $VERSIONTEMP"
+      echo "***************************************************"
+      mvn versions:set -DnewVersion=$VERSIONTEMP
+      $VERSION = $VERSIONTEMP
+    fi
     
     mvn -B clean package --file ${WORKSPACE}/pom.xml
     echo "::set-output name=package-version::$(echo $VERSION)" 
