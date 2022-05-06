@@ -65,11 +65,11 @@ elif [[  $LENGUAGE -eq "angular" ]] ; then
   echo "Artifact Angular Building"
   echo "***************************************************"
   
-  if [[ ${REF} == refs/heads/main* ]] ; then 
+  if [[ $REF == refs/heads/main* ]] ; then 
 
     ng build --Prod ${workspace}/package.json  # implement build configure production --Prod
     
-  elif [[ ${REF} == refs/heads/develop* ]] ; then
+  elif [[ $REF == refs/heads/develop* ]] ; then
 
     ng build ${workspace}/package.json 
 
