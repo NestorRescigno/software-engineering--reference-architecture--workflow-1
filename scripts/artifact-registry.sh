@@ -81,7 +81,14 @@ if [[ $LANGUAGE -eq "java" ]] ; then
         export URL=`aws codeartifact get-repository-endpoint --domain $PROJECT --repository $SNAPSHOTS --format maven --output text`
         # example deploy file with maven
         mvn -s settings.xml --batch-mode deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$URL
-        
+        rc=$?
+        if [ $rc -ne 0 ] ; then
+            echo Could not perform mvn clean install, exit code [$rc]; exit $rc
+            echo "***************************************************"
+            echo "upload fail"
+            echo "***************************************************"
+        fi 
+              
         echo "::set-output name=registry-repository-id::$(echo ${PATH_SNAPSHOTS})" 
         echo "***************************************************"
         echo "upload complete"
@@ -105,7 +112,13 @@ if [[ $LANGUAGE -eq "java" ]] ; then
         export URL=`aws codeartifact get-repository-endpoint --domain $PROJECT --repository $RELEASES --format maven --output text`
         # example deploy file with maven
         mvn -s settings.xml --batch-mode  deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$URL
-               
+        rc=$?
+        if [ $rc -ne 0 ] ; then
+            echo Could not perform mvn clean install, exit code [$rc]; exit $rc
+            echo "***************************************************"
+            echo "upload fail"
+            echo "***************************************************"
+        fi       
         echo "::set-output name=registry-repository-id::$(echo ${PATH_RELEASE})" 
         
         echo "***************************************************"
