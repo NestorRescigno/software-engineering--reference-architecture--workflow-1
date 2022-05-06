@@ -56,5 +56,21 @@ git config --local --name-only --get-regexp '${pattern}'
 git config --local --unset-all '${configKey}'
 
 
-for use codeartifact to write package, may be is necesary policy https://docs.aws.amazon.com/codeartifact/latest/ug/repo-policies.html
-get token and use owner credencial on client but it hasn't authorization to update package.
+for use codeartifact to write package
+
+Example publish with curl.
+´´´´
+        # Adapter variable:
+        # 1 - remove substring snapshot on version because codeartifact can't accept snapshot word
+        VERSIONTEMP=${VERSION%-SNAPSHOT}
+        # 2 - reemplace point to slash in groupid for it use on path uri
+        oldstr="\."
+        newstr="\/"
+        GROUPID=$(echo $GROUP | sed "s/$oldstr/$newstr/g")
+        echo $GROUPID
+        
+        echo $SNAPSHOTS_REPOSITORY_URL$GROUPID/$ARTIFACTID/${VERSIONTEMP}/$VERSION
+        curl --request PUT $SNAPSHOTS_REPOSITORY_URL$GROUPID/$ARTIFACTID/${VERSIONTEMP}/$VERSION \
+        --user "aws:${CODEARTIFACT_AUTH_TOKEN}" --header "Content-Type: application/octet-stream" \
+        --data-binary "@target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE"
+´´´´
