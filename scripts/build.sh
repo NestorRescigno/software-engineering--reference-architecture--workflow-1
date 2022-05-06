@@ -20,7 +20,7 @@ if [[ $LENGUAGE == "java" ]] ; then
     
    echo "***************************************************"
    echo "version in pom.xml: $VERSION"
-   echo "In the main branch 
+   echo "In the main branch " 
    echo "the version can't contain the snapshot value,"
    echo "replace the new version in the build: $VERCHECK"
    echo "***************************************************"
