@@ -69,7 +69,7 @@ if [ $LANGUAGE=="java" ] ; then
             
         SNAPSHOTS_REPOSITORY_URL="${REPOSITORY_URL}${PATH_SNAPSHOTS}"
         
-        export URL=`aws codeartifact get-repository-endpoint --domain $PROJECT --repository $PATH_SNAPSHOTS --format maven --output text`
+        export URL=`aws codeartifact get-repository-endpoint --domain $PROJECT --repository snapshots --format maven --output text`
         echo $URL
         
         # example deploy file with maven
