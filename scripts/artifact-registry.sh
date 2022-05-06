@@ -61,7 +61,7 @@ cd $WORKSPACE
 
 echo "branch to work: $REF"
 
-if [ $LANGUAGE=="java" ] ; then
+if [[ $LANGUAGE == "java" ]] ; then
     echo "***************************************************"
     echo "artifact type java"
     echo "***************************************************"
@@ -104,11 +104,11 @@ if [ $LANGUAGE=="java" ] ; then
         echo "upload complete"
         echo "***************************************************"
     fi
-elif [ $LANGUAGE=="angular"] ; then
+elif [[ $LANGUAGE == "angular" ]] ; then
     echo "***************************************************"
     echo "Artifact type angular"
     echo "***************************************************"
-    if [ $REF=='refs/heads/main'* ] ; then
+    if [[ $REF == refs/heads/main* ]] ; then
         echo "***************************************************"
         echo "upload npm private release"
         echo "***************************************************"
