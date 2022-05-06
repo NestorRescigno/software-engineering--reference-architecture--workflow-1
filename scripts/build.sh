@@ -69,8 +69,6 @@ elif [ $LENGUAGE == "angular" ] ; then
   package = "zip"
   echo "::set-output name=package-type-id::$(echo ${package})"
 
-
-
   echo "***************************************************"
   echo "End Angular Building"
   echo "***************************************************"
