@@ -53,8 +53,9 @@ echo "***************************************************"
 
 
 # This module have lifecycle { create_before_destroy = false }
-cd /terraform/module/aws-ec2-vpc-iberia  
+cd ./terraform/module/aws-ec2-vpc-iberia  
 ls
+pwd
 # init terraform module
 terraform init
 
