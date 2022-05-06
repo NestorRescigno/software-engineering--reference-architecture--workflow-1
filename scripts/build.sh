@@ -24,8 +24,8 @@ if [[ $LENGUAGE -eq "java" ]] ; then
     echo "the version can't contain the snapshot value,"
     echo "replace the new version in the build: $VERSIONTEMP"
     echo "***************************************************"
-    ls ${WORKSPACE}
-    mvn versions:set -DnewVersion=$VERSIONTEMP
+
+    mvn versions:set -DnewVersion=$VERSIONTEMP -f ${WORKSPACE}/pom.xml
     mvn -B clean package --file ${WORKSPACE}/pom.xml 
 
     echo "::set-output name=package-version::$(echo $VERSIONTEMP)" 
@@ -41,7 +41,7 @@ if [[ $LENGUAGE -eq "java" ]] ; then
       echo "the version has contain the snapshot value,"
       echo "replace the new version in the build: $VERSIONTEMP"
       echo "***************************************************"
-      mvn versions:set -DnewVersion=$VERSIONTEMP
+      mvn versions:set -DnewVersion=$VERSIONTEMP -f ${WORKSPACE}/pom.xml
       $VERSION = $VERSIONTEMP
     fi
     
