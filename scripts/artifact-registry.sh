@@ -78,7 +78,7 @@ if [ $LANGUAGE=="java" ] ; then
         # get URL 
         export URL=`aws codeartifact get-repository-endpoint --domain $PROJECT --repository $SNAPSHOTS --format maven --output text`
         # example deploy file with maven
-        mvn -s settings.xml -X --batch-mode deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$URL
+        mvn -s settings.xml --batch-mode deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$URL
         
         echo "::set-output name=registry-repository-id::$(echo ${PATH_SNAPSHOTS})" 
         echo "***************************************************"
@@ -96,7 +96,7 @@ if [ $LANGUAGE=="java" ] ; then
         # get URL 
         export URL=`aws codeartifact get-repository-endpoint --domain $PROJECT --repository $RELEASES --format maven --output text`
         # example deploy file with maven
-        mvn -s settings.xml -X --batch-mode deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$URL
+        mvn -s settings.xml --batch-mode deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$URL
                
         echo "::set-output name=registry-repository-id::$(echo ${PATH_RELEASE})" 
         
