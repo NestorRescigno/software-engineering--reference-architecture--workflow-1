@@ -65,7 +65,9 @@ if [ $LANGUAGE=="java" ] ; then
         echo "***************************************************"
             
         SNAPSHOTS_REPOSITORY_URL="${REPOSITORY_URL}${PATH_SNAPSHOTS}"
-   
+        # example deploy file with maven
+        mvn -s settings.xml --batch-mode deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$SNAPSHOTS_REPOSITORY_URL
+         
         # Adapter variable:
         # 1 - remove substring snapshot on version because codeartifact can't accept snapshot word
         VERSIONTEMP=${VERSION%-SNAPSHOT}
@@ -76,13 +78,13 @@ if [ $LANGUAGE=="java" ] ; then
         echo $GROUPID
         
         echo $SNAPSHOTS_REPOSITORY_URL$GROUPID/$ARTIFACTID/${VERSIONTEMP}/$VERSION
-        curl --request PUT $SNAPSHOTS_REPOSITORY_URL$GROUPID/$ARTIFACTID/${VERSIONTEMP}/$VERSION \
-        --user "aws:${CODEARTIFACT_AUTH_TOKEN}" --header "Content-Type: application/octet-stream" \
-        --data-binary "@target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE"
+        #curl --request PUT $SNAPSHOTS_REPOSITORY_URL$GROUPID/$ARTIFACTID/${VERSIONTEMP}/$VERSION \
+        #--user "aws:${CODEARTIFACT_AUTH_TOKEN}" --header "Content-Type: application/octet-stream" \
+        #--data-binary "@target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE"
         
-        # example deploy file with maven
-        # mvn -s settings.xml --batch-mode deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$SNAPSHOTS_REPOSITORY_URL
-         
+        ls target
+        
+       
         echo "::set-output name=registry-repository-id::$(echo ${PATH_SNAPSHOTS})" 
         echo "***************************************************"
         echo "upload complete"
