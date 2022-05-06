@@ -51,12 +51,10 @@ echo "***************************************************"
 echo " prepare enviroment with terraform... "
 echo "***************************************************"
 
-ls ${WORKSPACE} 
+
 # This module have lifecycle { create_before_destroy = false }
-cd ${WORKSPACE}/terraform/module/aws-ec2-vpc-iberia  
- 
+cd /terraform/module/aws-ec2-vpc-iberia  
 ls
-pwd
 # init terraform module
 terraform init
 
