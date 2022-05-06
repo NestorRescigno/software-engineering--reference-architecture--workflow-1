@@ -17,6 +17,7 @@ then
     REPOSITORY_SECRET=$CODEARTIFACT_AUTH_TOKEN 
     
    
+   
 else 
     echo "***************************************************"
     echo "use Nexus"
@@ -51,6 +52,8 @@ echo "***************************************************"
 echo "Registy artifact to repository"
 echo "***************************************************"
 
+ 
+
 # set path work
 cp settings.xml $WORKSPACE
 cd $WORKSPACE
@@ -65,6 +68,10 @@ if [ $LANGUAGE=="java" ] ; then
         echo "***************************************************"
             
         SNAPSHOTS_REPOSITORY_URL="${REPOSITORY_URL}${PATH_SNAPSHOTS}"
+        
+        export URL=`aws codeartifact get-repository-endpoint --domain $PROJECT --repository $PATH_SNAPSHOTS --format maven --output text`
+        echo $URL
+        
         # example deploy file with maven
         mvn -s settings.xml -X --batch-mode deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$SNAPSHOTS_REPOSITORY_URL
          
