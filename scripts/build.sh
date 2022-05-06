@@ -34,7 +34,7 @@ if [[ $LENGUAGE -eq "java" ]] ; then
     
     VERCHECK=$(echo ${VERSION,,} | grep -o 'snapshot'); 
     echo "has version: $VERCHECK"
-    if [[ $VERCHECK -eq 'snapshot' ]] ; then
+    if [[ $VERCHECK -eq "snapshot" ]] ; then
       mvn -B clean package --file ${WORKSPACE}/pom.xml
       echo "::set-output name=package-version::$(echo $VERSION)"
     else
