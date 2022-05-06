@@ -32,7 +32,7 @@ if [[ $LENGUAGE -eq "java" ]] ; then
   
   elif [[ $REF == refs/heads/develop* ]]  ; then
     
-    VERCHECK=$(echo ${VERSION,,} | grep -o 'snapshot'); 
+    VERCHECK=$(echo ${VERSION,,} | grep -o 'snapshot')
     echo "has version: $VERCHECK"
     if [[ $VERCHECK -eq "snapshot" ]] ; then
       mvn -B clean package --file ${WORKSPACE}/pom.xml
