@@ -33,7 +33,11 @@ if [[ $LENGUAGE -eq "java" ]] ; then
   elif [[ $REF == refs/heads/develop* ]]  ; then
     
     VERCHECK=$(echo ${VERSION,,} | grep -o 'snapshot'); 
-    if [[ $VERCHECK -ne 'snapshot' ]] ; then
+    echo "has version: $VERCHECK"
+    if [[ $VERCHECK -eq 'snapshot' ]] ; then
+      mvn -B clean package --file ${WORKSPACE}/pom.xml
+      echo "::set-output name=package-version::$(echo $VERSION)"
+    else
       VERSIONTEMP="$VERSION-SNAPSHOT"
       echo "***************************************************"
       echo "version in pom.xml: $VERSION"
@@ -42,13 +46,9 @@ if [[ $LENGUAGE -eq "java" ]] ; then
       echo "replace the new version in the build: $VERSIONTEMP"
       echo "***************************************************"
       mvn versions:set -DnewVersion=$VERSIONTEMP -f ${WORKSPACE}/pom.xml
-      VERSION = $VERSIONTEMP
-
+      mvn -B clean package --file ${WORKSPACE}/pom.xml
+      echo "::set-output name=package-version::$(echo $VERSIONTEMP)"
     fi
-
-    mvn -B clean package --file ${WORKSPACE}/pom.xml
-    echo "::set-output name=package-version::$(echo $VERSION)"
-
   fi
 
   # get information from pom.xml and create package name 
