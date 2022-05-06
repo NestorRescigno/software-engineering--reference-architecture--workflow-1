@@ -25,13 +25,13 @@ if [[ $LENGUAGE -eq "java" ]] ; then
     echo "replace the new version in the build: $VERSIONTEMP"
     echo "***************************************************"
       
-    mvn -B versions:set -DnewVersion=$VERSIONTEMP clean build package --file ${WORKSPACE}/pom.xml 
+    mvn -B versions:set -DnewVersion=$VERSIONTEMP clean package --file ${WORKSPACE}/pom.xml 
 
     echo "::set-output name=package-version::$(echo $VERSIONTEMP)" 
   
   elif [[ $REF == refs/heads/develop* ]]  ; then
     
-    mvn -B clean build package --file ${WORKSPACE}/pom.xml
+    mvn -B clean package --file ${WORKSPACE}/pom.xml
     echo "::set-output name=package-version::$(echo $VERSION)" 
     
   fi
