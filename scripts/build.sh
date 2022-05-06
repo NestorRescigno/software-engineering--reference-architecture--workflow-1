@@ -12,7 +12,7 @@ if [[ $LENGUAGE -eq "java" ]] ; then
   echo "Artifact java Building with maven"
   echo "***************************************************"
 
-  VERSION = $(sed -n 's,.*<version>\(.*\)</version>.*,\1,p' ${WORKSPACE}/pom.xml | head -1)
+  VERSION=$(sed -n 's,.*<version>\(.*\)</version>.*,\1,p' ${WORKSPACE}/pom.xml | head -1)
   
   if [[ $REF == refs/heads/main* ]] ; then 
    
@@ -25,8 +25,8 @@ if [[ $LENGUAGE -eq "java" ]] ; then
     echo "replace the new version in the build: $VERCHECK"
     echo "***************************************************"
       
-    mvn versions:set -DnewVersion=$VERCHECK
-    mvn -B clean package --batch-mode --file ${WORKSPACE}/pom.xml
+    mvn -B clean package --batch-mode --file ${WORKSPACE}/pom.xml versions:set -DnewVersion=$VERCHECK
+    
     echo "::set-output name=package-version::$(echo $VERCHECK)" 
   
   elif [[ $REF == refs/heads/develop* ]]  ; then

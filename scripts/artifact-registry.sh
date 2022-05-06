@@ -61,7 +61,7 @@ cd $WORKSPACE
 
 echo "branch to work: $REF"
 
-if [[ $LANGUAGE == "java" ]] ; then
+if [[ $LANGUAGE -eq "java" ]] ; then
     echo "***************************************************"
     echo "artifact type java"
     echo "***************************************************"
@@ -104,7 +104,7 @@ if [[ $LANGUAGE == "java" ]] ; then
         echo "upload complete"
         echo "***************************************************"
     fi
-elif [[ $LANGUAGE == "angular" ]] ; then
+elif [[ $LANGUAGE -eq "angular" ]] ; then
     echo "***************************************************"
     echo "Artifact type angular"
     echo "***************************************************"
