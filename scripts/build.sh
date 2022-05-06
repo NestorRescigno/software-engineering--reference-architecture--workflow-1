@@ -18,11 +18,11 @@ if [ $LENGUAGE=="java" ] ; then
 
   if [[ ${REF}=='refs/heads/main'* ]] ; then 
   
-    mvn -B package --batch-mode --file ${WORKSPACE}/pom.xml
+    mvn -B clean package --batch-mode --file ${WORKSPACE}/pom.xml
 
   elif [[ ${REF}=='refs/heads/develop'* ]]  ; then
    
-    mvn -B package --batch-mode --file ${WORKSPACE}/pom.xml
+    mvn -B clean package --batch-mode --file ${WORKSPACE}/pom.xml
   
   fi
 
