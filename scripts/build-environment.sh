@@ -5,55 +5,54 @@
 # *********************************************************************
 
 # setting variable
-PROJECT     =${{ env.PROJECT }}
-GROUP       =${{ env.GROUP }} 
-SERVICE     =${{ env.SERVICE }} 
-WORKSPACE   =${{ github.workspace }}
-REF         =${{ github.ref }}
+
 
 # access key cloud
-aws_access_key             = ${{ env.AWS_ACCESS_KEY }}
-aws_secret_access_key      = ${{ env.AWS_SECRETE_ACCESS_KEY }}
+# AWS_ACCESS_KEY=$AWS_ACCESS_KEY
+# AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
 
-aws_access_key_dev         = ${{ env.AWS_ACCESS_KEY_DEV }}
-aws_secret_access_key_dev  = ${{ env.AWS_SECRETE_ACCESS_KEY_DEV }}  
+# AWS_ACCESS_KEY_DEV=$AWS_ACCESS_KEY_DEV
+# AWS_SECRET_ACCESS_KEY_DEV=$AWS_SECRET_ACCESS_KEY_DEV  
 
 # access enviroment profile 
-aws-profile                = ${{ env.AWS_PROFILE }}
+# AWS_PROFILE=AWS_PROFILE
 
 # setting enviroment and prefix with conditional reference branchs
 # pull request event from action
-if [ ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then  
-    ENVIROMENT=${{env.ENVIROMENT}}  # may be change to preproduction or production 
-    PREFIX=${{env.ENVIROMENT_PREFIX}}    
-    if [${aws-profile} != "" ] then
-        echo "****************************************"
-        echo "**  profile connect: ${aws-profile}   **"
-        echo "****************************************"
-        export AWS_PROFILE= ${aws-profile}
-    else
-        . could-configure.sh "aws" ${aws_access_key } ${aws_secret_access_key } 
-    fi 
-elif [${ startsWith(${ REF }, 'refs/heads/develop') } == true ] then  
-    ENVIROMENT=${{env.ENVIROMENT_DEV}}  # may be change to preproduction or production 
-    PREFIX=${{env.ENVIROMENT_PREFIX_DEV}} 
-    if [${aws-profile} != "" ] then
-        echo "****************************************"
-        echo "**    profile connect: ${aws-profile}       *"
-        echo "****************************************"
-        export AWS_PROFILE= ${aws-profile}
-    else
-       . could-configure.sh "aws" ${aws_access_key_dev} ${aws_secret_access_key_dev } 
-    fi   
+  if [[ $REF == refs/heads/main* ]] ; then 
+    ENVIROMENT_TEMP=$ENVIROMENT  # may be change to preproduction or production 
+    PREFIX_TEMP=$ENVIROMENT_PREFIX 
+    ###########################################################################
+    ##################### NOT IMPLEMENT PROFILE ###############################
+    # if [[ $AWS_PROFILE  -eq "" ]] ; then
+    #     echo "****************************************"
+    #     echo "**  profile connect: $AWS_PROFILE     **"
+    #     echo "****************************************"
+    #     export AWS_PROFILE= $AWS_PROFILE
+    # else
+    #     . could-configure.sh "aws" $AWS_ACCESS_KEY $AWS_SECRET_ACCESS_KEY
+    # fi 
+elif [[ $REF == refs/heads/develop* ]] ; then  
+    ENVIROMENT_TEMP=$ENVIROMENT_DEV  # may be change to preproduction or production 
+    PREFIX_TEMP=$ENVIROMENT_PREFIX_DEV
+    ###########################################################################
+    ##################### NOT IMPLEMENT PROFILE ###############################
+    # if [[ $AWS_PROFILE  -eq "" ]] ; then
+    #     echo "****************************************"
+    #     echo "**  profile connect: $AWS_PROFILE     **"
+    #     echo "****************************************"
+    #     export AWS_PROFILE= $AWS_PROFILE
+    # else
+    #     . could-configure.sh "aws" $AWS_ACCESS_KEY_DEV $AWS_SECRET_ACCESS_KEY_DEV
+    # fi 
 fi 
 
-
 echo "***************************************************"
-echo "prepare enviroment with terraform..."
+echo " prepare enviroment with terraform... "
 echo "***************************************************"
 
 # This module have lifecycle { create_before_destroy = false }
-cd ${WORKSPACE }/terraform/module/aws-ec2-vpc-iberia  
+cd ${WORKSPACE}/terraform/module/aws-ec2-vpc-iberia  
 
 # init terraform module
 terraform init
@@ -62,16 +61,13 @@ terraform init
 terraform plan 
 -var "project=${PROJECT}" 
 -var "service_name=${SERVICE}"
--var "environment=${ENVIROMENT}" 
--var "environment_prefix=${PREFIX}"  
+-var "environment=${ENVIROMENT_TEMP}" 
+-var "environment_prefix=${PREFIX_TEMP}"  
 -var "service_groupid=${GROUP}"
 
 # apply plan terrafom 
 terraform apply 
-#-auto-approve
-#-var "project=${PROJECT}" 
-#-var "environment_prefix=${PREFIX}"
-#-var "environment=${ENVIROMENT}" 
+# -auto-approve
 
 echo "::set-output name=security-group-ids:$(terraform output aws_security_groups)" 
 echo "::set-output name=subnets-ids::$(terraform output aws_subnets_ids)" 
@@ -81,7 +77,7 @@ echo "::set-output name=lb-arn-suffix::$(terraform output lb_arn_suffix)"
 echo "::set-output name=alb-target-group-arn-suffix::$(terraform output aws_alb_target_group_arn_suffix)" 
 
 echo "***************************************************"
-echo "Enviroment ${ENVIROMENT} "
-echo "with Prefix ${PREFIX}" 
-echo "is complete ..."
+echo " Enviroment ${ENVIROMENT_TEMP}"
+echo " with Prefix ${PREFIX_TEMP}" 
+echo " is complete... "
 echo "***************************************************"

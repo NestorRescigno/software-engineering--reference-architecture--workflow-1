@@ -1,0 +1,122 @@
+# *********************************************************************
+# *************           IBERIA L.A.E.                   *************
+# *************       by Software Engineering             *************
+# *********************************************************************
+# This action yaml represents the different steps to perform 
+# for a create environment with github workflow
+# This action'll need a runner to compile and process data for its use.
+#
+# currently it is only possible to configure 
+# two types of languages "java and angular"
+# this script create environment for example development and pre or production
+# in aws cloud ( vpc, subnet, etc.). 
+# use terraform command and module for this propuse
+
+#### test composite 
+name: 'environment'
+description: 'create environment'
+inputs:
+  project_name:
+    type: string
+    required: true
+  # configuration cloud secret by enviroment  
+  service_name:
+    type: string
+    required: true
+  # configuration cloud secret by enviroment  
+  group_name:
+    type: string
+    required: true
+  # configuration cloud name enviroment
+  aws-environment-name:
+    type: string
+    required: true
+    default: 'production'
+  aws-environment-prefix:
+    type: string
+    required: true
+    default: 'pro'
+  # configuration cloud name enviroment
+  aws-environment-dev-name:
+    type: string
+    required: true
+    default: 'development'
+  aws-environment-dev-prefix:
+    type: string
+    required: true
+    default: 'dev'
+  # configuration cloud secret by enviroment
+  aws-access-key:
+    type: string
+    required: false
+  aws-secret-acesss-key:
+    type: string
+    required: false
+  aws-region:
+    type: string
+    required: false
+    default: "eu-central-1"
+  ###########################################################################
+  ##################### NOT IMPLEMENT PROFILE ###############################
+  # now use one account and secret access, 
+  # may be in future use profile or diference credencial for environment 
+  # configuration cloud secret by enviroment  
+  # aws-access-key-dev:
+  #  type: string
+  #  required: false
+  # aws-secret-acesss-key-dev:
+  #  type: string
+  #  required: false
+  # aws-region-dev:
+  #  type: string
+  #  required: false
+  #  default: "eu-central-1"
+outputs:
+    shared-number-ids-arn_suffix: 
+      value: ${{ steps.build-environment-generator.shared-ids }} 
+    security-group-number-ids: 
+      value: ${{ steps.build-environment-generator.security-group-ids }}
+    subnet-number-ids: 
+      value: ${{ steps.build-environment-generator.subnets-ids }}   
+    alb-target-group-number-arn: 
+      value: ${{ steps.build-environment-generator.alb-target-group-arn }}
+    alb-target-group-number-arn-suffix: 
+      value: ${{ steps.build-environment-generator.alb-target-group-arn-suffix }}
+    lb-number-arn-suffix: 
+      value: ${{ steps.build-environment-generator.lb-arn-suffix }}
+runs:
+  using: "composite"
+  steps:
+    ########################################################
+    # use temporaly this action but change 
+    # to future with script instal setup or install in magine
+    - name: Setup Node 14
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2.0.0
+      with:
+        terraform_wrapper: false
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{inputs.aws-access-key}}
+        aws-secret-access-key: ${{inputs.aws-secret-acesss-key}}
+        aws-region: ${{inputs.aws-region}}     
+    #######################################
+    - id: build-environment-generator
+      working-directory: .github/cicd/scripts
+      env:
+        WORKSPACE: ${{ github.workspace }}
+        REF: ${{ github.ref }}
+        # Data proyect
+        PROJECT: ${{ inputs.project_name }} 
+        GROUP: ${{ inputs.group_name }} 
+        SERVICE: ${{ inputs.service_name }} 
+        ENVIROMENT: ${{ inputs.aws-environment-name }}  
+        ENVIROMENT_PREFIX: ${{ inputs.aws-environment-prefix }} 
+        ENVIROMENT_DEV: ${{ inputs.aws-environment-dev-name }} 
+        ENVIROMENT_PREFIX_DEV: ${{ inputs.aws-environment-dev-prefix }} 
+      run: sh build-environment.sh  
+      shell: sh
