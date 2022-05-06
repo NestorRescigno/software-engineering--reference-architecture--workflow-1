@@ -65,7 +65,7 @@ if [ $LANGUAGE=="java" ] ; then
     echo "***************************************************"
     echo "artifact type java"
     echo "***************************************************"
-    if [[ $REF==refs\/heads\/develop* ]] ; then
+    if [[ $REF == refs/heads/develop* ]] ; then
         echo "***************************************************"
         echo "upload snapshop"
         echo "***************************************************"
@@ -84,7 +84,7 @@ if [ $LANGUAGE=="java" ] ; then
         echo "***************************************************"
         echo "upload complete"
         echo "***************************************************"
-    elif [[ $REF==refs\/heads\/main* ]] ; then
+    elif [[ $REF == refs/heads/main* ]] ; then
         echo "***************************************************"
         echo "upload release"
         echo "***************************************************"
