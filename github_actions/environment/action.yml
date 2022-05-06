@@ -108,7 +108,7 @@ runs:
     - id: build-environment-generator
       working-directory: .github/cicd/scripts
       env:
-        WORKSPACE: ${{ github.workspace }}
+        WORKSPACE: ${{ github.workspace }}/.github/cicd
         REF: ${{ github.ref }}
         # Data proyect
         PROJECT: ${{ inputs.project_name }} 
