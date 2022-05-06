@@ -25,8 +25,8 @@ else
     REPOSITORY_SECRET=$REPOSITORY_SECRET   
 fi    
 # REPOSITORY_URL="https://${REPOSITORY_USER}:${REPOSITORY_SECRET}@${REPOSITORY_DNS}"      # DNS can't content http or https, is necesary certificate 
-# REPOSITORY_URL="https://best-practice-158115648020.d.codeartifact.eu-central-1.amazonaws.com"
-REPOSITORY_URL=$REPOSITORY_DNS
+REPOSITORY_URL="https://best-practice-158115648020.d.codeartifact.eu-central-1.amazonaws.com"
+# REPOSITORY_URL=$REPOSITORY_DNS
 # return user and token access to repository because token auto generate in this jobs, phase build image download form codeartifact or nexus.
 echo "::set-output name=registry-repository-owner::$(echo ${REPOSITORY_OWNER})" 
 echo "::set-output name=registry-repository-usr::$(echo ${REPOSITORY_USER})"
