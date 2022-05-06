@@ -33,13 +33,14 @@ if [[ $LENGUAGE -eq "java" ]] ; then
   elif [[ $REF == refs/heads/develop* ]] ; then
     
     VERCHECK=$(echo ${VERSION,,} | grep -o 'snapshot')
-    echo "has version: ${VERCHECK}"
+
     if [[ $VERCHECK == "snapshot" ]] ; then
-      echo "es igual a snapshot"
+
       mvn -B clean package --file ${WORKSPACE}/pom.xml
       echo "::set-output name=package-version::$(echo $VERSION)"
+      
     else
-      echo "no es igual a snapshot"
+
       VERSIONTEMP="${VERSION}-SNAPSHOT"
       echo "***************************************************"
       echo "version in pom.xml: $VERSION"
