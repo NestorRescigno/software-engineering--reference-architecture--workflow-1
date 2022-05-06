@@ -42,7 +42,7 @@ if [[ $LENGUAGE -eq "java" ]] ; then
       echo "replace the new version in the build: $VERSIONTEMP"
       echo "***************************************************"
       mvn versions:set -DnewVersion=$VERSIONTEMP -f ${WORKSPACE}/pom.xml
-      $VERSION = $VERSIONTEMP
+      VERSION = $VERSIONTEMP
     fi
     
     mvn -B clean package --file ${WORKSPACE}/pom.xml
