@@ -74,8 +74,9 @@ if [ $LANGUAGE=="java" ] ; then
         newstr="\/"
         GROUPID=$(echo $GROUP | sed "s/$oldstr/$newstr/g")
         echo $GROUPID
-         
-        curl --request PUT $SNAPSHOTS_REPOSITORY_URL/$GROUPID/$ARTIFACTID/${VERSIONTEMP}/$ARTIFACTID-$VERSION.$PACKAGE_TYPE \
+        echo $SNAPSHOTS_REPOSITORY_URL/$GROUPID/$ARTIFACTID/${VERSIONTEMP}/$ARTIFACTID-$VERSION.$PACKAGE_TYPE
+        
+        curl --request PUT $SNAPSHOTS_REPOSITORY_URL/$GROUPID/$ARTIFACTID/${VERSIONTEMP}/$ARTIFACTID-$VERSION \
         --user "aws:${CODEARTIFACT_AUTH_TOKEN}" --header "Content-Type: application/octet-stream" \
         --data-binary "@target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE"
         
