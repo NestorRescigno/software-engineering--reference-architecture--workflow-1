@@ -88,15 +88,21 @@ if [[ $LANGUAGE -eq "java" ]] ; then
         echo "***************************************************"
         echo "upload release"
         echo "***************************************************"
+
         ################################################################################
         ## No implement with codeartifact, use api: get url
         # RELEASE_REPOSITORY_URL="${REPOSITORY_URL}${PATH_RELEASE}"
         ################################################################################
+        #VERCHECK=$(echo ${VERSION,,} | grep -o 'snapshot'); 
         
+        echo "***************************************************"
+        echo "version: $VERSION"
+        echo "***************************************************" 
+
         # get URL 
         export URL=`aws codeartifact get-repository-endpoint --domain $PROJECT --repository $RELEASES --format maven --output text`
         # example deploy file with maven
-        mvn -s settings.xml --batch-mode deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$URL
+        mvn -s settings.xml --batch-mode  deploy:deploy-file -DgroupId=$GROUPID -DartifactId=$ARTIFACTID -Dversion=$VERSION -DgeneratePom=true -Dpackaging=$PACKAGE_TYPE -Dfile=target/$ARTIFACTID-$VERSION.$PACKAGE_TYPE -DrepositoryId=codeartifact -Durl=$URL
                
         echo "::set-output name=registry-repository-id::$(echo ${PATH_RELEASE})" 
         
