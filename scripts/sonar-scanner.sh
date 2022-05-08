@@ -5,21 +5,12 @@
 # *********************************************************************
 #
 # Setting variable
-. setup.sh
+# . setup.sh
 
-SONAR_URL       = ${{ env.SONAR_URL }}
-SONAR_USER      = ${{ env.SONAR_USER }}
-SONAR_PASS      = ${{ env.SONAR_SECRET }} 
-SONAR_LANGUAGE  = ${{ env.LANGUAGE }}
-SONAR_CLI       = ${{ env.SONAR_CLI }}
-REF             = ${{ github.ref }}
-GROUPID         = ${{ github.GROUP }}
-ARTIFACTID      = ${{ github.ARTIFACT }}
-VERSION         = ${{ github.VERSION }} 
 
 # if url isn't empty then allow sonar for scanner code
-if [ ${SONAR_URL} != "" && ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then  
- 
+if [[ ${SONAR_URL} != "" && $REF == refs/heads/main* ]] ; then
+
   echo "***************************************************"
   echo "Sonar scanner started..."
   echo "***************************************************"
@@ -43,10 +34,11 @@ if [ ${SONAR_URL} != "" && ${ startsWith(${ REF }, 'refs/heads/main') } == true 
   else
       echo "Continuing with sonar-scanner."
   fi
- 
-
-  if [${SONAR_LANGUAGE}=="java"] then
-
+  
+  cd $WORKSPACE
+  
+  if [[ $LANGUAGE -eq "java" ]] ; then
+  
     # sonar scannar java setup
     sonar-scanner
       -Dsonar.login=${SONAR_USER}
@@ -58,9 +50,10 @@ if [ ${SONAR_URL} != "" && ${ startsWith(${ REF }, 'refs/heads/main') } == true 
       -Dsonar.java.binaries=**/target/classes
       -Dsonar.language=java
   
-  elif [${SONAR_LANGUAGE}=="angular"] then
-  
+  elif [[ $LANGUAGE -eq "angular" ]] ; then
+
     # sonar scannar angular setup
+
     sonar-scanner
       -Dsonar.login=${SONAR_USER}
       -Dsonar.password=${SONAR_PASS}
