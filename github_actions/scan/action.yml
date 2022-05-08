@@ -1,0 +1,111 @@
+# *********************************************************************
+# *************           IBERIA L.A.E.                   *************
+# *************       by Software Engineering             *************
+# *********************************************************************
+# This action yaml represents the different steps to perform 
+# for quality and vulnerability source code. 
+# use sonarqube and veracode
+#
+# currently it is only possible to configure 
+# two types of languages "java and angular"
+
+#### test composite 
+name: 'scan'
+description: 'scan of quality and vulnerability code'
+inputs:
+  # configure project 
+  project_name:
+    type: string
+    required: true
+  lenguage-code:
+    type: string
+    required: true
+    default: "java"
+  group_name:
+    type: string
+    required: true
+  service_name:
+    type: string
+    required: true
+  service_version:
+    type: string
+    required: true
+  service_package:
+    type: string
+    required: true
+  # control scan code
+  scancode:
+    type: boolean
+    required: true
+    default: false
+  # control quality code with sonar
+  sonarqube-host:
+    type: string
+    required: false
+  sonarqube-user:
+    type: string
+    required: false
+  sonarqube-token:
+    type: string
+    required: false
+  sonarqube-client-version:
+    type: string
+    required: false
+  # Note of developer: pending define referece tool.
+      # control vulnerability code for example: veracode
+      # vulnerability-host:
+      #  required: false
+      # vulnerability-user:
+      #  required: false
+      # vulnerability-token:
+      #  required: false
+      # control vulnerability code  # if use code artifact repository-host 
+runs:
+  using: "composite"
+  steps:
+    ########################################################
+    # use temporaly this action but change 
+    # to future with script instal setup or install in magine 
+    - name: Setup Node 14
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+    - name: checkout
+      uses: actions/checkout@v3    
+    #######################################
+    - name: sonar
+      working-directory: .github/cicd/scripts
+      shell: sh
+      env:
+        # get package name generate from step build
+        GROUP:  ${{ inputs.group_name  }}  
+        # get package name generate from step build
+        ARTIFACT:  ${{ inputs.service_name  }}   
+        # get package name generate from step build
+        VERSION:  ${{ inputs.service_version  }}     
+        # get package type extention from step build
+        PACKAGE: ${{ inputs.service_package }} 
+        SONAR_URL: ${{ inputs.sonarqube-host }} 
+        SONAR_USER: ${{ inputs.sonarqube-user }} 
+        SONAR_SECRET: ${{ inputs.sonarqube-token }} 
+        SONAR_CLI: ${{ inputs.sonarqube-client-version }}
+      if: ${{ inputs.scancode }}
+      run: sonar-scanner.sh
+  # Note of develop: pendieng testing and tool implement      
+  #    - name: vulnerability-scan
+  #      working-directory: .github/cicd/scripts
+  #      shell: sh
+  #      env:
+  #        # get package name generate from step build
+  #        GROUP:  ${{ inputs.group_name  }}  
+  #        # get package name generate from step build
+  #        ARTIFACT:  ${{ inputs.service_name  }}   
+  #        # get package name generate from step build
+  #        VERSION:  ${{ inputs.service_version  }}     
+  #        # get package type extention from step build
+  #        PACKAGE: ${{ inputs.service_package }} 
+  #        vulnerability-host: ${{ inputs.vulnerability-host }} 
+  #        vulnerability-usr: ${{ inputs.vulnerability-user  }} 
+  #        vulnerability-key: ${{ inputs.vulnerability-token }} 
+  #      if: ${{ inputs.scancode && startsWith(${ github.ref }, 'refs/heads/main') == true }}
+  #      run: pipeline-scan.sh
