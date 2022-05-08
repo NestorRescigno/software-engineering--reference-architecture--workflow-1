@@ -5,44 +5,31 @@
 # *********************************************************************
 
 # setting variable
-SERVICE=${{ env.SERVICE }}
-PROJECT=${{ env.PROJECT }} 
-AMI_VERSION=${{ env.AMI_VERSION }}
-AMI_ID=${{ env.AMI_ID }}
-WORKSPACE=${{ github.workspace }}
-REF=${{ github.ref }}
-SECURITY_GROUPS}=${{ env.SECURITY_GROUPS }} 
-SUBNETS=${{ env.SUBNETS }}
-ALB_TARGET_GROUP_ARN=${{ env.ALB_TARGET_GROUP}} 
-ALB_TARGET_GROUP_ARN_SUFFIX= ${{ env.ALB_TARGET_GROUP_SUFFIX}}                
-LB_ARN_SUFFIX=${{ env.LB_SUFFIX}} 
-
-
-ENVIROMENT=${{env.ENVIROMENT}}  # may be change to preproduction or production 
-PREFIX=${{env.ENVIROMENT_PREFIX}} 
-aws_access_key=${{ env.AWS_ACCESS_KEY }}
-aws_secret_access_key=${{ env.AWS_SECRETE_ACCESS_KEY }}
+# ENVIROMENT=${{env.ENVIROMENT}}  # may be change to preproduction or production 
+# PREFIX=${{env.ENVIROMENT_PREFIX}} 
+# aws_access_key=${{ env.AWS_ACCESS_KEY }}
+# aws_secret_access_key=${{ env.AWS_SECRETE_ACCESS_KEY }}
 
 # access enviroment profile 
-aws-profile                = ${{ env.AWS_PROFILE }}
+# aws-profile                = ${{ env.AWS_PROFILE }}
 
 # setting enviroment and prefix with conditional reference branchs
 # pull request event from action
-if [ ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then  
+if [[ $REF == refs/heads/main* ]] ; then
     
-   if [${aws-profile} != "" ] then
-        echo "****************************************"
-        echo "**  profile connect: ${aws-profile}   **"
-        echo "****************************************"
-        export AWS_PROFILE= ${aws-profile}
-   else
-        # create instance in developmente enviroment, need this account access.
-        . could-configure.sh "aws" ${aws_access_key} ${aws_secret_access_key } 
-   fi
-   
+    ###########################################################################
+    ##################### NOT IMPLEMENT PROFILE ###############################
+    # if [[ $AWS_PROFILE  -eq "" ]] ; then
+    #     echo "****************************************"
+    #     echo "**  profile connect: $AWS_PROFILE     **"
+    #     echo "****************************************"
+    #     export AWS_PROFILE= $AWS_PROFILE
+    # else
+    #     . could-configure.sh "aws" $AWS_ACCESS_KEY $AWS_SECRET_ACCESS_KEY
+    # fi 
 
 
-    cd ${ WORKSPACE }/terraform/module/aws-ec2-deploy-iberia
+    cd ${ WORKSPACE }/terraform/modules/aws-ec2-deploy-iberia
 
     echo "***************************************************"
     echo "Deploying with terraform..."
@@ -75,7 +62,7 @@ if [ ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then
 
 
     # set terrafom arn aws target group output to environment
-    echo "aws_alb_target_group_arn=$(terraform output aws_alb_target_group_arn)" >> $GITHUB_ENV  #test in shell or move to run action
+    # echo "aws_alb_target_group_arn=$(terraform output aws_alb_target_group_arn)" >> $GITHUB_ENV  #test in shell or move to run action
 
     echo "***************************************************"
     echo "Deploying complete..."
@@ -85,7 +72,7 @@ if [ ${ startsWith(${ REF }, 'refs/heads/main') } == true ] then
     echo "create cloudwatch alarm and log subcription..."
     echo "***************************************************"
     
-    cd ${ WORKSPACE }/terraform/module/aws-ec2-monitoring
+    cd ${ WORKSPACE }/terraform/modules/aws-ec2-monitoring
     
     # init terraform module
     terraform init
