@@ -34,7 +34,7 @@ inputs:
     type: string
     required: true
   # control scan code
-  scancode:
+  scancode-allow:
     type: boolean
     required: true
     default: false

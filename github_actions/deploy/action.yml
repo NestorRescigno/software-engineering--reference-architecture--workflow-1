@@ -14,23 +14,23 @@ name: 'deploy'
 description: 'create instance, package image and deploy'
 inputs:
   # configure project 
-  project_name:
+  project-name:
     type: string
     required: true
   lenguage-code:
     type: string
     required: true
     default: "java"
-  group_name:
+  group-name:
     type: string
     required: true
-  service_name:
+  service-name:
     type: string
     required: true
-  service_version:
+  service-version:
     type: string
     required: true
-  service_package:
+  service-package:
     type: string
     required: true
   # configuration cloud secret by enviroment  
@@ -63,7 +63,7 @@ inputs:
     type: string
     required: true
   # configure environment 
-  shared-number-ids: 
+  shared-number-ids-arn-suffix: 
     type: string
     required: true
   security-group-number-ids: 
@@ -110,15 +110,15 @@ runs:
       env:
         WORKSPACE: ${{ github.workspace }}
         LENGUAGE: ${{inputs.lenguage-code}}
-        REF: ${{ github.ref }}
+        PROJECT:  ${{ inputs.project-name }} 
         # get package name generate from step build
-        GROUP: ${{ inputs.group_name }}   
+        GROUP: ${{ inputs.group-name }}   
         # get package name generate fromstep build
-        ARTIFACT: ${{ inputs.service_name }}    
+        ARTIFACT: ${{ inputs.service-name }}    
         # get package name generate from step build
-        VERSION: ${{ inputs.service_version }}  
+        VERSION: ${{ inputs.service-version }}  
         # get package type extention from step build
-        PACKAGE: ${{ inputs.service_package }}
+        PACKAGE: ${{ inputs.service-package }}
         # active code artifact and reemplace nexus
         CODEARTIFACT:  ${{ inputs.codeartifact-allow }}
         # get path repository package generate font step build
@@ -129,22 +129,26 @@ runs:
         REPOSITORY_USER:  ${{ inputs.repository-user }}     
         REPOSITORY_SECRET: ${{ inputs.repository-token }}      # change token to read, now use write
         # configure environment use
-        SECURITY_GROUPS: ${{ inputs.environment-seguritygroup }}
-        SUBNETS: ${{ inputs.environment-subnets }} 
-      run: build-instance.sh
+        SECURITY_GROUPS: ${{ inputs.security-group-number-ids }}
+        SUBNETS: ${{ inputs.subnet-number-ids }} 
+      if: ${{ startsWith(${ github.ref }, 'refs/heads/develop') == true }} 
+      run: sh build-instance.sh
     # create image in main branch
     - id: image-generator
       working-directory: .github/cicd/scripts
       shell: sh
       env:
-       # get package name generate from step build
-        GROUP: ${{ inputs.group_name }}   
-        # get package name generate fromstep build
-        ARTIFACT: ${{ inputs.service_name }}    
+        WORKSPACE: ${{ github.workspace }}
+        LENGUAGE: ${{inputs.lenguage-code}}
+        PROJECT:  ${{ inputs.project-name }} 
         # get package name generate from step build
-        VERSION: ${{ inputs.service_version }}  
+        GROUP: ${{ inputs.group-name }}   
+        # get package name generate fromstep build
+        ARTIFACT: ${{ inputs.service-name }}    
+        # get package name generate from step build
+        VERSION: ${{ inputs.service-version }}  
         # get package type extention from step build
-        PACKAGE: ${{ inputs.service_package }}
+        PACKAGE: ${{ inputs.service-package }}
         # active code artifact and reemplace nexus
         CODEARTIFACT:  ${{ inputs.codeartifact-allow }}
         # get path repository package generate font step build
@@ -155,19 +159,20 @@ runs:
         REPOSITORY_USER:  ${{ inputs.repository-user }}     
         REPOSITORY_SECRET: ${{ inputs.repository-token }}      # change token to read, now use write
         # configure environment use
-        SECURITY_GROUPS: ${{ inputs.environment-seguritygroup }}
-        SUBNETS: ${{ inputs.environment-subnets }} 
+        SECURITY_GROUPS: ${{ inputs.security-group-number-ids }}
+        SUBNETS: ${{ inputs.subnet-number-ids }} 
+      
         # shared ami with environment.
         SHARED: ${{ inputs.shared-number-ids }}  
         
         # secret account operational. 
-        AWS_ACCESS_KEY_OP:  ${{ inputs.aws-access-key-op }}                   
-        AWS_SECRET_ACCESS_KEY_OP: ${{ inputs.aws-secret-access-key-op }}
+        # AWS_ACCESS_KEY_OP:  ${{ inputs.aws-access-key-op }}                   
+        # AWS_SECRET_ACCESS_KEY_OP: ${{ inputs.aws-secret-access-key-op }}
         
         # reemplace aws secret and access key to profile
-        AWS_PROFILE: ''
+        # AWS_PROFILE: ''
       if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }} 
-      run: build-image.sh
+      run: sh build-image.sh
     # deploy scaling group with image.
     - name: Deploy
       working-directory: .github/cicd/scripts
@@ -195,11 +200,11 @@ runs:
       working-directory: .github/cicd/scripts
       shell: sh
       if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }} 
-      run: health-checking.sh
+      run: sh health-checking.sh
     - name: Integration tests
       working-directory: .github/cicd/scripts
       env:
         TEST: ${{ inputs.testIntegration-allow }}
       shell: sh
       if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }} 
-      run: integration-tests.sh 
+      run: sh integration-tests.sh 
