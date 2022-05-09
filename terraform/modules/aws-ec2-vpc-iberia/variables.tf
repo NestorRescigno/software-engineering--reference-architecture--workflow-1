@@ -43,27 +43,27 @@ variable "service_groupid" {
 }
 
 # backet setup and other 
-variable "bucket_name" {
-  description = "bucket_name."
-  type        = string
-}
+# variable "bucket_name" {
+#  description = "bucket_name."
+#  type        = string
+#}
 
-variable "bucket_key" {
-  description = "bucket_key."
-  type        = string
-}
+#variable "bucket_key" {
+#  description = "bucket_key."
+#  type        = string
+#}
 
-variable "dynamodb_table" {
-  description = "dynamo db table."
-  type        = string
-}
+#variable "dynamodb_table" {
+#  description = "dynamo db table."
+#  type        = string
+#}
 
-variable "kms_key_id" {
-  description = "kms key id."
-  type        = string
-}
+#variable "kms_key_id" {
+#  description = "kms key id."
+#  type        = string
+#}
 
-variable "role_arn" {
-  description = "role aim arn."
-  type        = string
-}
+#variable "role_arn" {
+#  description = "role aim arn."
+#  type        = string
+#}
