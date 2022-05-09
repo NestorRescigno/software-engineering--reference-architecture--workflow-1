@@ -59,12 +59,7 @@ cd ${WORKSPACE}/.github/cicd/terraform/modules/aws-ec2-vpc-iberia
 terraform init
 
 # create plan terrafom
-terraform plan \
--var "project=${PROJECT}" \
--var "service_name=${SERVICE}" \
--var "environment=${ENVIROMENT_TEMP}" \
--var "environment_prefix=${PREFIX_TEMP}" \  
--var "service_groupid=${GROUP}"
+terraform plan -var "project=${PROJECT}" -var "service_name=${SERVICE}" -var "environment=${ENVIROMENT_TEMP}" -var "environment_prefix=${PREFIX_TEMP}" -var "service_groupid=${GROUP}"
 
 # apply plan terrafom 
 # terraform apply temporal comment for test, NOT CREATE
