@@ -52,10 +52,11 @@ echo " prepare enviroment with terraform... "
 echo "***************************************************"
 
 export STATE=$(aws ec2 describe-vpcs --filters "Name=tag-key, Values=${PROJECT}-${PREFIX_TEMP}" --query 'Vpcs[0].State')
-echo $STATE
+
 
 
 if [ $STATE == "null" ] ; then 
+  echo "vpc not available: $STATE"
   # This module have lifecycle { create_before_destroy = false }
   cd ${WORKSPACE}/.github/cicd/terraform/modules/aws-ec2-vpc-iberia/simple_vpc
   terraform init
@@ -71,7 +72,7 @@ terraform init
 
 echo "group by id: ${GROUP}" 
 # create plan terrafom
-#terraform plan -var "project=${PROJECT}" -var "service_name=${SERVICE}" -var "environment=${ENVIROMENT_TEMP}" -var "environment_prefix=${PREFIX_TEMP}" -var "service_groupid=${GROUP}"
+# terraform plan -var "project=${PROJECT}" -var "service_name=${SERVICE}" -var "environment=${ENVIROMENT_TEMP}" -var "environment_prefix=${PREFIX_TEMP}" -var "service_groupid=${GROUP}"
 
 # apply plan terrafom
 terraform apply -auto-approve -var "project=${PROJECT}" -var "service_name=${SERVICE}" -var "environment=${ENVIROMENT_TEMP}" -var "environment_prefix=${PREFIX_TEMP}" -var "service_groupid=${GROUP}" -var "state=${STATE}"
