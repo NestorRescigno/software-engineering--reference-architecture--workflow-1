@@ -53,21 +53,21 @@ locals {
       vpc-product = "${var.project}-${var.environment}"
       amber = {
         subnet  = "*amber*"
-        subneta = join("-",[var.project,"snet","amber", var.region,"a"])
-        subnetb = join("-",[var.project,"snet","amber", var.region,"b"])
-        subnetc = join("-",[var.project,"snet","amber", var.region,"c"])
+        subneta = join("-",[var.project,"snet","amber", var.aws_region,"a"])
+        subnetb = join("-",[var.project,"snet","amber", var.aws_region,"b"])
+        subnetc = join("-",[var.project,"snet","amber", var.aws_region,"c"])
       }
       green = {
         subnet  = "*green*"
-        subneta = join("-",[var.project,"snet","green", var.region,"a"])
-        subnetb = join("-",[var.project,"snet","green", var.region,"b"])
-        subnetc = join("-",[var.project,"snet","green", var.region,"c"])
+        subneta = join("-",[var.project,"snet","green", var.aws_region,"a"])
+        subnetb = join("-",[var.project,"snet","green", var.aws_region,"b"])
+        subnetc = join("-",[var.project,"snet","green", var.aws_region,"c"])
       }
       red = {
         subnet  = "*red*"
-        subneta = join("-",[var.project,"snet","red", var.region,"a"])
-        subnetb = join("-",[var.project,"snet","red", var.region,"b"])
-        subnetc = join("-",[var.project,"snet","red", var.region,"c"])
+        subneta = join("-",[var.project,"snet","red", var.aws_region,"a"])
+        subnetb = join("-",[var.project,"snet","red", var.aws_region,"b"])
+        subnetc = join("-",[var.project,"snet","red", var.aws_region,"c"])
       }
     }
   }
