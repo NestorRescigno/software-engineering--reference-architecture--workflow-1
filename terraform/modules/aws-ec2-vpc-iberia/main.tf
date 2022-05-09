@@ -40,27 +40,27 @@ resource "aws_subnet" "subneta" {
 }
 
 # create subnet in vpc
-resource "aws_subnet" "subnetab" {
+resource "aws_subnet" "subnetb" {
   # The VPC ID. 
   vpc_id     = aws_vpc.vpc_product.id
   # The IPv4 CIDR block for the subnet.
   cidr_block = "10.0.2.0/24"
   # A map of tags to assign to the resource. If configured with a provider
   tags = {
-    Name = local.data.vpc.amber.subnetab
+    Name = local.data.vpc.amber.subnetb
   }
 
 }
 
 # create subnet in vpc
-resource "aws_subnet" "subnetac" {
+resource "aws_subnet" "subnetc" {
   # The VPC ID. 
   vpc_id     = aws_vpc.vpc_product.id
   # The IPv4 CIDR block for the subnet.
   cidr_block = "10.0.3.0/24"
   # A map of tags to assign to the resource. If configured with a provider
   tags = {
-    Name = local.data.vpc.amber.subnetac
+    Name = local.data.vpc.amber.subnetc
   }
 }
 
