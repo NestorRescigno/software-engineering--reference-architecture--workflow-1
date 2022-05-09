@@ -13,7 +13,7 @@
 name: 'build'
 description: 'building artifact'
 inputs:
-  project_name:
+  project-name:
     type: string
     required: true
   lenguage-code:
@@ -110,9 +110,9 @@ runs:
       shell: sh
       env:
         WORKSPACE: ${{ github.workspace }}
-        LENGUAGE: ${{inputs.lenguage-code}}
+        LENGUAGE: ${{ inputs.lenguage-code }}
         REF: ${{ github.ref }}
-        PROJECT: ${{inputs.project_name}}
+        PROJECT: ${{ inputs.project-name }}
         # get package name generate from step build
         GROUP: ${{ steps.package-generator-name.outputs.package-group }} 
         # get package name generate from step build
