@@ -28,18 +28,6 @@ resource "aws_vpc" "vpc_product" {
 }
 
 # create subnet in vpc
-resource "aws_subnet" "subnet" {
-  # The VPC ID. 
-  vpc_id     = aws_vpc.vpc_product.id
-  # The IPv4 CIDR block for the subnet.
-  cidr_block = "10.0.1.0/24"
-  # A map of tags to assign to the resource. If configured with a provider
-  tags = {
-    Name = local.data.amber.subnet
-  }
-}
-
-# create subnet in vpc
 resource "aws_subnet" "subneta" {
   # The VPC ID. 
   vpc_id     = aws_vpc.vpc_product.id
@@ -47,10 +35,8 @@ resource "aws_subnet" "subneta" {
   cidr_block = "10.0.1.0/24"
   # A map of tags to assign to the resource. If configured with a provider
   tags = {
-    Name = local.data.amber.subneta
+    Name = local.data.vpc.amber.subneta
   }
-
-  depends_on = [aws_subnet.subnet]
 }
 
 # create subnet in vpc
@@ -58,13 +44,12 @@ resource "aws_subnet" "subnetab" {
   # The VPC ID. 
   vpc_id     = aws_vpc.vpc_product.id
   # The IPv4 CIDR block for the subnet.
-  cidr_block = "10.0.1.0/24"
+  cidr_block = "10.0.2.0/24"
   # A map of tags to assign to the resource. If configured with a provider
   tags = {
-    Name = local.data.amber.subnetab
+    Name = local.data.vpc.amber.subnetab
   }
 
-   depends_on = [aws_subnet.subnet]
 }
 
 # create subnet in vpc
@@ -72,13 +57,11 @@ resource "aws_subnet" "subnetac" {
   # The VPC ID. 
   vpc_id     = aws_vpc.vpc_product.id
   # The IPv4 CIDR block for the subnet.
-  cidr_block = "10.0.1.0/24"
+  cidr_block = "10.0.3.0/24"
   # A map of tags to assign to the resource. If configured with a provider
   tags = {
-    Name = local.data.amber.subnetac
+    Name = local.data.vpc.amber.subnetac
   }
-  
-  depends_on = [aws_subnet.subnet]
 }
 
 
