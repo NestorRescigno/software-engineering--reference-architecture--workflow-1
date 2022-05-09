@@ -91,7 +91,7 @@ EOF
 }
 
 resource "aws_iam_instance_profile" "iam_instance_profile" {
-  name = data.aws_iam_instance_profile.ip.nam
+  name = data.aws_iam_instance_profile.ip.name
   role = aws_iam_role.role.name
 }
 
