@@ -33,7 +33,7 @@ resource "aws_subnet" "subneta" {
   count = data.aws_subnet.snet_amber_eu_central_1a.id != "null" ? 0 : 1
   
   # The VPC ID. 
-  vpc_id =  aws_vpc.vpc_product.id
+  vpc_id =  data.aws_vpc.vpc_product.id
   # The IPv4 CIDR block for the subnet.
   cidr_block = "10.0.1.0/24"
   # A map of tags to assign to the resource. If configured with a provider
@@ -47,7 +47,7 @@ resource "aws_subnet" "subnetb" {
   # The VPC ID. 
   count = data.aws_subnet.snet_amber_eu_central_1b.id != "null" ? 0 : 1
   
-  vpc_id = aws_vpc.vpc_product.id
+  vpc_id = data.aws_vpc.vpc_product.id
   # The IPv4 CIDR block for the subnet.
   cidr_block = "10.0.2.0/24"
   # A map of tags to assign to the resource. If configured with a provider
@@ -62,7 +62,7 @@ resource "aws_subnet" "subnetc" {
   # The VPC ID. 
   count = data.aws_subnet.snet_amber_eu_central_1c.id != "null" ? 0 : 1
   
-  vpc_id = aws_vpc.vpc_product.id
+  vpc_id = data.aws_vpc.vpc_product.id
   # The IPv4 CIDR block for the subnet.
   cidr_block = "10.0.3.0/24"
   # A map of tags to assign to the resource. If configured with a provider
