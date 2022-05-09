@@ -5,6 +5,7 @@ project            = "<project name>"                     # this name is present
 environment        = "<enviroment name>"
 aws_region         = "<regione name>"                     # default: "eu-central-1"
 global_dns         = "<domain>"                           # default: "cloud.iberia.local"
+service_groupid    = "<groupid>"                                        
 bucket_name        = "<bucket name>"                      # set s3 backet for log
 bucket_key         = "<bucket key>"                       # set s3 backet for log
 dynamodb_table     = "<dynamo db>"
