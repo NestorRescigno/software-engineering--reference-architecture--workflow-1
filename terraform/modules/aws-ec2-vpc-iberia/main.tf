@@ -10,7 +10,7 @@
 # create vitual private cloud network for product
 resource "aws_vpc" "vpc_product" {
     # The IPv4 CIDR block for the VPC. CIDR can be explicitly set or it can be derived from IPAM using
-  count = data.aws_vpc.vpc_product.id != "null" ? 0 : 1
+  count = data.aws_vpc.vpc_product[1].id != "null" ? 0 : 1
 
   cidr_block       = "10.0.0.0/16"
   # A tenancy option for instances launched into the VPC. 
@@ -30,10 +30,10 @@ resource "aws_vpc" "vpc_product" {
 
 # create subnet in vpc
 resource "aws_subnet" "subneta" {
-  count = data.aws_subnet.snet_amber_eu_central_1a.id != "null" ? 0 : 1
+  count = data.aws_subnet.snet_amber_eu_central_1a[1].id != "null" ? 0 : 1
   
   # The VPC ID. 
-  vpc_id =  data.aws_vpc.vpc_product.id
+  vpc_id =  data.aws_vpc.vpc_product[1].id
   # The IPv4 CIDR block for the subnet.
   cidr_block = "10.0.1.0/24"
   # A map of tags to assign to the resource. If configured with a provider
@@ -45,9 +45,9 @@ resource "aws_subnet" "subneta" {
 # create subnet in vpc
 resource "aws_subnet" "subnetb" {
   # The VPC ID. 
-  count = data.aws_subnet.snet_amber_eu_central_1b.id != "null" ? 0 : 1
+  count = data.aws_subnet.snet_amber_eu_central_1b[1].id != "null" ? 0 : 1
   
-  vpc_id = data.aws_vpc.vpc_product.id
+  vpc_id = data.aws_vpc.vpc_product[1].id
   # The IPv4 CIDR block for the subnet.
   cidr_block = "10.0.2.0/24"
   # A map of tags to assign to the resource. If configured with a provider
@@ -60,9 +60,9 @@ resource "aws_subnet" "subnetb" {
 # create subnet in vpc
 resource "aws_subnet" "subnetc" {
   # The VPC ID. 
-  count = data.aws_subnet.snet_amber_eu_central_1c.id != "null" ? 0 : 1
+  count = data.aws_subnet.snet_amber_eu_central_1c[1].id != "null" ? 0 : 1
   
-  vpc_id = data.aws_vpc.vpc_product.id
+  vpc_id = data.aws_vpc.vpc_product[1].id
   # The IPv4 CIDR block for the subnet.
   cidr_block = "10.0.3.0/24"
   # A map of tags to assign to the resource. If configured with a provider
@@ -115,7 +115,7 @@ resource "aws_alb_target_group" "alb" {
   name                 = local.alb_tg_service_name
   port                 = local.targetgroup_port
   protocol             = local.targetgroup_protocol
-  vpc_id               = data.aws_vpc.vpc_product.id
+  vpc_id               = data.aws_vpc.vpc_product[1].id
   deregistration_delay = 30
   slow_start           = 30
 
@@ -246,7 +246,7 @@ resource "aws_security_group" "alb" {
   
   # asign vpc id to apply security group 
 
-  vpc_id      = data.aws_vpc.vpc_product.id
+  vpc_id      = data.aws_vpc.vpc_product[1].id
 
   # Configuration block for ingress rules. 
   # Can be specified multiple times for each ingress rule. 
@@ -256,7 +256,7 @@ resource "aws_security_group" "alb" {
     from_port       = 80
     to_port         = 80
     protocol        = "tcp"
-    security_groups = [ data.aws_security_group.sg_instances.id ]
+    security_groups = [ data.aws_security_group.sg_instances[1].id ]
     description     = "From ${var.service_name} ALB"
   }
 
@@ -290,7 +290,7 @@ resource "aws_security_group" "instances" {
   # asign name: demo-instances-dev-sg
   name        = join("-",[var.service_name,"instances",var.environment_prefix,"sg"])
   description = "SG for ${var.service_name} cluster instances"
-  vpc_id      = data.aws_vpc.vpc_product.id
+  vpc_id      = data.aws_vpc.vpc_product[1].id
   
 
   ingress {

@@ -12,7 +12,7 @@ output "aws_security_groups" {
 }
 
 output "aws_subnets_ids" {
-  value = [data.aws_subnet.snet_amber_eu_central_1a.id, data.aws_subnet.snet_amber_eu_central_1b.id, data.aws_subnet.snet_amber_eu_central_1c.id]
+  value = [data.aws_subnet.snet_amber_eu_central_1a[1].id, data.aws_subnet.snet_amber_eu_central_1b[1].id, data.aws_subnet.snet_amber_eu_central_1c[1].id]
 }
 
 output "lb_arn_suffix" {
