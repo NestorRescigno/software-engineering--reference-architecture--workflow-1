@@ -115,8 +115,7 @@ resource "aws_alb_target_group" "alb" {
   name                 = local.alb_tg_service_name
   port                 = local.targetgroup_port
   protocol             = local.targetgroup_protocol
-  # vpc_id               = data.aws_vpc.vpc_product.id
-  vpc_id               = aws_vpc.vpc_product.id
+  vpc_id               = data.aws_vpc.vpc_product.id
   deregistration_delay = 30
   slow_start           = 30
 
@@ -246,8 +245,8 @@ resource "aws_security_group" "alb" {
   description = "SG for ${var.service_name} cluster ALB"
   
   # asign vpc id to apply security group 
-  # vpc_id      = data.aws_vpc.vpc_product.id
-  vpc_id      = aws_vpc.vpc_product.id
+
+  vpc_id      = data.aws_vpc.vpc_product.id
 
   # Configuration block for ingress rules. 
   # Can be specified multiple times for each ingress rule. 
