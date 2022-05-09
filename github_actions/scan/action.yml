@@ -70,8 +70,8 @@ runs:
       uses: actions/setup-node@v2
       with:
         node-version: '14'
-    - name: checkout
-      uses: actions/checkout@v3    
+    #- name: checkout
+    #  uses: actions/checkout@v3    
     #######################################
     - name: sonar
       working-directory: .github/cicd/scripts

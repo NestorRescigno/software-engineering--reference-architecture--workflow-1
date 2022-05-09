@@ -90,12 +90,12 @@ runs:
     ########################################################
     # use temporaly this action but change 
     # to future with script instal setup or install in magine
-    - name: checkout
-      uses: actions/checkout@v3
-    - name: Setup Node 14
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
+    # - name: checkout
+    #  uses: actions/checkout@v3
+    #- name: Setup Node 14
+    #  uses: actions/setup-node@v2
+    #  with:
+    #    node-version: '14'
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2.0.0
       with:

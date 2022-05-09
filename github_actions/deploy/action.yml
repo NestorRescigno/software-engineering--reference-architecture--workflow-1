@@ -95,8 +95,8 @@ runs:
     ########################################################
     # use temporaly this action but change 
     # to future with script instal setup or install in magine 
-    - name: checkout
-      uses: actions/checkout@v3
+    #- name: checkout
+    #  uses: actions/checkout@v3
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
