@@ -8,11 +8,11 @@ output "aws_alb_target_group_arn" {
 }
 
 output "aws_security_groups" {
-  value = [aws_security_group.instances.id, data.aws_security_group.sg_common_microservices[1].id]
+  value = [aws_security_group.instances.id, data.aws_security_group.sg_common_microservices.id]
 }
 
 output "aws_subnets_ids" {
-  value = [data.aws_subnet.snet_amber_eu_central_1a[1].id, data.aws_subnet.snet_amber_eu_central_1b[1].id, data.aws_subnet.snet_amber_eu_central_1c[1].id]
+  value = [data.aws_subnet.snet_amber_eu_central_1a.id, data.aws_subnet.snet_amber_eu_central_1b.id, data.aws_subnet.snet_amber_eu_central_1c.id]
 }
 
 output "lb_arn_suffix" {

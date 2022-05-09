@@ -11,11 +11,10 @@ data "aws_caller_identity" "current" {}
 #########################
 
 data "aws_vpc" "vpc_product" {
-  count = var.state != null ? 1 : 0 
   tags = {
       Name = local.data.vpc.vpc_product
   }
-  state = ["pending", "available"][count.index]
+  state = "available"
 }
 
 #########################
@@ -39,17 +38,14 @@ data "aws_route53_zone" "route_local" {
 ## SG for instances
 #########################
 
-data "aws_security_group" "sg_instances" {
-  count = var.state != null ? 1 : 0 
+data "aws_security_group" "sg_instances" { 
   name = join("-",[var.project,"sg","instances"])
-  vpc_id = data.aws_vpc.vpc_product[count.index].id
+  vpc_id = data.aws_vpc.vpc_product.id
 }
 
 data "aws_security_group" "sg_common_microservices" {
-  count = var.state != null ? 1 : 0 
   name = join("-",[var.project,"sg","common","microservices"])
-  vpc_id = data.aws_vpc.vpc_product[count.index].id
-
+  vpc_id = data.aws_vpc.vpc_product.id
 }
 
 #########################
@@ -57,11 +53,8 @@ data "aws_security_group" "sg_common_microservices" {
 #########################
 
 data "aws_security_group" "sg_common_microservices_alb" {
-  count = var.state != null ? 1 : 0 
   name = join("-",[var.project,"sg","common","microservices","alb"])
-  vpc_id = data.aws_vpc.vpc_product[count.index].id
-
-
+  vpc_id = data.aws_vpc.vpc_product.id
 }
 
 #########################
@@ -69,8 +62,7 @@ data "aws_security_group" "sg_common_microservices_alb" {
 #########################
 
 data "aws_subnet_ids" "snet_amber_eu_central_1_subnets" {
-  count = var.state != null ? 1 : 0 
-  vpc_id = data.aws_vpc.vpc_product[count.index].id
+  vpc_id = data.aws_vpc.vpc_product.id
 
   tags = {
     Name = local.data.vpc.amber.subnet
@@ -78,17 +70,15 @@ data "aws_subnet_ids" "snet_amber_eu_central_1_subnets" {
 }
 
 data "aws_subnet" "snet_amber_eu_central_1a" {
-  count = var.state != null ? 1 : 0 
-  vpc_id = data.aws_vpc.vpc_product[count.index].id
+  vpc_id = data.aws_vpc.vpc_product.id
 
   tags = {
     Name = local.data.vpc.amber.subneta
   }
 }
 
-data "aws_subnet" "snet_amber_eu_central_1b" {
-  count = var.state != null ? 1 : 0 
-  vpc_id = data.aws_vpc.vpc_product[count.index].id
+data "aws_subnet" "snet_amber_eu_central_1b" { 
+  vpc_id = data.aws_vpc.vpc_product.id
 
   tags = {
     Name = local.data.vpc.amber.subnetb
@@ -96,8 +86,7 @@ data "aws_subnet" "snet_amber_eu_central_1b" {
 }
 
 data "aws_subnet" "snet_amber_eu_central_1c" {
-  count = var.state != null ? 1 : 0
-  vpc_id = data.aws_vpc.vpc_product[count.index].id
+  vpc_id = data.aws_vpc.vpc_product.id
   tags = {
     Name = local.data.vpc.amber.subnetc
   }

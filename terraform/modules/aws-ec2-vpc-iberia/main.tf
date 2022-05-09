@@ -3,105 +3,6 @@
 # *************       by Software Engineering             *************
 # *********************************************************************
 
-###########################
-### New Resource vpc
-###########################
-
-# create vitual private cloud network for product
-resource "aws_vpc" "vpc_product" {
-    # The IPv4 CIDR block for the VPC. CIDR can be explicitly set or it can be derived from IPAM using
-  count = data.aws_vpc.vpc_product[1].id != "null" ? 0 : 1
-
-  cidr_block       = "10.0.0.0/16"
-  # A tenancy option for instances launched into the VPC. 
-  # Default is default, which ensures that EC2 instances launched
-  # in this VPC use the EC2 instance tenancy attribute specified 
-  # when the EC2 instance is launched. The only other option is dedicated, 
-  # which ensures that EC2 instances launched in this VPC are run on dedicated 
-  # tenancy instances regardless of the tenancy attribute specified at launch. 
-  # This has a dedicated per region fee of $2 per hour, plus an hourly per instance usage fee.
-  instance_tenancy = "default"
-  # A map of tags to assign to the resource. If configured with a provider
-  tags = {
-    Name = local.data.vpc.vpc_product
-  }
-  
-}
-
-# create subnet in vpc
-resource "aws_subnet" "subneta" {
-  count = data.aws_subnet.snet_amber_eu_central_1a[1].id != "null" ? 0 : 1
-  
-  # The VPC ID. 
-  vpc_id =  data.aws_vpc.vpc_product[1].id
-  # The IPv4 CIDR block for the subnet.
-  cidr_block = "10.0.1.0/24"
-  # A map of tags to assign to the resource. If configured with a provider
-  tags = {
-    Name = local.data.vpc.amber.subneta
-  }
-}
-
-# create subnet in vpc
-resource "aws_subnet" "subnetb" {
-  # The VPC ID. 
-  count = data.aws_subnet.snet_amber_eu_central_1b[1].id != "null" ? 0 : 1
-  
-  vpc_id = data.aws_vpc.vpc_product[1].id
-  # The IPv4 CIDR block for the subnet.
-  cidr_block = "10.0.2.0/24"
-  # A map of tags to assign to the resource. If configured with a provider
-  tags = {
-    Name = local.data.vpc.amber.subnetb
-  }
-
-}
-
-# create subnet in vpc
-resource "aws_subnet" "subnetc" {
-  # The VPC ID. 
-  count = data.aws_subnet.snet_amber_eu_central_1c[1].id != "null" ? 0 : 1
-  
-  vpc_id = data.aws_vpc.vpc_product[1].id
-  # The IPv4 CIDR block for the subnet.
-  cidr_block = "10.0.3.0/24"
-  # A map of tags to assign to the resource. If configured with a provider
-  tags = {
-    Name = local.data.vpc.amber.subnetc
-  }
-}
-
-
-############################
-### New instance profile 
-############################
-
-resource "aws_iam_role" "role" {
-  name = join("-", [var.project, var.environment, "role"])
-  path = "/"
-
-  assume_role_policy = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Action": "sts:AssumeRole",
-            "Principal": {
-               "Service": "ec2.amazonaws.com"
-            },
-            "Effect": "Allow",
-            "Sid": ""
-        }
-    ]
-}
-EOF
-}
-
-resource "aws_iam_instance_profile" "iam_instance_profile" {
-  count = data.aws_iam_instance_profile.ip.name != "null" ? 0 : 1
-  name = join("-",[var.project, var.environment, "instanceprofile", var.service_name])
-  role = aws_iam_role.role.name
-}
 
 ###########################
 ### New Resource Target Group
@@ -115,7 +16,7 @@ resource "aws_alb_target_group" "alb" {
   name                 = local.alb_tg_service_name
   port                 = local.targetgroup_port
   protocol             = local.targetgroup_protocol
-  vpc_id               = data.aws_vpc.vpc_product[1].id
+  vpc_id               = data.aws_vpc.vpc_product.id
   deregistration_delay = 30
   slow_start           = 30
 
@@ -194,12 +95,12 @@ resource "aws_lb" "alb" {
   load_balancer_type = "application"
 
   # asign segurity group to loadbalancer
-  security_groups = [aws_security_group.alb.id, data.aws_security_group.sg_common_microservices_alb[1].id]
+  security_groups = [aws_security_group.alb.id, data.aws_security_group.sg_common_microservices_alb.id]
   
   # A list of subnet IDs to attach to the LB. 
   # Subnets cannot be updated for Load Balancers of type network. 
   # Changing this value for load balancers of type network will force a recreation of the resource.
-  subnets         = [data.aws_subnet.snet_amber_eu_central_1a[1].id, data.aws_subnet.snet_amber_eu_central_1b[1].id, data.aws_subnet.snet_amber_eu_central_1c[1].id]
+  subnets         = [data.aws_subnet.snet_amber_eu_central_1a.id, data.aws_subnet.snet_amber_eu_central_1b.id, data.aws_subnet.snet_amber_eu_central_1c.id]
   
   # If true, deletion of the load balancer will be disabled via the AWS API. 
   # This will prevent Terraform from deleting the load balancer. Defaults to false.
@@ -246,7 +147,7 @@ resource "aws_security_group" "alb" {
   
   # asign vpc id to apply security group 
 
-  vpc_id      = data.aws_vpc.vpc_product[1].id
+  vpc_id      = data.aws_vpc.vpc_product.id
 
   # Configuration block for ingress rules. 
   # Can be specified multiple times for each ingress rule. 
@@ -256,7 +157,7 @@ resource "aws_security_group" "alb" {
     from_port       = 80
     to_port         = 80
     protocol        = "tcp"
-    security_groups = [ data.aws_security_group.sg_instances[1].id ]
+    security_groups = [ data.aws_security_group.sg_instances.id ]
     description     = "From ${var.service_name} ALB"
   }
 
@@ -290,7 +191,7 @@ resource "aws_security_group" "instances" {
   # asign name: demo-instances-dev-sg
   name        = join("-",[var.service_name,"instances",var.environment_prefix,"sg"])
   description = "SG for ${var.service_name} cluster instances"
-  vpc_id      = data.aws_vpc.vpc_product[1].id
+  vpc_id      = data.aws_vpc.vpc_product.id
   
 
   ingress {
