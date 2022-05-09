@@ -51,7 +51,7 @@ echo "***************************************************"
 echo " prepare enviroment with terraform... "
 echo "***************************************************"
 
-export STATE=`aws ec2 describe-vpcs --filters Name=tag, Values="${PROJECT}-${PREFIX_TEMP}" --query 'Vpcs[0].State'`
+export STATE=$(aws ec2 describe-vpcs --filters Name=tag, Values="${PROJECT}-${PREFIX_TEMP}" --query 'Vpcs[0].State'
 echo $STATE
 # This module have lifecycle { create_before_destroy = false }
 cd ${WORKSPACE}/.github/cicd/terraform/modules/aws-ec2-vpc-iberia
