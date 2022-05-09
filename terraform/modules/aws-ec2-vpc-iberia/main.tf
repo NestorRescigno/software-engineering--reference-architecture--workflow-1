@@ -21,10 +21,9 @@ resource "aws_vpc" "vpc_product" {
   instance_tenancy = "default"
   # A map of tags to assign to the resource. If configured with a provider
   tags = {
-    Name = "${var.project}-${var.environment}"
-    Project	= "${var.project}"
-    Environment = "${var.environment}"
+    Name = local.data.vpc.vpc_product
   }
+  
 }
 
 # create subnet in vpc

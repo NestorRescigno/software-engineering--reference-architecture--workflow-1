@@ -10,11 +10,11 @@ data "aws_caller_identity" "current" {}
 ## VPC 
 #########################
 
-data "aws_vpc" "vpc_product" {
-  tags = {
-    Name = local.data.vpc.vpc_product
- }
-}
+# data "aws_vpc" "vpc_product" {
+#  tags = {
+#    Name = local.data.vpc.vpc_product
+# }
+# }
 
 #########################
 ## instance profile ip 
