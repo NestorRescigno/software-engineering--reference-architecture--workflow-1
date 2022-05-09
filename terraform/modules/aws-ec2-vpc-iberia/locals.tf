@@ -50,7 +50,7 @@ locals {
   data = {
     sg-common-microservices = ""
     vpc = {
-      vpc-product = "${var.project}-${var.environment}"
+      vpc_product = "${var.project}-${var.environment}"
       amber = {
         subnet  = "*amber*"
         subneta = join("-",[var.project,"snet","amber", var.aws_region,"a"])
