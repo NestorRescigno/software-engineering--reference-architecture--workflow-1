@@ -90,6 +90,8 @@ runs:
     ########################################################
     # use temporaly this action but change 
     # to future with script instal setup or install in magine
+    - name: checkout
+      uses: actions/checkout@v3
     - name: Setup Node 14
       uses: actions/setup-node@v2
       with:
