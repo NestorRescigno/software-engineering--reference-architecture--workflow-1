@@ -64,7 +64,7 @@ terraform plan \
 -var "service_name=${SERVICE}" \
 -var "environment=${ENVIROMENT_TEMP}" \
 -var "environment_prefix=${PREFIX_TEMP}" \  
--var "service_groupid=${GROUP}" \
+-var "service_groupid=${GROUP}"
 
 # apply plan terrafom 
 # terraform apply temporal comment for test, NOT CREATE
