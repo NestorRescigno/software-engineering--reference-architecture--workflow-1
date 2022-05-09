@@ -60,10 +60,6 @@ data "aws_security_group" "sg_common_microservices_alb" {
 
 }
 
-data "aws_iam_instance_profile" "ip" {
-  name = join("-",[var.project,var.environment,"instanceprofile",var.service_name])
-}
-
 
 
 #########################
