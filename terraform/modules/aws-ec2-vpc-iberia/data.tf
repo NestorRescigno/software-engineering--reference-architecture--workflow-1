@@ -31,7 +31,6 @@ data "aws_iam_instance_profile" "ip" {
 data "aws_route53_zone" "route_local" {
   name         = join(".",[var.environment,var.project,var.global_dns])
   private_zone = true
-  state = "pending"
 }
 
 #########################
