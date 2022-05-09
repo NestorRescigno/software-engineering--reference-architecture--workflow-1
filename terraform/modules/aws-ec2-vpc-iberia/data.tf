@@ -10,27 +10,27 @@ data "aws_caller_identity" "current" {}
 ## VPC 
 #########################
 
-data "aws_vpc" "vpc_product" {
-  tags = {
-    Name = local.data.vpc.vpc_product
-  }
-}
+# data "aws_vpc" "vpc_product" {
+#  tags = {
+#    Name = local.data.vpc.vpc_product
+#  }
+# }
 
 #########################
 ## instance profile ip 
 #########################
-data "aws_iam_instance_profile" "ip" {
-  name = join("-",[var.project,var.environment,"instanceprofile",var.service_name])
-}
+# data "aws_iam_instance_profile" "ip" {
+#  name = join("-",[var.project,var.environment,"instanceprofile",var.service_name])
+# }
 
 ###########################
 ## data Route53 Hosted Zone
 ###########################
 
-data "aws_route53_zone" "route_local" {
-  name         = join(".",[var.environment,var.project,var.global_dns])
-  private_zone = true
-}
+# data "aws_route53_zone" "route_local" {
+#  name         = join(".",[var.environment,var.project,var.global_dns])
+#  private_zone = true
+# }
 
 #########################
 ## SG for instances
