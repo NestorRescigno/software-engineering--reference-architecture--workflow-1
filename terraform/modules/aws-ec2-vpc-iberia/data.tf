@@ -16,6 +16,13 @@ data "aws_vpc" "vpc_product" {
   }
 }
 
+#########################
+## instance profile ip 
+#########################
+data "aws_iam_instance_profile" "ip" {
+  name = join("-",[var.project,var.environment,"instanceprofile",var.service_name])
+}
+
 ###########################
 ## data Route53 Hosted Zone
 ###########################

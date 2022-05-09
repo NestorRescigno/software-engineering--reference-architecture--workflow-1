@@ -66,7 +66,7 @@ resource "aws_autoscaling_group" "asg" {
   
   # Decision Server ASG
   
-  name             = join("-",[var.environment_prefix,var.service_name,"asg"])
+  name             = join("-",[var.environment_prefix, var.service_name,"asg"])
   min_size         = local.asg_min
   max_size         = local.asg_max
   desired_capacity = local.asg_desired
