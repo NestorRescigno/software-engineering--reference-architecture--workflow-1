@@ -10,7 +10,7 @@
 # create vitual private cloud network for product
 resource "aws_vpc" "vpc_product" {
     # The IPv4 CIDR block for the VPC. CIDR can be explicitly set or it can be derived from IPAM using
-  count= data.aws_vpc.vpc_product.id != "null" ? 0 : 1
+  count = data.aws_vpc.vpc_product.id != "null" ? 0 : 1
 
   cidr_block       = "10.0.0.0/16"
   # A tenancy option for instances launched into the VPC. 
