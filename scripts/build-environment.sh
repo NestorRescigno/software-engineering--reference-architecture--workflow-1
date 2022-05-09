@@ -60,11 +60,11 @@ terraform init
 
 echo "group by id: ${GROUP}" 
 # create plan terrafom
-# terraform plan -var "project=${PROJECT}" -var "service_name=${SERVICE}" -var "environment=${ENVIROMENT_TEMP}" -var "environment_prefix=${PREFIX_TEMP}" -var "service_groupid=${GROUP}"
+terraform plan -var "project=${PROJECT}" -var "service_name=${SERVICE}" -var "environment=${ENVIROMENT_TEMP}" -var "environment_prefix=${PREFIX_TEMP}" -var "service_groupid=${GROUP}"
 
 # apply plan terrafom 
-terraform apply -auto-approve -var "project=${PROJECT}" -var "service_name=${SERVICE}" -var "environment=${ENVIROMENT_TEMP}" -var "environment_prefix=${PREFIX_TEMP}" -var "service_groupid=${GROUP}"
-
+#terraform apply -auto-approve -var "project=${PROJECT}" -var "service_name=${SERVICE}" -var "environment=${ENVIROMENT_TEMP}" -var "environment_prefix=${PREFIX_TEMP}" -var "service_groupid=${GROUP}"
+terraform destroy
 
 echo "::set-output name=security-group-ids:$(terraform output aws_security_groups)" 
 echo "::set-output name=subnets-ids::$(terraform output aws_subnets_ids)" 
