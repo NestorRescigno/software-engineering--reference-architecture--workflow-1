@@ -58,6 +58,7 @@ cd ${WORKSPACE}/.github/cicd/terraform/modules/aws-ec2-vpc-iberia
 # init terraform module
 terraform init
 
+echo "group by id: ${GROUP}" 
 # create plan terrafom
 terraform plan -var "project=${PROJECT}" -var "service_name=${SERVICE}" -var "environment=${ENVIROMENT_TEMP}" -var "environment_prefix=${PREFIX_TEMP}" -var "service_groupid=${GROUP}"
 
