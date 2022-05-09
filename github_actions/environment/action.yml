@@ -13,38 +13,38 @@
 # use terraform command and module for this propuse
 
 #### test composite 
-name: 'environment'
+name: 'create-environment'
 description: 'create environment'
 inputs:
-  project_name:
+  project-name:
     type: string
     required: true
   # configuration cloud secret by enviroment  
-  service_name:
+  service-name:
     type: string
     required: true
   # configuration cloud secret by enviroment  
-  group_name:
+  group-name:
     type: string
     required: true
   # configuration cloud name enviroment
   aws-environment-name:
     type: string
     required: true
-    default: 'production'
+    default: "production"
   aws-environment-prefix:
     type: string
     required: true
-    default: 'pro'
+    default: "pro"
   # configuration cloud name enviroment
   aws-environment-dev-name:
     type: string
     required: true
-    default: 'development'
+    default: "development"
   aws-environment-dev-prefix:
     type: string
     required: true
-    default: 'dev'
+    default: "dev"
   # configuration cloud secret by enviroment
   aws-access-key:
     type: string
@@ -113,9 +113,9 @@ runs:
         WORKSPACE: ${{ github.workspace }}
         REF: ${{ github.ref }}
         # Data proyect
-        PROJECT: ${{ inputs.project_name }} 
-        GROUP: ${{ inputs.group_name }} 
-        SERVICE: ${{ inputs.service_name }} 
+        PROJECT: ${{ inputs.project-name }} 
+        GROUP: ${{ inputs.group-name }} 
+        SERVICE: ${{ inputs.service-name }} 
         ENVIROMENT: ${{ inputs.aws-environment-name }}  
         ENVIROMENT_PREFIX: ${{ inputs.aws-environment-prefix }} 
         ENVIROMENT_DEV: ${{ inputs.aws-environment-dev-name }} 
