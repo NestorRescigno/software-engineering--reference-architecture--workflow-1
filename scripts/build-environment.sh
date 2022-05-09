@@ -62,7 +62,7 @@ terraform init
 terraform plan -var "project=${PROJECT}" -var "service_name=${SERVICE}" -var "environment=${ENVIROMENT_TEMP}" -var "environment_prefix=${PREFIX_TEMP}" -var "service_groupid=${GROUP}"
 
 # apply plan terrafom 
-# terraform apply temporal comment for test, NOT CREATE
+terraform apply
 # -auto-approve
 
 echo "::set-output name=security-group-ids:$(terraform output aws_security_groups)" 
