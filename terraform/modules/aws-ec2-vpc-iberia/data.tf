@@ -11,10 +11,11 @@ data "aws_caller_identity" "current" {}
 #########################
 
 data "aws_vpc" "vpc_product" {
+  count = var.state != null ? 1 : 0 
   tags = {
       Name = local.data.vpc.vpc_product
   }
-  state = "pending"
+  state = ["pending", "available"][count.index]
 }
 
 #########################

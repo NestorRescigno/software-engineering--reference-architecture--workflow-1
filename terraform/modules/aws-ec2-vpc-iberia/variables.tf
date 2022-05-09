@@ -42,6 +42,11 @@ variable "service_groupid" {
   type        = string
 }
 
+variable "state" {
+  description = "vpc state"
+  type        = string
+}
+
 # backet setup and other 
 # variable "bucket_name" {
 #  description = "bucket_name."
