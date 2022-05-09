@@ -290,8 +290,8 @@ resource "aws_security_group" "instances" {
   # asign name: demo-instances-dev-sg
   name        = join("-",[var.service_name,"instances",var.environment_prefix,"sg"])
   description = "SG for ${var.service_name} cluster instances"
-  # vpc_id      = data.aws_vpc.vpc_product.id
-  vpc_id      = aws_vpc.vpc_product.id
+  vpc_id      = data.aws_vpc.vpc_product.id
+  
 
   ingress {
     from_port       = 8080
