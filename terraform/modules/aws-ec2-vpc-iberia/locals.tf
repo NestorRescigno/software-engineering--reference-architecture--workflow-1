@@ -36,7 +36,7 @@ locals {
   asg_max               = 2
   targetgroup_protocol      = "HTTP"
   targetgroup_port          = "8080"
-  alb_tg_service_name       = join("-",[var.service_name,var.environment,"tg"]) 
+  alb_tg_service_name       = join("-",[var.service_name, var.environment_prefix,"tg"])  # use prefix because "name" cannot be longer than 32 characters
   #environment_prefix       = "${var.project}-${var.environment}"
   traffic_distribution      = "${var.service_name}"
   autoscaling_policy_cpu_value = 90.0
