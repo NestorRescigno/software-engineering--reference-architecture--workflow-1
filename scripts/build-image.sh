@@ -54,17 +54,17 @@ cd ${WORKSPACE}/terraform/modules/aws-ec2-instance-iberia
 terraform init
 
 # create plan terrafom
-terraform plan 
-     -var "lenguage_code=${LANGUAGE}" 
-     -var "instance_type=${INSTANCE_TYPE}" 
-     -var "ref=${ARTIFACTREF}" 
-     -var "package=${PACKAGE}"
-     -var "project_name=${PROJECT}"
-     -var "service_name=${ARTIFACT}"
-     -var "service_version=${VERSION}"
-     -var "artifact_user=${REPOSITORY_USER}"
-     -var "artifact_secret=${REPOSITORY_SECRET}"
-     -var "security_group=${SECURITY_GROUPS}" # array 
+terraform plan \
+     -var "lenguage_code=${LANGUAGE}" \
+     -var "instance_type=${INSTANCE_TYPE}" \ 
+     -var "ref=${ARTIFACTREF}" \
+     -var "package=${PACKAGE}" \
+     -var "project_name=${PROJECT}" \
+     -var "service_name=${ARTIFACT}" \
+     -var "service_version=${VERSION}" \
+     -var "artifact_user=${REPOSITORY_USER}" \
+     -var "artifact_secret=${REPOSITORY_SECRET}" \
+     -var "security_group=${SECURITY_GROUPS}" \ # array 
      -var "subnet_target=${SUBNET}" 
 
 # apply plan terrafom
@@ -79,11 +79,11 @@ echo "::set-output name=instance-id::$(terraform output instance_id)" # Note to 
 terraform init
 
 # create plan terrafom 
-terraform plan 
-     -var "project_name=${PROJECT}"
-     -var "service_name=${ARTIFACT}"
-     -var "service_version=${VERSION}"
-     -var "source_instance_id=${instance-id}"
+terraform plan \
+     -var "project_name=${PROJECT}" \
+     -var "service_name=${ARTIFACT}" \
+     -var "service_version=${VERSION}" \
+     -var "source_instance_id=${instance-id}" \
      -var "shareds_id=${SHARED}" # Note to develop: verify pass var
 
 # apply plan terrafom

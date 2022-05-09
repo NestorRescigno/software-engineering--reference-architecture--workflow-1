@@ -39,17 +39,17 @@ if [[ $REF == refs/heads/main* ]] ; then
     terraform init
 
     # create plan terrafom
-    terraform plan 
-    -var "version=${AMI_VERSION}"
-    -var "ami_id=${AMI_ID}" 
-    -var "project=${PROJECT}" 
-    -var "environment=${ENVIROMENT}" 
-    -var "environment_prefix=${PREFIX}"
-    -var "security_group=${SECURITY_GROUPS}"
-    -var "subnet_target=${SUBNETS}"
-    -var "aws_alb_target_group_arn=${ALB_TARGET_GROUP_ARN}"
-    -var "aws_alb_target_group_arn_suffix=${ALB_TARGET_GROUP_ARN_SUFFIX}"
-    -var "aws_lb_alb_arn_suffix=${LB_ARN_SUFFIX}"
+    terraform plan \
+    -var "version=${AMI_VERSION}" \
+    -var "ami_id=${AMI_ID}" \
+    -var "project=${PROJECT}" \ 
+    -var "environment=${ENVIROMENT}" \ 
+    -var "environment_prefix=${PREFIX}" \
+    -var "security_group=${SECURITY_GROUPS}" \
+    -var "subnet_target=${SUBNETS}" \
+    -var "aws_alb_target_group_arn=${ALB_TARGET_GROUP_ARN}" \
+    -var "aws_alb_target_group_arn_suffix=${ALB_TARGET_GROUP_ARN_SUFFIX}" \
+    -var "aws_lb_alb_arn_suffix=${LB_ARN_SUFFIX}" 
 
     # apply plan terrafom
     terraform apply 
@@ -78,12 +78,12 @@ if [[ $REF == refs/heads/main* ]] ; then
     terraform init
 
     # create plan terrafom
-    terraform plan 
-    -var "service_name=${SERVICE}"
-    -var "project=${PROJECT}" 
-    -var "environment=${ENVIROMENT}"
-    -var "environment_prefix=${PREFIX}"
-    -var "aws_autoscaling_group_name=$(terraform output aws_autoscaling_group_name)"
+    terraform plan \
+    -var "service_name=${SERVICE}" \
+    -var "project=${PROJECT}" \
+    -var "environment=${ENVIROMENT}" \
+    -var "environment_prefix=${PREFIX}" \
+    -var "aws_autoscaling_group_name=$(terraform output aws_autoscaling_group_name)" \
     -var "aws_autoscaling_policy_arn=$(terraform output aws_autoscaling_policy_arn_cpu)"
   
     # apply plan terrafom
