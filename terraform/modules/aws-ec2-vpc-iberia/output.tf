@@ -8,7 +8,7 @@ output "aws_alb_target_group_arn" {
 }
 
 output "aws_security_groups" {
-  value = [aws_security_group.instances.id, data.aws_security_group.sg_common_microservices.id]
+  value = [aws_security_group.instances.id, data.aws_security_group.sg_common_microservices[1].id]
 }
 
 output "aws_subnets_ids" {
