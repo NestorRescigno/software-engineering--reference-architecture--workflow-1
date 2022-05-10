@@ -1,8 +1,7 @@
-# *********************************************************************
-# *************           IBERIA L.A.E.                   *************
-# *************       by Software Engineering             *************
-# *********************************************************************
-# 000 - Global variables
+###########################
+### variable
+###########################
+
 variable "aws_region" {
   description = "Region"
   type        = string
@@ -30,45 +29,3 @@ variable "environment_prefix" {
   type        = string
   default     = "dev"
 }
-
-variable "global_dns" {
-  description = "dns."
-  type        = string
-  default     = "cloud.iberia.local"
-}
-
-variable "service_groupid" {
-  description = "The name of groupid application service."
-  type        = string
-}
-
-variable "state" {
-  description = "vpc state"
-  type        = string
-}
-
-# backet setup and other 
-# variable "bucket_name" {
-#  description = "bucket_name."
-#  type        = string
-#}
-
-#variable "bucket_key" {
-#  description = "bucket_key."
-#  type        = string
-#}
-
-#variable "dynamodb_table" {
-#  description = "dynamo db table."
-#  type        = string
-#}
-
-#variable "kms_key_id" {
-#  description = "kms key id."
-#  type        = string
-#}
-
-#variable "role_arn" {
-#  description = "role aim arn."
-#  type        = string
-#}
