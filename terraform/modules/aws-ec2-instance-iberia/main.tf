@@ -335,7 +335,7 @@ resource "aws_launch_template" "launch" {
   }
 
   # configure bash param to script template
-  user_data  = filebase64(templatefile("user_data.tftpl", {
+  user_data  = base64encode(templatefile("user_data.tftpl", {
     department = "${var.user_departament}", 
     name = "${var.user_name}", 
     lenguage= "${var.lenguage_code}",
