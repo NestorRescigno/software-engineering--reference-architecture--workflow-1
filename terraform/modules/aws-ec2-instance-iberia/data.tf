@@ -17,20 +17,46 @@ data "aws_iam_instance_profile" "ip" {
   name = join("-",[var.project,var.environment,"instanceprofile",var.service_name])
 }
 
-#########################
-## SG for instances
-#########################
+# #########################
+# ## data source base ami
+# #########################
+# 
+data "aws_ami" "base_ami" {
+    
+    most_recent = true
+    # name_regex       = "^amazon-linux2-\\d{3}"
+    owners = ["self"]
 
+    filter {
+      name   = "name"
+      values = ["shared-linux2-base*"]
+    }
+    # filter {
+    #  name  = "name"
+    #  value = ["ubuntu/image/hvm-ssd/ubuntu-xenial-20.08-amf64-server-**"]
+    # }
+    
+  #  filter {
+  #    name  = "virtualization - type"
+  #    value = ["hvm"]
+  #  }
 
-data "aws_security_group" "instances" { 
-  name = join("-",[var.service_name, "instances",var.environment_prefix,"sg"])
-  vpc_id = data.aws_vpc.vpc_product.id
 }
 
-data "aws_security_group" "alb" { 
-  name = join("-",[var.service_name, "alb", var.environment_prefix, "sg"])
-  vpc_id = data.aws_vpc.vpc_product.id
-}
+# #########################
+# ## SG for instances
+# #########################
+
+
+# data "aws_security_group" "instances" { 
+#   name = join("-",[var.service_name, "instances",var.environment_prefix,"sg"])
+#   vpc_id = data.aws_vpc.vpc_product.id
+# }
+
+# data "aws_security_group" "alb" { 
+#   name = join("-",[var.service_name, "alb", var.environment_prefix, "sg"])
+#   vpc_id = data.aws_vpc.vpc_product.id
+# }
 
 
 # data "aws_security_group" "sg_common_microservices" {
