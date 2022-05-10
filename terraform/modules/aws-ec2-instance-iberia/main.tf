@@ -78,7 +78,7 @@ resource "aws_security_group" "alb" {
     from_port       = 80
     to_port         = 80
     protocol        = "tcp"
-    security_groups = [ data.aws_security_group.sg_instances.id ]
+    security_groups = [ aws_security_group.instances.id ]
     description     = "From ${var.service_name} ALB"
   }
 
