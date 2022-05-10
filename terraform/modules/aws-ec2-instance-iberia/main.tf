@@ -142,7 +142,7 @@ resource "aws_instance" "app" {
     # number launch
     count                   = 1
     # VPC Subnet ID to launch in.
-    subnet_id               = data.aws_subnet.snet_amber_eu_central_1a.id
+    subnet_id               = local.data.vpc.amber.id
     # A list of security grou[p IDs to associate with.
     vpc_security_group_ids  = [aws_security_group.alb.id, aws_security_group.instances.id] 
     # configure bash param to script template
