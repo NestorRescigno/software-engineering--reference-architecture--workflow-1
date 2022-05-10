@@ -33,10 +33,10 @@ data "aws_ami" "base_ami" {
     
     most_recent = true
     # name_regex       = "^amazon-linux2-\\d{3}"
-    owners           = ["self"]
+    owners = ["self"]
 
     filter {
-      name   = "name"
+      name   = "Name"
       values = ["amazon-linux2"]
     }
     # filter {
