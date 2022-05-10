@@ -51,7 +51,7 @@ echo "***************************************************"
 echo " prepare enviroment with terraform... "
 echo "***************************************************"
 
-export STATE=$(aws ec2 describe-vpcs --filters "Name=tag-key, Values=${PROJECT}-${PREFIX_TEMP}" --query 'Vpcs[0].State')
+export STATE=$(aws ec2 describe-vpcs --filters "Name=tag-value, Values=${PROJECT}-${PREFIX_TEMP}" --query 'Vpcs[0].State')
 
 
 
