@@ -80,7 +80,7 @@ resource "aws_security_group" "alb" {
     protocol        = "tcp"
     # security_groups = [ aws_security_group.instances.id ]
     # data.aws_vpc.vpc_product
-    cidr_blocks = [data.aws_vpc.vpc_product.cidr_blocks]
+    cidr_blocks = data.aws_vpc.vpc_product.cidr_blocks
   }
 
   # asign tag use marge takes an arbitrary number of maps or objects, 
