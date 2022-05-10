@@ -65,7 +65,7 @@ if [ $STATE == "null" ] ; then
 fi
 
 # echo "::set-output name=security-group-ids:$(terraform output aws_security_groups)" 
-echo "::set-output name=subnets-ids::$(terraform output aws_subnets_ids)" 
+# echo "::set-output name=subnets-ids::$(terraform output aws_subnets_ids)" 
 # echo "::set-output name=shared-ids::$(terraform output account_id)" 
 # echo "::set-output name=alb-target-group-arn::$(terraform output aws_alb_target_group_arn)" 
 # echo "::set-output name=lb-arn-suffix::$(terraform output lb_arn_suffix)" 
