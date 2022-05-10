@@ -335,7 +335,7 @@ resource "aws_launch_template" "launch" {
   }
 
   # configure bash param to script template
-  user_data  = templatefile("user_data.tftpl", {
+  user_data  = filebase64(templatefile("user_data.tftpl", {
     department = "${var.user_departament}", 
     name = "${var.user_name}", 
     lenguage= "${var.lenguage_code}",
@@ -343,7 +343,7 @@ resource "aws_launch_template" "launch" {
     package = "${var.package}" , 
     user   = "${var.artifact_user}",
     secret = "${var.artifact_secret}"
-  })
+  }))
 
   tags = merge(
     local.global_common_tags,
