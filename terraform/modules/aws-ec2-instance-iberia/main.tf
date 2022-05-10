@@ -46,10 +46,10 @@ data "aws_ami" "base_ami" {
     #  value = ["ubuntu/image/hvm-ssd/ubuntu-xenial-20.08-amf64-server-**"]
     # }
     
-    filter {
-      name  = "virtualization - type"
-      value = ["hvm"]
-    }
+  #  filter {
+  #    name  = "virtualization - type"
+  #    value = ["hvm"]
+  #  }
 
 }
 
