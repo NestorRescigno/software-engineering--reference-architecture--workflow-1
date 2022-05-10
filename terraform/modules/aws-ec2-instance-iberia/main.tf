@@ -36,8 +36,8 @@ data "aws_ami" "base_ami" {
     owners = ["self"]
 
     filter {
-      name   = "Name"
-      values = ["amazon-linux2"]
+      name   = "AMI name"
+      values = ["shared-linux2-base*"]
     }
     # filter {
     #  name  = "name"
