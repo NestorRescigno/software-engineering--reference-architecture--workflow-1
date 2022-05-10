@@ -39,17 +39,17 @@ echo "***************************************************"
 # create uri artifact reference 
 ################################
 if [[ $LENGUAGE -eq "java" ]] ; then
-   FORMAT= "maven"  
+   FORMAT="maven"  
 else
-   FORMAT= "npm"
+   FORMAT="npm"
 fi
 # example uri aws
 if $CODEARTIFACT
 then     
 # GET /v1/package/version/asset?asset=asset&domain=domain&domain-owner=domainOwner&format=format&namespace=namespace&package=package&repository=repository&revision=packageVersionRevision&version=packageVersion HTTP/1.1     
-     ARTIFACTREF = "https://${REPOSITORY_HOST}/v1/package/version/asset?asset=asset&domain=${PROJECT}&domain-owner=${REPOSITORY_OWNER}&format=${FORMAT}&namespace=${GROUP}&package=${ARTIFACT}&repository=${REPOSITORY_PATH}&version=${VERSION} HTTP/1.1"
+     ARTIFACTREF="https://${REPOSITORY_HOST}/v1/package/version/asset?asset=asset&domain=${PROJECT}&domain-owner=${REPOSITORY_OWNER}&format=${FORMAT}&namespace=${GROUP}&package=${ARTIFACT}&repository=${REPOSITORY_PATH}&version=${VERSION} HTTP/1.1"
 else
-     ARTIFACTREF = "https://${REPOSITORY_HOST}/nexus/service/local/artifact/maven/redirect?r=${REPOSITORY_PATH}&g=${GROUP}&a=${ARTIFACT}&v=${VERSION}&p=${PACKAGE}" 
+     ARTIFACTREF="https://${REPOSITORY_HOST}/nexus/service/local/artifact/maven/redirect?r=${REPOSITORY_PATH}&g=${GROUP}&a=${ARTIFACT}&v=${VERSION}&p=${PACKAGE}" 
 fi
 
 
@@ -59,16 +59,7 @@ fi
 cd ${WORKSPACE}/terraform/modules/aws-ec2-instance-iberia
 terraform init
 # create plan terrafom
-terraform plan \
--var "lenguage_code=${LANGUAGE}" \
--var "instance_type=${INSTANCE_TYPE}" \ 
--var "ref=${ARTIFACTREF}" \
--var "package=${PACKAGE}" \
--var "project_name=${PROJECT}" \
--var "service_name=${ARTIFACT}" \
--var "service_version=${VERSION}" \
--var "artifact_user=${REPOSITORY_USER}" \
--var "artifact_secret=${REPOSITORY_SECRET}" 
+terraform plan -var "lenguage_code=${LANGUAGE}" -var "instance_type=${INSTANCE_TYPE}" -var "ref=${ARTIFACTREF}" -var "package=${PACKAGE}" -var "project_name=${PROJECT}" -var "service_name=${ARTIFACT}" -var "service_version=${VERSION}" -var "artifact_user=${REPOSITORY_USER}" -var "artifact_secret=${REPOSITORY_SECRET}" 
 
 # apply plan terrafom
 # terraform apply # temporal comment to test
