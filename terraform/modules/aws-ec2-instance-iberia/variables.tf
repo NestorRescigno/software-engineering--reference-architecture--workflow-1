@@ -82,3 +82,14 @@ variable "environment_prefix" {
   type        = string
   default     = "dev"
 }
+
+variable "service_groupid" {
+  description = "The name of groupid application service."
+  type        = string
+}
+
+variable "global_dns" {
+  description = "mian domain dns."
+  type        = string
+  default     = "cloud.iberia.local"
+}
