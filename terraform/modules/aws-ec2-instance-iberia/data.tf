@@ -8,6 +8,10 @@ data "aws_vpc" "vpc_product" {
   }
 }
 
+data "aws_iam_role" "role" {
+   name = join("-", [var.project, var.environment, "role"])
+}
+
 
 data "aws_iam_instance_profile" "ip" {
   name = join("-",[var.project,var.environment,"instanceprofile",var.service_name])
