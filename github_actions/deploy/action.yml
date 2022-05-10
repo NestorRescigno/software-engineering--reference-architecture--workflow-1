@@ -80,6 +80,9 @@ inputs:
     type: string
     required: true
     default: "dev"
+  aws-instance-type: 
+    type: string
+    required: true
   # shared-number-ids-arn-suffix: 
   #   type: string
   #   required: true
@@ -131,7 +134,8 @@ runs:
         ENVIROMENT: ${{ inputs.aws-environment-name }}  
         ENVIROMENT_PREFIX: ${{ inputs.aws-environment-prefix }} 
         ENVIROMENT_DEV: ${{ inputs.aws-environment-dev-name }} 
-        ENVIROMENT_PREFIX_DEV: ${{ inputs.aws-environment-dev-prefix }} 
+        ENVIROMENT_PREFIX_DEV: ${{ inputs.aws-environment-dev-prefix }}
+        INSTANCE_TYPE: ${{ inputs.aws-instance-type }}
         # get package name generate from step build
         GROUP: ${{ inputs.group-name }}   
         # get package name generate fromstep build
@@ -148,7 +152,8 @@ runs:
         # change user to read, now use write
         REPOSITORY_OWNER:  ${{ inputs.repository-owner }}    
         REPOSITORY_USER:  ${{ inputs.repository-user }}     
-        REPOSITORY_SECRET: ${{ inputs.repository-token }}  
+        REPOSITORY_SECRET: ${{ inputs.repository-token }} 
+
         # configure environment use
  #       SECURITY_GROUPS: ${{ inputs.security-group-number-ids }}
  #       SUBNETS: ${{ inputs.subnet-number-ids }} 
