@@ -137,11 +137,11 @@ resource "aws_security_group" "instances" {
 resource "aws_instance" "app" {
     # AMI to use for the instance from generate example: ubuntu-xenial-20.08-amf64-server-**
     ami                     = data.aws_ami.base_ami.id
-    intance_type            = var.instance_type
+    instance_type           = var.instance_type
     # number launch
     count                   = 1
     # VPC Subnet ID to launch in.
-    subnet_id               = [data.aws_subnet.snet_amber_eu_central_1a.id, data.aws_subnet.snet_amber_eu_central_1b.id, data.aws_subnet.snet_amber_eu_central_1c.id]
+    subnet_id               = data.aws_subnet.snet_amber_eu_central_1a.id
     # A list of security grou[p IDs to associate with.
     vpc_security_group_ids  = [aws_security_group.alb.id, aws_security_group.instances.id] 
     # configure bash param to script template
