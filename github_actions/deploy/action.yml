@@ -63,24 +63,24 @@ inputs:
     type: string
     required: true
   # configure environment 
-  shared-number-ids-arn-suffix: 
-    type: string
-    required: true
-  security-group-number-ids: 
-    type: string
-    required: true
-  subnet-number-ids: 
-    type: string
-    required: true
-  alb-target-group-number-arn: 
-    type: string
-    required: true
-  alb-target-group-number-arn-suffix: 
-    type: string
-    required: true
-  lb-number-arn-suffix: 
-    type: string
-    required: true
+  # shared-number-ids-arn-suffix: 
+  #   type: string
+  #   required: true
+  # security-group-number-ids: 
+  #   type: string
+  #   required: true
+  # subnet-number-ids: 
+  #   type: string
+  #   required: true
+  # alb-target-group-number-arn: 
+  #   type: string
+  #   required: true
+  # alb-target-group-number-arn-suffix: 
+  #   type: string
+  #   required: true
+  # lb-number-arn-suffix: 
+  #   type: string
+  #   required: true
   # available test integration 
   testIntegration-allow:
     type: boolean
@@ -129,90 +129,90 @@ runs:
         REPOSITORY_USER:  ${{ inputs.repository-user }}     
         REPOSITORY_SECRET: ${{ inputs.repository-token }}      # change token to read, now use write
         # configure environment use
-        SECURITY_GROUPS: ${{ inputs.security-group-number-ids }}
-        SUBNETS: ${{ inputs.subnet-number-ids }} 
+ #       SECURITY_GROUPS: ${{ inputs.security-group-number-ids }}
+ #       SUBNETS: ${{ inputs.subnet-number-ids }} 
       if: ${{ startsWith(${ github.ref }, 'refs/heads/develop') == true }} 
       run: sh build-instance.sh
     # create image in main branch
-    - id: image-generator
-      working-directory: .github/cicd/scripts
-      shell: sh
-      env:
-        WORKSPACE: ${{ github.workspace }}
-        LENGUAGE: ${{ inputs.lenguage-code }}
-        PROJECT: ${{ inputs.project-name }} 
-        # get package name generate from step build
-        GROUP: ${{ inputs.group-name }}   
-        # get package name generate fromstep build
-        ARTIFACT: ${{ inputs.service-name }}    
-        # get package name generate from step build
-        VERSION: ${{ inputs.service-version }}  
-        # get package type extention from step build
-        PACKAGE: ${{ inputs.service-package }}
-        # active code artifact and reemplace nexus
-        CODEARTIFACT:  ${{ inputs.codeartifact-allow }}
-        # get path repository package generate font step build
-        REPOSITORY_PATH:  ${{ inputs.repository-path }}    
-        REPOSITORY_HOST: ${{ inputs.repository-host }} 
-        # change user to read, now use write
-        REPOSITORY_OWNER:  ${{ inputs.repository-owner }}    
-        REPOSITORY_USER:  ${{ inputs.repository-user }}     
-        REPOSITORY_SECRET: ${{ inputs.repository-token }}      # change token to read, now use write
-        # configure environment use
-        SECURITY_GROUPS: ${{ inputs.security-group-number-ids }}
-        SUBNETS: ${{ inputs.subnet-number-ids }} 
+    # - id: image-generator
+    #   working-directory: .github/cicd/scripts
+    #   shell: sh
+    #   env:
+    #     WORKSPACE: ${{ github.workspace }}
+    #     LENGUAGE: ${{ inputs.lenguage-code }}
+    #     PROJECT: ${{ inputs.project-name }} 
+    #     # get package name generate from step build
+    #     GROUP: ${{ inputs.group-name }}   
+    #     # get package name generate fromstep build
+    #     ARTIFACT: ${{ inputs.service-name }}    
+    #     # get package name generate from step build
+    #     VERSION: ${{ inputs.service-version }}  
+    #     # get package type extention from step build
+    #     PACKAGE: ${{ inputs.service-package }}
+    #     # active code artifact and reemplace nexus
+    #     CODEARTIFACT:  ${{ inputs.codeartifact-allow }}
+    #     # get path repository package generate font step build
+    #     REPOSITORY_PATH:  ${{ inputs.repository-path }}    
+    #     REPOSITORY_HOST: ${{ inputs.repository-host }} 
+    #     # change user to read, now use write
+    #     REPOSITORY_OWNER:  ${{ inputs.repository-owner }}    
+    #     REPOSITORY_USER:  ${{ inputs.repository-user }}     
+    #     REPOSITORY_SECRET: ${{ inputs.repository-token }}      # change token to read, now use write
+    #     # configure environment use
+    #     SECURITY_GROUPS: ${{ inputs.security-group-number-ids }}
+    #     SUBNETS: ${{ inputs.subnet-number-ids }} 
       
-        # shared ami with environment.
-        SHARED: ${{ inputs.shared-number-ids }}  
+    #     # shared ami with environment.
+    #     SHARED: ${{ inputs.shared-number-ids }}  
         
-        # secret account operational. 
-        # AWS_ACCESS_KEY_OP:  ${{ inputs.aws-access-key-op }}                   
-        # AWS_SECRET_ACCESS_KEY_OP: ${{ inputs.aws-secret-access-key-op }}
+    #     # secret account operational. 
+    #     # AWS_ACCESS_KEY_OP:  ${{ inputs.aws-access-key-op }}                   
+    #     # AWS_SECRET_ACCESS_KEY_OP: ${{ inputs.aws-secret-access-key-op }}
         
-        # reemplace aws secret and access key to profile
-        # AWS_PROFILE: ''
-      if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }} 
-      run: sh build-image.sh
-    # deploy scaling group with image.
-    - name: Deploy
-      working-directory: .github/cicd/scripts
-      shell: sh
-      env:
-        WORKSPACE: ${{ github.workspace }}
-        REF: ${{ github.ref }}
-        LENGUAGE: ${{ inputs.lenguage-code }}
-        PROJECT: ${{ inputs.project-name }}
-        # get package name generate from step build
-        SERVICE:  ${{ inputs.service-name }}  
-        AMI_ID: ${{ step.image-generator.outputs.image-number-id }}
-        # get package version generate from step build   
-        AMI_VERSION: ${{ inputs.service-version }}
-        SECURITY_GROUPS: ${{ inputs.security-group-number-ids }}
-        SUBNETS: ${{ inputs.subnet-number-ids }}
-        ALB_TARGET_GROUP: ${{ inputs.alb-target-group-number-arn}}
-        ALB_TARGET_GROUP_SUFFIX: ${{ inputs.alb-target-group-number-arn-suffix}}
-        LB_SUFFIX: ${{ inputs.lb-number-arn-suffix}}
-        # input account integration/preproduction environment
-        ENVIROMENT: ${{inputs.aws-environment-name}}
-        ENVIROMENT_PREFIX: ${{inputs.aws-environment-prefix}}
-        AWS_ACCESS_KEY: ${{ inputs.aws-access-key }}
-        AWS_SECRET_ACCESS_KEY: ${{ inputs.aws-secret-access-key }}
-      if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }} 
-      run: terraform-deploy.sh 
-    - name: Health Check
-      working-directory: .github/cicd/scripts
-      shell: sh
-      env:
-        ALB_ARN: ${{ inputs.alb-target-group-number-arn}}
-      if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }} 
-      run: sh health-checking.sh
-    - name: Integration tests
-      working-directory: .github/cicd/scripts
-      env:
-        WORKSPACE: ${{ github.workspace }}
-        REF: ${{ github.ref }}
-        LENGUAGE: ${{ inputs.lenguage-code }}
-        ACTIVE: ${{ inputs.testIntegration-allow }}
-      shell: sh
-      if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }} 
-      run: sh integration-tests.sh 
+    #     # reemplace aws secret and access key to profile
+    #     # AWS_PROFILE: ''
+    #   if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }} 
+    #   run: sh build-image.sh
+    # # deploy scaling group with image.
+    # - name: Deploy
+    #   working-directory: .github/cicd/scripts
+    #   shell: sh
+    #   env:
+    #     WORKSPACE: ${{ github.workspace }}
+    #     REF: ${{ github.ref }}
+    #     LENGUAGE: ${{ inputs.lenguage-code }}
+    #     PROJECT: ${{ inputs.project-name }}
+    #     # get package name generate from step build
+    #     SERVICE:  ${{ inputs.service-name }}  
+    #     AMI_ID: ${{ step.image-generator.outputs.image-number-id }}
+    #     # get package version generate from step build   
+    #     AMI_VERSION: ${{ inputs.service-version }}
+    #     SECURITY_GROUPS: ${{ inputs.security-group-number-ids }}
+    #     SUBNETS: ${{ inputs.subnet-number-ids }}
+    #     ALB_TARGET_GROUP: ${{ inputs.alb-target-group-number-arn}}
+    #     ALB_TARGET_GROUP_SUFFIX: ${{ inputs.alb-target-group-number-arn-suffix}}
+    #     LB_SUFFIX: ${{ inputs.lb-number-arn-suffix}}
+    #     # input account integration/preproduction environment
+    #     ENVIROMENT: ${{inputs.aws-environment-name}}
+    #     ENVIROMENT_PREFIX: ${{inputs.aws-environment-prefix}}
+    #     AWS_ACCESS_KEY: ${{ inputs.aws-access-key }}
+    #     AWS_SECRET_ACCESS_KEY: ${{ inputs.aws-secret-access-key }}
+    #   if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }} 
+    #   run: terraform-deploy.sh 
+    # - name: Health Check
+    #   working-directory: .github/cicd/scripts
+    #   shell: sh
+    #   env:
+    #     ALB_ARN: ${{ inputs.alb-target-group-number-arn}}
+    #   if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }} 
+    #   run: sh health-checking.sh
+    # - name: Integration tests
+    #   working-directory: .github/cicd/scripts
+    #   env:
+    #     WORKSPACE: ${{ github.workspace }}
+    #     REF: ${{ github.ref }}
+    #     LENGUAGE: ${{ inputs.lenguage-code }}
+    #     ACTIVE: ${{ inputs.testIntegration-allow }}
+    #   shell: sh
+    #   if: ${{ startsWith(${ github.ref }, 'refs/heads/main') == true }} 
+    #   run: sh integration-tests.sh 

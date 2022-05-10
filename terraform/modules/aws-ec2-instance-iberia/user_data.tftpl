@@ -51,21 +51,21 @@ export JARPATH=/home/${name}/target   # Note of developers : change to other pat
 # setting environment path
 export PATH=$PATH:$GOROOT/bin:$NODEROOT/bin:$JAVAROOT/bin:$GOPATH/bin:$NODEPATH/dist:$JARPATH
 
-if [ ${lenguage} == "go"] then
+if [ ${lenguage} == "go"] ; then
     # get webapp from repository git
     go get -d ${artifact}
     # change directory source
     cd go/src/${artifact}
     # run go application 
     go run webapp.go
-elif [ ${lenguage} == "angular"] then
+elif [ ${lenguage} == "angular"] ; then
     # change directory
     cd $NODEPATH
     # get artifact 
     curl -X GET -u ${user}:${secret} ${artifact} && clear
     # run service 
     ng serve 
-elif [ ${lenguage} == "java"] then
+elif [ ${lenguage} == "java"] ; then
     # run jar spring boot
     cd $JARPATH
     

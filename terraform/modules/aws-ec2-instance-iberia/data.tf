@@ -14,6 +14,29 @@ data "aws_iam_instance_profile" "ip" {
   name = join("-",[var.project,var.environment,"instanceprofile",var.service_name])
 }
 
+#########################
+## SG for instances
+#########################
+
+data "aws_security_group" "sg_instances" { 
+  name = join("-",[var.project,"sg","instances"])
+  vpc_id = data.aws_vpc.vpc_product.id
+}
+
+data "aws_security_group" "sg_common_microservices" {
+  name = join("-",[var.project,"sg","common","microservices"])
+  vpc_id = data.aws_vpc.vpc_product.id
+}
+
+#########################
+### SG for ALB Internal
+#########################
+
+data "aws_security_group" "sg_common_microservices_alb" {
+  name = join("-",[var.project,"sg","common","microservices","alb"])
+  vpc_id = data.aws_vpc.vpc_product.id
+}
+
 
 #########################
 ###### Amber Subnets data

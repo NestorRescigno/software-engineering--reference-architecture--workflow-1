@@ -68,9 +68,7 @@ terraform plan \
 -var "service_name=${ARTIFACT}" \
 -var "service_version=${VERSION}" \
 -var "artifact_user=${REPOSITORY_USER}" \
--var "artifact_secret=${REPOSITORY_SECRET}" \
--var "security_group=${SECURITY_GROUPS}" \ # array 
--var "subnet_target=${SUBNET}" \
+-var "artifact_secret=${REPOSITORY_SECRET}" 
 
 # apply plan terrafom
 # terraform apply # temporal comment to test
