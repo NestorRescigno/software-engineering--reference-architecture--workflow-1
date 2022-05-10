@@ -112,7 +112,7 @@ resource "aws_lb_listener" "lb_listener" {
 resource "aws_security_group" "alb" {
 
   # asign name: demo-alb-dev-sg
-  name        = join("-",[var.service_name,"alb",var.environment_prefix,"sg"], formatdate("YYMMMDDhhmmss", timestamp))
+  name        = join("-",[var.service_name,"alb",var.environment_prefix,"sg", formatdate("YYMMMDDhhmmss", timestamp)])
   description = "SG for ${var.service_name} cluster ALB"
   
   # asign vpc id to apply security group 
