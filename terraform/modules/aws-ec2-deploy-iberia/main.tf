@@ -448,3 +448,5 @@ resource "aws_autoscaling_attachment" "alb_autoscale" {
   alb_target_group_arn   = var.aws_alb_target_group_arn
   autoscaling_group_name = aws_autoscaling_group.asg.id
 }
+
+

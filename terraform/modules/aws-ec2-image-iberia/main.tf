@@ -43,3 +43,36 @@ resource "aws_ami_launch_permission" "shared" {
       image_id = aws_ami_from_instance.app_ami.id
       account_id  = local.sharedId[count.id]
 }
+
+
+############################
+### New instance profile 
+############################
+
+resource "aws_iam_role" "role" {
+  name = join("-", [var.project, var.environment, "role"])
+  path = "/"
+
+  assume_role_policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": "sts:AssumeRole",
+            "Principal": {
+               "Service": "ec2.amazonaws.com"
+            },
+            "Effect": "Allow",
+            "Sid": ""
+        }
+    ]
+}
+EOF
+}
+
+
+resource "aws_iam_instance_profile" "iam_instance_profile" {
+  count = data.aws_iam_instance_profile.ip.name != "null" ? 0 : 1
+  name = join("-",[var.project, var.environment, "instanceprofile", var.service_name])
+  role = aws_iam_role.role.name
+}
