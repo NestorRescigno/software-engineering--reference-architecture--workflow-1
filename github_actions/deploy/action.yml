@@ -131,7 +131,7 @@ runs:
         # configure environment use
  #       SECURITY_GROUPS: ${{ inputs.security-group-number-ids }}
  #       SUBNETS: ${{ inputs.subnet-number-ids }} 
-      if: ${{ startsWith(${ github.ref }, 'refs/heads/develop') == true }} 
+      if:  startsWith(${{ github.ref }}, 'refs/heads/develop') == true 
       run: sh build-instance.sh
     # create image in main branch
     # - id: image-generator
