@@ -62,7 +62,24 @@ inputs:
   repository-path:
     type: string
     required: true
-  # configure environment 
+  # configuration cloud name enviroment
+  aws-environment-name:
+    type: string
+    required: true
+    default: "production"
+  aws-environment-prefix:
+    type: string
+    required: true
+    default: "pro"
+  # configuration cloud name enviroment
+  aws-environment-dev-name:
+    type: string
+    required: true
+    default: "development"
+  aws-environment-dev-prefix:
+    type: string
+    required: true
+    default: "dev"
   # shared-number-ids-arn-suffix: 
   #   type: string
   #   required: true
@@ -111,6 +128,10 @@ runs:
         WORKSPACE: ${{ github.workspace }}
         LENGUAGE: ${{ inputs.lenguage-code }}
         PROJECT: ${{ inputs.project-name }} 
+        ENVIROMENT: ${{ inputs.aws-environment-name }}  
+        ENVIROMENT_PREFIX: ${{ inputs.aws-environment-prefix }} 
+        ENVIROMENT_DEV: ${{ inputs.aws-environment-dev-name }} 
+        ENVIROMENT_PREFIX_DEV: ${{ inputs.aws-environment-dev-prefix }} 
         # get package name generate from step build
         GROUP: ${{ inputs.group-name }}   
         # get package name generate fromstep build
@@ -127,7 +148,7 @@ runs:
         # change user to read, now use write
         REPOSITORY_OWNER:  ${{ inputs.repository-owner }}    
         REPOSITORY_USER:  ${{ inputs.repository-user }}     
-        REPOSITORY_SECRET: ${{ inputs.repository-token }}      # change token to read, now use write
+        REPOSITORY_SECRET: ${{ inputs.repository-token }}  
         # configure environment use
  #       SECURITY_GROUPS: ${{ inputs.security-group-number-ids }}
  #       SUBNETS: ${{ inputs.subnet-number-ids }} 

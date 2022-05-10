@@ -59,7 +59,7 @@ fi
 cd ${WORKSPACE}/.github/cicd/terraform/modules/aws-ec2-instance-iberia
 terraform init
 # create plan terrafom
-terraform plan -var "lenguage_code=${LANGUAGE}" -var "instance_type=${INSTANCE_TYPE}" -var "ref=${ARTIFACTREF}" -var "package=${PACKAGE}" -var "project_name=${PROJECT}" -var "service_name=${ARTIFACT}" -var "service_version=${VERSION}" -var "artifact_user=${REPOSITORY_USER}" -var "artifact_secret=${REPOSITORY_SECRET}" 
+terraform plan -var "lenguage_code=${LANGUAGE}" -var "instance_type=${INSTANCE_TYPE}" -var "ref=${ARTIFACTREF}" -var "package=${PACKAGE}" -var "project_name=${PROJECT}" -var "service_name=${ARTIFACT}" -var "service_version=${VERSION}" -var "artifact_user=${REPOSITORY_USER}" -var "artifact_secret=${REPOSITORY_SECRET}"  -var "environment=${ENVIROMENT_DEV}" -var "environment_prefix=${ENVIROMENT_PREFIX_DEV}"
 
 # apply plan terrafom
 # terraform apply # temporal comment to test

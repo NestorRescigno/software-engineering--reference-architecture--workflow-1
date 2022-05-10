@@ -159,7 +159,7 @@ resource "aws_instance" "app" {
 ############################
 
 resource "aws_iam_role" "role" {
-  name = join("-", [var.project, var.environment, "role"])
+  name = join("-", [var.project_name, var.environment, "role"])
   path = "/"
 
   assume_role_policy = <<EOF
@@ -182,6 +182,6 @@ EOF
 
 resource "aws_iam_instance_profile" "iam_instance_profile" {
   count = data.aws_iam_instance_profile.ip.name != "null" ? 0 : 1
-  name = join("-",[var.project, var.environment, "instanceprofile", var.service_name])
+  name = join("-",[var.project_name, var.environment, "instanceprofile", var.service_name])
   role = aws_iam_role.role.name
 }

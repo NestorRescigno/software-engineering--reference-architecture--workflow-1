@@ -71,3 +71,14 @@ variable "lenguage_code" {
   # }
 }
 
+variable "environment" {
+  description = "Environment"
+  type        = string
+  default     = "development"
+}
+
+variable "environment_prefix" {
+  description = "Environment Prefix."
+  type        = string
+  default     = "dev"
+}
