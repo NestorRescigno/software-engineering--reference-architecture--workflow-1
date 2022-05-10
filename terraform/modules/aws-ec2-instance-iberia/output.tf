@@ -10,10 +10,10 @@
 
 # output id new instance
 output "instance_id" {
-  value = aws_instance.app.id
+  value = aws_instance.app[count.index].id
 }
 
 # NOTE OF DEVELOPERS: BOH! private or public, dns is necesary for test app.
 output "instance_ip_addr" {
-  value = aws_instance.app.private_dns
+  value = aws_instance.app[count.index].private_dns
 }
