@@ -78,8 +78,9 @@ resource "aws_security_group" "alb" {
     from_port       = 80
     to_port         = 80
     protocol        = "tcp"
-    security_groups = [ aws_security_group.instances.id ]
-    description     = "From ${var.service_name} ALB"
+    # security_groups = [ aws_security_group.instances.id ]
+    # data.aws_vpc.vpc_product
+    cidr_blocks = [data.aws_vpc.vpc_product.cidr_blocks]
   }
 
   # asign tag use marge takes an arbitrary number of maps or objects, 
