@@ -33,7 +33,7 @@ variable "service_version" {
 }
 
 # project name 
-variable "project_name" {
+variable "project" {
   description = "The name of project"
 }
 
