@@ -30,19 +30,27 @@ provider "aws" {
 
 # data source base ami
 data "aws_ami" "base_ami" {
-    most_recent = true
     
+    executable_users = ["self"]
+    most_recent = true
+    # name_regex       = "^amazon-linux2-\\d{3}"
+    owners           = ["self"]
+
     filter {
-      name  = "name"
-      value = ["ubuntu/image/hvm-ssd/ubuntu-xenial-20.08-amf64-server-**"]
+      name   = "name"
+      values = ["amazon-linux2-*"]
     }
+
+    # filter {
+    #  name  = "name"
+    #  value = ["ubuntu/image/hvm-ssd/ubuntu-xenial-20.08-amf64-server-**"]
+    # }
     
     filter {
       name  = "virtualization - type"
       value = ["hvm"]
     }
-    
-    owner = ["amazon"]
+
 }
 
 
