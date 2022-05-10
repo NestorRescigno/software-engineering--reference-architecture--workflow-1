@@ -3,6 +3,10 @@
 # *************           IBERIA L.A.E.                   *************
 # *************       by Software Engineering             *************
 # *********************************************************************
+# installation commands for SSM Agent on Amazon Linux 2 (https://docs.aws.amazon.com/systems-manager/latest/userguide/agent-install-al2.html)
+sudo yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_arm64/amazon-ssm-agent.rpm
+sudo systemctl start amazon-ssm-agent
+
 
 # Install necessary dependencies
 # Installing the CloudWatch agent

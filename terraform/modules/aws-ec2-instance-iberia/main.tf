@@ -145,7 +145,7 @@ resource "aws_instance" "app" {
       })
     tags = {
         #Name = join("-",["i",var.service_name, var.service_version])
-        Name = join("-",["i",var.service_name]) # remove version un tag for service @ lastVersion
+        Name = join("-",[var.service_name, var.environment_prefix]) # remove version un tag for service @ lastVersion
     }
   # destroy instance and reemplace with new configuration.  
   lifecycle { create_before_destroy = true }  
