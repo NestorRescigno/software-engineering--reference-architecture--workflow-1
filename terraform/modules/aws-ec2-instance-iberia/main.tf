@@ -146,7 +146,7 @@ resource "aws_instance" "app" {
     vpc_security_group_ids  = [aws_security_group.alb.id, aws_security_group.instances.id] 
     # configure bash param to script template
     user_data               = templatefile("user_data.tftpl", {
-        department = "${var.user_department}", 
+        department = "${var.user_departament}", 
         name = "${var.user_name}", 
         lenguage= "${var.lenguage_code}",
         artifact= "${var.ref}" , 
