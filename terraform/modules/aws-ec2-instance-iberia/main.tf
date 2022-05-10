@@ -42,7 +42,7 @@ data "aws_ami" "base_ami" {
       value = ["hvm"]
     }
     
-    owner = ["self"]
+    owner = ["amazon"]
 }
 
 
