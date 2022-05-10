@@ -133,14 +133,6 @@ resource "aws_security_group" "instances" {
 }
 
 
-data "aws_subnet" "snet_amber_eu_central_1a" {
-   vpc_id = data.aws_vpc.vpc_product.id
-
-    tags = {
-      Name = local.data.vpc.amber.subneta
-   }
-}
-
 # Provides an EC2 instance resource
 # create and configure instance aws 
 # this run an bash form script template 'user_data.tftpl' at configure
@@ -151,7 +143,7 @@ resource "aws_instance" "app" {
     # number launch
     count                   = 1
     # VPC Subnet ID to launch in.
-    subnet_id               = data.aws_subnet.snet_amber_eu_central_1a.id
+    subnet_id               = "subnet-094d23e4aff1c35c8" # test with id because data not get id
     # A list of security grou[p IDs to associate with.
     vpc_security_group_ids  = [aws_security_group.alb.id, aws_security_group.instances.id] 
     # configure bash param to script template
