@@ -31,14 +31,13 @@ provider "aws" {
 # data source base ami
 data "aws_ami" "base_ami" {
     
-    executable_users = ["self"]
     most_recent = true
     # name_regex       = "^amazon-linux2-\\d{3}"
     owners           = ["self"]
 
     filter {
       name   = "name"
-      values = ["amazon-*"]
+      values = ["amazon-linux2"]
     }
     # filter {
     #  name  = "name"
