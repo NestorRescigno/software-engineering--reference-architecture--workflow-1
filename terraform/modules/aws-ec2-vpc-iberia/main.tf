@@ -35,7 +35,7 @@ data "aws_availability_zones" "available" {
 # This additional data source determines some additional
 # details about each VPC, including its suffix letter.
 data "aws_availability_zone" "all" {
-  for_each = aws_avaiability_zones.available.names
+  for_each = data.aws_avaiability_zones.available.names
   name = each.key
 }
 
@@ -66,7 +66,7 @@ resource "aws_vpc" "vpc_product" {
 
 
 resource "aws_subnet" "subnets" {
-  for_each = aws_availability_zone.all
+  for_each = data.aws_availability_zone.all
 
   vpc_id            = aws_vpc.vpc_product.id
   availability_zone = each.key
