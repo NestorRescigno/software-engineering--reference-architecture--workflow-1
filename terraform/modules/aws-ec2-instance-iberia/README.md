@@ -13,12 +13,11 @@ This module allows you to up an aws instance from a base image. use sharedlinux
 data "aws_ami" "base_ami" {
     
     most_recent = true
-    # name_regex       = "^amazon-linux2-\\d{3}"
     owners = ["self"]
 
     filter {
       name   = "name"
-      values = ["shared-linux2-base*"]
+      values = ["iaggbs-shared-amzn2-base-arm64-v2.2.0-*"]
     }
     
   #  filter {

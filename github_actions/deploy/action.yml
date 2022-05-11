@@ -59,7 +59,7 @@ inputs:
   repository-token:
     type: string
     required: true
-  repository-path:
+  repository-id:
     type: string
     required: true
   # configuration cloud name enviroment
@@ -147,7 +147,7 @@ runs:
         # active code artifact and reemplace nexus
         CODEARTIFACT:  ${{ inputs.codeartifact-allow }}
         # get path repository package generate font step build
-        REPOSITORY_PATH:  ${{ inputs.repository-path }}    
+        REPOSITORY_PATH:  ${{ inputs.repository-id }}    
         REPOSITORY_HOST: ${{ inputs.repository-host }} 
         # change user to read, now use write
         REPOSITORY_OWNER:  ${{ inputs.repository-owner }}    

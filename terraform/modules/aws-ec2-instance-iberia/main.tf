@@ -311,7 +311,7 @@ resource "aws_route53_record" "alb-record" {
 
 # Provides an EC2 launch template resource. 
 # Can be used to create instances or auto scaling groups.
-
+# Note of developer: use lanch template with script 
 resource "aws_launch_template" "launch" { 
   
   # Decision Server launch template
@@ -321,6 +321,13 @@ resource "aws_launch_template" "launch" {
   instance_type = local.instance_type
   vpc_security_group_ids = [aws_security_group.alb.id, aws_security_group.instances.id] 
   
+  # monitoring enabled
+  monitoring {
+    enabled = true
+  }
+
+
+
   # The IAM Instance Profile to launch the instance with.
   iam_instance_profile {
     name = data.aws_iam_instance_profile.ip.name
@@ -371,4 +378,47 @@ resource "aws_launch_template" "launch" {
   lifecycle {
     create_before_destroy = true
   }
+}
+
+# Provides an EC2 instance resource
+# create and configure instance aws 
+# this run an bash form script template 'user_data.tftpl' at configure
+resource "aws_instance" "app" {
+    # AMI to use for the instance from generate example: ubuntu-xenial-20.08-amf64-server-**
+    for_each                = data.aws_subnets.snet_amber_eu_central_1_subnets.ids
+    # ami                     = data.aws_ami.base_ami.id
+    launch_template {
+      id      = aws_launch_template.launch.id
+      # version = aws_launch_template.launch.last_version
+    }
+  
+    instance_type           = var.instance_type
+    # number launch
+    # count                   = 1
+    # VPC Subnet ID to launch in.
+    subnet_id               = each.value # test with id because data not get id
+    # A list of security grou[p IDs to associate with.
+    vpc_security_group_ids  = [aws_security_group.alb.id, aws_security_group.instances.id] 
+    # IAM Instance Profile to launch the instance with. Specified as the name of the Instance Profile.
+    iam_instance_profile    = aws_iam_instance_profile.iam_instance_profile.name
+
+
+    # # configure bash param to script template
+    # user_data               = templatefile("user_data.tftpl", {
+    #     department = "${var.user_departament}", 
+    #     name = "${var.user_name}", 
+    #     lenguage= "${var.lenguage_code}",
+    #     artifact= "${var.ref}" , 
+    #     package = "${var.package}" , 
+    #     user   = "${var.artifact_user}",
+    #     secret = "${var.artifact_secret}"
+    #   })
+    # tags = {
+    #     #Name = join("-",["i",var.service_name, var.service_version])
+    #     Name = join("-",[var.service_name, var.environment_prefix]) # remove version un tag for service @ lastVersion
+    # }
+
+    
+  # destroy instance and reemplace with new configuration.  
+  lifecycle { create_before_destroy = true }  
 }

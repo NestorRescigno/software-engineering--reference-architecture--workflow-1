@@ -88,9 +88,10 @@ if [[ $LANGUAGE -eq "java" ]] ; then
             echo "upload fail"
             echo "***************************************************"
         fi 
-              
-        echo "::set-output name=registry-repository-id::$(echo ${PATH_SNAPSHOTS})" 
-        echo "***************************************************"
+
+        echo "::set-output name=registry-repository-id::$(echo ${SNAPSHOTS})" 
+        echo "::set-output name=registry-repository-url::$(echo ${URL})" 
+        echo "**************************************************"
         echo "upload complete"
         echo "***************************************************"
     elif [[ $REF == refs/heads/main* ]] ; then
@@ -119,7 +120,8 @@ if [[ $LANGUAGE -eq "java" ]] ; then
             echo "upload fail"
             echo "***************************************************"
         fi       
-        echo "::set-output name=registry-repository-id::$(echo ${PATH_RELEASE})" 
+        echo "::set-output name=registry-repository-id::$(echo ${RELEASES})" 
+        echo "::set-output name=registry-repository-url::$(echo ${URL})" 
         
         echo "***************************************************"
         echo "upload complete"

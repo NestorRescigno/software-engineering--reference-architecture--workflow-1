@@ -29,7 +29,7 @@ data "aws_ami" "base_ami" {
 
     filter {
       name   = "name"
-      values = ["shared-linux2-base*"]
+      values = ["iaggbs-shared-amzn2-base-arm64-v2.2.0-*"]
     }
     # filter {
     #  name  = "name"

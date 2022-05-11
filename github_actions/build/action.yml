@@ -57,6 +57,8 @@ outputs:
     value: ${{ steps.package-generator-name.outputs.package-type-id }}
   package-repository: 
     value: ${{ steps.registry-repository.outputs.registry-repository-id }}
+  package-url: 
+    value: ${{ steps.registry-repository.outputs.registry-repository-url }}
   package-usr: 
     value: ${{ steps.registry-repository.outputs.registry-repository-usr }}
   package-key: 
