@@ -75,35 +75,6 @@ resource "aws_alb_target_group" "alb" {
 }
 
 
-###########################
-## New Resource listener
-###########################
-
-# Provides a Load Balancer Listener resource
-resource "aws_lb_listener" "lb_listener" {
-  # ARN of the load balancer.
-  #load_balancer_arn = aws_lb.alb.arn 
-  for_each          = aws_lb.alb
-  load_balancer_arn = aws_lb.alb[each.key].arn
-  # Port on which the load balancer is listening. Not valid for Gateway Load Balancers.
-  port              = "80"
-  # Protocol for connections from clients to the load balancer. 
-  # For Application Load Balancers, valid values are HTTP and HTTPS, with a default of HTTP. 
-  # For Network Load Balancers, valid values are TCP, TLS, UDP, and TCP_UDP. 
-  # Not valid to use UDP or TCP_UDP if dual-stack mode is enabled. Not valid for Gateway Load Balancers.
-  protocol          = "HTTP"
-
-  # Configuration block for default actions
-  default_action {
-    # ARN of the Target Group to which to route traffic. 
-    # Specify only if type is forward and you want to route to a single target group. 
-    # To route to one or more target groups, use a forward block instead.
-    target_group_arn = aws_alb_target_group.alb.arn
-    # Type of routing action. 
-    # Valid values are forward, redirect, fixed-response, authenticate-cognito and authenticate-oidc.
-    type             = "forward"
-  }
-}
 
 #####################################
 ### New resources ALB SG 
@@ -253,6 +224,39 @@ resource "aws_lb" "alb" {
   )
 }
 
+
+
+###########################
+## New Resource listener
+###########################
+
+# Provides a Load Balancer Listener resource
+resource "aws_lb_listener" "lb_listener" {
+  # ARN of the load balancer.
+  #load_balancer_arn = aws_lb.alb.arn 
+  for_each = aws_lb.alb.arn
+  load_balancer_arn = each.value
+  # Port on which the load balancer is listening. Not valid for Gateway Load Balancers.
+  port              = "80"
+  # Protocol for connections from clients to the load balancer. 
+  # For Application Load Balancers, valid values are HTTP and HTTPS, with a default of HTTP. 
+  # For Network Load Balancers, valid values are TCP, TLS, UDP, and TCP_UDP. 
+  # Not valid to use UDP or TCP_UDP if dual-stack mode is enabled. Not valid for Gateway Load Balancers.
+  protocol          = "HTTP"
+
+  # Configuration block for default actions
+  default_action {
+    # ARN of the Target Group to which to route traffic. 
+    # Specify only if type is forward and you want to route to a single target group. 
+    # To route to one or more target groups, use a forward block instead.
+    target_group_arn = aws_alb_target_group.alb.arn
+    # Type of routing action. 
+    # Valid values are forward, redirect, fixed-response, authenticate-cognito and authenticate-oidc.
+    type             = "forward"
+  }
+}
+
+
 resource "aws_iam_instance_profile" "iam_instance_profile" {
   count = data.aws_iam_instance_profile.ip.name != "null" ? 0 : 1
   name = join("-",[var.project, var.environment, "instanceprofile", var.service_name])
@@ -277,7 +281,6 @@ resource "aws_route53_zone" "main_domain_local" {
 # See AWS Route53 Developer Guide for details.
 resource "aws_route53_record" "alb-record" {
   zone_id = aws_route53_zone.main_domain_local.zone_id
-  foreach = aws_lb.alb
   # asign name - example: demo.development.bestpractice.cloud.iberia.com  
   name    = join(".",[var.service_name, var.environment, var.project, var.global_dns])
   
@@ -287,8 +290,8 @@ resource "aws_route53_record" "alb-record" {
   type    = "A"
  
   alias {
-    name                 = aws_lb.alb[each.key].dns_name
-    zone_id              = aws_lb.alb[each.key].zone_id
+    name                 = aws_lb.alb[0].dns_name
+    zone_id              = aws_lb.alb[0].zone_id
     evaluate_target_health = true
   }
 
