@@ -83,7 +83,8 @@ resource "aws_alb_target_group" "alb" {
 resource "aws_lb_listener" "lb_listener" {
   # ARN of the load balancer.
   #load_balancer_arn = aws_lb.alb.arn 
-  load_balancer_arn = [for s in aws_lb.alb : s.arn]
+  for_each          = aws_lb.alb.arn
+  load_balancer_arn = each.values
   # Port on which the load balancer is listening. Not valid for Gateway Load Balancers.
   port              = "80"
   # Protocol for connections from clients to the load balancer. 
@@ -276,7 +277,7 @@ resource "aws_route53_zone" "main_domain_local" {
 # See AWS Route53 Developer Guide for details.
 resource "aws_route53_record" "alb-record" {
   zone_id = aws_route53_zone.main_domain_local.zone_id
-  
+  for_each               = aws_lb.alb
   # asign name - example: demo.development.bestpractice.cloud.iberia.com  
   name    = join(".",[var.service_name, var.environment, var.project, var.global_dns])
   
@@ -287,9 +288,9 @@ resource "aws_route53_record" "alb-record" {
  
   alias {
     # name                 = aws_lb.alb.dns_name
-    name                   = [for s in aws_lb.alb : s.dns_name] 
+    name                   = each.values.name
     # zone_id              = aws_lb.alb.zone_id
-    zone_id                = [for s in aws_lb.alb : s.zone_id] 
+    zone_id                = each.values.zone_id
     evaluate_target_health = true
   }
 }
