@@ -5,7 +5,7 @@
 # setting variable
 variable "aws_region" {
   description = "The aws region providers"
-  default     = "us-east-1"
+  default     = "eu-central-1"
 } 
 
 # service name
