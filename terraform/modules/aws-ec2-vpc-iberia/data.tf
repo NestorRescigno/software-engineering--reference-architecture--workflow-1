@@ -10,6 +10,6 @@ data "aws_availability_zones" "available" {
 # This additional data source determines some additional
 # details about each VPC, including its suffix letter.
 data "aws_availability_zone" "all" {
-  for_each = data.aws_avaiability_zones.available.names
+  for_each = data.aws_avaiability_zones.available.availability_zone_name.names
   name = each.key
 }
