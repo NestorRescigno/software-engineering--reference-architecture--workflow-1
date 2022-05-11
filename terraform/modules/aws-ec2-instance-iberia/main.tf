@@ -72,6 +72,11 @@ resource "aws_alb_target_group" "alb" {
       "Application:GroupId"    = "${var.service_groupid}"
     })
   )
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
 }
 
 
@@ -222,6 +227,10 @@ resource "aws_lb" "alb" {
       "Application:GroupId"    = "${var.service_groupid}"   # Note of develops: use other var
     })
   )
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 
@@ -359,6 +368,11 @@ resource "aws_launch_template" "launch" {
       Name ="${var.environment_prefix}"
     })
   )
+
+  
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 
