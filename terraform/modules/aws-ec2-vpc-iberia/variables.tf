@@ -1,13 +1,6 @@
 ###########################
 ### variable
 ###########################
-
-variable "aws_region" {
-  description = "Region"
-  type        = string
-  default     = "eu-central-1"
-}
-
 variable "az_number" {
   # Assign a number to each AZ letter used in our configuration
   default = {
@@ -28,6 +21,12 @@ variable "region_number" {
     eu-central-1   = 4
     ap-northeast-1 = 5
   }
+}
+
+variable "aws_region" {
+  description = "Region"
+  type        = string
+  default     = "eu-central-1"
 }
 
 variable "project" {
