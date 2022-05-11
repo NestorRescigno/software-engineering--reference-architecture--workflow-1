@@ -51,6 +51,8 @@ echo "***************************************************"
 echo " prepare enviroment with terraform... "
 echo "***************************************************"
 
+echo $(aws ec2 describe-availability-zones --region eu-central-1)
+
 export STATE=$(aws ec2 describe-vpcs --filters "Name=tag-value, Values=${PROJECT}-${PREFIX_TEMP}" --query 'Vpcs[0].State')
 
 echo "vpc state: $STATE"
