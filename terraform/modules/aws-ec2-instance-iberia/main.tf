@@ -385,7 +385,7 @@ resource "aws_route53_record" "alb-record" {
 # this run an bash form script template 'user_data.tftpl' at configure
 resource "aws_instance" "app" {
     # AMI to use for the instance from generate example: ubuntu-xenial-20.08-amf64-server-**
-    for_each                = data.aws_subnets.snet_amber_eu_central_1_subnets.ids
+    for_each                = toset(data.aws_subnets.snet_amber_eu_central_1_subnets.ids)
     ami                     = data.aws_ami.base_ami.id
     # launch_template {
     #   id      = aws_launch_template.launch.id
