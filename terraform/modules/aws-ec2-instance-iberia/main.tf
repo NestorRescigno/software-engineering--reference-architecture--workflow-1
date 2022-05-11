@@ -214,9 +214,10 @@ resource "aws_lb" "alb" {
   # A list of subnet IDs to attach to the LB. 
   # Subnets cannot be updated for Load Balancers of type network. 
   # Changing this value for load balancers of type network will force a recreation of the resource.
+  # for_each                = data.aws_subnet_ids.snet_amber_eu_central_1_subnets.ids
   
-  # subnets         = [data.aws_subnet.snet_amber_eu_central_1a.id, data.aws_subnet.snet_amber_eu_central_1b.id, data.aws_subnet.snet_amber_eu_central_1c.id]
-  subnets = data.aws_subnet_ids.snet_amber_eu_central_1_subnets.ids
+  subnets         = [data.aws_subnet.snet_amber_eu_central_1a.id, data.aws_subnet.snet_amber_eu_central_1b.id, data.aws_subnet.snet_amber_eu_central_1c.id]
+  # subnets = data.aws_subnet_ids.snet_amber_eu_central_1_subnets.ids
   
   # If true, deletion of the load balancer will be disabled via the AWS API. 
   # This will prevent Terraform from deleting the load balancer. Defaults to false.
