@@ -215,7 +215,7 @@ resource "aws_lb" "alb" {
   # Subnets cannot be updated for Load Balancers of type network. 
   # Changing this value for load balancers of type network will force a recreation of the resource.
   for_each                = data.aws_subnet_ids.snet_amber_eu_central_1_subnets.ids
-  count = length(data.aws_subnet_ids.snet_amber_eu_central_1_subnets.ids)
+
   subnets = each.value # test with id because data not get id
   # subnets         = [data.aws_subnet.snet_amber_eu_central_1a.id, data.aws_subnet.snet_amber_eu_central_1b.id, data.aws_subnet.snet_amber_eu_central_1c.id]
   # subnets = data.aws_subnet_ids.snet_amber_eu_central_1_subnets.ids
