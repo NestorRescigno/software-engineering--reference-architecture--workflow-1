@@ -90,7 +90,7 @@ resource "aws_alb_target_group" "alb" {
 resource "aws_security_group" "alb" {
 
   # asign name: demo-alb-dev-sg
-  name        = join("-",[var.service_name,"alb",var.environment_prefix,"sg", formatdate("YYMMMDDhhmmss", timestamp())])
+  name        = join("-",[var.service_name,"alb",var.environment_prefix,"sg"])
   description = "SG for ${var.service_name} cluster ALB"
   
   # asign vpc id to apply security group 
@@ -145,7 +145,7 @@ resource "aws_security_group" "instances" {
   ]
 
   # asign name: demo-instances-dev-sg
-  name        = join("-",[var.service_name, "instances",var.environment_prefix,"sg", formatdate("YYMMMDDhhmmss", timestamp())])
+  name        = join("-",[var.service_name, "instances",var.environment_prefix,"sg"])
   description = "SG for ${var.service_name} cluster instances"
   vpc_id      = data.aws_vpc.vpc_product.id
   
