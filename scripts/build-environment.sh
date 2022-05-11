@@ -64,7 +64,8 @@ if [ $STATE == "null" ] ; then
   terraform init
   # apply plan terrafom
   terraform apply -auto-approve -var "project=${PROJECT}" -var "service_name=${SERVICE}" -var "environment=${ENVIROMENT_TEMP}" -var "environment_prefix=${PREFIX_TEMP}"
-  if [ echo $? == 1 ] ; then 
+  rc=$?
+  if [ $rc -eq 1 ] ; then 
    echo "***************************************************"
    echo " Error terrafom apply resource "
    echo " stop workflow progess... "
