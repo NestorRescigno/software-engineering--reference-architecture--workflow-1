@@ -387,10 +387,10 @@ resource "aws_instance" "app" {
     # AMI to use for the instance from generate example: ubuntu-xenial-20.08-amf64-server-**
     for_each                = data.aws_subnets.snet_amber_eu_central_1_subnets.ids
     ami                     = data.aws_ami.base_ami.id
-    launch_template {
-      id      = aws_launch_template.launch.id
-      # version = aws_launch_template.launch.last_version
-    }
+    # launch_template {
+    #   id      = aws_launch_template.launch.id
+    #   # version = aws_launch_template.launch.last_version
+    # }
   
     # The IAM Instance Profile to launch the instance with.
     iam_instance_profile {
