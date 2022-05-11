@@ -64,6 +64,14 @@ if [ $STATE == "null" ] ; then
   terraform init
   # apply plan terrafom
   terraform apply -auto-approve -var "project=${PROJECT}" -var "service_name=${SERVICE}" -var "environment=${ENVIROMENT_TEMP}" -var "environment_prefix=${PREFIX_TEMP}"
+  if [ echo $? == 1 ] ; then 
+   echo "***************************************************"
+   echo " Error terrafom apply resource "
+   echo " stop workflow progess... "
+   echo "***************************************************"
+   exit -1
+  fi
+
 fi
 
 # echo "::set-output name=security-group-ids:$(terraform output aws_security_groups)" 
