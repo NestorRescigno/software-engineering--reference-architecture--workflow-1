@@ -78,9 +78,12 @@ data "aws_ami" "base_ami" {
 ###### Amber Subnets data
 #########################
 
-data "aws_subnet_ids" "snet_amber_eu_central_1_subnets" {
-  vpc_id = data.aws_vpc.vpc_product.id
-
+data "aws_subnets" "snet_amber_eu_central_1_subnets" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.vpc_product.id]
+  }
+  
   tags = {
     Name = local.data.vpc.amber.subnet
   }
