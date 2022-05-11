@@ -12,7 +12,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 4.13"
+      version = "~> 3.29" # chnage version because the data zone isn't available after version.
     }
   }
 }
