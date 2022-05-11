@@ -187,10 +187,10 @@ resource "aws_lb" "alb" {
   # A list of subnet IDs to attach to the LB. 
   # Subnets cannot be updated for Load Balancers of type network. 
   # Changing this value for load balancers of type network will force a recreation of the resource.
-  for_each                = data.aws_subnet_ids.snet_amber_eu_central_1_subnets.ids
+  # for_each                = data.aws_subnet_ids.snet_amber_eu_central_1_subnets.ids
 
-  subnets = [each.value] # test with id because data not get id
-  # subnets         = [data.aws_subnet.snet_amber_eu_central_1a.id, data.aws_subnet.snet_amber_eu_central_1b.id, data.aws_subnet.snet_amber_eu_central_1c.id]
+  # subnets = # test with id because data not get id
+  subnets         = [data.aws_subnet.snet_amber_eu_central_1a.id, data.aws_subnet.snet_amber_eu_central_1b.id, data.aws_subnet.snet_amber_eu_central_1c.id]
   # subnets = data.aws_subnet_ids.snet_amber_eu_central_1_subnets.ids
   
   # If true, deletion of the load balancer will be disabled via the AWS API. 
@@ -234,8 +234,7 @@ resource "aws_lb" "alb" {
 resource "aws_lb_listener" "lb_listener" {
   # ARN of the load balancer.
   #load_balancer_arn = aws_lb.alb.arn 
-  for_each = aws_lb.alb
-  load_balancer_arn = each.value.arn
+  load_balancer_arn = aws_lb.alb.arn
   # Port on which the load balancer is listening. Not valid for Gateway Load Balancers.
   port              = "80"
   # Protocol for connections from clients to the load balancer. 
@@ -290,8 +289,8 @@ resource "aws_route53_record" "alb-record" {
   type    = "A"
  
   alias {
-    name                 = aws_lb.alb[0].dns_name
-    zone_id              = aws_lb.alb[0].zone_id
+    name                 = aws_lb.alb.dns_name
+    zone_id              = aws_lb.alb.zone_id
     evaluate_target_health = true
   }
 

@@ -13,7 +13,7 @@ variable "user_name" {
 
 variable "aws_region" {
   description = "The aws region providers"
-  default     = "us-east-1"
+  default     = "eu-central-1"
 } 
 
 # organization type
