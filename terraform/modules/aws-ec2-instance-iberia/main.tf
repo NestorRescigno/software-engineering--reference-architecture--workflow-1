@@ -277,7 +277,7 @@ resource "aws_route53_zone" "main_domain_local" {
 # See AWS Route53 Developer Guide for details.
 resource "aws_route53_record" "alb-record" {
   zone_id = aws_route53_zone.main_domain_local.zone_id
-  for_each               = aws_lb.alb
+  
   # asign name - example: demo.development.bestpractice.cloud.iberia.com  
   name    = join(".",[var.service_name, var.environment, var.project, var.global_dns])
   
@@ -287,10 +287,16 @@ resource "aws_route53_record" "alb-record" {
   type    = "A"
  
   alias {
+    for_each               = aws_lb.alb.nane
     # name                 = aws_lb.alb.dns_name
-    name                   = each.values.name
+    name                   = each.values
+    evaluate_target_health = true
+  }
+
+  alias {
+    for_each               = aws_lb.alb.zone_id
     # zone_id              = aws_lb.alb.zone_id
-    zone_id                = each.values.zone_id
+    zone_id                = each.values
     evaluate_target_health = true
   }
 }
