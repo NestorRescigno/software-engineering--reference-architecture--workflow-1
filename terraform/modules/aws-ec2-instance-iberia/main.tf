@@ -84,7 +84,7 @@ resource "aws_lb_listener" "lb_listener" {
   # ARN of the load balancer.
   #load_balancer_arn = aws_lb.alb.arn 
   for_each          = aws_lb.alb.arn
-  load_balancer_arn = each.values
+  load_balancer_arn = each.value
   # Port on which the load balancer is listening. Not valid for Gateway Load Balancers.
   port              = "80"
   # Protocol for connections from clients to the load balancer. 
@@ -289,14 +289,14 @@ resource "aws_route53_record" "alb-record" {
   alias {
     for_each               = aws_lb.alb.nane
     # name                 = aws_lb.alb.dns_name
-    name                   = each.values
+    name                   = each.value
     evaluate_target_health = true
   }
 
   alias {
     for_each               = aws_lb.alb.zone_id
     # zone_id              = aws_lb.alb.zone_id
-    zone_id                = each.values
+    zone_id                = each.value
     evaluate_target_health = true
   }
 }
