@@ -234,8 +234,8 @@ resource "aws_lb" "alb" {
 resource "aws_lb_listener" "lb_listener" {
   # ARN of the load balancer.
   #load_balancer_arn = aws_lb.alb.arn 
-  for_each = aws_lb.alb.arn
-  load_balancer_arn = each.value
+  for_each = aws_lb.alb
+  load_balancer_arn = each.value.arn
   # Port on which the load balancer is listening. Not valid for Gateway Load Balancers.
   port              = "80"
   # Protocol for connections from clients to the load balancer. 
