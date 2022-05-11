@@ -82,7 +82,8 @@ resource "aws_alb_target_group" "alb" {
 # Provides a Load Balancer Listener resource
 resource "aws_lb_listener" "lb_listener" {
   # ARN of the load balancer.
-  load_balancer_arn = aws_lb.alb.arn
+  #load_balancer_arn = aws_lb.alb.arn 
+  load_balancer_arn = [for s in aws_lb.alb : s.arn]
   # Port on which the load balancer is listening. Not valid for Gateway Load Balancers.
   port              = "80"
   # Protocol for connections from clients to the load balancer. 
@@ -285,8 +286,10 @@ resource "aws_route53_record" "alb-record" {
   type    = "A"
  
   alias {
-    name                   = aws_lb.alb.dns_name
-    zone_id                = aws_lb.alb.zone_id
+    # name                 = aws_lb.alb.dns_name
+    name                   = [for s in aws_lb.alb : s.dns_name] 
+    # zone_id              = aws_lb.alb.zone_id
+    zone_id                = [for s in aws_lb.alb : s.zone_id] 
     evaluate_target_health = true
   }
 }
