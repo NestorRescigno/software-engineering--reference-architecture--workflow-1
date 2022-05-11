@@ -11,6 +11,6 @@ data "aws_availability_zones" "available" {
 # details about each VPC, including its suffix letter.
 data "aws_availability_zone" "all" {
   for_each = toset(data.aws_availability_zones.available.names)
-  name = each.key
+  name = each.value
   # test
 }
