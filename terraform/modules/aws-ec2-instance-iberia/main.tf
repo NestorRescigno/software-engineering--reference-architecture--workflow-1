@@ -202,16 +202,19 @@ resource "aws_lb" "alb" {
   # This will prevent Terraform from deleting the load balancer. Defaults to false.
   enable_deletion_protection = false
 
+  ########################################################################################################################
+  # Note of developer: comment line 208 to 215, pending test create resource
   # An Access Logs block. Access Logs documented below.
-  access_logs {
-    # The S3 bucket name to store the logs in. example dev-alb-logs
-    bucket  = join("-",[var.environment_prefix,"alb","logs"])
+  #access_logs {
+  #  # The S3 bucket name to store the logs in. example dev-alb-logs
+  #  bucket  = join("-",[var.environment_prefix,"alb","logs"])
     
     # The S3 bucket prefix. Logs are stored in the root if not configured. example: dev-demo-ap-lb
-    prefix  = lower(format("%s-%s-ap-lb", var.environment_prefix, var.service_name))
-    enabled = true
-  }
-
+  #  prefix  = lower(format("%s-%s-ap-lb", var.environment_prefix, var.service_name))
+  #  enabled = true
+  #}
+  ############################################################################################################################
+  
   tags = merge(
     #local.tags,
     #local.global_common_tags,
