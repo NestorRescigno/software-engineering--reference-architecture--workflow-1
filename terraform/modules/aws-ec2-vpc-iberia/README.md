@@ -1,9 +1,11 @@
 AWS EC2 Simple VPC module
 ---
-This module create de simple vpc 
+This module create de simple vpc
 
 **steps:**
-* create aws ec2 vpc and create subneta, subnetb, subnetc  
+* create aws ec2 vpc and create subneta, subnetb, subnetc for available zone in region
+* this code create subnet in diference zone eu-center-1a, eu-center-1b, eu-center-1c
+* create IAM role
 
 **variable**
 * aws_region:           "region of priveder"

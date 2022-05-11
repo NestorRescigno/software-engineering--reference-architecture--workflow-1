@@ -1,15 +1,35 @@
 AWS EC2 instance up module
 ---
-This module allows you to up an aws instance from a base image.
+This module allows you to up an aws instance from a base image. use sharedlinux
 
 **steps:**
-* create aws ami form ubuntu image base
+* create aws ami form lasted shared linux image base ( for change image is necesary modify datasource in https://github.com/Iberia-Ent/software-engineering--reference-architecture--workflow/blob/main/terraform/modules/aws-ec2-instance-iberia/data.tf). use de filter for query image.
+
 ````
-ubuntu/image/hvm-ssd/ubuntu-xenial-20.08-amf64-server-**
+# #########################
+# ## data source base ami
+# #########################
+# 
+data "aws_ami" "base_ami" {
+    
+    most_recent = true
+    # name_regex       = "^amazon-linux2-\\d{3}"
+    owners = ["self"]
+
+    filter {
+      name   = "name"
+      values = ["shared-linux2-base*"]
+    }
+    
+  #  filter {
+  #    name  = "virtualization - type"
+  #    value = ["hvm"]
+  #  }
+
+}
 ````
 * instance image and run script template [user_data.tftpl](https://github.com/Iberia-Ent/software-engineering--reference-architecture--workflow/blob/main/terraform/modules/aws-ec2-image-iberia/user_data.tftpl)
-
-
+* create load balancer , segurity group, traffic route53,  template launch.
 
 **variable**
 * aws_region:           "region of priveder"
@@ -28,9 +48,6 @@ ubuntu/image/hvm-ssd/ubuntu-xenial-20.08-amf64-server-**
 * artifact_secret:      "The secret key access to read register artifact. example: Nexus"
 * security_group:       "The security group to deploy"
 * subnet_target:        "The subnet id target to deploy ec2 instance"
-
-**output**
-* instance_id: "aws magine image id"
 
 **Other configuration**
 

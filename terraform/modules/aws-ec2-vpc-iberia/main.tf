@@ -50,71 +50,38 @@ resource "aws_vpc" "vpc_product" {
   
 }
 
+############################
+### create subnet in vpc 
+### with aws availability zone
+############################
 
+# resource subnet
 resource "aws_subnet" "subnets" {
+  # interate array
   for_each = data.aws_availability_zone.all
-
+  # select vpc id
   vpc_id            = aws_vpc.vpc_product.id
+  # get key of item array
   availability_zone = each.key
+  # set IP 
   cidr_block        = cidrsubnet(aws_vpc.vpc_product.cidr_block, 4, var.az_number[each.value.name_suffix])
+  # set tag
   tags = {
      Name = join("-",[var.project,"snet","amber", data.aws_region.current.name, each.value.name_suffix])
   }
 }
 
-# # create subnet in vpc
-# resource "aws_subnet" "subneta" {
-  
-#   # The VPC ID. 
-#   vpc_id =  aws_vpc.vpc_product.id
-#   # The IPv4 CIDR block for the subnet.
-#   cidr_block = "10.0.1.0/24"
-#   # A map of tags to assign to the resource. If configured with a provider
-#   availability_zone = 
-#   tags = {
-#     Name = local.data.vpc.amber.subneta
-#   }
-# }
-
-# # create subnet in vpc
-# resource "aws_subnet" "subnetb" {
-#   # The VPC ID. 
-  
-#   vpc_id = aws_vpc.vpc_product.id
-#   # The IPv4 CIDR block for the subnet.
-#   cidr_block = "10.0.2.0/24"
-#   # A map of tags to assign to the resource. If configured with a provider
-#   tags = {
-#     Name = local.data.vpc.amber.subnetb
-#   }
-
-# }
-
-# # create subnet in vpc
-# resource "aws_subnet" "subnetc" {
-#   # The VPC ID. 
-  
-#   vpc_id = aws_vpc.vpc_product.id
-#   # The IPv4 CIDR block for the subnet.
-#   cidr_block = "10.0.3.0/24"
-#   # A map of tags to assign to the resource. If configured with a provider
-#   tags = {
-#     Name = local.data.vpc.amber.subnetc
-#   }
-# }
-
-
-# move segurity group in process instance because is create for services.
-
-
 ############################
 ### New instance profile 
 ############################
 
+# create resource AIM 
 resource "aws_iam_role" "role" {
+  # assigned name best-practice-development-role
   name = join("-", [var.project, var.environment, "role"])
   path = "/"
-
+  
+  # asssigne standars policy
   assume_role_policy = <<EOF
 {
     "Version": "2012-10-17",

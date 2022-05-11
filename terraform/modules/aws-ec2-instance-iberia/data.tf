@@ -43,35 +43,6 @@ data "aws_ami" "base_ami" {
 
 }
 
-# #########################
-# ## SG for instances
-# #########################
-
-
-# data "aws_security_group" "instances" { 
-#   name = join("-",[var.service_name, "instances",var.environment_prefix,"sg"])
-#   vpc_id = data.aws_vpc.vpc_product.id
-# }
-
-# data "aws_security_group" "alb" { 
-#   name = join("-",[var.service_name, "alb", var.environment_prefix, "sg"])
-#   vpc_id = data.aws_vpc.vpc_product.id
-# }
-
-
-# data "aws_security_group" "sg_common_microservices" {
-#  name = join("-",[var.project,"sg","common","microservices"])
-#  vpc_id = data.aws_vpc.vpc_product.id
-#}
-
-#########################
-### SG for ALB Internal
-#########################
-
-#data "aws_security_group" "sg_common_microservices_alb" {
-#  name = join("-",[var.project,"sg","common","microservices","alb"])
-#  vpc_id = data.aws_vpc.vpc_product.id
-#}
 
 
 #########################
