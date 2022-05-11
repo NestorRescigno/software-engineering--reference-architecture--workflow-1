@@ -393,9 +393,7 @@ resource "aws_instance" "app" {
     # }
   
     # The IAM Instance Profile to launch the instance with.
-    iam_instance_profile {
-      name = data.aws_iam_instance_profile.ip.name
-    }
+    iam_instance_profile    = data.aws_iam_instance_profile.ip.name
 
     instance_type           = var.instance_type
     # number launch
