@@ -62,6 +62,14 @@ if [ ${INSTANCE_TYPE} != ""] ; then
    echo "force use new instance type: ${INSTANCE_TYPE}"
 fi
 
+echo "remove instance"
+PROFILEINSTANCE="$project-$environment-instanceprofile-$service_name"
+aws sts get-caller-identity
+aws iam list-instance-profiles
+aws iam list-instance-profiles | grep $PROFILEINSTANCE
+aws iam delete-instance-profile --instance-profile-name $PROFILEINSTANCE
+echo "complete remove"
+
 terraform init
 terraform plan -var "lenguage_code=${LENGUAGE}" -var "instance_type=${INSTANCE_TYPE}" -var "ref=${ARTIFACTREF}" -var "package=${PACKAGE}" -var "project=${PROJECT}" -var "service_name=${ARTIFACT}" -var "service_version=${VERSION}" -var "service_groupid=${GROUP}" -var "artifact_user=${REPOSITORY_USER}" -var "artifact_secret=${REPOSITORY_SECRET}"  -var "environment=${ENVIROMENT_DEV}" -var "environment_prefix=${ENVIROMENT_PREFIX_DEV}" -out create.plan
 ls
