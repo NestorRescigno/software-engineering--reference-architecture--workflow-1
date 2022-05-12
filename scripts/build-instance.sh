@@ -67,7 +67,7 @@ PROFILEINSTANCE="${PROJECT}-${ENVIROMENT_DEV}-instanceprofile-${ARTIFACT}"
 aws sts get-caller-identity
 aws iam list-instance-profiles
 echo $(aws iam list-instance-profiles | grep $PROFILEINSTANCE)
-# aws iam delete-instance-profile --instance-profile-name $PROFILEINSTANCE
+echo $(aws iam delete-instance-profile --instance-profile-name $PROFILEINSTANCE)
 echo "complete remove"
 
 terraform init
