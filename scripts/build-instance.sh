@@ -67,6 +67,10 @@ PROFILEINSTANCE="${PROJECT}-${ENVIROMENT_DEV}-instanceprofile-${ARTIFACT}"
 aws sts get-caller-identity
 echo $(aws iam list-instance-profiles | grep $PROFILEINSTANCE)
 echo $(aws iam delete-instance-profile --instance-profile-name $PROFILEINSTANCE)
+
+SG = "${ARTIFACT}-instances-${ENVIROMENT_PREFIX_DEV}-sg"
+echo $(aws ec2 delete-security-group --group-name $SG)
+
 echo "complete remove"
 
 terraform init
