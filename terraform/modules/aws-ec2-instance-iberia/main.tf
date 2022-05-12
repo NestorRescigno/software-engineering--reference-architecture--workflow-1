@@ -29,54 +29,6 @@ provider "aws" {
 }
 
 
-
-############################
-### New instance profile 
-############################
-
-# create resource AIM 
-resource "aws_iam_role" "role" {
-  # assigned name best-practice-development-role
-  name = join("-", [var.project, var.environment, "role"])
-  path = "/"
-  
-  # asssigne standars policy
-  assume_role_policy = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Action": "sts:AssumeRole",
-            "Principal": {
-               "Service": "ec2.amazonaws.com"
-            },
-            "Effect": "Allow",
-            "Sid": ""
-        }
-    ]
-}
-EOF
-
-  lifecycle { create_before_destroy = true }  
-}
-
-
-resource "aws_iam_instance_profile" "iam_instance_profile" {
-
-   depends_on = [
-    aws_iam_role.role
-  ]
-
-   name = join("-",[var.project, var.environment, "instanceprofile", var.service_name])
-   role = data.aws_iam_role.role.name
-   
-   # destroy instance and reemplace with new configuration.  
-   lifecycle { create_before_destroy = true } 
-
-}
-
-
-
 ###########################
 ### New Resource Target Group
 ###########################
@@ -128,96 +80,6 @@ resource "aws_alb_target_group" "alb" {
 }
 
 
-# create segurity group by instance
-resource "aws_security_group" "instances" {
-
-  depends_on = [
-    aws_security_group.alb
-  ]
-
-  # asign name: demo-instances-dev-sg
-  name        = join("-",[var.service_name, "instances",var.environment_prefix,"sg"])
-  description = "SG for ${var.service_name} cluster instances"
-  vpc_id      = data.aws_vpc.vpc_product.id
-  
-
-  ingress {
-    from_port       = 8080
-    to_port         = 8080     
-    protocol        = "tcp"
-    security_groups = [aws_security_group.alb.id]
-    description = "From ${var.service_name} ALB"
-  }
-
-  tags = merge(
-    local.global_common_tags,
-    tomap({
-      Name = join("-",[var.service_name,"instances",var.environment_prefix,"sg"])
-    })
-  )
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
-
-
-#####################################
-### New resources ALB SG 
-######################################
-
-# Provides a security group resource for cluster ALB
-
-resource "aws_security_group" "alb" {
-
-  # asign name: demo-alb-dev-sg
-  name        = join("-",[var.service_name,"alb",var.environment_prefix,"sg"])
-  description = "SG for ${var.service_name} cluster ALB"
-  
-  # asign vpc id to apply security group 
-
-  vpc_id      = data.aws_vpc.vpc_product.id
-
-  # Configuration block for ingress rules. 
-  # Can be specified multiple times for each ingress rule. 
-  # Each ingress block supports fields documented below. 
-  # This argument is processed in attribute-as-blocks mode.
-  ingress {
-    from_port       = 80
-    to_port         = 80
-    protocol        = "tcp"
-    # security_groups = [ aws_security_group.instances.id ]
-    # data.aws_vpc.vpc_product
-    
-  }
-
-  # asign tag use marge takes an arbitrary number of maps or objects, 
-  # and returns a single map or object that contains 
-  # a merged set of elements from all arguments.
-  # tag:{
-  #    Project = "bestpractice"
-  #    Name = "demo-alb-dev-sg"
-  #    Environment = "developer"
-  #    Cluster = "demo"
-  #    Side = "demo"
-  #    "tf:Used"                = "True"
-  #    "Application:ArtifactId" = "demo-core"      
-  # }
-  tags = merge(
-    local.global_common_tags,
-    # converts to map { Name = demo-alb-dev-sg}
-    tomap({
-      Name = join("-",[var.service_name,"alb",var.environment_prefix,"sg"])
-    })
-  )
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
-
-
-
 #######################################################
 ## New Resource Internal ALB 
 #######################################################
@@ -235,7 +97,7 @@ resource "aws_lb" "alb" {
 
   # asign segurity group to loadbalancer
   # security_groups = [aws_security_group.alb.id, data.aws_security_group.sg_common_microservices_alb.id]
-  security_groups = [aws_security_group.alb.id, aws_security_group.instances.id]
+  security_groups = [data.aws_security_group.alb.id, data.aws_security_group.instances.id]
 
   # A list of subnet IDs to attach to the LB. 
   # Subnets cannot be updated for Load Balancers of type network. 
@@ -437,7 +299,7 @@ resource "aws_instance" "app" {
     # }
   
     # The IAM Instance Profile to launch the instance with.
-    iam_instance_profile    = aws_iam_instance_profile.iam_instance_profile.name
+    iam_instance_profile    = data.aws_iam_instance_profile.iam_instance_profile.name
 
     instance_type           = var.instance_type
     # number launch
@@ -445,7 +307,7 @@ resource "aws_instance" "app" {
     # VPC Subnet ID to launch in.
     subnet_id               = each.value # test with id because data not get id
     # A list of security grou[p IDs to associate with.
-    vpc_security_group_ids  = [aws_security_group.alb.id, aws_security_group.instances.id] 
+    vpc_security_group_ids  = [data.aws_security_group.alb.id, data.aws_security_group.instances.id] 
 
 
     # configure bash param to script template

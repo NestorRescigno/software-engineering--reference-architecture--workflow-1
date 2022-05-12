@@ -53,30 +53,56 @@ else
 fi
 
 
-##################################
-
-# init terraform module
-cd ${WORKSPACE}/.github/cicd/terraform/modules/aws-ec2-instance-iberia
-
 if [[ "${INSTANCE_TYPE}" -ne "" ]]  ; then 
    echo "force use new instance type: ${INSTANCE_TYPE}"
 fi
 
+##################################
+# init terraform module AIM
+##################################
 # echo "remove instance"
 # PROFILEINSTANCE="${PROJECT}-${ENVIROMENT_DEV}-instanceprofile-${ARTIFACT}"
 # aws sts get-caller-identity
 # echo $(aws iam list-instance-profiles | grep $PROFILEINSTANCE)
 # echo $(aws iam delete-instance-profile --instance-profile-name $PROFILEINSTANCE)
 
+# service name
+cd ${WORKSPACE}/.github/cicd/terraform/modules/aws-ec2-profile-iberia
+terraform init
+terraform plan  -var "project=${PROJECT}" -var "service_name=${ARTIFACT}"  -var "environment=${ENVIROMENT_DEV}" -var "environment_prefix=${ENVIROMENT_PREFIX_DEV}" -out create.plan
+# create plan terrafom
+terraform apply create.plan
+rc=$?
+if [ $rc -eq 1 ] ; then
+   echo "***************************************************"
+   echo " Continuos process..                               "
+   echo "***************************************************"
+fi
+
+##################################
+# init terraform module security
+##################################
 # SG="${ARTIFACT}-instances-${ENVIROMENT_PREFIX_DEV}-sg"
 # echo $(aws ec2 delete-security-group --group-name $SG)
+cd ${WORKSPACE}/.github/cicd/terraform/modules/aws-ec2-securitygroup-iberia
+terraform init
+terraform plan  -var "project=${PROJECT}" -var "service_name=${ARTIFACT}"  -var "environment=${ENVIROMENT_DEV}" -var "environment_prefix=${ENVIROMENT_PREFIX_DEV}" -out create.plan
+# create plan terrafom
+terraform apply create.plan
+rc=$?
+if [ $rc -eq 1 ] ; then
+   echo "***************************************************"
+   echo " Continuos process..                               "
+   echo "***************************************************"
+fi
 
-# echo "complete remove"
+##################################
+# init terraform module instance
+##################################
+cd ${WORKSPACE}/.github/cicd/terraform/modules/aws-ec2-instance-iberia
 
 terraform init
 terraform plan -var "lenguage_code=${LENGUAGE}" -var "instance_type=${INSTANCE_TYPE}" -var "ref=${ARTIFACTREF}" -var "package=${PACKAGE}" -var "project=${PROJECT}" -var "service_name=${ARTIFACT}" -var "service_version=${VERSION}" -var "service_groupid=${GROUP}" -var "artifact_user=${REPOSITORY_USER}" -var "artifact_secret=${REPOSITORY_SECRET}"  -var "environment=${ENVIROMENT_DEV}" -var "environment_prefix=${ENVIROMENT_PREFIX_DEV}" -out create.plan
-ls
-
 # create plan terrafom
 terraform apply create.plan
 rc=$?
@@ -87,7 +113,7 @@ if [ $rc -eq 1 ] ; then
    echo "***************************************************"
    exit -1
 fi
-ls
+
 
 #apply plan terrafom
 # terraform apply # temporal comment to test
