@@ -63,11 +63,11 @@ if [ ${INSTANCE_TYPE} != ""] ; then
 fi
 
 echo "remove instance"
-PROFILEINSTANCE="$project-$environment-instanceprofile-$service_name"
+PROFILEINSTANCE="${PROJECT}-${ENVIROMENT_DEV}-instanceprofile-${ARTIFACT}"
 aws sts get-caller-identity
 aws iam list-instance-profiles
-aws iam list-instance-profiles | grep $PROFILEINSTANCE
-aws iam delete-instance-profile --instance-profile-name $PROFILEINSTANCE
+echo $(aws iam list-instance-profiles | grep $PROFILEINSTANCE)
+# aws iam delete-instance-profile --instance-profile-name $PROFILEINSTANCE
 echo "complete remove"
 
 terraform init
