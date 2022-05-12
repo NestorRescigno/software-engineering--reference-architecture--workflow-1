@@ -13,9 +13,9 @@ data "aws_iam_role" "role" {
 }
 
 
-data "aws_iam_instance_profile" "ip" {
-  name = join("-",[var.project,var.environment,"instanceprofile",var.service_name])
-}
+# data "aws_iam_instance_profile" "ip" {
+#   name = join("-",[var.project,var.environment,"instanceprofile",var.service_name])
+# }
 
 # #########################
 # ## data source base ami
