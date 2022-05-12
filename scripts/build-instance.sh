@@ -84,10 +84,18 @@ ls
 echo "***************************************************"
 echo " instance id: $(terraform output instance_id)"
 echo "***************************************************"
-export IDS=$(terraform output instance_id)
-for ID in {$IDS[@]} ; do
-echo "Number instance_id is $ID"
-export PEM=`$(aws ec2 get-console-output --instance-id ${ID} --output text)`
+export DataList=$(terraform output instance_id)
+Field_Separator=$IFS
+ 
+# set comma as internal field separator for the string list
+IFS=,
+for val in $DataList;
+do
+id=$(echo $val | tr "[" " " | tr "]" " ")
+export PEM=`$(aws ec2 get-console-output --instance-id ${id} --output text)`
 echo "Read for instances key pem: $PEM"
-done 
+done
+ 
+IFS=$Field_Separator
+
 
