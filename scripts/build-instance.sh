@@ -58,14 +58,13 @@ fi
 # init terraform module
 cd ${WORKSPACE}/.github/cicd/terraform/modules/aws-ec2-instance-iberia
 
-if [ ${INSTANCE_TYPE} != ""] ; then 
+if [[ $INSTANCE_TYPE -ne "" ]]  ; then 
    echo "force use new instance type: ${INSTANCE_TYPE}"
 fi
 
 echo "remove instance"
 PROFILEINSTANCE="${PROJECT}-${ENVIROMENT_DEV}-instanceprofile-${ARTIFACT}"
 aws sts get-caller-identity
-aws iam list-instance-profiles
 echo $(aws iam list-instance-profiles | grep $PROFILEINSTANCE)
 echo $(aws iam delete-instance-profile --instance-profile-name $PROFILEINSTANCE)
 echo "complete remove"
