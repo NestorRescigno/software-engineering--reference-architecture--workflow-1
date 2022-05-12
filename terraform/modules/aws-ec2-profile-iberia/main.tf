@@ -35,7 +35,7 @@ resource "aws_iam_role" "role" {
   name = join("-", [var.project, var.environment, "role"])
   path = "/"
   
-  managed_policy_arns = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+  managed_policy_arns = ["arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"]
   
   # asssigne standars policy
   assume_role_policy = <<EOF
