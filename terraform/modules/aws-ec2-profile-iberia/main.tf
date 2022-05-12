@@ -36,7 +36,8 @@ resource "aws_iam_role" "role" {
   path = "/"
   
   # add new policy
-  managed_policy_arns = [data.aws_iam_policy.SSMManagedInstanceCore.arn, data.aws_iam_policy.SSMServiceRolePolicy.arn]
+  #managed_policy_arns = [data.aws_iam_policy.SSMManagedInstanceCore.arn, data.aws_iam_policy.SSMServiceRolePolicy.arn]
+
   
   # asssigne standars policy
   assume_role_policy = data.aws_iam_policy_document.instance-assume-role-policy.json
@@ -55,8 +56,12 @@ resource "aws_iam_role" "role" {
   #     ]
   # }
   # EOF
+  tags = local.global_common_tags
 
 }
+# ##############################
+# ## IAM Instance profile Role
+# ##############################
 
 # create instance profile
 resource "aws_iam_instance_profile" "iam_instance_profile" {
@@ -67,3 +72,28 @@ resource "aws_iam_instance_profile" "iam_instance_profile" {
 }
 
 
+
+
+##########################################################
+# Attach the policy cloudwatch_agent to the role
+# resource "aws_iam_instance_profile" "service" {
+#   name = "${var.service_name}-instanceprofile-${var.environment_prefix}"
+#   role = aws_iam_role.service.name
+# }
+
+# resource "aws_iam_role_policy_attachment" "cloudwatch_agent" {
+#   role       = aws_iam_role.service.name
+#   policy_arn = data.aws_iam_policy.cloudwatch_agent.arn
+# }
+
+# Attach the policy ssm to the role
+resource "aws_iam_role_policy_attachment" "ssm" {
+  role       = aws_iam_role.role.name
+  policy_arn = data.aws_iam_policy.ssm.arn
+}
+
+# # Attach the policy common-microservices to the role
+# resource "aws_iam_role_policy_attachment" "common-microservices" {
+#   role       = aws_iam_role.service.name
+#   policy_arn = data.aws_iam_policy.common-microservices.arn
+# }
