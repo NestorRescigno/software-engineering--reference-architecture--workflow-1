@@ -80,3 +80,11 @@ fi
 echo "***************************************************"
 echo " instance id: $(terraform output instance_id)"
 echo "***************************************************"
+export IDS = $(terraform output instance_id)
+for IDS
+do
+echo “Number instance_id is $IDS”
+export STATE=$(aws ec2 get-console-output --instance-id ${IDS} --output text)
+echo $STATE
+done
+
