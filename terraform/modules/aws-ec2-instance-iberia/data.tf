@@ -13,6 +13,8 @@ data "aws_iam_role" "role" {
 }
 
 
+
+
 #######################################
 ### Security group
 ########################################
@@ -25,9 +27,9 @@ data "aws_security_group" "instances"{
   name = join("-",[var.service_name, "instances",var.environment_prefix,"sg"])
 }
 
-# data "aws_iam_instance_profile" "ip" {
-#   name = join("-",[var.project,var.environment,"instanceprofile",var.service_name])
-# }
+data "aws_iam_instance_profile" "iam_instance_profile" {
+  name = join("-",[var.project,var.environment,"instanceprofile",var.service_name])
+}
 
 # #########################
 # ## data source base ami
