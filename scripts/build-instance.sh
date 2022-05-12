@@ -58,7 +58,7 @@ fi
 # init terraform module
 cd ${WORKSPACE}/.github/cicd/terraform/modules/aws-ec2-instance-iberia
 
-if [[ ${INSTANCE_TYPE} -ne "" ]]  ; then 
+if [[ "${INSTANCE_TYPE}" -ne "" ]]  ; then 
    echo "force use new instance type: ${INSTANCE_TYPE}"
 fi
 
