@@ -82,10 +82,9 @@ echo "***************************************************"
 echo " instance id: $(terraform output instance_id)"
 echo "***************************************************"
 export IDS=$(terraform output instance_id)
-for IDS
-do
-echo "Number instance_id is $IDS"
-export PEM=`$(aws ec2 get-console-output --instance-id ${IDS} --output text)`
+for ID in {$IDS[@]} ; do
+echo "Number instance_id is $ID"
+export PEM=`$(aws ec2 get-console-output --instance-id ${ID} --output text)`
 echo "Read for instances key pem: $PEM"
 done 
 
