@@ -67,7 +67,7 @@ terraform plan -var "lenguage_code=${LENGUAGE}" -var "instance_type=${INSTANCE_T
 ls
 
 # create plan terrafom
-terraform apply create.plan 
+terraform apply create.plan
 rc=$?
 if [ $rc -eq 1 ] ; then
    echo "***************************************************"
