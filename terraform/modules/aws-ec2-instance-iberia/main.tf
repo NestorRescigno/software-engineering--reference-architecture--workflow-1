@@ -269,6 +269,9 @@ resource "aws_iam_instance_profile" "iam_instance_profile" {
    role = data.aws_iam_role.role.name
 }
 
+data "aws_iam_instance_profile" "instance_profile" {
+   name = join("-",[var.project, var.environment, "instanceprofile", var.service_name])
+}
 
 # Manages a Route53 Hosted Zone. 
 # For managing Domain Name System Security Extensions (DNSSEC), 
@@ -394,7 +397,7 @@ resource "aws_instance" "app" {
     # }
   
     # The IAM Instance Profile to launch the instance with.
-    iam_instance_profile    = aws_iam_instance_profile.iam_instance_profile.name
+    iam_instance_profile    = data.aws_iam_instance_profile.instance_profile.name
 
     instance_type           = var.instance_type
     # number launch
