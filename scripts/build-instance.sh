@@ -61,10 +61,10 @@ fi
 # init terraform module AIM
 ##################################
 # echo "remove instance"
-# PROFILEINSTANCE="${PROJECT}-${ENVIROMENT_DEV}-instanceprofile-${ARTIFACT}"
-# aws sts get-caller-identity
-# echo $(aws iam list-instance-profiles | grep $PROFILEINSTANCE)
-# echo $(aws iam delete-instance-profile --instance-profile-name $PROFILEINSTANCE)
+PROFILEINSTANCE="${PROJECT}-${ENVIROMENT_DEV}-instanceprofile-${ARTIFACT}"
+aws sts get-caller-identity
+echo $(aws iam list-instance-profiles | grep $PROFILEINSTANCE)
+echo $(aws iam delete-instance-profile --instance-profile-name $PROFILEINSTANCE)
 
 # service name
 cd ${WORKSPACE}/.github/cicd/terraform/modules/aws-ec2-profile-iberia
