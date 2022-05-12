@@ -70,7 +70,12 @@ runs:
   steps:
     ########################################################
     # use temporaly this action but change 
-    # to future with script instal setup or install in magine 
+    # to future with script instal setup or install in magine
+    # checkout source code in runner 
+    - name: Checkout source
+      uses: actions/checkout@v2.4.2
+      with:
+        clean: 'true'
     - name: Setup Node 14
       uses: actions/setup-node@v2
       with:
