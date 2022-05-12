@@ -29,6 +29,54 @@ provider "aws" {
 }
 
 
+
+############################
+### New instance profile 
+############################
+
+# create resource AIM 
+resource "aws_iam_role" "role" {
+  # assigned name best-practice-development-role
+  name = join("-", [var.project, var.environment, "role"])
+  path = "/"
+  
+  # asssigne standars policy
+  assume_role_policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": "sts:AssumeRole",
+            "Principal": {
+               "Service": "ec2.amazonaws.com"
+            },
+            "Effect": "Allow",
+            "Sid": ""
+        }
+    ]
+}
+EOF
+
+  lifecycle { create_before_destroy = true }  
+}
+
+
+resource "aws_iam_instance_profile" "iam_instance_profile" {
+
+   depends_on = [
+    aws_iam_role.role
+  ]
+
+   name = join("-",[var.project, var.environment, "instanceprofile", var.service_name])
+   role = data.aws_iam_role.role.name
+   
+   # destroy instance and reemplace with new configuration.  
+   lifecycle { create_before_destroy = true } 
+
+}
+
+
+
 ###########################
 ### New Resource Target Group
 ###########################
@@ -79,6 +127,39 @@ resource "aws_alb_target_group" "alb" {
 
 }
 
+
+# create segurity group by instance
+resource "aws_security_group" "instances" {
+
+  depends_on = [
+    aws_security_group.alb
+  ]
+
+  # asign name: demo-instances-dev-sg
+  name        = join("-",[var.service_name, "instances",var.environment_prefix,"sg"])
+  description = "SG for ${var.service_name} cluster instances"
+  vpc_id      = data.aws_vpc.vpc_product.id
+  
+
+  ingress {
+    from_port       = 8080
+    to_port         = 8080     
+    protocol        = "tcp"
+    security_groups = [aws_security_group.alb.id]
+    description = "From ${var.service_name} ALB"
+  }
+
+  tags = merge(
+    local.global_common_tags,
+    tomap({
+      Name = join("-",[var.service_name,"instances",var.environment_prefix,"sg"])
+    })
+  )
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
 
 
 #####################################
@@ -136,38 +217,6 @@ resource "aws_security_group" "alb" {
 }
 
 
-# create segurity group by instance
-resource "aws_security_group" "instances" {
-
-  depends_on = [
-    aws_security_group.alb
-  ]
-
-  # asign name: demo-instances-dev-sg
-  name        = join("-",[var.service_name, "instances",var.environment_prefix,"sg"])
-  description = "SG for ${var.service_name} cluster instances"
-  vpc_id      = data.aws_vpc.vpc_product.id
-  
-
-  ingress {
-    from_port       = 8080
-    to_port         = 8080     
-    protocol        = "tcp"
-    security_groups = [aws_security_group.alb.id]
-    description = "From ${var.service_name} ALB"
-  }
-
-  tags = merge(
-    local.global_common_tags,
-    tomap({
-      Name = join("-",[var.service_name,"instances",var.environment_prefix,"sg"])
-    })
-  )
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
 
 #######################################################
 ## New Resource Internal ALB 
@@ -262,13 +311,6 @@ resource "aws_lb_listener" "lb_listener" {
   }
 }
 
-
-resource "aws_iam_instance_profile" "iam_instance_profile" {
-   name = join("-",[var.project, var.environment, "instanceprofile", var.service_name])
-   role = data.aws_iam_role.role.name
-   # destroy instance and reemplace with new configuration.  
-   lifecycle { create_before_destroy = true }  
-}
 
 
 # Manages a Route53 Hosted Zone. 

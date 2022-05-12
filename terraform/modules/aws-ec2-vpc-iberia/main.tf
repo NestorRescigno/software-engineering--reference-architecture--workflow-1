@@ -71,33 +71,6 @@ resource "aws_subnet" "subnets" {
   }
 }
 
-############################
-### New instance profile 
-############################
-
-# create resource AIM 
-resource "aws_iam_role" "role" {
-  # assigned name best-practice-development-role
-  name = join("-", [var.project, var.environment, "role"])
-  path = "/"
-  
-  # asssigne standars policy
-  assume_role_policy = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Action": "sts:AssumeRole",
-            "Principal": {
-               "Service": "ec2.amazonaws.com"
-            },
-            "Effect": "Allow",
-            "Sid": ""
-        }
-    ]
-}
-EOF
-}
 
 
 
