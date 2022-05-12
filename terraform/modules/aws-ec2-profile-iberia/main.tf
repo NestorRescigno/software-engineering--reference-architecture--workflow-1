@@ -35,21 +35,23 @@ resource "aws_iam_role" "role" {
   name = join("-", [var.project, var.environment, "role"])
   path = "/"
   
+  managed_policy_arns = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+  
   # asssigne standars policy
   assume_role_policy = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Action": "sts:AssumeRole",
-            "Principal": {
-               "Service": "ec2.amazonaws.com"
-            },
-            "Effect": "Allow",
-            "Sid": ""
-        }
-    ]
-}
+  {
+      "Version": "2012-10-17",
+      "Statement": [
+          {
+              "Action": "sts:AssumeRole",
+              "Principal": {
+                "Service": "ec2.amazonaws.com"
+              },
+              "Effect": "Allow",
+              "Sid": ""
+          }
+      ]
+  }
 EOF
 
 }

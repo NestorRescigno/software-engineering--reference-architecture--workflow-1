@@ -122,6 +122,7 @@ echo "***************************************************"
 echo " instance id: $(terraform output instance_id)"
 echo "***************************************************"
 export DataList=$(terraform output instance_id)
+
 Field_Separator=$IFS
  
 # set comma as internal field separator for the string list
