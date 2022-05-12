@@ -264,14 +264,12 @@ resource "aws_lb_listener" "lb_listener" {
 
 
 resource "aws_iam_instance_profile" "iam_instance_profile" {
-   count = data.aws_iam_instance_profile.ip.name != "null" ? 0 : 1
    name = join("-",[var.project, var.environment, "instanceprofile", var.service_name])
    role = data.aws_iam_role.role.name
+   # destroy instance and reemplace with new configuration.  
+   lifecycle { create_before_destroy = true }  
 }
 
-data "aws_iam_instance_profile" "instance_profile" {
-   name = join("-",[var.project, var.environment, "instanceprofile", var.service_name])
-}
 
 # Manages a Route53 Hosted Zone. 
 # For managing Domain Name System Security Extensions (DNSSEC), 
@@ -397,7 +395,7 @@ resource "aws_instance" "app" {
     # }
   
     # The IAM Instance Profile to launch the instance with.
-    iam_instance_profile    = data.aws_iam_instance_profile.instance_profile.name
+    iam_instance_profile    = aws_iam_instance_profile.iam_instance_profile.name
 
     instance_type           = var.instance_type
     # number launch
