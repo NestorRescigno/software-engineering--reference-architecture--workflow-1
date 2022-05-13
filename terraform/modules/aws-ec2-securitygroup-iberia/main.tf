@@ -49,8 +49,6 @@ resource "aws_security_group" "alb" {
     protocol        = "tcp"
     # security_groups = [ aws_security_group.instances.id ]
     # data.aws_vpc.vpc_product
-    cidr_blocks      = [data.aws_vpc.vpc_product.cidr_block]
-    ipv6_cidr_blocks = [data.aws_vpc.vpc_product.ipv6_cidr_block]
   }
 
   # configure load balancer to instance
