@@ -108,8 +108,10 @@ resource "aws_security_group" "instances" {
     from_port      = 0
     to_port        = 0
     protocol       = "-1"
-    cidr_blocks      = [data.aws_vpc.vpc_product.cidr_block]
-    ipv6_cidr_blocks = [data.aws_vpc.vpc_product.ipv6_cidr_block]
+  
+     # If your requirement is to allow all the traffic from internet you can use
+    cidr_blocks      = ["0.0.0.0/0"] 
+    ipv6_cidr_blocks = ["::/0"]
   }
 
   tags = merge(
