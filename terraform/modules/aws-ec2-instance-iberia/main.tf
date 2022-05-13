@@ -355,7 +355,7 @@ resource "aws_instance" "app" {
 
 resource "aws_vpc_endpoint" "ec2" {
   vpc_id            = data.aws_vpc.vpc_product.id
-  service_name      = join(".",["com","amazonaws",var.region, "ec2"])
+  service_name      = join(".",["com","amazonaws",var.aws_region, "ec2"])
   vpc_endpoint_type = "Interface"
 
   security_group_ids = [
@@ -367,7 +367,7 @@ resource "aws_vpc_endpoint" "ec2" {
 
 resource "aws_vpc_endpoint" "s3" {
   vpc_id            = data.aws_vpc.vpc_product.id
-  service_name      = join(".",["com","amazonaws",var.region, "s2"])
+  service_name      = join(".",["com","amazonaws",var.aws_region, "s2"])
   vpc_endpoint_type = "Interface"
 
   security_group_ids = [
@@ -379,7 +379,7 @@ resource "aws_vpc_endpoint" "s3" {
 
 resource "aws_vpc_endpoint" "ec2messages" {
   vpc_id            = data.aws_vpc.vpc_product.id
-  service_name      =  join(".",["com","amazonaws",var.region, "ec2messages"])
+  service_name      =  join(".",["com","amazonaws",var.aws_region, "ec2messages"])
   vpc_endpoint_type = "Interface"
 
   security_group_ids = [
@@ -391,7 +391,7 @@ resource "aws_vpc_endpoint" "ec2messages" {
 
 resource "aws_vpc_endpoint" "ssm" {
   vpc_id            = data.aws_vpc.vpc_product.id
-  service_name      = join(".",["com","amazonaws",var.region, "ssm"])
+  service_name      = join(".",["com","amazonaws",var.aws_region, "ssm"])
   vpc_endpoint_type = "Interface"
 
   security_group_ids = [
@@ -403,7 +403,7 @@ resource "aws_vpc_endpoint" "ssm" {
 
 resource "aws_vpc_endpoint" "ssmmessages" {
   vpc_id            = data.aws_vpc.vpc_product.id
-  service_name      = join(".",["com","amazonaws",var.region, "ssmmessages"])
+  service_name      = join(".",["com","amazonaws",var.aws_region, "ssmmessages"])
   vpc_endpoint_type = "Interface"
 
   security_group_ids = [
