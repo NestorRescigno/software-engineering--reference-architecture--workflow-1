@@ -100,7 +100,6 @@ resource "aws_security_group" "instances" {
     from_port       = 8080
     to_port         = 8080 
     protocol        = "tcp"
-    security_groups = [aws_security_group.alb.id]
     description = "From ${var.service_name} ALB"
   }
 
