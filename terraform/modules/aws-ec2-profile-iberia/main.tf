@@ -92,6 +92,11 @@ resource "aws_iam_role_policy_attachment" "ssm" {
   policy_arn = data.aws_iam_policy.ssm.arn
 }
 
+resource "aws_iam_role_policy_attachment" "SSMManagedInstanceCore" {
+  role       = aws_iam_role.role.name
+  policy_arn = data.aws_iam_policy.SSMManagedInstanceCore.arn
+}
+
 # # Attach the policy common-microservices to the role
 # resource "aws_iam_role_policy_attachment" "common-microservices" {
 #   role       = aws_iam_role.service.name
