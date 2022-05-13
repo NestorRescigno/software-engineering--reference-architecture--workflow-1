@@ -51,11 +51,13 @@ resource "aws_security_group" "alb" {
     # data.aws_vpc.vpc_product
   }
 
-  # configure load balancer to instance
+  ## outbound all traffic
   egress {
-    from_port = 8080
-    to_port = 8080
-    protocol = "tcp"
+    form_port      = 0
+    to_port        = 0
+    protocol       = "-1"
+    cidr_blocks      = [data.aws_vpc.vpc_product.cidr_block]
+    ipv6_cidr_blocks = [data.aws_vpc.vpc_product.ipv6_cidr_block]
   }
 
  
@@ -102,16 +104,7 @@ resource "aws_security_group" "instances" {
     security_groups = [ aws_security_group.alb.id ]
     description = "From ${var.service_name} ALB"
   }
-
-  ## outbound all traffic
-  egress {
-    form_port      = 0
-    to_port        = 0
-    protocol       = "-1"
-    cidr_blocks      = [data.aws_vpc.vpc_product.cidr_block]
-    ipv6_cidr_blocks = [data.aws_vpc.vpc_product.ipv6_cidr_block]
-  }
-
+  
   tags = merge(
     local.global_common_tags,
     tomap({
