@@ -4,8 +4,8 @@
 # *************       by Software Engineering             *************
 # *********************************************************************
 # installation commands for SSM Agent on Amazon Linux 2 (https://docs.aws.amazon.com/systems-manager/latest/userguide/agent-install-al2.html)
-# sudo yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_arm64/amazon-ssm-agent.rpm
-# sudo systemctl start amazon-ssm-agent
+sudo yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_arm64/amazon-ssm-agent.rpm
+sudo systemctl start amazon-ssm-agent
 
 
 # Install necessary dependencies
@@ -34,8 +34,8 @@ sudo useradd -m -s /bin/bash ${name}
 sudo usermod -a -G ${department} ${name}
 
 # Setup sudo to allow no-password 
-# sudo cp /etc/sudoers /etc/sudoers.orig
-# echo "${name} ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/${name}
+sudo cp /etc/sudoers /etc/sudoers.orig
+echo "${name} ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/${name}
 
 # Create PATH for your user & download the webapp from github
 sudo -H -i -u ${name} -- env bash << EOF
