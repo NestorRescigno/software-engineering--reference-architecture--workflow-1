@@ -367,7 +367,7 @@ resource "aws_vpc_endpoint" "ec2" {
 
 resource "aws_vpc_endpoint" "s3" {
   vpc_id            = data.aws_vpc.vpc_product.id
-  service_name      = join(".",["com","amazonaws",var.aws_region, "s2"])
+  service_name      = join(".",["com","amazonaws",var.aws_region, "s3"])
   vpc_endpoint_type = "Interface"
 
   security_group_ids = [
