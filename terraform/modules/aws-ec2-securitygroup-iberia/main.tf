@@ -52,6 +52,18 @@ resource "aws_security_group" "alb" {
     
   }
 
+  // put ingress and egress access 
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+  }
+
+  egress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+  }
   # asign tag use marge takes an arbitrary number of maps or objects, 
   # and returns a single map or object that contains 
   # a merged set of elements from all arguments.
@@ -87,6 +99,18 @@ resource "aws_security_group" "instances" {
   description = "SG for ${var.service_name} cluster instances"
   vpc_id      = data.aws_vpc.vpc_product.id
   
+  // put ingress and egress access 
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+  }
+
+  egress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+  }
 
   ingress {
     from_port       = 8080
@@ -104,5 +128,4 @@ resource "aws_security_group" "instances" {
   )
 
 }
-
 
