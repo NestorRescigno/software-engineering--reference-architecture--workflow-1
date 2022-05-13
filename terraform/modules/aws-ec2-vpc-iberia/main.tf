@@ -44,6 +44,10 @@ resource "aws_vpc" "vpc_product" {
   # This has a dedicated per region fee of $2 per hour, plus an hourly per instance usage fee.
   instance_tenancy = "default"
   # A map of tags to assign to the resource. If configured with a provider
+
+  enable_dns_support = true
+  enable_dns_hostnames = true
+  
   tags = {
     Name = local.data.vpc.vpc_product
   }
