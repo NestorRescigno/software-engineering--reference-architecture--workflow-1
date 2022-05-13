@@ -365,17 +365,17 @@ resource "aws_vpc_endpoint" "ec2" {
   private_dns_enabled = true
 }
 
-resource "aws_vpc_endpoint" "s3" {
-  vpc_id            = data.aws_vpc.vpc_product.id
-  service_name      = join(".",["com","amazonaws",var.aws_region, "s3"])
-  vpc_endpoint_type = "Interface"
+# resource "aws_vpc_endpoint" "s3" {
+#   vpc_id            = data.aws_vpc.vpc_product.id
+#   service_name      = join(".",["com","amazonaws",var.aws_region, "s3"])
+#   vpc_endpoint_type = "Interface"
 
-  security_group_ids = [
-    data.aws_security_group.alb.id, data.aws_security_group.instances.id
-  ]
+#   security_group_ids = [
+#     data.aws_security_group.alb.id, data.aws_security_group.instances.id
+#   ]
 
-  private_dns_enabled = true
-}
+#   private_dns_enabled = true
+# }
 
 resource "aws_vpc_endpoint" "ec2messages" {
   vpc_id            = data.aws_vpc.vpc_product.id
