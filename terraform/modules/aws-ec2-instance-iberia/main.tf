@@ -348,3 +348,67 @@ resource "aws_instance" "app" {
 #   filename = "${aws_key_pair.kp.key_name}.pem"
 #   content = tls_private_key.pk.private_key_pem
 # }
+
+# #################################
+# ### add endpoint
+# #################################
+
+resource "aws_vpc_endpoint" "ec2" {
+  vpc_id            = data.aws_vpc.vpc_product.id
+  service_name      = join(".",["com","amazonaws",var.region, "ec2"])
+  vpc_endpoint_type = "Interface"
+
+  security_group_ids = [
+    data.aws_security_group.alb.id, data.aws_security_group.instances.id
+  ]
+
+  private_dns_enabled = true
+}
+
+resource "aws_vpc_endpoint" "s3" {
+  vpc_id            = data.aws_vpc.vpc_product.id
+  service_name      = join(".",["com","amazonaws",var.region, "s2"])
+  vpc_endpoint_type = "Interface"
+
+  security_group_ids = [
+    data.aws_security_group.alb.id, data.aws_security_group.instances.id
+  ]
+
+  private_dns_enabled = true
+}
+
+resource "aws_vpc_endpoint" "ec2messages" {
+  vpc_id            = data.aws_vpc.vpc_product.id
+  service_name      =  join(".",["com","amazonaws",var.region, "ec2messages"])
+  vpc_endpoint_type = "Interface"
+
+  security_group_ids = [
+    data.aws_security_group.alb.id, data.aws_security_group.instances.id
+  ]
+
+  private_dns_enabled = true
+}
+
+resource "aws_vpc_endpoint" "ssm" {
+  vpc_id            = data.aws_vpc.vpc_product.id
+  service_name      = join(".",["com","amazonaws",var.region, "ssm"])
+  vpc_endpoint_type = "Interface"
+
+  security_group_ids = [
+    data.aws_security_group.alb.id, data.aws_security_group.instances.id
+  ]
+
+  private_dns_enabled = true
+}
+
+resource "aws_vpc_endpoint" "ssmmessages" {
+  vpc_id            = data.aws_vpc.vpc_product.id
+  service_name      = join(".",["com","amazonaws",var.region, "ssmmessages"])
+  vpc_endpoint_type = "Interface"
+
+  security_group_ids = [
+    data.aws_security_group.alb.id, data.aws_security_group.instances.id
+  ]
+
+  private_dns_enabled = true
+}
