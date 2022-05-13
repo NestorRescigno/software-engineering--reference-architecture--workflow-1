@@ -49,21 +49,19 @@ resource "aws_security_group" "alb" {
     protocol        = "tcp"
     # security_groups = [ aws_security_group.instances.id ]
     # data.aws_vpc.vpc_product
-    
+    cidr_blocks      = [data.aws_vpc.vpc_product.cidr_block]
+    ipv6_cidr_blocks = [data.aws_vpc.vpc_product.ipv6_cidr_block]
   }
 
-  // put ingress and egress access 
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-  }
-
+  # configure load balancer to instance
   egress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
+    from_port = 8080
+    to_port = 8080
+    protocol = "tcp"
+    security_groups = [ aws_security_group.instances.id ]
   }
+
+ 
   # asign tag use marge takes an arbitrary number of maps or objects, 
   # and returns a single map or object that contains 
   # a merged set of elements from all arguments.
@@ -99,25 +97,22 @@ resource "aws_security_group" "instances" {
   description = "SG for ${var.service_name} cluster instances"
   vpc_id      = data.aws_vpc.vpc_product.id
   
-  // put ingress and egress access 
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-  }
-
-  egress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-  }
-
+  # inbound
   ingress {
     from_port       = 8080
-    to_port         = 8080     
+    to_port         = 8080 
     protocol        = "tcp"
     security_groups = [aws_security_group.alb.id]
     description = "From ${var.service_name} ALB"
+  }
+
+  ## outbound all traffic
+  egress {
+    form_port      = 0
+    to_port        = 0
+    protocol       = "-1"
+    cidr_blocks      = [data.aws_vpc.vpc_product.cidr_block]
+    ipv6_cidr_blocks = [data.aws_vpc.vpc_product.ipv6_cidr_block]
   }
 
   tags = merge(

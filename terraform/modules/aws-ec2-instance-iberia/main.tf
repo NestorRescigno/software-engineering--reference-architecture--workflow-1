@@ -97,7 +97,7 @@ resource "aws_lb" "alb" {
 
   # asign segurity group to loadbalancer
   # security_groups = [aws_security_group.alb.id, data.aws_security_group.sg_common_microservices_alb.id]
-  security_groups = [data.aws_security_group.alb.id, data.aws_security_group.instances.id]
+  security_groups = [data.aws_security_group.alb.id]
 
   # A list of subnet IDs to attach to the LB. 
   # Subnets cannot be updated for Load Balancers of type network. 
@@ -307,7 +307,7 @@ resource "aws_instance" "app" {
     # VPC Subnet ID to launch in.
     subnet_id               = each.value # test with id because data not get id
     # A list of security grou[p IDs to associate with.
-    vpc_security_group_ids  = [data.aws_security_group.alb.id, data.aws_security_group.instances.id] 
+    vpc_security_group_ids  = [data.aws_security_group.instances.id] 
 
 
     # configure bash param to script template
@@ -359,7 +359,7 @@ resource "aws_vpc_endpoint" "ec2" {
   vpc_endpoint_type = "Interface"
 
   security_group_ids = [
-    data.aws_security_group.alb.id, data.aws_security_group.instances.id
+    data.aws_security_group.instances.id
   ]
 
   private_dns_enabled = true
@@ -383,7 +383,7 @@ resource "aws_vpc_endpoint" "ec2messages" {
   vpc_endpoint_type = "Interface"
 
   security_group_ids = [
-    data.aws_security_group.alb.id, data.aws_security_group.instances.id
+    data.aws_security_group.instances.id
   ]
 
   private_dns_enabled = true
@@ -395,7 +395,7 @@ resource "aws_vpc_endpoint" "ssm" {
   vpc_endpoint_type = "Interface"
 
   security_group_ids = [
-    data.aws_security_group.alb.id, data.aws_security_group.instances.id
+    data.aws_security_group.instances.id
   ]
 
   private_dns_enabled = true
@@ -407,7 +407,7 @@ resource "aws_vpc_endpoint" "ssmmessages" {
   vpc_endpoint_type = "Interface"
 
   security_group_ids = [
-    data.aws_security_group.alb.id, data.aws_security_group.instances.id
+    data.aws_security_group.instances.id
   ]
 
   private_dns_enabled = true
