@@ -7,79 +7,80 @@
 sudo yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_arm64/amazon-ssm-agent.rpm
 sudo systemctl start amazon-ssm-agent
 
-
+echo "Copying the SSH key of github runner to the server"
+echo -e "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDW3cVbdMlcu95EJaa/L+JUG8rABCVbS/Lq8OwZgTqppAsjO48Qdu2rVF8/JMAgowvbPCEYmvERUHpFY4s6l9LBQ0qsE5cTahLaG6ty6fug4oKRY9+et3Hie0DcSPxLvZqkLltF5b/DnbLvMcXQLc/om312AWnWR6w0857w1mVfDH3AKcos1aLYpg9AkXskxkTy5NWQyJ2U2AuqLtv8kvMHMDDzMoOr2Z9uuFn+94Tf2zwb1IcCBTcnd6b6w6LFQpW7fMid2VpfHDV3TwyeJECR0jLFFthTy4oWGiZIDQE4Z2KGGnk+qGyJn7xgyxXNKC7m8jZ0DDz1OWXmb45INoIz ssm-user@ip-10-200-177-169.eu-central-1.compute.internalcicd.cloud.iberi" >> /home/ec2-user/.ssh/authorized_keys
 # Install necessary dependencies
 # Installing the CloudWatch agent
-sudo yum install amazon-cloudwatch-agent
+# sudo yum install amazon-cloudwatch-agent
 
-## configure file cloudwatch agent
-# Note of developer: pending configure json file,this file is present in same repository
-## end configure
+# ## configure file cloudwatch agent
+# # Note of developer: pending configure json file,this file is present in same repository
+# ## end configure
 
 
-# GO lenguage
-sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
-sudo apt-get -y -qq install curl wget git vim apt-transport-https ca-certificates
-sudo add-apt-repository ppa:longsleep/golang-backports -y
-sudo apt -y -qq install golang-go
-# node js
-sudo apt-get install nodejs
+# # GO lenguage
+# sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
+# sudo apt-get -y -qq install curl wget git vim apt-transport-https ca-certificates
+# sudo add-apt-repository ppa:longsleep/golang-backports -y
+# sudo apt -y -qq install golang-go
+# # node js
+# sudo apt-get install nodejs
 
-# java runtime 11
-sudo apt-get install openjdk-11-jre
+# # java runtime 11
+# sudo apt-get install openjdk-11-jre
 
-# Setup your group and adding your user
-sudo groupadd -r ${department}
-sudo useradd -m -s /bin/bash ${name}
-sudo usermod -a -G ${department} ${name}
+# # Setup your group and adding your user
+# sudo groupadd -r ${department}
+# sudo useradd -m -s /bin/bash ${name}
+# sudo usermod -a -G ${department} ${name}
 
-# Setup sudo to allow no-password 
-sudo cp /etc/sudoers /etc/sudoers.orig
-echo "${name} ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/${name}
+# # Setup sudo to allow no-password 
+# sudo cp /etc/sudoers /etc/sudoers.orig
+# echo "${name} ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/${name}
 
-# Create PATH for your user & download the webapp from github
-sudo -H -i -u ${name} -- env bash << EOF
-# change directory project home
-cd /home/${name}
+# # Create PATH for your user & download the webapp from github
+# sudo -H -i -u ${name} -- env bash << EOF
+# # change directory project home
+# cd /home/${name}
 
-# export environment variables
-export GOROOT=/usr/lib/go
-export NODEROOT=/usr/lib/nodejs
-export JAVAROOT=/usr/lib/java   # Note of developers : use readlink example -> $(dirname $(dirname $(readlink -f $(which java))))
+# # export environment variables
+# export GOROOT=/usr/lib/go
+# export NODEROOT=/usr/lib/nodejs
+# export JAVAROOT=/usr/lib/java   # Note of developers : use readlink example -> $(dirname $(dirname $(readlink -f $(which java))))
 
-# path software 
-export GOPATH=/home/${name}/go
-export NODEPATH=/home/${name}/www
-export JARPATH=/home/${name}/target   # Note of developers : change to other path
+# # path software 
+# export GOPATH=/home/${name}/go
+# export NODEPATH=/home/${name}/www
+# export JARPATH=/home/${name}/target   # Note of developers : change to other path
 
-# setting environment path
-export PATH=$PATH:$GOROOT/bin:$NODEROOT/bin:$JAVAROOT/bin:$GOPATH/bin:$NODEPATH/dist:$JARPATH
+# # setting environment path
+# export PATH=$PATH:$GOROOT/bin:$NODEROOT/bin:$JAVAROOT/bin:$GOPATH/bin:$NODEPATH/dist:$JARPATH
 
-if [ ${lenguage} == "go"] ; then
-    # get webapp from repository git
-    go get -d ${artifact}
-    # change directory source
-    cd go/src/${artifact}
-    # run go application 
-    go run webapp.go
-elif [ ${lenguage} == "angular"] ; then
-    # change directory
-    cd $NODEPATH
-    # get artifact 
-    curl -X GET -u ${user}:${secret} ${artifact} && clear
-    # run service 
-    ng serve 
-elif [ ${lenguage} == "java"] ; then
-    # run jar spring boot
-    cd $JARPATH
+# if [ ${lenguage} == "go"] ; then
+#     # get webapp from repository git
+#     go get -d ${artifact}
+#     # change directory source
+#     cd go/src/${artifact}
+#     # run go application 
+#     go run webapp.go
+# elif [ ${lenguage} == "angular"] ; then
+#     # change directory
+#     cd $NODEPATH
+#     # get artifact 
+#     curl -X GET -u ${user}:${secret} ${artifact} && clear
+#     # run service 
+#     ng serve 
+# elif [ ${lenguage} == "java"] ; then
+#     # run jar spring boot
+#     cd $JARPATH
     
-    # NOTE OF DEVELOPER: use param remote-name for write file name in output curl and use jar command
-    java -jar $(echo curl --remote-name -X GET -u ${user}:${secret} ${artifact}) && clear
-    # if param is not exist then use next code and comment other code
-    # curl -X GET -u ${user}:${secret} ${artifact} && clear
-    # java -jar $(echo find . -name *.${package})
+#     # NOTE OF DEVELOPER: use param remote-name for write file name in output curl and use jar command
+#     java -jar $(echo curl --remote-name -X GET -u ${user}:${secret} ${artifact}) && clear
+#     # if param is not exist then use next code and comment other code
+#     # curl -X GET -u ${user}:${secret} ${artifact} && clear
+#     # java -jar $(echo find . -name *.${package})
    
-else 
-    echo "Not complete process, lenguage code selected isn't implement to script"
-if
-EOF
+# else 
+#     echo "Not complete process, lenguage code selected isn't implement to script"
+# if
+# EOF
