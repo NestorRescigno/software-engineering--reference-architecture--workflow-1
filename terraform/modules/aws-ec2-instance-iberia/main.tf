@@ -395,7 +395,7 @@ resource "aws_route_table" "route_product" {
   vpc_id = data.aws_vpc.vpc_product.id
 
   route {
-    cidr_block = data.aws_vpc.vpc_product.cidr_block
+    cidr_block = "10.200.8.0/22"
     gateway_id = aws_internet_gateway.gw.id
   }
 
