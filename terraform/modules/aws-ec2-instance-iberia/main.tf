@@ -407,7 +407,7 @@ resource "aws_route_table" "route_product" {
     #local.tags,
     #local.global_common_tags,
     tomap({
-      Name = "${var.project}-${var.environment_prefix}-snet-amber"0
+      Name = "${var.project}-${var.environment_prefix}-snet-amber"
       Terraform                = "True"
       Project                  = "${var.project}"
       Environment              = "${var.environment}"
