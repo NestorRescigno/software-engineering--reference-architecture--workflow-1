@@ -142,17 +142,7 @@ resource "aws_lb" "alb" {
   }
 }
 
-######################################################
-# attach target group ALB to Instance
-#####################################################
 
-resource "aws_lb_target_group_attachment" "albtogrouptarget" {
-    for_each = aws_instance.app.id
-    target_group_arn  = aws_alb_target_group.alb.arn
-    target_id         = each.value
-    port              = 80
-
-}
 
 ######################################################
 ## New Resource listener
@@ -359,3 +349,14 @@ resource "aws_instance" "app" {
 #   content = tls_private_key.pk.private_key_pem
 # }
 
+######################################################
+# attach target group ALB to Instance
+#####################################################
+
+resource "aws_lb_target_group_attachment" "albtogrouptarget" {
+    count = length(aws_instance.app)
+    target_group_arn  = aws_alb_target_group.alb.arn
+    target_id         = aws_instance.app[count.index].ids
+    port              = 80
+
+}
