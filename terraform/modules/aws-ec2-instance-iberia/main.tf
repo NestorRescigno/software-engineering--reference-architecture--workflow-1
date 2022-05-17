@@ -142,11 +142,20 @@ resource "aws_lb" "alb" {
   }
 }
 
+######################################################
+# attach target group ALB to Instance
+#####################################################
 
+resource "aws_lb_target_group_attachment" "albtogrouptarget" {
+    target_group_arn  = aws_alb_target_group.alb.arn
+    target_id         = aws_instance.app.id
+    port              = 80
 
-###########################
+}
+
+######################################################
 ## New Resource listener
-###########################
+######################################################
 
 # Provides a Load Balancer Listener resource
 resource "aws_lb_listener" "lb_listener" {
@@ -349,66 +358,3 @@ resource "aws_instance" "app" {
 #   content = tls_private_key.pk.private_key_pem
 # }
 
-# #################################
-# ### add endpoint
-# #################################
-
-resource "aws_vpc_endpoint" "ec2" {
-  vpc_id            = data.aws_vpc.vpc_product.id
-  service_name      = join(".",["com","amazonaws",var.aws_region, "ec2"])
-  vpc_endpoint_type = "Interface"
-
-  security_group_ids = [
-    data.aws_security_group.instances.id
-  ]
-
-  private_dns_enabled = true
-}
-
-# resource "aws_vpc_endpoint" "s3" {
-#   vpc_id            = data.aws_vpc.vpc_product.id
-#   service_name      = join(".",["com","amazonaws",var.aws_region, "s3"])
-#   vpc_endpoint_type = "Interface"
-
-#   security_group_ids = [
-#     data.aws_security_group.alb.id, data.aws_security_group.instances.id
-#   ]
-
-#   private_dns_enabled = true
-# }
-
-resource "aws_vpc_endpoint" "ec2messages" {
-  vpc_id            = data.aws_vpc.vpc_product.id
-  service_name      =  join(".",["com","amazonaws",var.aws_region, "ec2messages"])
-  vpc_endpoint_type = "Interface"
-
-  security_group_ids = [
-    data.aws_security_group.instances.id
-  ]
-
-  private_dns_enabled = true
-}
-
-resource "aws_vpc_endpoint" "ssm" {
-  vpc_id            = data.aws_vpc.vpc_product.id
-  service_name      = join(".",["com","amazonaws",var.aws_region, "ssm"])
-  vpc_endpoint_type = "Interface"
-
-  security_group_ids = [
-    data.aws_security_group.instances.id
-  ]
-
-  private_dns_enabled = true
-}
-
-resource "aws_vpc_endpoint" "ssmmessages" {
-  vpc_id            = data.aws_vpc.vpc_product.id
-  service_name      = join(".",["com","amazonaws",var.aws_region, "ssmmessages"])
-  vpc_endpoint_type = "Interface"
-
-  security_group_ids = [
-    data.aws_security_group.instances.id
-  ]
-
-  private_dns_enabled = true
-}
