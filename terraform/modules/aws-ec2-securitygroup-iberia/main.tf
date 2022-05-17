@@ -32,7 +32,7 @@ resource "aws_security_group" "sg-commons-microservices" {
   # asign name: demo-alb-dev-sg
   name        = join("-",[var.project, var.environment_prefix, "sg", "common", "microservice"])
   description = "SG for common access to-from microservices"
-
+  vpc_id      = data.aws_vpc.vpc_product.id
   ## outbound all traffic
   egress {
     from_port      = 0
@@ -52,7 +52,7 @@ resource "aws_security_group" "sg-commons-microservices-alb" {
   # asign name: demo-alb-dev-sg
   name        = join("-", [var.project, var.environment_prefix, "sg", "common", "microservice","alb"])
   description = "SG for common access to-from microservices ALBs"
-
+  vpc_id      = data.aws_vpc.vpc_product.id
   ## outbound all traffic
   egress {
     from_port      = 8080
