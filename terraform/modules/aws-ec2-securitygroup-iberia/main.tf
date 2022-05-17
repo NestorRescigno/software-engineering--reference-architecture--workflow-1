@@ -155,8 +155,7 @@ resource "aws_security_group" "instances" {
     self = true
     cidr_blocks      = ["0.0.0.0/0"] 
     ipv6_cidr_blocks = ["::/0"]
-    prefix_list_ids = [aws_vpc_endpoint.ec2.id, aws_vpc_endpoint.ec2messages.id, aws_vpc_endpoint.ssm.id, aws_vpc_endpoint.ssmmessages.id]
-  }
+   }
 
   tags = merge(
     local.global_common_tags,
