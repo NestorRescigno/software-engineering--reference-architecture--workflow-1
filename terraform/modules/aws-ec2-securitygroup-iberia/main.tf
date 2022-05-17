@@ -38,7 +38,7 @@ resource "aws_security_group" "sg-commons-microservices" {
     from_port      = 0
     to_port        = 0
     protocol       = "-1"
-  
+    prefix_list_ids = []
      # If your requirement is to allow all the traffic from internet you can use
     cidr_blocks      = ["0.0.0.0/0"] 
     ipv6_cidr_blocks = ["::/0"]
@@ -58,7 +58,7 @@ resource "aws_security_group" "sg-commons-microservices-alb" {
     from_port      = 8080
     to_port        = 8080
     protocol       = "tpc"
-    cidr_blocks    = []
+    
   }
 
  
@@ -91,6 +91,7 @@ resource "aws_security_group" "alb" {
     protocol        = "tcp"
     # security_groups = [ aws_security_group.instances.id ]
     # data.aws_vpc.vpc_product
+    self = true
   }
 
   # configure load balancer to instance
@@ -141,8 +142,8 @@ resource "aws_security_group" "instances" {
     from_port       = 8080
     to_port         = 8080 
     protocol        = "tcp"
-    security_groups = [ aws_security_group.alb.id ]
     description = "From ${var.service_name} ALB"
+    self = true
   }
 
   ## outbound all traffic
@@ -151,8 +152,10 @@ resource "aws_security_group" "instances" {
     to_port        = 0
     protocol       = "-1"
      # If your requirement is to allow all the traffic from internet you can use
+    self = true
     cidr_blocks      = ["0.0.0.0/0"] 
     ipv6_cidr_blocks = ["::/0"]
+    prefix_list_ids = [aws_vpc_endpoint.ec2.id, aws_vpc_endpoint.ec2messages.id, aws_vpc_endpoint.ssm.id, aws_vpc_endpoint.ssmmessages.id]
   }
 
   tags = merge(
