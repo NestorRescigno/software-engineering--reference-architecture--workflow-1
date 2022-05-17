@@ -356,7 +356,7 @@ resource "aws_instance" "app" {
 resource "aws_lb_target_group_attachment" "albtogrouptarget" {
     count = length(aws_instance.app)
     target_group_arn  = aws_alb_target_group.alb.arn
-    target_id         = aws_instance.app[count.index].ids
+    target_id         = aws_instance.app[count.index].id
     port              = 80
 
 }
