@@ -4,7 +4,7 @@
 # *************       by Software Engineering             *************
 # *********************************************************************
 # installation commands for SSM Agent on Amazon Linux 2 (https://docs.aws.amazon.com/systems-manager/latest/userguide/agent-install-al2.html)
-sudo yum install -y https://s3.eu-central-1.amazonaws.com/amazon-ssm-eu-central-1/latest/linux_amd64/amazon-ssm-agent.rpm
+sudo yum install -y https://s3.${aws_region}.amazonaws.com/amazon-ssm-${aws_region}/latest/linux_amd64/amazon-ssm-agent.rpm
 sudo systemctl start amazon-ssm-agent
 
 echo "Copying the SSH key of github runner to the server"
