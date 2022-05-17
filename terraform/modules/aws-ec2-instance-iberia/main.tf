@@ -147,8 +147,9 @@ resource "aws_lb" "alb" {
 #####################################################
 
 resource "aws_lb_target_group_attachment" "albtogrouptarget" {
+    for_each = aws_instance.app.id
     target_group_arn  = aws_alb_target_group.alb.arn
-    target_id         = aws_instance.app.id
+    target_id         = each.value
     port              = 80
 
 }
