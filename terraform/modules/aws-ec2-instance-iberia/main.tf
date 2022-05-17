@@ -378,6 +378,7 @@ resource "aws_internet_gateway" "gw" {
       Project                  = "${var.project}"
       Environment              = "${var.environment}"
     }))
+}
 
 resource "aws_egress_only_internet_gateway" "egress_gw" {
   vpc_id = data.aws_vpc.vpc_product.id
