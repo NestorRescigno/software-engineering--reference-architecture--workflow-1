@@ -362,3 +362,55 @@ resource "aws_lb_target_group_attachment" "albtogrouptarget" {
     port              = 80
 
 }
+
+#####################################################
+# Api gateway 
+#####################################################
+resource "aws_internet_gateway" "gw" {
+  vpc_id = data.aws_vpc.vpc_product.id
+
+  tags =  merge(  
+    #local.tags,
+    #local.global_common_tags,
+    tomap({
+      Name = join("-", [var.project, var.environment_prefix]),
+      Terraform                = "True"
+      Project                  = "${var.project}"
+      Environment              = "${var.environment}"
+    }))
+
+resource "aws_egress_only_internet_gateway" "egress_gw" {
+  vpc_id = data.aws_vpc.vpc_product.id
+
+  tags = {
+    name = "${var.project}-${var.environment_prefix}"
+  }
+}
+
+#####################################################
+# create route table 
+#####################################################
+resource "aws_route_table" "route_product" {
+  vpc_id = data.aws_vpc.vpc_product.id
+
+  route {
+    cidr_block = data.aws_vpc.vpc_product.cidr_block
+    gateway_id = aws_internet_gateway.gw.id
+  }
+
+  route {
+    ipv6_cidr_block        = "::/0"
+    egress_only_gateway_id = aws_egress_only_internet_gateway.egress_gw.id
+  }
+
+  tags =  merge(
+    #local.tags,
+    #local.global_common_tags,
+    tomap({
+      Name = "${var.project}-${var.environment_prefix}-snet-amber"0
+      Terraform                = "True"
+      Project                  = "${var.project}"
+      Environment              = "${var.environment}"
+    }))
+}
+
