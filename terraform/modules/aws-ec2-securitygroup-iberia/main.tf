@@ -177,7 +177,7 @@ resource "aws_vpc_endpoint" "ec2" {
   vpc_endpoint_type = "Interface"
 
   security_group_ids = [
-    data.aws_security_group.instances.id
+    aws_security_group.instances.id
   ]
 
   private_dns_enabled = true
@@ -201,7 +201,7 @@ resource "aws_vpc_endpoint" "ec2messages" {
   vpc_endpoint_type = "Interface"
 
   security_group_ids = [
-    data.aws_security_group.instances.id
+    aws_security_group.instances.id
   ]
 
   private_dns_enabled = true
@@ -213,7 +213,7 @@ resource "aws_vpc_endpoint" "ssm" {
   vpc_endpoint_type = "Interface"
 
   security_group_ids = [
-    data.aws_security_group.instances.id
+    aws_security_group.instances.id
   ]
 
   private_dns_enabled = true
@@ -225,7 +225,7 @@ resource "aws_vpc_endpoint" "ssmmessages" {
   vpc_endpoint_type = "Interface"
 
   security_group_ids = [
-    data.aws_security_group.instances.id
+    aws_security_group.instances.id
   ]
 
   private_dns_enabled = true
