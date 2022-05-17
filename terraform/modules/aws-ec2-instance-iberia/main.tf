@@ -349,14 +349,16 @@ resource "aws_instance" "app" {
 #   content = tls_private_key.pk.private_key_pem
 # }
 
+
+
 ######################################################
 # attach target group ALB to Instance
 #####################################################
 
 resource "aws_lb_target_group_attachment" "albtogrouptarget" {
-    count = length(aws_instance.app)
+    for_each = aws_instance.app
     target_group_arn  = aws_alb_target_group.alb.arn
-    target_id         = aws_instance.app[count.index].id
+    target_id         = aws_instance.app[each.key].id
     port              = 80
 
 }
