@@ -328,7 +328,7 @@ resource "aws_instance" "app" {
 
     
   # destroy instance and reemplace with new configuration.  
-  lifecycle { create_before_destroy = true }  
+  lifecycle { create_before_destroy = false }  
 }
 
 # #################################
