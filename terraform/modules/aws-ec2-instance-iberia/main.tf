@@ -312,6 +312,7 @@ resource "aws_instance" "app" {
 
     # configure bash param to script template
     user_data               = templatefile("user_data.tftpl", {
+        aws_region = "${var.aws_region}"
         department = "${var.user_departament}", 
         name = "${var.user_name}", 
         lenguage= "${var.lenguage_code}",
