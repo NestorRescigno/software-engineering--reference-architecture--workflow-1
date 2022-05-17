@@ -27,42 +27,42 @@ provider "aws" {
 ### New commons resource
 ######################################
 
-# commons service access to-from microservice
-resource "aws_security_group" "sg-commons-microservices" {
-  # asign name: demo-alb-dev-sg
-  name        = join("-",[var.project, var.environment_prefix, "sg", "common", "microservice"])
-  description = "SG for common access to-from microservices"
-  vpc_id      = data.aws_vpc.vpc_product.id
-  ## outbound all traffic
-  egress {
-    from_port      = 0
-    to_port        = 0
-    protocol       = "-1"
-    prefix_list_ids = []
-     # If your requirement is to allow all the traffic from internet you can use
-    cidr_blocks      = ["0.0.0.0/0"] 
-    ipv6_cidr_blocks = ["::/0"]
-  }
+# # commons service access to-from microservice
+# resource "aws_security_group" "sg-commons-microservices" {
+#   # asign name: demo-alb-dev-sg
+#   name        = join("-",[var.project, var.environment_prefix, "sg", "common", "microservice"])
+#   description = "SG for common access to-from microservices"
+#   vpc_id      = data.aws_vpc.vpc_product.id
+#   ## outbound all traffic
+#   egress {
+#     from_port      = 0
+#     to_port        = 0
+#     protocol       = "-1"
+#     prefix_list_ids = []
+#      # If your requirement is to allow all the traffic from internet you can use
+#     cidr_blocks      = ["0.0.0.0/0"] 
+#     ipv6_cidr_blocks = ["::/0"]
+#   }
 
-}
+# }
 
 
-# commons service access to-from microservice
-resource "aws_security_group" "sg-commons-microservices-alb" {
-  # asign name: demo-alb-dev-sg
-  name        = join("-", [var.project, var.environment_prefix, "sg", "common", "microservice","alb"])
-  description = "SG for common access to-from microservices ALBs"
-  vpc_id      = data.aws_vpc.vpc_product.id
-  ## outbound all traffic
-  egress {
-    from_port      = 8080
-    to_port        = 8080
-    protocol       = "tpc"
+# # commons service access to-from microservice
+# resource "aws_security_group" "sg-commons-microservices-alb" {
+#   # asign name: demo-alb-dev-sg
+#   name        = join("-", [var.project, var.environment_prefix, "sg", "common", "microservice","alb"])
+#   description = "SG for common access to-from microservices ALBs"
+#   vpc_id      = data.aws_vpc.vpc_product.id
+#   ## outbound all traffic
+#   egress {
+#     from_port      = 8080
+#     to_port        = 8080
+#     protocol       = "tpc"
     
-  }
+#   }
 
  
-}
+# }
 
 
 #####################################
