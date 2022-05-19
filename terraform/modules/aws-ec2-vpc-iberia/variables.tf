@@ -51,4 +51,7 @@ variable "environment_prefix" {
   default     = "dev"
 }
 
-
+variable "common_tags" {
+  type    = map(any)
+  default = {}
+}
