@@ -106,8 +106,8 @@ resource "aws_eip" "nat_eip" {
 
 resource "aws_nat_gateway" "nat_gateway" {
   for_each = data.aws_availability_zone.all
-  allocation_id = aws_eip.nat_eip.id
-  subnet_id = aws_subnet.subnets.id
+  allocation_id = aws_eip.nat_eip[each.key].id
+  subnet_id = aws_subnet.subnetsp[each.key].id
   #allocation_id = element(aws_eip.nat_eip.*.id, count.index)
   #subnet_id     = element(aws_subnet.subnet.*.id, count.index)
   #tags          = merge(var.common_tags, map("Name", "natgw-${var.vpc_name}-${element(var.azs, count.index)}"))
@@ -129,7 +129,7 @@ resource "aws_route_table" "rt_igw_dc" {
 
 # all traffic NO-LOCAL subnet public route to IGW-Gateway
 resource "aws_route" "rt_igw_dc" {
-  count                  = length(aws_subnet.subnets.id) != 0 ? 1 : 0
+  count                  = length(aws_subnet.subnets) != 0 ? 1 : 0
   route_table_id         = aws_route_table.rt_igw_dc[0].id
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = aws_internet_gateway.igw_dc[0].id
@@ -139,7 +139,7 @@ resource "aws_route" "rt_igw_dc" {
 # asigned route public to Internet Gateway subnet public
 resource "aws_route_table_association" "rt_igw_dc_asoc" {
   #vpc_id = "${aws_vpc.vpc.id}"
-  count          = length(aws_subnet.subnets.id) != 0 ? length(data.aws_availability_zone.all) : 0
+  count          = length(aws_subnet.subnets) != 0 ? length(data.aws_availability_zone.all) : 0
   route_table_id = aws_route_table.rt_igw_dc[0].id
   subnet_id      = aws_subnet.subnets[count.index].id
   depends_on     = [aws_route_table.rt_igw_dc]
