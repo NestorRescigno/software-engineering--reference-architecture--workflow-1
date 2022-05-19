@@ -85,7 +85,7 @@ resource "aws_subnet" "subnets" {
 ####################################################################################
 
 resource "aws_internet_gateway" "igw_dc" {
-  count  = length(var.public_subnets) != 0 ? 1 : 0
+  count  = length(aws_subnet.subnets) != 0 ? 1 : 0
   vpc_id = aws_vpc.vpc_product.id
   #tags      = merge(var.common_tags, map("Name", "igw-${var.vpc_name}"))
   tags = merge(var.common_tags, tomap({ "Name" = "igw-${aws_vpc.vpc_product.id}" }))
@@ -111,7 +111,7 @@ resource "aws_nat_gateway" "nat_gateway" {
   #allocation_id = element(aws_eip.nat_eip.*.id, count.index)
   #subnet_id     = element(aws_subnet.subnet.*.id, count.index)
   #tags          = merge(var.common_tags, map("Name", "natgw-${var.vpc_name}-${element(var.azs, count.index)}"))
-  tags = merge(var.common_tags, tomap({ "Name" = "natgw-${aws_vpc.vpc_product.id}-${each.value}" }))
+  tags = merge(local.data.sg-common-microservices, tomap({ "Name" = "natgw-${aws_vpc.vpc_product.id}-${each.value}" }))
 
   depends_on = [aws_internet_gateway.igw_dc]
 }
@@ -124,7 +124,7 @@ resource "aws_route_table" "rt_igw_dc" {
   count  = length(aws_subnet.subnets) != 0 ? 1 : 0
   vpc_id = aws_vpc.vpc_product.id
   #tags   = merge(var.common_tags, map("Name", "rt-${var.vpc_name}-public"))
-  tags = merge(var.common_tags, tomap({ "Name" = "rt-${aws_vpc.vpc_product.id}-public" }))
+  tags = merge(local.data.sg-common-microservices, tomap({ "Name" = "rt-${aws_vpc.vpc_product.id}-public" }))
 }
 
 # all traffic NO-LOCAL subnet public route to IGW-Gateway
