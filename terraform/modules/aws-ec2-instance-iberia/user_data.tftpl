@@ -5,12 +5,13 @@
 # *********************************************************************
 # installation commands for SSM Agent on Amazon Linux 2 (https://docs.aws.amazon.com/systems-manager/latest/userguide/agent-install-al2.html)
 cd /tmp
-sudo yum install -y https://s3.${aws_region}.amazonaws.com/amazon-ssm-${aws_region}/latest/linux_amd64/amazon-ssm-agent.rpm
+sudo yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_arm64/amazon-ssm-agent.rpm
 sudo systemctl enable amazon-ssm-agent
 sudo systemctl start amazon-ssm-agent
+sudo systemctl status amazon-ssm-agent
 
-echo "Copying the SSH key of github runner to the server"
-echo -e "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDW3cVbdMlcu95EJaa/L+JUG8rABCVbS/Lq8OwZgTqppAsjO48Qdu2rVF8/JMAgowvbPCEYmvERUHpFY4s6l9LBQ0qsE5cTahLaG6ty6fug4oKRY9+et3Hie0DcSPxLvZqkLltF5b/DnbLvMcXQLc/om312AWnWR6w0857w1mVfDH3AKcos1aLYpg9AkXskxkTy5NWQyJ2U2AuqLtv8kvMHMDDzMoOr2Z9uuFn+94Tf2zwb1IcCBTcnd6b6w6LFQpW7fMid2VpfHDV3TwyeJECR0jLFFthTy4oWGiZIDQE4Z2KGGnk+qGyJn7xgyxXNKC7m8jZ0DDz1OWXmb45INoIz ssm-user@ip-10-200-177-169.eu-central-1.compute.internalcicd.cloud.iberi" >> /home/ec2-user/.ssh/authorized_keys
+# echo "Copying the SSH key of github runner to the server"
+# echo -e "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDW3cVbdMlcu95EJaa/L+JUG8rABCVbS/Lq8OwZgTqppAsjO48Qdu2rVF8/JMAgowvbPCEYmvERUHpFY4s6l9LBQ0qsE5cTahLaG6ty6fug4oKRY9+et3Hie0DcSPxLvZqkLltF5b/DnbLvMcXQLc/om312AWnWR6w0857w1mVfDH3AKcos1aLYpg9AkXskxkTy5NWQyJ2U2AuqLtv8kvMHMDDzMoOr2Z9uuFn+94Tf2zwb1IcCBTcnd6b6w6LFQpW7fMid2VpfHDV3TwyeJECR0jLFFthTy4oWGiZIDQE4Z2KGGnk+qGyJn7xgyxXNKC7m8jZ0DDz1OWXmb45INoIz ssm-user@ip-10-200-177-169.eu-central-1.compute.internalcicd.cloud.iberi" >> /home/ec2-user/.ssh/authorized_keys
 # Install necessary dependencies
 # Installing the CloudWatch agent
 # sudo yum install amazon-cloudwatch-agent
