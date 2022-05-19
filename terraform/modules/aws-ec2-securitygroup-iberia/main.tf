@@ -22,7 +22,7 @@ provider "aws" {
   region = var.aws_region
 }
 
-
+data "aws_caller_identity" "current" {}
 #####################################
 ### New commons resource
 ######################################
@@ -166,6 +166,23 @@ resource "aws_security_group" "instances" {
 
 }
 
+
+# ##################################
+# # add endpoint service 
+# ##################################
+# resource "aws_vpc_endpoint_service" "product" {
+#   acceptance_required        = false
+#   allowed_principals         = [data.aws_caller_identity.current.arn]
+#   gateway_load_balancer_arns = [aws_lb.alb.arn]
+# }
+
+# resource "aws_vpc_endpoint" "product" {
+#   service_name      = aws_vpc_endpoint_service.product.service_name
+#   subnet_ids        = [local,data.subnet_ids]
+#   vpc_endpoint_type = aws_vpc_endpoint_service.product.service_type
+#   vpc_id            = data.aws_vpc.vpc_product.id
+# }
+
 # #################################
 # ### add endpoint
 # #################################
@@ -174,7 +191,6 @@ resource "aws_vpc_endpoint" "ec2" {
   vpc_id            = data.aws_vpc.vpc_product.id
   service_name      = join(".",["com","amazonaws",var.aws_region, "ec2"])
   vpc_endpoint_type = "Interface"
-
   security_group_ids = [
     aws_security_group.instances.id
   ]
