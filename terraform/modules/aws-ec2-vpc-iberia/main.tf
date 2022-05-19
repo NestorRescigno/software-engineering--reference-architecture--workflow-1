@@ -88,7 +88,7 @@ resource "aws_internet_gateway" "igw_dc" {
   count  = length(aws_subnet.subnets) != 0 ? 1 : 0
   vpc_id = aws_vpc.vpc_product.id
   #tags      = merge(var.common_tags, map("Name", "igw-${var.vpc_name}"))
-  tags = merge(var.common_tags, tomap({ "Name" = "igw-${aws_vpc.vpc_product.id}" }))
+  tags = merge(local.data.sg-common-microservices, tomap({ "Name" = "igw-${aws_vpc.vpc_product.id}" }))
 }
 
 
@@ -101,7 +101,7 @@ resource "aws_eip" "nat_eip" {
   for_each = data.aws_availability_zone.all
   vpc   = true
   #tags          = merge(var.common_tags, map("Name", "eip-${var.vpc_name}-${element(var.azs, count.index)}"))
-  tags = merge(var.common_tags, tomap({ "Name" = "eip-${aws_vpc.vpc_product.id}-${each.value}" }))
+  tags = merge(local.data.sg-common-microservices, tomap({ "Name" = "eip-${aws_vpc.vpc_product.id}-${each.value}" }))
 }
 
 resource "aws_nat_gateway" "nat_gateway" {
