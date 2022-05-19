@@ -106,8 +106,8 @@ resource "aws_eip" "nat_eip" {
 
 resource "aws_nat_gateway" "nat_gateway" {
   for_each = data.aws_availability_zone.all
-  allocation_id = aws_eip.nat_eip[each.key].id
-  subnet_id = aws_subnet.subnets[each.key].id
+  allocation_id = aws_eip.nat_eip[each.key.index].id
+  subnet_id = aws_subnet.subnets[each.key.index].id
   #allocation_id = element(aws_eip.nat_eip.*.id, count.index)
   #subnet_id     = element(aws_subnet.subnet.*.id, count.index)
   #tags          = merge(var.common_tags, map("Name", "natgw-${var.vpc_name}-${element(var.azs, count.index)}"))
