@@ -139,9 +139,9 @@ resource "aws_route" "rt_igw_dc" {
 # asigned route public to Internet Gateway subnet public
 resource "aws_route_table_association" "rt_igw_dc_asoc" {
   #vpc_id = "${aws_vpc.vpc.id}"
-  for_each       = aws_subnet.subnets.id
+  for_each       = aws_subnet.subnets
   # count          = length(aws_subnet.subnets) != 0 ? length(data.aws_availability_zone.all) : 0
   route_table_id = aws_route_table.rt_igw_dc[0].id
-  subnet_id      = each.value
+  subnet_id      = each.value.id
   depends_on     = [aws_route_table.rt_igw_dc]
 }
