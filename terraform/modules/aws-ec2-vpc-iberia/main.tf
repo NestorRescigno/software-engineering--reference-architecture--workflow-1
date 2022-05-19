@@ -101,7 +101,7 @@ resource "aws_eip" "nat_eip" {
   for_each = data.aws_availability_zone.all
   vpc   = true
   #tags          = merge(var.common_tags, map("Name", "eip-${var.vpc_name}-${element(var.azs, count.index)}"))
-  tags = merge(var.common_tags, tomap({ "Name" = "eip-${local.data.vpc.vpc_product}-${each.value}" }))
+  tags = merge(var.common_tags, tomap({ "Name" = "eip-${local.data.vpc.vpc_product}-${ each.value.name_suffix}" }))
 }
 
 resource "aws_nat_gateway" "nat_gateway" {
@@ -111,7 +111,7 @@ resource "aws_nat_gateway" "nat_gateway" {
   #allocation_id = element(aws_eip.nat_eip.*.id, count.index)
   #subnet_id     = element(aws_subnet.subnet.*.id, count.index)
   #tags          = merge(var.common_tags, map("Name", "natgw-${var.vpc_name}-${element(var.azs, count.index)}"))
-  tags = merge(var.common_tags, tomap({ "Name" = "natgw-${local.data.vpc.vpc_product}-${each.value}" }))
+  tags = merge(var.common_tags, tomap({ "Name" = "natgw-${local.data.vpc.vpc_product}-${ each.value.name_suffix}" }))
 
   depends_on = [aws_internet_gateway.igw_dc]
 }
@@ -139,8 +139,9 @@ resource "aws_route" "rt_igw_dc" {
 # asigned route public to Internet Gateway subnet public
 resource "aws_route_table_association" "rt_igw_dc_asoc" {
   #vpc_id = "${aws_vpc.vpc.id}"
-  count          = length(aws_subnet.subnets) != 0 ? length(data.aws_availability_zone.all) : 0
+  for_each       = aws_subnet.subnets.id
+  # count          = length(aws_subnet.subnets) != 0 ? length(data.aws_availability_zone.all) : 0
   route_table_id = aws_route_table.rt_igw_dc[0].id
-  subnet_id      = aws_subnet.subnets[count.index].id
+  subnet_id      = each.value
   depends_on     = [aws_route_table.rt_igw_dc]
 }
