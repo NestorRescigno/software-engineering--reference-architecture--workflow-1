@@ -70,6 +70,16 @@ data "aws_caller_identity" "current" {}
 
 resource "aws_default_security_group" "default" {
   vpc_id = data.aws_vpc.vpc_product.id
+
+ ## outbound all traffic
+  egress {
+    from_port      = 0
+    to_port        = 0
+    protocol       = "-1"
+     # If your requirement is to allow all the traffic from internet you can use
+    security_groups = [ aws_security_group.alb.id, aws_security_group.instance.id ]
+   }
+
 }
 
 
