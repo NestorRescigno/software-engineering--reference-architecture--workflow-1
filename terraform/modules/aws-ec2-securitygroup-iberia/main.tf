@@ -279,14 +279,6 @@ resource "aws_vpc_endpoint" "ec2" {
   tags                = merge(var.common_tags, tomap({ "Name" = "ec2-${lookup(var.common_tags, "Project")}-endpoint" }))
 }
 
-###############################
-# VPC Endpoint for EC2MESSAGES
-###############################
-data "aws_vpc_endpoint_service" "ec2messages" {
-  count = var.enable_ec2messages_endpoint ? 1 : 0
-
-  service = "ec2messages"
-}
 
 resource "aws_vpc_endpoint" "ec2messages" {
   vpc_id            = data.aws_vpc.vpc_product.id

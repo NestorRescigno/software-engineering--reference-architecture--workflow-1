@@ -88,7 +88,7 @@ resource "aws_iam_role_policy_attachment" "SSMManagedInstanceCore" {
 # IAM ROLE
 ##############################################
 
-esource "aws_iam_role" "flow_log_role" {
+resource "aws_iam_role" "flow_log_role" {
   name               = "flow-${local.data.vpc.vpc_product}-log-role"
   assume_role_policy = data.aws_iam_policy_document.flow_log_assume_role_policy.json
 }
