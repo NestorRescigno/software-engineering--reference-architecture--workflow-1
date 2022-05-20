@@ -145,7 +145,7 @@ resource "aws_eip" "nat_eip" {
 
 resource "aws_nat_gateway" "nat_gateway" {
   for_each = data.aws_availability_zone.all
-  allocation_id = aws_eip.nat_eip[each.key].id
+  #allocation_id = aws_eip.nat_eip[each.key].id
   subnet_id = aws_subnet.subnets[each.key].id
   #allocation_id = element(aws_eip.nat_eip.*.id, count.index)
   #subnet_id     = element(aws_subnet.subnet.*.id, count.index)
@@ -178,7 +178,7 @@ resource "aws_route_table" "private" {
 resource "aws_route" "private_nat_gateway" {
   for_each = data.aws_availability_zone.all
   route_table_id         = aws_route_table.private[each.key].id
-  nat_gateway_id         = aws_nat_gateway.nat_gateway[each.key].id
+  #nat_gateway_id         = aws_nat_gateway.nat_gateway[each.key].id
   destination_cidr_block = "0.0.0.0/0"
 
   timeouts {
