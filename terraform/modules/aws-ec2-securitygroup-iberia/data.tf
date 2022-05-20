@@ -50,7 +50,7 @@ data "aws_vpc_endpoint_service" "ec2_autoscaling" {
   service = "autoscaling"
 }
 
-data "aws_vpc_endpoint_service" "ec2_autoscaling" {
+data "aws_vpc_endpoint_service" "transfer" {
   service = "transfer.server"
 }
 

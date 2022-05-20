@@ -48,3 +48,10 @@ data "aws_iam_policy_document" "flow_log_policy" {
     resources = ["*"]
   }
 }
+
+
+data "aws_vpc" "vpc_product" {
+  tags = {
+      Name = "${var.project}-${var.environment_prefix}"
+  }
+}
