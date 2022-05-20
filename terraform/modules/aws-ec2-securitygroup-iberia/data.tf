@@ -90,7 +90,7 @@ data "aws_vpc_endpoint_service" "codeartifact_api" {
   service = "codeartifact.api"
 }
 
-data "aws_vpc_endpoint_service" "codeartifact_repositories" {s
+data "aws_vpc_endpoint_service" "codeartifact_repositories" {
   service = "codeartifact.repositories"
 }
 
