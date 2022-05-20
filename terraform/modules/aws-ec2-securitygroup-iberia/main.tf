@@ -449,7 +449,7 @@ resource "aws_vpc_endpoint" "elasticloadbalancing" {
 
 resource "aws_vpc_endpoint" "transfer" {
   vpc_id            = data.aws_vpc.vpc_product.id
-  service_name      = data.aws_vpc_endpoint_service.transfer.service_name
+  service_name      = data.aws_vpc_endpoint_service.transferserver.service_name
   vpc_endpoint_type = "Interface"
 
   security_group_ids  = aws_default_security_group.default.id
