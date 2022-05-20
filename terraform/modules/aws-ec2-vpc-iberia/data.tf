@@ -14,3 +14,8 @@ data "aws_availability_zone" "all" {
   name = each.key
   # test
 }
+
+
+data "aws_vpc_endpoint_service" "s3" {
+  service = "s3"
+}

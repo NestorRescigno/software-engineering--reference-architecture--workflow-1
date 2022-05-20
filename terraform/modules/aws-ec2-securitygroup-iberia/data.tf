@@ -26,9 +26,6 @@ data "aws_vpc_endpoint_service" "config" {
   service = "config"
 }
 
-data "aws_vpc_endpoint_service" "s3" {
-  service = "s3"
-}
 
 data "aws_vpc_endpoint_service" "ssmmessages" {
   service = "ssmmessages"
@@ -101,3 +98,5 @@ data "aws_vpc_endpoint_service" "ebs" {
 data "aws_vpc_endpoint_service" "auto_scaling_plans" {
   service = "autoscaling-plans"
 }
+
+
