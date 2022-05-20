@@ -231,8 +231,8 @@ data "aws_vpc_endpoint_service" "s3" {
 
   service = "s3"
    filter {
-    name   = "vpc_id"
-    values = [aws_vpc.vpc_product.id]
+    name   = "Name"
+    values = [local.data.vpc.vpc_product]
   }
 }
 
