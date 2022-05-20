@@ -19,7 +19,7 @@ data "aws_availability_zone" "all" {
 data "aws_vpc_endpoint_service" "s3" {
 
   service = "s3"
-   ilter {
+   filter {
     name   = "vpc_id"
     values = [aws_vpc.this.id]
   }
