@@ -79,6 +79,24 @@ resource "aws_subnet" "subnets" {
   }
 }
 
+# # resource subnet
+# resource "aws_subnet" "subnets-private" {
+#   # interate array
+#   for_each = data.aws_availability_zone.all
+#   # select vpc id
+#   vpc_id            = aws_vpc.vpc_product.id
+#   # get key of item array
+#   availability_zone = each.key
+
+
+#   # set IP 
+#   cidr_block        = cidrsubnet(aws_vpc.vpc_product.cidr_block, 4, var.az_number[each.value.name_suffix])
+#   # set tag
+#   tags = {
+#      Name = join("-",[var.project,"snet","amber", data.aws_region.current.name, each.value.name_suffix])
+#   }
+# }
+
 ####################################################################################
 # create DHCP Options Set
 ####################################################################################
@@ -139,30 +157,70 @@ resource "aws_nat_gateway" "nat_gateway" {
 
 
 ####################################################################################
-# route net public
+#Rutas de las redes privadas. Si está habilitado el NAT Gateway lo asocia a las rutas
+#sino deja solo la ruta por defecto
 ####################################################################################
-resource "aws_route_table" "rt_igw_dc" {
-  count  = length(aws_subnet.subnets) != 0 ? 1 : 0
+resource "aws_route_table" "private" {
+  # count                 = var.vertical_routes ? length(var.azs) : var.n_tiers
+  for_each = data.aws_availability_zone.all
   vpc_id = aws_vpc.vpc_product.id
-  #tags   = merge(var.common_tags, map("Name", "rt-${var.vpc_name}-public"))
-  tags = merge(var.common_tags, tomap({ "Name" = "rt-${local.data.vpc.vpc_product}-public" }))
+  propagating_vgws = []
+  tags             =  merge(var.common_tags, tomap({ "Name" = "rt-${local.data.vpc.vpc_product}-${each.value.name_suffix}-private" })) 
+  
+
+  lifecycle {
+    # When attaching VPN gateways it is common to define aws_vpn_gateway_route_propagation
+    # resources that manipulate the attributes of the routing table (typically for the private subnets)
+    ignore_changes = [propagating_vgws]
+  }
 }
 
-# all traffic NO-LOCAL subnet public route to IGW-Gateway
-resource "aws_route" "rt_igw_dc" {
-  count                  = length(aws_subnet.subnets) != 0 ? 1 : 0
-  route_table_id         = aws_route_table.rt_igw_dc[0].id
+resource "aws_route" "private_nat_gateway" {
+  for_each = data.aws_availability_zone.all
+  route_table_id         = aws_route_table.private[each.key.index].id
+  nat_gateway_id         = aws_nat_gateway.nat_gateway[each.key.index].id
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = aws_internet_gateway.igw_dc[0].id
-  depends_on             = [aws_internet_gateway.igw_dc]
+
+  timeouts {
+    create = "5m"
+  }
 }
 
-# asigned route public to Internet Gateway subnet public
-resource "aws_route_table_association" "rt_igw_dc_asoc" {
-  #vpc_id = "${aws_vpc.vpc.id}"
-  for_each       = aws_subnet.subnets
-  # count          = length(aws_subnet.subnets) != 0 ? length(data.aws_availability_zone.all) : 0
-  route_table_id = aws_route_table.rt_igw_dc[0].id
-  subnet_id      = each.value.id
-  depends_on     = [aws_route_table.rt_igw_dc]
+resource "aws_route_table_association" "private" {
+  for_each = aws_subnet.subnets  
+  subnet_id = aws_subnet.subnets[each.key.index].id
+  route_table_id = aws_route_table.private[each.key.index].id
 }
+
+
+
+
+
+# ####################################################################################
+# # route net public
+# ####################################################################################
+# resource "aws_route_table" "rt_igw_dc" {
+#   count  = length(aws_subnet.subnets) != 0 ? 1 : 0
+#   vpc_id = aws_vpc.vpc_product.id
+#   #tags   = merge(var.common_tags, map("Name", "rt-${var.vpc_name}-public"))
+#   tags = merge(var.common_tags, tomap({ "Name" = "rt-${local.data.vpc.vpc_product}-public" }))
+# }
+
+# # all traffic NO-LOCAL subnet public route to IGW-Gateway
+# resource "aws_route" "rt_igw_dc" {
+#   count                  = length(aws_subnet.subnets) != 0 ? 1 : 0
+#   route_table_id         = aws_route_table.rt_igw_dc[0].id
+#   destination_cidr_block = "0.0.0.0/0"
+#   gateway_id             = aws_internet_gateway.igw_dc[0].id
+#   depends_on             = [aws_internet_gateway.igw_dc]
+# }
+
+# # asigned route public to Internet Gateway subnet public
+# resource "aws_route_table_association" "rt_igw_dc_asoc" {
+#   #vpc_id = "${aws_vpc.vpc.id}"
+#   for_each       = aws_subnet.subnets
+#   # count          = length(aws_subnet.subnets) != 0 ? length(data.aws_availability_zone.all) : 0
+#   route_table_id = aws_route_table.rt_igw_dc[0].id
+#   subnet_id      = each.value.id
+#   depends_on     = [aws_route_table.rt_igw_dc]
+# }
