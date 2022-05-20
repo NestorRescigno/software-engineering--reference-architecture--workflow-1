@@ -108,7 +108,7 @@ resource "aws_vpc_dhcp_options" "dhcp_options" {
   netbios_name_servers = var.dhcp_options_netbios_name_servers
   netbios_node_type    = var.dhcp_options_netbios_node_type
   #tags                  = merge(var.common_tags, map("Name", "dhcp-ops-${lookup(var.common_tags, "Project")}-${var.vpc_name}"))
-  tags = merge(var.common_tags, tomap({ "Name" = "dhcp-ops-${lookup(var.common_tags, "Project")}-${local.data.vpc.vpc_product}" }))
+  tags = merge(var.common_tags, tomap({ "Name" = "dhcp-ops-Project-${local.data.vpc.vpc_product}" }))
 
 }
 
