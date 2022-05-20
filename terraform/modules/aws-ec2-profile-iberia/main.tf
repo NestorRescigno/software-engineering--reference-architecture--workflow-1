@@ -100,10 +100,10 @@ resource "aws_iam_role_policy" "flow_log_policy" {
 }
 
 ##############################################
-# S3 logs 
+# S3 logs test 
 ##############################################
 resource "aws_cloudwatch_log_group" "vpc_flow_log" {
-  name              = "/aws/flowlogs/${data.aws_vpc.vpc_product.id}"
+  name              = "/aws/flowlogs/${local.data.vpc.vpc_product}"
   retention_in_days = 90
   tags = merge(var.common_tags, tomap({ "Name" = "fl-${local.data.vpc.vpc_product}" }))
 }
