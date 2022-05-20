@@ -24,3 +24,8 @@ variable "aws_region" {
   description = "The aws region providers"
   default     = "eu-central-1"
 } 
+
+variable "common_tags" {
+  type    = map(any)
+  default = {}
+}

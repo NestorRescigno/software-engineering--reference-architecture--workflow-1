@@ -174,82 +174,361 @@ resource "aws_security_group" "instances" {
 
 }
 
+########################################################################################
+# VPC Endpoint connect vpc with other vpc or service aws
+########################################################################################
 
-# ##################################
-# # add endpoint service 
-# ##################################
-# resource "aws_vpc_endpoint_service" "product" {
-#   acceptance_required        = false
-#   allowed_principals         = [data.aws_caller_identity.current.arn]
-#   gateway_load_balancer_arns = [aws_lb.alb.arn]
-# }
 
-# resource "aws_vpc_endpoint" "product" {
-#   service_name      = aws_vpc_endpoint_service.product.service_name
-#   subnet_ids        = [local,data.subnet_ids]
-#   vpc_endpoint_type = aws_vpc_endpoint_service.product.service_type
-#   vpc_id            = data.aws_vpc.vpc_product.id
-# }
+######################
+# VPC Endpoint for S3
+######################
 
-# #################################
-# ### add endpoint
-# #################################
+resource "aws_vpc_endpoint" "s3" {
 
-resource "aws_vpc_endpoint" "ec2" {
-  vpc_id            = data.aws_vpc.vpc_product.id
-  service_name      = join(".",["com","amazonaws",var.aws_region, "ec2"])
-  vpc_endpoint_type = "Interface"
-  security_group_ids = [
-    aws_security_group.instances.id
-  ]
 
-  private_dns_enabled = true
+  vpc_id       = data.aws_vpc.vpc_product.id
+  service_name = data.aws_vpc_endpoint_service.s3.service_name
+  #tags         = merge(var.common_tags, map("Name", "s3-${lookup(var.common_tags, "Project")}-endpoint"}))
+  tags = merge(var.common_tags, tomap({ "Name" = "s3-${lookup(var.common_tags, "Project")}-endpoint" }))
 }
 
-# resource "aws_vpc_endpoint" "s3" {
-#   vpc_id            = data.aws_vpc.vpc_product.id
-#   service_name      = join(".",["com","amazonaws",var.aws_region, "s3"])
-#   vpc_endpoint_type = "Gateway"
-#   # security group add role
-#   security_group_ids = [
-#     data.aws_security_group.instances.id
-#   ]
+# resource "aws_vpc_endpoint_route_table_association" "private_s3" {
+#   count = length(var.azs)
 
-#   private_dns_enabled = true
+#   vpc_endpoint_id = aws_vpc_endpoint.s3[0].id
+#   route_table_id  = element(aws_route_table.private.*.id, count.index)
 # }
+
+# resource "aws_vpc_endpoint_route_table_association" "public_s3" {
+#   count = var.enable_s3_endpoint && (var.public_mask != 0 || length(var.public_subnets) != 0) && length(var.azs) > 0 ? 1 : 0
+
+#   vpc_endpoint_id = aws_vpc_endpoint.s3[0].id
+#   route_table_id  = aws_route_table.rt_igw_dc[0].id
+# }
+
+
+
+
+##########################
+# VPC Endpoint for Config
+##########################
+resource "aws_vpc_endpoint" "config" {
+  vpc_id            = data.aws_vpc.vpc_product.id
+  service_name      = data.aws_vpc_endpoint_service.config.service_name
+  vpc_endpoint_type = "Interface"
+
+
+  security_group_ids  = aws_default_security_group.default.id
+  private_dns_enabled = true
+
+  tags = merge(var.common_tags, tomap({ "Name" = "config-${lookup(var.common_tags, "Project")}-endpoint" }))
+}
+
+
+#########################
+# VPC Endpoint for Lambda
+
+resource "aws_vpc_endpoint" "lambda" {
+  vpc_id            = data.aws_vpc.vpc_product.id
+  service_name      = data.aws_vpc_endpoint_service.lambda.service_name
+  vpc_endpoint_type = "Interface"
+
+  security_group_ids  = aws_default_security_group.default.id
+  private_dns_enabled = true
+  tags = merge(var.common_tags, tomap({ "Name" = "lambda-${lookup(var.common_tags, "Project")}-endpoint" }))
+}
+
+
+#######################
+# VPC Endpoint for SSM
+#######################
+resource "aws_vpc_endpoint" "ssm" {
+  vpc_id            = data.aws_vpc.vpc_product.id
+  service_name      = data.aws_vpc_endpoint_service.ssm.service_name
+  vpc_endpoint_type = "Interface"
+
+
+  security_group_ids  = aws_default_security_group.default.id
+  private_dns_enabled = true
+  tags                = merge(var.common_tags, tomap({ "Name" = "ssm-${lookup(var.common_tags, "Project")}-endpoint" }))
+}
+
+###############################
+# VPC Endpoint for SSMMESSAGES
+###############################
+resource "aws_vpc_endpoint" "ssmmessages" {
+
+  vpc_id            = data.aws_vpc.vpc_product.id
+  service_name      = data.aws_vpc_endpoint_service.ssmmessages.service_name
+  vpc_endpoint_type = "Interface"
+
+  security_group_ids  = aws_default_security_group.default.id
+  private_dns_enabled = true
+  tags                = merge(var.common_tags, tomap({ "Name" = "ssmmessages-${lookup(var.common_tags, "Project")}-endpoint" }))
+}
+
+#######################
+# VPC Endpoint for EC2
+#######################
+resource "aws_vpc_endpoint" "ec2" {
+  vpc_id            = data.aws_vpc.vpc_product.id
+  service_name      = data.aws_vpc_endpoint_service.ec2.service_name
+  vpc_endpoint_type = "Interface"
+
+  security_group_ids  = aws_default_security_group.default.id
+  private_dns_enabled = true
+  tags                = merge(var.common_tags, tomap({ "Name" = "ec2-${lookup(var.common_tags, "Project")}-endpoint" }))
+}
+
+###############################
+# VPC Endpoint for EC2MESSAGES
+###############################
+data "aws_vpc_endpoint_service" "ec2messages" {
+  count = var.enable_ec2messages_endpoint ? 1 : 0
+
+  service = "ec2messages"
+}
 
 resource "aws_vpc_endpoint" "ec2messages" {
   vpc_id            = data.aws_vpc.vpc_product.id
-  service_name      =  join(".",["com","amazonaws",var.aws_region, "ec2messages"])
+  service_name      = data.aws_vpc_endpoint_service.ec2messages.service_name
   vpc_endpoint_type = "Interface"
 
-  security_group_ids = [
-    aws_security_group.instances.id
-  ]
 
+  security_group_ids  = aws_default_security_group.default.id
   private_dns_enabled = true
+  tags                = merge(var.common_tags, tomap({ "Name" = "ec2messages-${lookup(var.common_tags, "Project")}-endpoint" }))
 }
 
-resource "aws_vpc_endpoint" "ssm" {
+###############################
+# VPC Endpoint for EC2 Autoscaling
+###############################
+
+resource "aws_vpc_endpoint" "ec2_autoscaling" {
   vpc_id            = data.aws_vpc.vpc_product.id
-  service_name      = join(".",["com","amazonaws",var.aws_region, "ssm"])
+  service_name      = data.aws_vpc_endpoint_service.ec2_autoscaling.service_name
   vpc_endpoint_type = "Interface"
 
-  security_group_ids = [
-    aws_security_group.instances.id
-  ]
-
+  security_group_ids  = aws_default_security_group.default.id
   private_dns_enabled = true
+  tags                = merge(var.common_tags, tomap({ "Name" = "autoscaling-${lookup(var.common_tags, "Project")}-endpoint" }))
 }
 
-resource "aws_vpc_endpoint" "ssmmessages" {
+
+###################################
+# VPC Endpoint for Transfer Server
+###################################
+resource "aws_vpc_endpoint" "transferserver" {
   vpc_id            = data.aws_vpc.vpc_product.id
-  service_name      = join(".",["com","amazonaws",var.aws_region, "ssmmessages"])
+  service_name      = data.aws_vpc_endpoint_service.transferserver.service_name
   vpc_endpoint_type = "Interface"
 
-  security_group_ids = [
-    aws_security_group.instances.id
-  ]
-
+ 
+  security_group_ids  = aws_default_security_group.default.id
   private_dns_enabled = true
+  tags                = merge(var.common_tags, tomap({ "Name" = "transfer.server-${lookup(var.common_tags, "Project")}-endpoint" }))
 }
+
+
+
+#######################
+# VPC Endpoint for API Gateway
+#######################
+resource "aws_vpc_endpoint" "apigw" {
+  vpc_id            = data.aws_vpc.vpc_product.id
+  service_name      = data.aws_vpc_endpoint_service.apigw.service_name
+  vpc_endpoint_type = "Interface"
+
+ 
+  security_group_ids  = aws_default_security_group.default.id
+  private_dns_enabled = true
+  tags                = merge(var.common_tags, tomap({ "Name" = "execute-api-${lookup(var.common_tags, "Project")}-endpoint" }))
+}
+
+#######################
+# VPC Endpoint for KMS
+#######################
+resource "aws_vpc_endpoint" "kms" {
+  vpc_id            = data.aws_vpc.vpc_product.id
+  service_name      = data.aws_vpc_endpoint_service.kms.service_name
+  vpc_endpoint_type = "Interface"
+
+
+  security_group_ids  = aws_default_security_group.default.id
+  private_dns_enabled = true
+  tags                = merge(var.common_tags, tomap({ "Name" = "kms-${lookup(var.common_tags, "Project")}-endpoint" }))
+}
+
+#######################
+# VPC Endpoint for ECS
+#######################
+
+resource "aws_vpc_endpoint" "ecs" {
+  vpc_id            = data.aws_vpc.vpc_product.id
+  service_name      = data.aws_vpc_endpoint_service.ecs.service_name
+  vpc_endpoint_type = "Interface"
+
+  security_group_ids  = aws_default_security_group.default.id
+  private_dns_enabled = true
+  tags                = merge(var.common_tags, tomap({ "Name" = "ecs-${lookup(var.common_tags, "Project")}-endpoint" }))
+}
+
+
+#######################
+# VPC Endpoint for ECS Agent
+#######################
+resource "aws_vpc_endpoint" "ecs_agent" {
+  vpc_id            = data.aws_vpc.vpc_product.id
+  service_name      = data.aws_vpc_endpoint_service.ecs_agent.service_name
+  vpc_endpoint_type = "Interface"
+
+
+  security_group_ids  = aws_default_security_group.default.id
+  private_dns_enabled = true
+  tags                = merge(var.common_tags, tomap({ "Name" = "ecs-agent-${lookup(var.common_tags, "Project")}-endpoint" }))
+}
+
+
+
+
+#######################
+# VPC Endpoint for CloudWatch Monitoring
+#######################
+resource "aws_vpc_endpoint" "monitoring" {
+  vpc_id            = data.aws_vpc.vpc_product.id
+  service_name      = data.aws_vpc_endpoint_service.monitoring.service_name
+  vpc_endpoint_type = "Interface"
+
+
+  security_group_ids  = aws_default_security_group.default.id
+  private_dns_enabled = true
+  tags                = merge(var.common_tags, tomap({ "Name" = "monitoring-${lookup(var.common_tags, "Project")}-endpoint" }))
+}
+
+
+#######################
+# VPC Endpoint for CloudWatch Logs
+#######################
+
+resource "aws_vpc_endpoint" "logs" {
+  vpc_id            = data.aws_vpc.vpc_product.id
+  service_name      = data.aws_vpc_endpoint_service.logs.service_name
+  vpc_endpoint_type = "Interface"
+
+  security_group_ids  = aws_default_security_group.default.id
+  private_dns_enabled = true
+  tags                = merge(var.common_tags, tomap({ "Name" = "logs-${lookup(var.common_tags, "Project")}-endpoint" }))
+}
+
+
+#######################
+# VPC Endpoint for CloudWatch Events
+#######################
+resource "aws_vpc_endpoint" "events" {
+  vpc_id            = data.aws_vpc.vpc_product.id
+  service_name      = data.aws_vpc_endpoint_service.events.service_name
+  vpc_endpoint_type = "Interface"
+
+  security_group_ids  = aws_default_security_group.default.id
+  private_dns_enabled = true
+  tags                = merge(var.common_tags, tomap({ "Name" = "events-${lookup(var.common_tags, "Project")}-endpoint" }))
+}
+
+
+#######################
+# VPC Endpoint for Elastic Load Balancing
+
+resource "aws_vpc_endpoint" "elasticloadbalancing" {
+  count = var.enable_elasticloadbalancing_endpoint ? 1 : 0
+
+  vpc_id            = data.aws_vpc.vpc_product.id
+  service_name      = data.aws_vpc_endpoint_service.elasticloadbalancing.service_name
+  vpc_endpoint_type = "Interface"
+
+  security_group_ids  = aws_default_security_group.default.id
+  private_dns_enabled = true
+  tags                = merge(var.common_tags, tomap({ "Name" = "elasticloadbalancing-${lookup(var.common_tags, "Project")}-endpoint" }))
+}
+
+
+
+
+#############################
+# VPC Endpoint for Transfer
+#############################
+
+resource "aws_vpc_endpoint" "transfer" {
+  vpc_id            = data.aws_vpc.vpc_product.id
+  service_name      = data.aws_vpc_endpoint_service.transfer.service_name
+  vpc_endpoint_type = "Interface"
+
+  security_group_ids  = aws_default_security_group.default.id
+  private_dns_enabled = true
+  tags                = merge(var.common_tags, tomap({ "Name" = "transfer-${lookup(var.common_tags, "Project")}-endpoint" }))
+}
+
+
+#######################
+# VPC Endpoint for Auto Scaling Plans
+#######################
+resource "aws_vpc_endpoint" "auto_scaling_plans" {
+
+  vpc_id            = data.aws_vpc.vpc_product.id
+  service_name      = data.aws_vpc_endpoint_service.auto_scaling_plans.service_name
+  vpc_endpoint_type = "Interface"
+
+  security_group_ids  = aws_default_security_group.default.id
+
+
+  tags = merge(var.common_tags, tomap({ "Name" = "autoscaling-plans-${lookup(var.common_tags, "Project")}-endpoint" }))
+}
+
+
+
+#######################
+# VPC Endpoint for EBS
+#######################
+resource "aws_vpc_endpoint" "ebs" {
+  vpc_id            = data.aws_vpc.vpc_product.id
+  service_name      = data.aws_vpc_endpoint_service.ebs.service_name
+  vpc_endpoint_type = "Interface"
+
+  security_group_ids  = aws_default_security_group.default.id
+  private_dns_enabled = true
+
+  tags = merge(var.common_tags, tomap({ "Name" = "ebs-${lookup(var.common_tags, "Project")}-endpoint" }))
+}
+
+
+
+#############################################
+# VPC Endpoint for Codeartifact API
+#############################################
+
+
+resource "aws_vpc_endpoint" "codeartifact_api" {
+
+  vpc_id            = data.aws_vpc.vpc_product.id
+  service_name      = data.aws_vpc_endpoint_service.codeartifact_api.service_name
+  vpc_endpoint_type = "Interface"
+
+  security_group_ids  = aws_default_security_group.default.id
+  private_dns_enabled = true
+
+  tags = merge(var.common_tags, tomap({ "Name" = "codeartifact-api-${lookup(var.common_tags, "Project")}-endpoint" }))
+}
+
+
+resource "aws_vpc_endpoint" "codeartifact_repositories" {
+
+  vpc_id            = data.aws_vpc.vpc_product.id
+  service_name      = data.aws_vpc_endpoint_service.codeartifact_repositories.service_name
+  vpc_endpoint_type = "Interface"
+
+  security_group_ids  = aws_default_security_group.default.id
+  private_dns_enabled = true
+
+  tags = merge(var.common_tags, tomap({ "Name" = "codeartifact-repo-${lookup(var.common_tags, "Project")}-endpoint" }))
+}
+
+
