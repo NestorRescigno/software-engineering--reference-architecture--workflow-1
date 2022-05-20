@@ -179,34 +179,6 @@ resource "aws_security_group" "instances" {
 ########################################################################################
 
 
-######################
-# VPC Endpoint for S3
-######################
-
-resource "aws_vpc_endpoint" "s3" {
-
-
-  vpc_id       = data.aws_vpc.vpc_product.id
-  service_name = data.aws_vpc_endpoint_service.s3.service_name
-  tags = merge(var.common_tags, tomap({"Name" = "s3-Project-endpoint" }))
-}
-
-# resource "aws_vpc_endpoint_route_table_association" "private_s3" {
-#   count = length(var.azs)
-
-#   vpc_endpoint_id = aws_vpc_endpoint.s3[0].id
-#   route_table_id  = element(aws_route_table.private.*.id, count.index)
-# }
-
-# resource "aws_vpc_endpoint_route_table_association" "public_s3" {
-#   count = var.enable_s3_endpoint && (var.public_mask != 0 || length(var.public_subnets) != 0) && length(var.azs) > 0 ? 1 : 0
-
-#   vpc_endpoint_id = aws_vpc_endpoint.s3[0].id
-#   route_table_id  = aws_route_table.rt_igw_dc[0].id
-# }
-
-
-
 
 ##########################
 # VPC Endpoint for Config
