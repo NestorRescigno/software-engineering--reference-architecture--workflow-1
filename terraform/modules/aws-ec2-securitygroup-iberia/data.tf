@@ -47,10 +47,6 @@ data "aws_vpc_endpoint_service" "ec2_autoscaling" {
   service = "autoscaling"
 }
 
-data "aws_vpc_endpoint_service" "transferserver" {
-  service = "transfer.server"
-}
-
 data "aws_vpc_endpoint_service" "apigw" {
   service = "execute-api"
 }
