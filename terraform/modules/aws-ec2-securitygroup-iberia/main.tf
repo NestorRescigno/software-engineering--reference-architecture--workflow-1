@@ -399,22 +399,6 @@ resource "aws_vpc_endpoint" "elasticloadbalancing" {
 
 
 
-
-#############################
-# VPC Endpoint for Transfer
-#############################
-
-resource "aws_vpc_endpoint" "transfer" {
-  vpc_id            = data.aws_vpc.vpc_product.id
-  service_name      = data.aws_vpc_endpoint_service.transferserver.service_name
-  vpc_endpoint_type = "Interface"
-
-  security_group_ids  = [aws_default_security_group.default.id]
-  private_dns_enabled = true
-  tags                = merge(var.common_tags, tomap({ "Name" = "transfer-${local.data.vpc.vpc_product}-endpoint" }))
-}
-
-
 #######################
 # VPC Endpoint for Auto Scaling Plans
 #######################
