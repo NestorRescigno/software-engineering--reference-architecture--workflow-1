@@ -64,6 +64,14 @@ data "aws_caller_identity" "current" {}
  
 # }
 
+##############################################
+# Securización del Security group por defecto
+##############################################
+
+resource "aws_default_security_group" "default" {
+  vpc_id = data.aws_vpc.vpc_product.id
+}
+
 
 #####################################
 ### New resources ALB SG 

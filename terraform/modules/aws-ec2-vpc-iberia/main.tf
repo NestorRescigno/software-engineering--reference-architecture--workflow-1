@@ -80,6 +80,27 @@ resource "aws_subnet" "subnets" {
 }
 
 ####################################################################################
+# create DHCP Options Set
+####################################################################################
+resource "aws_vpc_dhcp_options" "dhcp_options" {
+
+  domain_name          = local.dhcp_options_domain_name
+  domain_name_servers  = var.dhcp_options_domain_name_servers
+  ntp_servers          = var.dhcp_options_ntp_servers
+  netbios_name_servers = var.dhcp_options_netbios_name_servers
+  netbios_node_type    = var.dhcp_options_netbios_node_type
+  #tags                  = merge(var.common_tags, map("Name", "dhcp-ops-${lookup(var.common_tags, "Project")}-${var.vpc_name}"))
+  tags = merge(var.common_tags, tomap({ "Name" = "dhcp-ops-${lookup(var.common_tags, "Project")}-${local.data.vpc.vpc_product}" }))
+
+}
+
+resource "aws_vpc_dhcp_options_association" "dhcp_options_association" {
+  vpc_id          = aws_vpc.vpc_product.id
+  dhcp_options_id = aws_vpc_dhcp_options.dhcp_options.id
+}
+
+
+####################################################################################
 #create Internet Gateway
 #será necesario configurar la variable public_mask distinto de 0 para que se genere
 ####################################################################################

@@ -72,20 +72,6 @@ resource "aws_iam_instance_profile" "iam_instance_profile" {
 }
 
 
-
-
-##########################################################
-# Attach the policy cloudwatch_agent to the role
-# resource "aws_iam_instance_profile" "service" {
-#   name = "${var.service_name}-instanceprofile-${var.environment_prefix}"
-#   role = aws_iam_role.service.name
-# }
-
-# resource "aws_iam_role_policy_attachment" "cloudwatch_agent" {
-#   role       = aws_iam_role.service.name
-#   policy_arn = data.aws_iam_policy.cloudwatch_agent.arn
-# }
-
 # Attach the policy ssm to the role
 resource "aws_iam_role_policy_attachment" "ssm" {
   role       = aws_iam_role.role.name
@@ -97,10 +83,35 @@ resource "aws_iam_role_policy_attachment" "SSMManagedInstanceCore" {
   policy_arn = data.aws_iam_policy.SSMManagedInstanceCore.arn
 }
 
-# # Attach the policy common-microservices to the role
-# resource "aws_iam_role_policy_attachment" "common-microservices" {
-#   role       = aws_iam_role.service.name
-#   policy_arn = data.aws_iam_policy.common-microservices.arn
-# }
+
+##############################################
+# IAM ROLE
+##############################################
+
+esource "aws_iam_role" "flow_log_role" {
+  name               = "flow-${local.data.vpc.vpc_product}-log-role"
+  assume_role_policy = data.aws_iam_policy_document.flow_log_assume_role_policy.json
+}
+
+resource "aws_iam_role_policy" "flow_log_policy" {
+  name   = "flow-${local.data.vpc.vpc_product}-log-policy"
+  role   = aws_iam_role.flow_log_role.id
+  policy = data.aws_iam_policy_document.flow_log_policy.json
+}
+
+##############################################
+# S3 logs 
+##############################################
+resource "aws_cloudwatch_log_group" "vpc_flow_log" {
+  name              = "/aws/flowlogs/${data.aws_vpc.vpc_product.id}"
+  retention_in_days = 90
+  tags = merge(var.common_tags, tomap({ "Name" = "fl-${local.data.vpc.vpc_product}" }))
+}
 
 
+resource "aws_flow_log" "vpc_flow_log" {
+  log_destination = aws_cloudwatch_log_group.vpc_flow_log.arn
+  iam_role_arn    = aws_iam_role.flow_log_role.arn
+  vpc_id          = data.aws_vpc.vpc_product.id
+  traffic_type    = "ALL"
+}

@@ -17,23 +17,34 @@ data "aws_iam_policy" "SSMManagedInstanceCore" {
   arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
-# data "aws_iam_policy" "SSMServiceRolePolicy" {
-#     arn = "arn:aws:iam::aws:policy/aws-service-role/AmazonSSMServiceRolePolicy"
-# }
-
-
 ##################
 # global policies
 ##################
-
-# data "aws_iam_policy" "cloudwatch_agent" {
-#   name        = "${var.environment_prefix}-policy-cloudwatch-agent"
-# }
-
 data "aws_iam_policy" "ssm" {
   name   = "ssm-global-policy"            
 }
 
-# data "aws_iam_policy" "common-microservices" {
-#   name   = "${var.environment_prefix}-policy-common-microservices"
-# }
+
+data "aws_iam_policy_document" "flow_log_assume_role_policy" {
+  statement {
+    actions = ["sts:AssumeRole"]
+    principals {
+      type        = "Service"
+      identifiers = ["vpc-flow-logs.amazonaws.com"]
+    }
+    effect = "Allow"
+    sid    = ""
+  }
+}
+
+data "aws_iam_policy_document" "flow_log_policy" {
+  statement {
+    actions = ["logs:CreateLogGroup",
+      "logs:CreateLogStream",
+      "logs:PutLogEvents",
+      "logs:DescribeLogGroups",
+    "logs:DescribeLogStreams"]
+    effect    = "Allow"
+    resources = ["*"]
+  }
+}
