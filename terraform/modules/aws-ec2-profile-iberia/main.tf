@@ -99,19 +99,4 @@ resource "aws_iam_role_policy" "flow_log_policy" {
   policy = data.aws_iam_policy_document.flow_log_policy.json
 }
 
-##############################################
-# S3 logs test 
-##############################################
-resource "aws_cloudwatch_log_group" "vpc_flow_log" {
-  name              = "/aws/flowlogs/${local.data.vpc.vpc_product}"
-  retention_in_days = 90
-  tags = merge(var.common_tags, tomap({ "Name" = "fl-${local.data.vpc.vpc_product}" }))
-}
 
-
-resource "aws_flow_log" "vpc_flow_log" {
-  log_destination = aws_cloudwatch_log_group.vpc_flow_log.arn
-  iam_role_arn    = aws_iam_role.flow_log_role.arn
-  vpc_id          = data.aws_vpc.vpc_product.id
-  traffic_type    = "ALL"
-}

@@ -16,3 +16,7 @@ data "aws_iam_policy" "ssm" {
 data "aws_iam_policy" "common-microservices" {
   name   = join("-",[var.environment_prefix,"policy","common","microservices"])
 }
+
+data "aws_iam_role" "flow_log_role" {
+  name = "flow-${local.data.vpc.vpc_product}-log-role"
+}
