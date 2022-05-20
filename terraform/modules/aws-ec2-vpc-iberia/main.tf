@@ -226,6 +226,14 @@ resource "aws_route_table_association" "private" {
 ######################
 # VPC Endpoint for S3
 ######################
+data "aws_vpc_endpoint_service" "s3" {
+
+  service = "s3"
+   filter {
+    name   = "vpc_id"
+    values = [aws_vpc.vpc_product.id]
+  }
+}
 
 resource "aws_vpc_endpoint" "s3" {
   vpc_id       = aws_vpc.vpc_product.id
