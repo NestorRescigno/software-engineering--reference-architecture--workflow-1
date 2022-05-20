@@ -188,12 +188,9 @@ resource "aws_route" "private_nat_gateway" {
 
 resource "aws_route_table_association" "private" {
   for_each = aws_subnet.subnets  
-  subnet_id = aws_subnet.subnets[each.key.index].id
-  route_table_id = aws_route_table.private[each.key.index].id
+  subnet_id = aws_subnet.subnets[each.key].id
+  route_table_id = aws_route_table.private[each.key].id
 }
-
-
-
 
 
 # ####################################################################################
