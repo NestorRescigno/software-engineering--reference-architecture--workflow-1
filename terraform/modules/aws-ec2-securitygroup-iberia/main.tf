@@ -188,7 +188,7 @@ resource "aws_vpc_endpoint" "s3" {
 
   vpc_id       = data.aws_vpc.vpc_product.id
   service_name = data.aws_vpc_endpoint_service.s3.service_name
-  tags = merge(var.common_tags, tomap({ "Name" = "s3-${lookup(var.common_tags, "Project")}-endpoint" }))
+  tags = merge(var.common_tags, tomap({"Name" = "s3-Project-endpoint" }))
 }
 
 # resource "aws_vpc_endpoint_route_table_association" "private_s3" {
@@ -217,10 +217,10 @@ resource "aws_vpc_endpoint" "config" {
   vpc_endpoint_type = "Interface"
 
 
-  security_group_ids  = aws_default_security_group.default.id
+  security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
 
-  tags = merge(var.common_tags, tomap({ "Name" = "config-${lookup(var.common_tags, "Project")}-endpoint" }))
+  tags = merge(var.common_tags, tomap({ "Name" = "config-Project-endpoint" }))
 }
 
 
@@ -232,9 +232,9 @@ resource "aws_vpc_endpoint" "lambda" {
   service_name      = data.aws_vpc_endpoint_service.lambda.service_name
   vpc_endpoint_type = "Interface"
 
-  security_group_ids  = aws_default_security_group.default.id
+  security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
-  tags = merge(var.common_tags, tomap({ "Name" = "lambda-${lookup(var.common_tags, "Project")}-endpoint" }))
+  tags = merge(var.common_tags, tomap({ "Name" = "lambda-Project-endpoint" }))
 }
 
 
@@ -247,9 +247,9 @@ resource "aws_vpc_endpoint" "ssm" {
   vpc_endpoint_type = "Interface"
 
 
-  security_group_ids  = aws_default_security_group.default.id
+  security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
-  tags                = merge(var.common_tags, tomap({ "Name" = "ssm-${lookup(var.common_tags, "Project")}-endpoint" }))
+  tags                = merge(var.common_tags, tomap({ "Name" = "ssm-Project-endpoint" }))
 }
 
 ###############################
@@ -261,9 +261,9 @@ resource "aws_vpc_endpoint" "ssmmessages" {
   service_name      = data.aws_vpc_endpoint_service.ssmmessages.service_name
   vpc_endpoint_type = "Interface"
 
-  security_group_ids  = aws_default_security_group.default.id
+  security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
-  tags                = merge(var.common_tags, tomap({ "Name" = "ssmmessages-${lookup(var.common_tags, "Project")}-endpoint" }))
+  tags                = merge(var.common_tags, tomap({ "Name" = "ssmmessages-Project-endpoint" }))
 }
 
 #######################
@@ -274,9 +274,9 @@ resource "aws_vpc_endpoint" "ec2" {
   service_name      = data.aws_vpc_endpoint_service.ec2.service_name
   vpc_endpoint_type = "Interface"
 
-  security_group_ids  = aws_default_security_group.default.id
+  security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
-  tags                = merge(var.common_tags, tomap({ "Name" = "ec2-${lookup(var.common_tags, "Project")}-endpoint" }))
+  tags                = merge(var.common_tags, tomap({ "Name" = "ec2-Project-endpoint" }))
 }
 
 
@@ -286,9 +286,9 @@ resource "aws_vpc_endpoint" "ec2messages" {
   vpc_endpoint_type = "Interface"
 
 
-  security_group_ids  = aws_default_security_group.default.id
+  security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
-  tags                = merge(var.common_tags, tomap({ "Name" = "ec2messages-${lookup(var.common_tags, "Project")}-endpoint" }))
+  tags                = merge(var.common_tags, tomap({ "Name" = "ec2messages-Project-endpoint" }))
 }
 
 ###############################
@@ -300,9 +300,9 @@ resource "aws_vpc_endpoint" "ec2_autoscaling" {
   service_name      = data.aws_vpc_endpoint_service.ec2_autoscaling.service_name
   vpc_endpoint_type = "Interface"
 
-  security_group_ids  = aws_default_security_group.default.id
+  security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
-  tags                = merge(var.common_tags, tomap({ "Name" = "autoscaling-${lookup(var.common_tags, "Project")}-endpoint" }))
+  tags                = merge(var.common_tags, tomap({ "Name" = "autoscaling-Project-endpoint" }))
 }
 
 
@@ -315,9 +315,9 @@ resource "aws_vpc_endpoint" "transferserver" {
   vpc_endpoint_type = "Interface"
 
  
-  security_group_ids  = aws_default_security_group.default.id
+  security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
-  tags                = merge(var.common_tags, tomap({ "Name" = "transfer.server-${lookup(var.common_tags, "Project")}-endpoint" }))
+  tags                = merge(var.common_tags, tomap({ "Name" = "transfer.server-Project-endpoint" }))
 }
 
 
@@ -331,9 +331,9 @@ resource "aws_vpc_endpoint" "apigw" {
   vpc_endpoint_type = "Interface"
 
  
-  security_group_ids  = aws_default_security_group.default.id
+  security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
-  tags                = merge(var.common_tags, tomap({ "Name" = "execute-api-${lookup(var.common_tags, "Project")}-endpoint" }))
+  tags                = merge(var.common_tags, tomap({ "Name" = "execute-api-Project-endpoint" }))
 }
 
 #######################
@@ -345,9 +345,9 @@ resource "aws_vpc_endpoint" "kms" {
   vpc_endpoint_type = "Interface"
 
 
-  security_group_ids  = aws_default_security_group.default.id
+  security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
-  tags                = merge(var.common_tags, tomap({ "Name" = "kms-${lookup(var.common_tags, "Project")}-endpoint" }))
+  tags                = merge(var.common_tags, tomap({ "Name" = "kms-Project-endpoint" }))
 }
 
 #######################
@@ -359,9 +359,9 @@ resource "aws_vpc_endpoint" "ecs" {
   service_name      = data.aws_vpc_endpoint_service.ecs.service_name
   vpc_endpoint_type = "Interface"
 
-  security_group_ids  = aws_default_security_group.default.id
+  security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
-  tags                = merge(var.common_tags, tomap({ "Name" = "ecs-${lookup(var.common_tags, "Project")}-endpoint" }))
+  tags                = merge(var.common_tags, tomap({ "Name" = "ecs-Project-endpoint" }))
 }
 
 
@@ -374,9 +374,9 @@ resource "aws_vpc_endpoint" "ecs_agent" {
   vpc_endpoint_type = "Interface"
 
 
-  security_group_ids  = aws_default_security_group.default.id
+  security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
-  tags                = merge(var.common_tags, tomap({ "Name" = "ecs-agent-${lookup(var.common_tags, "Project")}-endpoint" }))
+  tags                = merge(var.common_tags, tomap({ "Name" = "ecs-agent-Project-endpoint" }))
 }
 
 
@@ -391,9 +391,9 @@ resource "aws_vpc_endpoint" "monitoring" {
   vpc_endpoint_type = "Interface"
 
 
-  security_group_ids  = aws_default_security_group.default.id
+  security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
-  tags                = merge(var.common_tags, tomap({ "Name" = "monitoring-${lookup(var.common_tags, "Project")}-endpoint" }))
+  tags                = merge(var.common_tags, tomap({ "Name" = "monitoring-Project-endpoint" }))
 }
 
 
@@ -406,9 +406,9 @@ resource "aws_vpc_endpoint" "logs" {
   service_name      = data.aws_vpc_endpoint_service.logs.service_name
   vpc_endpoint_type = "Interface"
 
-  security_group_ids  = aws_default_security_group.default.id
+  security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
-  tags                = merge(var.common_tags, tomap({ "Name" = "logs-${lookup(var.common_tags, "Project")}-endpoint" }))
+  tags                = merge(var.common_tags, tomap({ "Name" = "logs-Project-endpoint" }))
 }
 
 
@@ -420,9 +420,9 @@ resource "aws_vpc_endpoint" "events" {
   service_name      = data.aws_vpc_endpoint_service.events.service_name
   vpc_endpoint_type = "Interface"
 
-  security_group_ids  = aws_default_security_group.default.id
+  security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
-  tags                = merge(var.common_tags, tomap({ "Name" = "events-${lookup(var.common_tags, "Project")}-endpoint" }))
+  tags                = merge(var.common_tags, tomap({ "Name" = "events-Project-endpoint" }))
 }
 
 
@@ -435,9 +435,9 @@ resource "aws_vpc_endpoint" "elasticloadbalancing" {
   service_name      = data.aws_vpc_endpoint_service.elasticloadbalancing.service_name
   vpc_endpoint_type = "Interface"
 
-  security_group_ids  = aws_default_security_group.default.id
+  security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
-  tags                = merge(var.common_tags, tomap({ "Name" = "elasticloadbalancing-${lookup(var.common_tags, "Project")}-endpoint" }))
+  tags                = merge(var.common_tags, tomap({ "Name" = "elasticloadbalancing-Project-endpoint" }))
 }
 
 
@@ -452,9 +452,9 @@ resource "aws_vpc_endpoint" "transfer" {
   service_name      = data.aws_vpc_endpoint_service.transferserver.service_name
   vpc_endpoint_type = "Interface"
 
-  security_group_ids  = aws_default_security_group.default.id
+  security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
-  tags                = merge(var.common_tags, tomap({ "Name" = "transfer-${lookup(var.common_tags, "Project")}-endpoint" }))
+  tags                = merge(var.common_tags, tomap({ "Name" = "transfer-Project-endpoint" }))
 }
 
 
@@ -467,10 +467,10 @@ resource "aws_vpc_endpoint" "auto_scaling_plans" {
   service_name      = data.aws_vpc_endpoint_service.auto_scaling_plans.service_name
   vpc_endpoint_type = "Interface"
 
-  security_group_ids  = aws_default_security_group.default.id
+  security_group_ids  = [aws_default_security_group.default.id]
 
 
-  tags = merge(var.common_tags, tomap({ "Name" = "autoscaling-plans-${lookup(var.common_tags, "Project")}-endpoint" }))
+  tags = merge(var.common_tags, tomap({ "Name" = "autoscaling-plans-Project-endpoint" }))
 }
 
 
@@ -483,10 +483,10 @@ resource "aws_vpc_endpoint" "ebs" {
   service_name      = data.aws_vpc_endpoint_service.ebs.service_name
   vpc_endpoint_type = "Interface"
 
-  security_group_ids  = aws_default_security_group.default.id
+  security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
 
-  tags = merge(var.common_tags, tomap({ "Name" = "ebs-${lookup(var.common_tags, "Project")}-endpoint" }))
+  tags = merge(var.common_tags, tomap({ "Name" = "ebs-Project-endpoint" }))
 }
 
 
@@ -502,10 +502,10 @@ resource "aws_vpc_endpoint" "codeartifact_api" {
   service_name      = data.aws_vpc_endpoint_service.codeartifact_api.service_name
   vpc_endpoint_type = "Interface"
 
-  security_group_ids  = aws_default_security_group.default.id
+  security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
 
-  tags = merge(var.common_tags, tomap({ "Name" = "codeartifact-api-${lookup(var.common_tags, "Project")}-endpoint" }))
+  tags = merge(var.common_tags, tomap({ "Name" = "codeartifact-api-Project-endpoint" }))
 }
 
 
@@ -515,10 +515,10 @@ resource "aws_vpc_endpoint" "codeartifact_repositories" {
   service_name      = data.aws_vpc_endpoint_service.codeartifact_repositories.service_name
   vpc_endpoint_type = "Interface"
 
-  security_group_ids  = aws_default_security_group.default.id
+  security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
 
-  tags = merge(var.common_tags, tomap({ "Name" = "codeartifact-repo-${lookup(var.common_tags, "Project")}-endpoint" }))
+  tags = merge(var.common_tags, tomap({ "Name" = "codeartifact-repo-Project-endpoint" }))
 }
 
 
