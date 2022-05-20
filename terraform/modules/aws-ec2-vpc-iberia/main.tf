@@ -227,18 +227,18 @@ resource "aws_route_table_association" "private" {
 ######################
 # VPC Endpoint for S3
 ######################
-data "aws_vpc_endpoint_service" "s3" {
+# data "aws_vpc_endpoint_service" "s3" {
 
-  service = "s3"
-   filter {
-    name   = "Name"
-    values = [local.data.vpc.vpc_product]
-  }
-}
+#   service = "s3"
+#    filter {
+#     name   = "Name"
+#     values = [local.data.vpc.vpc_product]
+#   }
+# }
 
 resource "aws_vpc_endpoint" "s3" {
   vpc_id       = aws_vpc.vpc_product.id
-  service_name = data.aws_vpc_endpoint_service.s3.service_name
+  service_name = "com.amazonaws.${var.aws_region}.s3"
   tags = merge(var.common_tags, tomap({"Name" = "s3-${local.data.vpc.vpc_product}-endpoint" }))
 }
 
