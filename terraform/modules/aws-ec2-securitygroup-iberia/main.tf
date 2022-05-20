@@ -430,7 +430,6 @@ resource "aws_vpc_endpoint" "events" {
 # VPC Endpoint for Elastic Load Balancing
 
 resource "aws_vpc_endpoint" "elasticloadbalancing" {
-  count = var.enable_elasticloadbalancing_endpoint ? 1 : 0
 
   vpc_id            = data.aws_vpc.vpc_product.id
   service_name      = data.aws_vpc_endpoint_service.elasticloadbalancing.service_name
