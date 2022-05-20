@@ -96,6 +96,25 @@ if [ $rc -eq 1 ] ; then
    echo "***************************************************"
 fi
 
+
+##################################
+# init terraform module endpoint connect
+##################################
+# SG="${ARTIFACT}-instances-${ENVIROMENT_PREFIX_DEV}-sg"
+# echo $(aws ec2 delete-security-group --group-name $SG)
+cd ${WORKSPACE}/.github/cicd/terraform/modules/aws-ec2-endpoint-iberia
+terraform init
+terraform plan  -var "project=${PROJECT}" -var "service_name=${ARTIFACT}"  -var "environment=${ENVIROMENT_DEV}" -var "environment_prefix=${ENVIROMENT_PREFIX_DEV}" -out create.plan
+# create plan terrafom
+terraform apply create.plan
+rc=$?
+if [ $rc -eq 1 ] ; then
+   echo "***************************************************"
+   echo " Continuos process..                               "
+   echo "***************************************************"
+fi
+
+
 ##################################
 # init terraform module instance
 ##################################
