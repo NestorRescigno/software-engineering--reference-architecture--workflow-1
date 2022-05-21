@@ -20,6 +20,6 @@ resource "aws_subnet" "subnets" {
   # set tag
   tags = {
       Name = join("-",[var.project,"snet", data.aws_region.current.name, each.value.name_suffix, (var.hasPublicIpOnLaunch)? "public":"private" ]),
-      Type = (var.hasPublicIpOnLaunch)? "public":"private"
+      #Type = var.hasPublicIpOnLaunch? "public":"private"  Note of developer: test read var conditionla into map tag, find function terraform.
   }
 }
