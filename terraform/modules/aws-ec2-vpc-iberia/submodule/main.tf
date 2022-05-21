@@ -19,6 +19,6 @@ resource "aws_subnet" "subnets" {
   cidr_block              = cidrsubnet(var.cidr_block, 4, var.az_number[each.value.name_suffix])
   # set tag
   tags = {
-      Name = join("-",[var.project,"snet","amber", data.aws_region.current.name, each.value.name_suffix])
+      Name = join("-",[var.project,"snet", data.aws_region.current.name, each.value.name_suffix, (var.hasPublicIpOnLaunch)? "public":"private" ])
   }
 }
