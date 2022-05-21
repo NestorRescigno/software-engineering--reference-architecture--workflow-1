@@ -1,9 +1,3 @@
-# *********************************************************************
-# *************           IBERIA L.A.E.                   *************
-# *************       by Software Engineering             *************
-# *********************************************************************
-
-
 ###########################
 ### Provider
 ###########################
@@ -33,7 +27,7 @@ provider "aws" {
 resource "aws_vpc" "vpc_product" {
     # The IPv4 CIDR block for the VPC. CIDR can be explicitly set or it can be derived from IPAM using
   # cidr_block       = "10.0.0.0/16"
-  cidr_block            = cidrsubnet("10.1.0.0/16", 4, var.region_number[data.aws_region.current.name])
+  cidr_block            = cidrsubnet("10.0.0.0/16", 4, var.region_number[data.aws_region.current.name])
 
   # A tenancy option for instances launched into the VPC. 
   # Default is default, which ensures that EC2 instances launched
@@ -55,49 +49,27 @@ resource "aws_vpc" "vpc_product" {
 }
 
 
-############################
-### create subnet in vpc 
-### with aws availability zone
-############################
+###################################################################################
+# submodule crete subnet
+###################################################################################
 
-# resource subnet
-resource "aws_subnet" "subnets" {
-  # interate array
-  for_each                = data.aws_availability_zone.all
-  # select vpc id
-  vpc_id                  = aws_vpc.vpc_product.id
-  # get key of item array
-  availability_zone       = each.key
-
-  # map ips public 
-  map_public_ip_on_launch = var.hasPrivateSubnet?false:true
-
-  # set IP 
-  cidr_block              = cidrsubnet(aws_vpc.vpc_product.cidr_block, 4, var.az_number[each.value.name_suffix])
-  # set tag
-  tags = {
-      Name = join("-",[var.project,"snet","amber", data.aws_region.current.name, each.value.name_suffix])
-  }
+module "subnets" {
+  source = "./submodule"
+  project = var.product
+  aws_vpc_id = aws_vpc.vpc_product.id
+  cidr_block = aws_vpc.vpc_product.cidr_block
+  hasPublicIpOnLaunch = true
 }
 
 
-# # resource subnet
-# resource "aws_subnet" "subnets-private" {
-#   # interate array
-#   for_each = data.aws_availability_zone.all
-#   # select vpc id
-#   vpc_id            = aws_vpc.vpc_product.id
-#   # get key of item array
-#   availability_zone = each.key
+module "subnets_private" {
+  source = "./submodule"
+  count = var.hasPrivateSubnet ? 1 : 0
+  project = var.product
+  aws_vpc_id = aws_vpc.vpc_product.id
+  cidr_block = aws_vpc.vpc_product.cidr_block
+}
 
-
-#   # set IP 
-#   cidr_block        = cidrsubnet(aws_vpc.vpc_product.cidr_block, 4, var.az_number[each.value.name_suffix])
-#   # set tag
-#   tags = {
-#      Name = join("-",[var.project,"snet","amber", data.aws_region.current.name, each.value.name_suffix])
-#   }
-# }
 
 ####################################################################################
 # create DHCP Options Set
@@ -118,11 +90,3 @@ resource "aws_vpc_dhcp_options_association" "dhcp_options_association" {
   vpc_id          = aws_vpc.vpc_product.id
   dhcp_options_id = aws_vpc_dhcp_options.dhcp_options.id
 }
-
-
-### NOTE OF DEVELOPER: Example code terraform with foreach
-# example conditional to foreach
-# for_each = {
-#     for k, v in var.some_map : k => v
-#     if contains(var.enabled_keys, k)
-#   }
