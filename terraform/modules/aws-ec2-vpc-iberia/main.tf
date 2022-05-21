@@ -33,7 +33,7 @@ provider "aws" {
 resource "aws_vpc" "vpc_product" {
     # The IPv4 CIDR block for the VPC. CIDR can be explicitly set or it can be derived from IPAM using
   # cidr_block       = "10.0.0.0/16"
-  cidr_block = cidrsubnet("10.1.0.0/16", 4, var.region_number[data.aws_region.current.name])
+  cidr_block            = cidrsubnet("10.1.0.0/16", 4, var.region_number[data.aws_region.current.name])
 
   # A tenancy option for instances launched into the VPC. 
   # Default is default, which ensures that EC2 instances launched
@@ -42,11 +42,11 @@ resource "aws_vpc" "vpc_product" {
   # which ensures that EC2 instances launched in this VPC are run on dedicated 
   # tenancy instances regardless of the tenancy attribute specified at launch. 
   # This has a dedicated per region fee of $2 per hour, plus an hourly per instance usage fee.
-  instance_tenancy = "default"
+  instance_tenancy      = "default"
   # A map of tags to assign to the resource. If configured with a provider
 
-  enable_dns_support = true
-  enable_dns_hostnames = true
+  enable_dns_support    = true
+  enable_dns_hostnames  = true
   
   tags = {
     Name = local.data.vpc.vpc_product
@@ -62,22 +62,47 @@ resource "aws_vpc" "vpc_product" {
 # resource subnet
 resource "aws_subnet" "subnets" {
   # interate array
-  for_each = data.aws_availability_zone.all
+  for_each                = data.aws_availability_zone.all
   # select vpc id
-  vpc_id            = aws_vpc.vpc_product.id
+  vpc_id                  = aws_vpc.vpc_product.id
   # get key of item array
-  availability_zone = each.key
+  availability_zone       = each.key
 
   # map ips public 
   map_public_ip_on_launch = true
 
   # set IP 
-  cidr_block        = cidrsubnet(aws_vpc.vpc_product.cidr_block, 4, var.az_number[each.value.name_suffix])
+  cidr_block              = cidrsubnet(aws_vpc.vpc_product.cidr_block, 4, var.az_number[each.value.name_suffix])
   # set tag
   tags = {
-     Name = join("-",[var.project,"snet","amber", data.aws_region.current.name, each.value.name_suffix])
+      Name = join("-",[var.project,"snet","amber", data.aws_region.current.name, each.value.name_suffix])
   }
 }
+
+
+####################################################################################
+# NOTE OF DEVELOPER: test use submodule compile for conditional create. test 
+####################################################################################
+
+# module "subnets" {
+#   source = "./submodule"
+#   project = var.product
+#   aws_vpc_id = aws_vpc.vpc_product.id
+#   cidr_block = aws_vpc.vpc_product.cidr_block
+#   hasPublicIpOnLaunch = true
+# }
+
+
+# module "subnets_private" {
+#   source = "./submodule"
+#   count = var.hasPrivateSubnet ? 1 : 0
+#   project = var.product
+#   aws_vpc_id = aws_vpc.vpc_product.id
+#   cidr_block = aws_vpc.vpc_product.cidr_block
+# }
+####################################################################################
+
+
 
 # # resource subnet
 # resource "aws_subnet" "subnets-private" {
@@ -116,3 +141,11 @@ resource "aws_vpc_dhcp_options_association" "dhcp_options_association" {
   vpc_id          = aws_vpc.vpc_product.id
   dhcp_options_id = aws_vpc_dhcp_options.dhcp_options.id
 }
+
+
+### NOTE OF DEVELOPER: Example code terraform with foreach
+# example conditional to foreach
+# for_each = {
+#     for k, v in var.some_map : k => v
+#     if contains(var.enabled_keys, k)
+#   }

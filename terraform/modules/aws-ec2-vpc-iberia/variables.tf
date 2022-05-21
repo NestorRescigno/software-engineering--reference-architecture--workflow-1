@@ -91,3 +91,10 @@ variable "dhcp_options_netbios_node_type" {
   type        = string
   default     = ""
 }
+
+
+variable "hasPrivateSubnet" {
+  description = "the vpc has private subnet"
+  type        = bool
+  default     = false
+}
