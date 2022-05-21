@@ -60,6 +60,9 @@ echo "vpc state: $STATE"
 if [ $STATE == "null" ] ; then 
   
   # This module have lifecycle { create_before_destroy = false }
+  echo "***************************************************"
+  echo " Init terraform VPC.                               "
+  echo "***************************************************"
   cd ${WORKSPACE}/.github/cicd/terraform/modules/aws-ec2-vpc-iberia
   terraform init
   # apply plan terrafom
@@ -73,6 +76,10 @@ if [ $STATE == "null" ] ; then
    exit -1
   fi
 
+else
+  echo "***************************************************"
+  echo " VPC exists.                                       "
+  echo "***************************************************"
 fi
 
 # echo "::set-output name=security-group-ids:$(terraform output aws_security_groups)" 

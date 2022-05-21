@@ -66,6 +66,9 @@ aws sts get-caller-identity
 echo $(aws iam list-instance-profiles | grep $PROFILEINSTANCE)
 echo $(aws iam delete-instance-profile --instance-profile-name $PROFILEINSTANCE)
 
+echo "***************************************************"
+echo " Init terraform module profile..                   "
+echo "***************************************************"
 # service name
 cd ${WORKSPACE}/.github/cicd/terraform/modules/aws-ec2-profile-iberia
 terraform init
@@ -84,6 +87,9 @@ fi
 ##################################
 # SG="${ARTIFACT}-instances-${ENVIROMENT_PREFIX_DEV}-sg"
 # echo $(aws ec2 delete-security-group --group-name $SG)
+echo "***************************************************"
+echo " Init terraform module securitygroup.              "
+echo "***************************************************"
 cd ${WORKSPACE}/.github/cicd/terraform/modules/aws-ec2-securitygroup-iberia
 terraform init
 terraform plan  -var "project=${PROJECT}" -var "service_name=${ARTIFACT}"  -var "environment=${ENVIROMENT_DEV}" -var "environment_prefix=${ENVIROMENT_PREFIX_DEV}" -out create.plan
@@ -102,6 +108,9 @@ fi
 ##################################
 # SG="${ARTIFACT}-instances-${ENVIROMENT_PREFIX_DEV}-sg"
 # echo $(aws ec2 delete-security-group --group-name $SG)
+echo "***************************************************"
+echo " Init terraform module endpoint connect.           "
+echo "***************************************************"
 cd ${WORKSPACE}/.github/cicd/terraform/modules/aws-ec2-endpoint-iberia
 terraform init
 terraform plan  -var "project=${PROJECT}" -var "service_name=${ARTIFACT}"  -var "environment=${ENVIROMENT_DEV}" -var "environment_prefix=${ENVIROMENT_PREFIX_DEV}" -out create.plan
@@ -118,6 +127,9 @@ fi
 ##################################
 # init terraform module instance
 ##################################
+echo "***************************************************"
+echo " Init terraform module Instance.                   "
+echo "***************************************************"
 cd ${WORKSPACE}/.github/cicd/terraform/modules/aws-ec2-instance-iberia
 
 terraform init
@@ -141,18 +153,18 @@ echo "***************************************************"
 echo " instance id: $(terraform output instance_id)"
 echo "***************************************************"
 export DataList=$(terraform output instance_id)
-
-Field_Separator=$IFS
+export InstaceZoneA=$(terraform output instance_id_zoneA)
+# Field_Separator=$IFS
  
-# set comma as internal field separator for the string list
-IFS=,
-for val in $DataList;
-do
-id=$(echo $val | tr "[" " " | tr "]" " ")
-export PEM=`$(aws ec2 get-console-output --instance-id ${id} --output text)`
-echo "Read for instances key pem: $PEM"
-done
+# # set comma as internal field separator for the string list
+# IFS=,
+# for val in $DataList;
+# do
+# id=$(echo $val | tr "[" " " | tr "]" " ")
+# export PEM=`$(aws ec2 get-console-output --instance-id ${id} --output text)`
+# echo "Read for instances key pem: $PEM"
+# done
  
-IFS=$Field_Separator
+# IFS=$Field_Separator
 
 
