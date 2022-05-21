@@ -5,8 +5,8 @@ The configuration for this scenario includes a virtual private cloud (VPC) with 
 
 An instance that's launched into the VPC is automatically associated with the default security group if you don't specify a different security group during launch. For this scenario, we recommend that you create the following security groups instead of using the default security group:
 
-* **WebServerSG:** Specify this security group when you launch the web servers in the public subnet.
-* **DBServerSG:** Specify this security group when you launch the database servers in the private subnet.
+* **web_server_sg:** Specify this security group when you launch the web servers in the public subnet.
+* **db_server_sg:** Specify this security group when you launch the database servers in the private subnet.
 
 ## Security group WebServerSG in public subnet
 The following table describes the recommended rules for the WebServerSG security group
@@ -43,7 +43,7 @@ Source          | Protocol      | Port range    | comments      |
 0.0.0.0/0       | TCP           |  80           | Allow outbound HTTP access to any IPv4 addres
 0.0.0.0/0       | TCP           |  443          | Allow outbound HTTPS access to any IPv4 address.
 
-# The default security group 
+## The default security group 
 
 The default security group for a VPC has rules that automatically allow assigned instances to communicate with each other. To allow that type of communication for a custom security group, you must add the following rules:
 
@@ -54,4 +54,4 @@ The ID of the security group   | ALL           |  ALL       | Allow inbound traf
 ### outbound
 Source          | Protocol      | Port range    | comments      |
 --------------- | ------------- | ------------- | ------------- |
-The ID of the security group   | ALL           |  ALLL         | Allow outbound traffic to other instances assigned to this security group.
+The ID of the security group   | ALL           |  ALL         | Allow outbound traffic to other instances assigned to this security group.
