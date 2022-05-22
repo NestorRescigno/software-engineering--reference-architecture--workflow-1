@@ -5,7 +5,7 @@
 # this run an bash form script template 'user_data.tftpl' at configure
 resource "aws_instance" "app" {
     # AMI to use for the instance from generate example: ubuntu-xenial-20.08-amf64-server-**
-    for_each                = toset(data.aws_subnets.snet_amber_eu_central_1_subnets.ids)
+    for_each                = toset(data.aws_subnets.snet_private_subnets.ids)
     ami                     = data.aws_ami.base_ami.id
     # launch_template {
     #   id      = aws_launch_template.launch.id
@@ -21,7 +21,7 @@ resource "aws_instance" "app" {
     # VPC Subnet ID to launch in.
     subnet_id               = each.value # test with id because data not get id
     # A list of security grou[p IDs to associate with.
-    vpc_security_group_ids  = [data.aws_security_group.instances.id] 
+    vpc_security_group_ids  = [data.aws_security_group.web_server_sg.ids] 
 
 
     # configure bash param to script template
