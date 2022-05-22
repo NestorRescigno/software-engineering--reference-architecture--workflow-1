@@ -16,7 +16,7 @@ resource "aws_subnet" "subnets" {
   map_public_ip_on_launch = var.hasPublicIpOnLaunch
 
   # set IP
-  cidr_block              = cidrsubnet(var.cidr_block, var.hasPublicIpOnLaunch?4:3 , var.az_number[each.value.name_suffix])
+  cidr_block              = cidrsubnet(var.cidr_block, var.hasPublicIpOnLaunch?3:4 , var.az_number[each.value.name_suffix])
   # set tag
   tags = merge({
       Name = join("-",[var.project,"snet", data.aws_region.current.name, each.value.name_suffix]),
