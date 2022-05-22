@@ -122,7 +122,7 @@ resource "aws_security_group" "web_server_sg" {
   }  
 
     egress {
-    from_port      = 8000
+    from_port      = 8100
     to_port        = 8999
     protocol       = "TCP"
     security_groups = [aws_security_group.backend_server_sg.id]
@@ -150,7 +150,7 @@ resource "aws_security_group" "backend_server_sg" {
 
   ## inbound all traffic
   ingress {
-    from_port      = 8000
+    from_port      = 8100
     to_port        = 8999
     protocol       = "TCP"
     cidr_blocks      = ["0.0.0.0/0"]
@@ -176,7 +176,7 @@ resource "aws_security_group" "backend_server_sg" {
   
   ## outbound all traffic
   egress {
-    from_port      = 8000
+    from_port      = 8100
     to_port        = 8999
     protocol       = "TCP"
     cidr_blocks      = ["0.0.0.0/0"] 
@@ -249,7 +249,7 @@ resource "aws_security_group" "db_server_sg" {
  
   ## outbound all traffic
   egress {
-    from_port      = 8000
+    from_port      = 8100
     to_port        = 8999
     protocol       = "TCP"
     cidr_blocks      = ["0.0.0.0/0"] 
