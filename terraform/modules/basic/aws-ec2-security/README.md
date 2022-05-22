@@ -55,3 +55,7 @@ The ID of the security group   | ALL           |  ALL       | Allow inbound traf
 Source          | Protocol      | Port range    | comments      |
 --------------- | ------------- | ------------- | ------------- |
 The ID of the security group   | ALL           |  ALL         | Allow outbound traffic to other instances assigned to this security group.
+
+
+## IAM
+create iam profiles for connection to ssm services and instances

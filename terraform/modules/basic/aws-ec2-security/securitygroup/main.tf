@@ -8,7 +8,7 @@ data "aws_caller_identity" "current" {}
 ##############################################
 
 resource "aws_default_security_group" "default" {
-  vpc_id = data.aws_vpc.vpc_product.id
+  vpc_id = var.vpc_id
 
   ## inbound all traffic
   ingress {
@@ -16,7 +16,7 @@ resource "aws_default_security_group" "default" {
     to_port        = 0
     protocol       = "-1"
      # If your requirement is to allow all the traffic from internet you can use
-    security_groups = [ aws_security_group.web_server_sg.id, aws_security_group.db_server_sg.id ]
+    security_groups = var.hasPrivateSubnet?[ aws_security_group.web_server_sg.id, aws_security_group.db_server_sg.id ]:[ aws_security_group.web_server_sg.id ]
    }
 
   ## outbound all traffic
@@ -25,7 +25,7 @@ resource "aws_default_security_group" "default" {
     to_port        = 0
     protocol       = "-1"
      # If your requirement is to allow all the traffic from internet you can use
-    security_groups = [ aws_security_group.web_server_sg.id, aws_security_group.db_server_sg.id ]
+    security_groups = var.hasPrivateSubnet?[ aws_security_group.web_server_sg.id, aws_security_group.db_server_sg.id ]:[ aws_security_group.web_server_sg.id ]
    }
 
    tags = merge(
@@ -47,7 +47,7 @@ resource "aws_security_group" "web_server_sg" {
 
   name        = join("-",[var.project, var.environment_prefix, "web", "server", "sg"])
   description = "Security group web server in public subnet"
-  vpc_id      = data.aws_vpc.vpc_product.id
+  vpc_id      = var.vpc_id
   
   tags = merge(
     local.global_common_tags,
@@ -128,9 +128,10 @@ resource "aws_security_group" "web_server_sg" {
 ###########################################################################
 
 resource "aws_security_group" "db_server_sg" {
+  count       = var.hasPrivateSubnet?1:0 
   name        = join("-",[var.project, var.environment_prefix, "db", "server", "sg"])
   description = "Security group db server in private subnet"
-  vpc_id      = data.aws_vpc.vpc_product.id
+  vpc_id      =  var.vpc_id
   
   tags = merge(
     local.global_common_tags,
