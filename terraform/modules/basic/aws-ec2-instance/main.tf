@@ -50,13 +50,27 @@ resource "aws_instance" "app" {
 # create loadbalancer and target group
 #####################################################
 
-module "loadbalancer" {
-  source = "./loadbalancer"
-}
 
 module "targetgroup" {
   source = "./targetgroup"
+  project=var.project
+  environment=var.environment
+  environment_prefix=var.environment_prefix
+  service_groupid=var.service_groupid
+  vpc_id=data.aws_vpc.vpc_product.id
 }
+
+module "loadbalancer" {
+  source = "./loadbalancer"
+  # setting variable
+  project=var.project
+  environment=var.environment
+  environment_prefix=var.environment_prefix
+  service_groupid=var.service_groupid
+  vpc_id=data.aws_vpc.vpc_product.id
+  aws_alb_target_group=module.targetgroup.target_group_arn
+}
+
 
 ######################################################
 # attach target group ALB to Instance
