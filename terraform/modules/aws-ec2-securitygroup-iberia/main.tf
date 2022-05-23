@@ -36,7 +36,7 @@ resource "aws_default_security_group" "default" {
     to_port        = 0
     protocol       = "-1"
      # If your requirement is to allow all the traffic from internet you can use
-    security_groups = [ aws_security_group.alb.id, aws_security_group.instance.id ]
+    security_groups = [ aws_security_group.alb.id, aws_security_group.instances.id ]
    }
 
    tags = merge(
