@@ -28,7 +28,12 @@ data "aws_availability_zone" "all" {
   # test
 }
 
-
+data "aws_subnets" "snet_amber_eu_central_1_subnets" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.vpc_product.id]
+  }
+}
 #######################
 # security group
 #######################

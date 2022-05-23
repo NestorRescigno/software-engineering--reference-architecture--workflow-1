@@ -68,7 +68,7 @@ resource "aws_vpc_endpoint" "config" {
   vpc_id            = data.aws_vpc.vpc_product.id
   service_name      = data.aws_vpc_endpoint_service.config.service_name
   vpc_endpoint_type = "Interface"
-
+  subnet_ids = [data.aws_vpc.snet_amber_eu_central_1_subnets]
 
   security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
@@ -84,7 +84,7 @@ resource "aws_vpc_endpoint" "lambda" {
   vpc_id            = data.aws_vpc.vpc_product.id
   service_name      = data.aws_vpc_endpoint_service.lambda.service_name
   vpc_endpoint_type = "Interface"
-
+  subnet_ids = [data.aws_vpc.snet_amber_eu_central_1_subnets]
   security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
   tags = merge(var.common_tags, tomap({ "Name" = "lambda-${local.data.vpc.vpc_product}-endpoint" }))
@@ -98,7 +98,7 @@ resource "aws_vpc_endpoint" "ssm" {
   vpc_id            = data.aws_vpc.vpc_product.id
   service_name      = data.aws_vpc_endpoint_service.ssm.service_name
   vpc_endpoint_type = "Interface"
-
+  subnet_ids = [data.aws_vpc.snet_amber_eu_central_1_subnets]
 
   security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
@@ -113,7 +113,7 @@ resource "aws_vpc_endpoint" "ssmmessages" {
   vpc_id            = data.aws_vpc.vpc_product.id
   service_name      = data.aws_vpc_endpoint_service.ssmmessages.service_name
   vpc_endpoint_type = "Interface"
-
+  subnet_ids = [data.aws_vpc.snet_amber_eu_central_1_subnets]
   security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
   tags                = merge(var.common_tags, tomap({ "Name" = "ssmmessages-${local.data.vpc.vpc_product}-endpoint" }))
@@ -126,7 +126,7 @@ resource "aws_vpc_endpoint" "ec2" {
   vpc_id            = data.aws_vpc.vpc_product.id
   service_name      = data.aws_vpc_endpoint_service.ec2.service_name
   vpc_endpoint_type = "Interface"
-
+  subnet_ids = [data.aws_vpc.snet_amber_eu_central_1_subnets]
   security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
   tags                = merge(var.common_tags, tomap({ "Name" = "ec2-${local.data.vpc.vpc_product}-endpoint" }))
@@ -137,7 +137,7 @@ resource "aws_vpc_endpoint" "ec2messages" {
   vpc_id            = data.aws_vpc.vpc_product.id
   service_name      = data.aws_vpc_endpoint_service.ec2messages.service_name
   vpc_endpoint_type = "Interface"
-
+  subnet_ids = [data.aws_vpc.snet_amber_eu_central_1_subnets]
 
   security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
@@ -152,7 +152,7 @@ resource "aws_vpc_endpoint" "ec2_autoscaling" {
   vpc_id            = data.aws_vpc.vpc_product.id
   service_name      = data.aws_vpc_endpoint_service.ec2_autoscaling.service_name
   vpc_endpoint_type = "Interface"
-
+  subnet_ids = [data.aws_vpc.snet_amber_eu_central_1_subnets]
   security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
   tags                = merge(var.common_tags, tomap({ "Name" = "autoscaling-${local.data.vpc.vpc_product}-endpoint" }))
@@ -167,7 +167,7 @@ resource "aws_vpc_endpoint" "apigw" {
   vpc_id            = data.aws_vpc.vpc_product.id
   service_name      = data.aws_vpc_endpoint_service.apigw.service_name
   vpc_endpoint_type = "Interface"
-
+  subnet_ids = [data.aws_vpc.snet_amber_eu_central_1_subnets]
  
   security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
@@ -181,7 +181,7 @@ resource "aws_vpc_endpoint" "kms" {
   vpc_id            = data.aws_vpc.vpc_product.id
   service_name      = data.aws_vpc_endpoint_service.kms.service_name
   vpc_endpoint_type = "Interface"
-
+  subnet_ids = [data.aws_vpc.snet_amber_eu_central_1_subnets]
 
   security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
@@ -196,7 +196,7 @@ resource "aws_vpc_endpoint" "ecs" {
   vpc_id            = data.aws_vpc.vpc_product.id
   service_name      = data.aws_vpc_endpoint_service.ecs.service_name
   vpc_endpoint_type = "Interface"
-
+  subnet_ids = [data.aws_vpc.snet_amber_eu_central_1_subnets]
   security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
   tags                = merge(var.common_tags, tomap({ "Name" = "ecs-${local.data.vpc.vpc_product}-endpoint" }))
@@ -210,7 +210,7 @@ resource "aws_vpc_endpoint" "ecs_agent" {
   vpc_id            = data.aws_vpc.vpc_product.id
   service_name      = data.aws_vpc_endpoint_service.ecs_agent.service_name
   vpc_endpoint_type = "Interface"
-
+  subnet_ids = [data.aws_vpc.snet_amber_eu_central_1_subnets]
 
   security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
@@ -227,7 +227,7 @@ resource "aws_vpc_endpoint" "monitoring" {
   vpc_id            = data.aws_vpc.vpc_product.id
   service_name      = data.aws_vpc_endpoint_service.monitoring.service_name
   vpc_endpoint_type = "Interface"
-
+  subnet_ids = [data.aws_vpc.snet_amber_eu_central_1_subnets]
 
   security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
@@ -243,7 +243,7 @@ resource "aws_vpc_endpoint" "logs" {
   vpc_id            = data.aws_vpc.vpc_product.id
   service_name      = data.aws_vpc_endpoint_service.logs.service_name
   vpc_endpoint_type = "Interface"
-
+  subnet_ids = [data.aws_vpc.snet_amber_eu_central_1_subnets]
   security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
   tags                = merge(var.common_tags, tomap({ "Name" = "logs-${local.data.vpc.vpc_product}-endpoint" }))
@@ -257,7 +257,7 @@ resource "aws_vpc_endpoint" "events" {
   vpc_id            = data.aws_vpc.vpc_product.id
   service_name      = data.aws_vpc_endpoint_service.events.service_name
   vpc_endpoint_type = "Interface"
-
+  subnet_ids = [data.aws_vpc.snet_amber_eu_central_1_subnets]
   security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
   tags                = merge(var.common_tags, tomap({ "Name" = "events-${local.data.vpc.vpc_product}-endpoint" }))
@@ -272,7 +272,7 @@ resource "aws_vpc_endpoint" "elasticloadbalancing" {
   vpc_id            = data.aws_vpc.vpc_product.id
   service_name      = data.aws_vpc_endpoint_service.elasticloadbalancing.service_name
   vpc_endpoint_type = "Interface"
-
+  subnet_ids = [data.aws_vpc.snet_amber_eu_central_1_subnets]
   security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
   tags                = merge(var.common_tags, tomap({ "Name" = "elasticloadbalancing-${local.data.vpc.vpc_product}-endpoint" }))
@@ -288,7 +288,7 @@ resource "aws_vpc_endpoint" "auto_scaling_plans" {
   vpc_id            = data.aws_vpc.vpc_product.id
   service_name      = data.aws_vpc_endpoint_service.auto_scaling_plans.service_name
   vpc_endpoint_type = "Interface"
-
+  subnet_ids = [data.aws_vpc.snet_amber_eu_central_1_subnets]
   security_group_ids  = [aws_default_security_group.default.id]
 
 
@@ -304,7 +304,7 @@ resource "aws_vpc_endpoint" "ebs" {
   vpc_id            = data.aws_vpc.vpc_product.id
   service_name      = data.aws_vpc_endpoint_service.ebs.service_name
   vpc_endpoint_type = "Interface"
-
+  subnet_ids = [data.aws_vpc.snet_amber_eu_central_1_subnets]
   security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
 
@@ -323,7 +323,7 @@ resource "aws_vpc_endpoint" "codeartifact_api" {
   vpc_id            = data.aws_vpc.vpc_product.id
   service_name      = data.aws_vpc_endpoint_service.codeartifact_api.service_name
   vpc_endpoint_type = "Interface"
-
+  subnet_ids = [data.aws_vpc.snet_amber_eu_central_1_subnets]
   security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
 
@@ -336,7 +336,7 @@ resource "aws_vpc_endpoint" "codeartifact_repositories" {
   vpc_id            = data.aws_vpc.vpc_product.id
   service_name      = data.aws_vpc_endpoint_service.codeartifact_repositories.service_name
   vpc_endpoint_type = "Interface"
-
+  subnet_ids = [data.aws_vpc.snet_amber_eu_central_1_subnets]
   security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
 
@@ -351,5 +351,6 @@ resource "aws_vpc_endpoint" "codeartifact_repositories" {
 resource "aws_vpc_endpoint" "s3" {
   vpc_id       = data.aws_vpc.vpc_product.id
   service_name = "com.amazonaws.${var.aws_region}.s3"
+  subnet_ids = [data.aws_vpc.snet_amber_eu_central_1_subnets]
   tags = merge(var.common_tags, tomap({"Name" = "s3-${local.data.vpc.vpc_product}-endpoint" }))
 }
