@@ -33,7 +33,7 @@ data "aws_availability_zone" "all" {
 ######################
 data "aws_default_security_group" "default" {
   tags = {
-    Name = join("-",[var.service_name,"default",var.environment_prefix,"sg"])
+    Name = "${var.service_name}-default-${var.environment_prefix}-sg"
   }
 }
 
