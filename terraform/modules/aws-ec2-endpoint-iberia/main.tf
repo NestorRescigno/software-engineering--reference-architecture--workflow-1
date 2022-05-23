@@ -324,7 +324,7 @@ resource "aws_vpc_endpoint" "codeartifact_api" {
   vpc_id            = data.aws_vpc.vpc_product.id
   service_name      = data.aws_vpc_endpoint_service.codeartifact_api.service_name
   vpc_endpoint_type = "Interface"
-  subnet_ids = data.aws_subnets.snet_amber_eu_central_1_subnets.ids
+ # subnet_ids = data.aws_subnets.snet_amber_eu_central_1_subnets.ids
   security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
 
@@ -337,7 +337,7 @@ resource "aws_vpc_endpoint" "codeartifact_repositories" {
   vpc_id            = data.aws_vpc.vpc_product.id
   service_name      = data.aws_vpc_endpoint_service.codeartifact_repositories.service_name
   vpc_endpoint_type = "Interface"
-  subnet_ids =  data.aws_subnets.snet_amber_eu_central_1_subnets.ids
+ # subnet_ids =  data.aws_subnets.snet_amber_eu_central_1_subnets.ids
   security_group_ids  = [aws_default_security_group.default.id]
   private_dns_enabled = true
 
