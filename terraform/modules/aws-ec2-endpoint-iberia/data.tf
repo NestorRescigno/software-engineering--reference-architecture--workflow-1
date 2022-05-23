@@ -32,7 +32,9 @@ data "aws_availability_zone" "all" {
 # Security default group
 ######################
 data "aws_default_security_group" "default" {
+  tags = {
     Name = join("-",[var.service_name,"default",var.environment_prefix,"sg"])
+  }
 }
 
 #######################
