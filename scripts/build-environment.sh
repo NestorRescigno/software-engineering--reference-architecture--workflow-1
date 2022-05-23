@@ -82,12 +82,30 @@ else
   echo "***************************************************"
 fi
 
-# echo "::set-output name=security-group-ids:$(terraform output aws_security_groups)" 
-# echo "::set-output name=subnets-ids::$(terraform output aws_subnets_ids)" 
-# echo "::set-output name=shared-ids::$(terraform output account_id)" 
-# echo "::set-output name=alb-target-group-arn::$(terraform output aws_alb_target_group_arn)" 
-# echo "::set-output name=lb-arn-suffix::$(terraform output lb_arn_suffix)" 
-# echo "::set-output name=alb-target-group-arn-suffix::$(terraform output aws_alb_target_group_arn_suffix)" 
+
+##################################
+# init terraform module api gateway
+##################################
+echo "***************************************************"
+echo " Init terraform module gateway.                   "
+echo "***************************************************"
+cd ${WORKSPACE}/.github/cicd/terraform/modules/aws-ec2-gateway-iberia
+
+terraform init
+terraform plan -var "project=${PROJECT}"  -var "environment=${ENVIROMENT_DEV}" -var "environment_prefix=${ENVIROMENT_PREFIX_DEV}" -out create.plan
+# create plan terrafom
+terraform apply create.plan
+rc=$?
+if [ $rc -eq 1 ] ; then
+   echo "***************************************************"
+   echo " Error terrafom apply resource "
+   echo " stop workflow progess... "
+   echo "***************************************************"
+   exit -1
+fi
+
+
+
 
 echo "***************************************************"
 echo " Enviroment ${ENVIROMENT_TEMP}"

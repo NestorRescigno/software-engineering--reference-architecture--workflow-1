@@ -34,10 +34,6 @@ variable "project" {
   type        = string
 }
 
-variable "service_name" {
-  description = "The name of the service to be created"
-  type        = string
-}
 
 variable "environment" {
   description = "Environment"
