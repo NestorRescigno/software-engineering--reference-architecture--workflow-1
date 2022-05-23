@@ -47,18 +47,18 @@ resource "aws_internet_gateway" "igw_dc" {
 #   tags = merge(var.common_tags, tomap({ "Name" = "eip-${local.data.vpc.vpc_product}-${ each.value.name_suffix}" }))
 # }
 
-resource "aws_nat_gateway" "nat_gateway_private" {
-  for_each = data.aws_availability_zone.all
-  #allocation_id = aws_eip.nat_eip[each.key].id
-  subnet_id = data.aws_subnets.snet_amber_eu_central_1_subnets[each.key].id
-  connectivity_type = "private"
-  #allocation_id = element(aws_eip.nat_eip.*.id, count.index)
-  #subnet_id     = element(aws_subnet.subnet.*.id, count.index)
-  #tags          = merge(var.common_tags, map("Name", "natgw-${var.vpc_name}-${element(var.azs, count.index)}"))
-  tags = merge(var.common_tags, tomap({ "Name" = "natgw-${local.data.vpc.vpc_product}-${ each.value.name_suffix}-private" }))
+# resource "aws_nat_gateway" "nat_gateway_private" {
+#   for_each = data.aws_availability_zone.all
+#   #allocation_id = aws_eip.nat_eip[each.key].id
+#   subnet_id = data.aws_subnets.snet_amber_eu_central_1_subnets[each.key].id
+#   connectivity_type = "private"
+#   #allocation_id = element(aws_eip.nat_eip.*.id, count.index)
+#   #subnet_id     = element(aws_subnet.subnet.*.id, count.index)
+#   #tags          = merge(var.common_tags, map("Name", "natgw-${var.vpc_name}-${element(var.azs, count.index)}"))
+#   tags = merge(var.common_tags, tomap({ "Name" = "natgw-${local.data.vpc.vpc_product}-${ each.value.name_suffix}-private" }))
   
-  depends_on = [aws_internet_gateway.igw_dc]
-}
+#   depends_on = [aws_internet_gateway.igw_dc]
+# }
 
 
 ####################################################################################
@@ -80,16 +80,16 @@ resource "aws_route_table" "private" {
   }
 }
 
-resource "aws_route" "route_nat_gateway_private" {
-  for_each = data.aws_availability_zone.all
-  route_table_id         = aws_route_table.private[each.key].id
-  nat_gateway_id         = aws_nat_gateway.nat_gateway_private[each.key].id
-  destination_cidr_block = "0.0.0.0/0"
+# resource "aws_route" "route_nat_gateway_private" {
+#   for_each = data.aws_availability_zone.all
+#   route_table_id         = aws_route_table.private[each.key].id
+#   nat_gateway_id         = aws_nat_gateway.nat_gateway_private[each.key].id
+#   destination_cidr_block = "0.0.0.0/0"
 
-  timeouts {
-    create = "5m"
-  }
-}
+#   timeouts {
+#     create = "5m"
+#   }
+# }
 
 resource "aws_route_table_association" "route_table_association_private" {
   for_each = toset(data.aws_subnets.snet_amber_eu_central_1_subnets.ids)

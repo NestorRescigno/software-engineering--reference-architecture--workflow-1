@@ -132,6 +132,13 @@ echo " Init terraform module Instance.                   "
 echo "***************************************************"
 cd ${WORKSPACE}/.github/cicd/terraform/modules/aws-ec2-instance-iberia
 
+export INSTANCES=$(aws ec2 describe-instances --filters "Name=tag-value, Values=${ARTIFACT}-${ENVIROMENT_PREFIX_DEV}" --query 'Reservations[*].Instances[*].[InstanceId]' --output text)
+
+echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+echo INSTANCES
+echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+
+
 terraform init
 terraform plan -var "lenguage_code=${LENGUAGE}" -var "instance_type=${INSTANCE_TYPE}" -var "ref=${ARTIFACTREF}" -var "package=${PACKAGE}" -var "project=${PROJECT}" -var "service_name=${ARTIFACT}" -var "service_version=${VERSION}" -var "service_groupid=${GROUP}" -var "artifact_user=${REPOSITORY_USER}" -var "artifact_secret=${REPOSITORY_SECRET}"  -var "environment=${ENVIROMENT_DEV}" -var "environment_prefix=${ENVIROMENT_PREFIX_DEV}" -out create.plan
 # create plan terrafom
@@ -154,17 +161,29 @@ echo " instance id: $(terraform output instance_id)"
 echo "***************************************************"
 export DataList=$(terraform output instance_id)
 export InstaceZoneA=$(terraform output instance_id_zoneA)
-# Field_Separator=$IFS
- 
-# # set comma as internal field separator for the string list
-# IFS=,
-# for val in $DataList;
-# do
-# id=$(echo $val | tr "[" " " | tr "]" " ")
-# export PEM=`$(aws ec2 get-console-output --instance-id ${id} --output text)`
-# echo "Read for instances key pem: $PEM"
-# done
- 
-# IFS=$Field_Separator
+
+
+##################################
+# init terraform module api gateway
+##################################
+echo "***************************************************"
+echo " Init terraform module gateway.                   "
+echo "***************************************************"
+cd ${WORKSPACE}/.github/cicd/terraform/modules/aws-ec2-gatewav-iberia
+
+terraform init
+terraform plan -var "project=${PROJECT}" -var "service_name=${ARTIFACT}"  -var "environment=${ENVIROMENT_DEV}" -var "environment_prefix=${ENVIROMENT_PREFIX_DEV}" -out create.plan
+# create plan terrafom
+terraform apply create.plan
+rc=$?
+if [ $rc -eq 1 ] ; then
+   echo "***************************************************"
+   echo " Error terrafom apply resource "
+   echo " stop workflow progess... "
+   echo "***************************************************"
+   exit -1
+fi
+
+
 
 

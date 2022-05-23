@@ -93,3 +93,9 @@ variable "global_dns" {
   type        = string
   default     = "cloud.iberia.local"
 }
+
+variable "pem" {
+  description = "key peir"
+  type        = string
+  default     = "demospringkey"
+}

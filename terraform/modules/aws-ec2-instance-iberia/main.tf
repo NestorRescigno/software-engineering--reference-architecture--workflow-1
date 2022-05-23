@@ -301,6 +301,8 @@ resource "aws_instance" "app" {
     # The IAM Instance Profile to launch the instance with.
     iam_instance_profile    = data.aws_iam_instance_profile.iam_instance_profile.name
 
+    # key pair name 
+    key_name                = var.pem
     instance_type           = var.instance_type
     # number launch
     # count                   = 1
@@ -308,7 +310,6 @@ resource "aws_instance" "app" {
     subnet_id               = each.value # test with id because data not get id
     # A list of security grou[p IDs to associate with.
     vpc_security_group_ids  = [data.aws_security_group.instances.id] 
-
 
     # configure bash param to script template
     user_data               = templatefile("user_data.tftpl", {

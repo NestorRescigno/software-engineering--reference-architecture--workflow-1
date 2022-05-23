@@ -5,9 +5,16 @@
 
 # output id new instance
 output "instance_ids" {
-  value = [for s in aws_instance.app : s.id]
+  value = toset([for s in aws_instance.app : s.id])
 }
 
-output "instance_id_zoneA" {
-  value = values(aws_instance.app).1.id
+
+output "instance_ips" {
+  value = toset([for s in aws_instance.app : s.*.private_ip])
 }
+
+# output "instance_id_zoneA" {
+#   value = values(aws_instance.app).1.id
+
+#   [for s in aws_instance.app : s.id]
+# }
