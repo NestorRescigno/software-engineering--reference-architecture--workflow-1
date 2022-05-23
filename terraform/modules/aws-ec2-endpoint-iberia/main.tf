@@ -345,6 +345,7 @@ resource "aws_vpc_endpoint" "codeartifact_repositories" {
 }
 
 
+
 ######################
 # VPC Endpoint for S3
 ######################
@@ -352,6 +353,5 @@ resource "aws_vpc_endpoint" "codeartifact_repositories" {
 resource "aws_vpc_endpoint" "s3" {
   vpc_id       = data.aws_vpc.vpc_product.id
   service_name = "com.amazonaws.${var.aws_region}.s3"
-  subnet_ids = data.aws_subnets.snet_amber_eu_central_1_subnets.ids
   tags = merge(var.common_tags, tomap({"Name" = "s3-${local.data.vpc.vpc_product}-endpoint" }))
 }
