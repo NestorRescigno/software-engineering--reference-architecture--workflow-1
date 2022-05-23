@@ -10,11 +10,6 @@ data "aws_vpc" "vpc_product" {
   }
 }
 
-data "aws_iam_role" "role" {
-   name = join("-", [var.project, var.environment, "role"])
-}
-
-
 # Determine all of the available availability zones in the
 # current AWS region.
 data "aws_availability_zones" "available" {
@@ -67,18 +62,3 @@ data "aws_subnet" "snet_amber_eu_central_1c" {
     Name = local.data.vpc.amber.subnetc
   }
 }
-
-##############################
-# data endpoint to route table.
-##############################
-
-data "aws_vpc_endpoint" "s3" {
-   vpc_id = data.aws_vpc.vpc_product.id
-}
-
-# resource "aws_vpc_endpoint_route_table_association" "public_s3" {
-#   count = var.enable_s3_endpoint && (var.public_mask != 0 || length(var.public_subnets) != 0) && length(var.azs) > 0 ? 1 : 0
-
-#   vpc_endpoint_id = aws_vpc_endpoint.s3[0].id
-#   route_table_id  = aws_route_table.rt_igw_dc[0].id
-# }
