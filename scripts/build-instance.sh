@@ -159,8 +159,8 @@ fi
 echo "***************************************************"
 echo " instance id: $(terraform output instance_id)"
 echo "***************************************************"
-export DataList=$(terraform output instance_id)
-export InstaceZoneA=$(terraform output instance_id_zoneA)
+export DataList=$(terraform output instance_ids)
+export InstaceZoneA=$(terraform output instance_ips)
 
 
 ##################################
@@ -169,7 +169,7 @@ export InstaceZoneA=$(terraform output instance_id_zoneA)
 echo "***************************************************"
 echo " Init terraform module gateway.                   "
 echo "***************************************************"
-cd ${WORKSPACE}/.github/cicd/terraform/modules/aws-ec2-gatewav-iberia
+cd ${WORKSPACE}/.github/cicd/terraform/modules/aws-ec2-gateway-iberia
 
 terraform init
 terraform plan -var "project=${PROJECT}" -var "service_name=${ARTIFACT}"  -var "environment=${ENVIROMENT_DEV}" -var "environment_prefix=${ENVIROMENT_PREFIX_DEV}" -out create.plan
