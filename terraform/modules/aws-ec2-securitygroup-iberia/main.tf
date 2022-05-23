@@ -23,39 +23,6 @@ provider "aws" {
 }
 
 
-##############################################
-# Securización del Security group por defecto
-##############################################
-
-resource "aws_default_security_group" "default" {
-  vpc_id = data.aws_vpc.vpc_product.id
-
-
-  ingress {
-    from_port      = 0
-    to_port        = 0
-    protocol       = "-1"
-    security_groups = [ aws_security_group.alb.id, aws_security_group.instances.id ]
-  }
-
- ## outbound all traffic
-  egress {
-    from_port      = 0
-    to_port        = 0
-    protocol       = "-1"
-     # If your requirement is to allow all the traffic from internet you can use
-    security_groups = [ aws_security_group.alb.id, aws_security_group.instances.id ]
-   }
-
-   tags = merge(
-    local.global_common_tags,
-    # converts to map { Name = demo-alb-dev-sg}
-    tomap({
-      Name = join("-",[var.service_name,"default",var.environment_prefix,"sg"])
-    })
-  )
-}
-
 
 #####################################
 ### New resources ALB SG 

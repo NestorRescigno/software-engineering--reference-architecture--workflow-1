@@ -28,12 +28,18 @@ data "aws_availability_zone" "all" {
   # test
 }
 
+
 #######################
-# Security default group
-######################
-data "aws_security_group" "default"{
-  name = join("-",[var.service_name, "default",var.environment_prefix,"sg"])
+# security group
+#######################
+data "aws_security_group" "alb"{
+  name = join("-",[var.service_name,"alb",var.environment_prefix,"sg"])
 }
+
+data "aws_security_group" "instances"{
+  name = join("-",[var.service_name, "instances",var.environment_prefix,"sg"])
+}
+
 
 #######################
 # VPC Endpoint 
