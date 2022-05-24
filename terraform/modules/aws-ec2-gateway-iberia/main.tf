@@ -144,9 +144,9 @@ resource "aws_vpc_endpoint" "s3" {
 
 ####################### test output
 resource "aws_vpc_endpoint_route_table_association" "private_s3" {
-  for_each = toset(data.aws_availability_zone.all.name_suffix) 
+  for_each = data.aws_availability_zone.all
   vpc_endpoint_id = aws_vpc_endpoint.s3.id
-  route_table_id  = aws_route_table.private[index(data.aws_availability_zones.all.name_suffix, each.value)].id
+  route_table_id  = aws_route_table.private[index(data.aws_availability_zone.all, each.value.name_suffix)].id
 }
 
 # resource "aws_vpc_endpoint_route_table_association" "public_s3" {
