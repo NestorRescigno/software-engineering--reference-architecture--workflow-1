@@ -75,7 +75,7 @@ resource "aws_route_table" "private" {
   }
 
   propagating_vgws = []
-  tags             =  merge(var.common_tags, tomap({ "Name" = "rt-${local.data.vpc.vpc_product}-${each.value.name_suffix}-private" })) 
+  tags             =  merge(var.common_tags, tomap({ "Name" = "rt-${local.data.vpc.vpc_product}-private" })) 
   
 
   lifecycle {
