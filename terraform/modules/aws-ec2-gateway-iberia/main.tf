@@ -94,10 +94,17 @@ resource "aws_route_table" "private" {
 resource "aws_route_table_association" "route_table_association_private" {
   for_each = toset(data.aws_subnets.snet_amber_eu_central_1_subnets.ids)
   subnet_id = each.value
-  route_table_id = aws_route_table.private[index(data.aws_subnets.snet_amber_eu_central_1_subnets.ids, each.value)].id
+  route_table_id = aws_route_table.private[index(values(data.aws_subnets.snet_amber_eu_central_1_subnets.ids), each.value)].id
 }
 
 
+output "test" {
+  value = data.aws_subnets.snet_amber_eu_central_1_subnets.ids
+}
+
+output "test2" {
+  value = values(data.aws_subnets.snet_amber_eu_central_1_subnets.ids)
+}
 # ####################################################################################
 # # route net public
 # ####################################################################################
