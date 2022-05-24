@@ -48,7 +48,7 @@ echo "${name} ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/${name}
 sudo -H -i -u ${name} -- env bash << EOF
 # change directory project home
 
-export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain $domain --domain-owner $owner --query authorizationToken --output text`
+export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain ${domain} --domain-owner ${owner} --query authorizationToken --output text`
 
 cd /home/${name}
 
@@ -67,7 +67,7 @@ if [ ${lenguage} == "angular"] ; then
     # change directory
     cd $NODEPATH
     # get artifact 
-    curl -X GET -u ${user}:${CODEARTIFACT_AUTH_TOKEN} ${artifact} && clear
+    curl -X GET -u ${user}:$CODEARTIFACT_AUTH_TOKEN ${artifact} && clear
     # run service 
     ng serve 
 elif [ ${lenguage} == "java"] ; then
@@ -75,9 +75,9 @@ elif [ ${lenguage} == "java"] ; then
     cd $JARPATH
     
     # NOTE OF DEVELOPER: use param remote-name for write file name in output curl and use jar command
-    java -jar $(echo curl --remote-name -X GET -u ${user}:${CODEARTIFACT_AUTH_TOKEN} ${artifact}) && clear
+    java -jar $(echo curl --remote-name -X GET -u ${user}:$CODEARTIFACT_AUTH_TOKEN ${artifact}) && clear
     # if param is not exist then use next code and comment other code
-    # curl -X GET -u ${user}:${CODEARTIFACT_AUTH_TOKEN} ${artifact} && clear
+    # curl -X GET -u ${user}:$CODEARTIFACT_AUTH_TOKEN ${artifact} && clear
     # java -jar $(echo find . -name *.${package})
    
 else 
