@@ -67,7 +67,7 @@ if [ ${lenguage} == "angular"] ; then
     # change directory
     cd $NODEPATH
     # get artifact 
-    curl -X GET -u ${user}:${secret} ${artifact} && clear
+    curl -X GET -u ${user}:${CODEARTIFACT_AUTH_TOKEN} ${artifact} && clear
     # run service 
     ng serve 
 elif [ ${lenguage} == "java"] ; then
@@ -77,7 +77,7 @@ elif [ ${lenguage} == "java"] ; then
     # NOTE OF DEVELOPER: use param remote-name for write file name in output curl and use jar command
     java -jar $(echo curl --remote-name -X GET -u ${user}:${CODEARTIFACT_AUTH_TOKEN} ${artifact}) && clear
     # if param is not exist then use next code and comment other code
-    # curl -X GET -u ${user}:${secret} ${artifact} && clear
+    # curl -X GET -u ${user}:${CODEARTIFACT_AUTH_TOKEN} ${artifact} && clear
     # java -jar $(echo find . -name *.${package})
    
 else 
