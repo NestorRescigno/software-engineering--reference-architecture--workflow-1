@@ -14,8 +14,14 @@ Install necessary dependencies
 Installing the CloudWatch agent
 sudo yum install amazon-cloudwatch-agent
 
-echo "Copying the SSH key of github runner to the server"
-echo -e "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDW3cVbdMlcu95EJaa/L+JUG8rABCVbS/Lq8OwZgTqppAsjO48Qdu2rVF8/JMAgowvbPCEYmvERUHpFY4s6l9LBQ0qsE5cTahLaG6ty6fug4oKRY9+et3Hie0DcSPxLvZqkLltF5b/DnbLvMcXQLc/om312AWnWR6w0857w1mVfDH3AKcos1aLYpg9AkXskxkTy5NWQyJ2U2AuqLtv8kvMHMDDzMoOr2Z9uuFn+94Tf2zwb1IcCBTcnd6b6w6LFQpW7fMid2VpfHDV3TwyeJECR0jLFFthTy4oWGiZIDQE4Z2KGGnk+qGyJn7xgyxXNKC7m8jZ0DDz1OWXmb45INoIz ssm-user@ip-10-200-177-169.eu-central-1.compute.internalcicd.cloud.iberi" >> /home/ec2-user/.ssh/authorized_keys
+curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+
+
+
+# echo "Copying the SSH key of github runner to the server"
+# echo -e "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDW3cVbdMlcu95EJaa/L+JUG8rABCVbS/Lq8OwZgTqppAsjO48Qdu2rVF8/JMAgowvbPCEYmvERUHpFY4s6l9LBQ0qsE5cTahLaG6ty6fug4oKRY9+et3Hie0DcSPxLvZqkLltF5b/DnbLvMcXQLc/om312AWnWR6w0857w1mVfDH3AKcos1aLYpg9AkXskxkTy5NWQyJ2U2AuqLtv8kvMHMDDzMoOr2Z9uuFn+94Tf2zwb1IcCBTcnd6b6w6LFQpW7fMid2VpfHDV3TwyeJECR0jLFFthTy4oWGiZIDQE4Z2KGGnk+qGyJn7xgyxXNKC7m8jZ0DDz1OWXmb45INoIz ssm-user@ip-10-200-177-169.eu-central-1.compute.internalcicd.cloud.iberi" >> /home/ec2-user/.ssh/authorized_keys
 
 ## configure file cloudwatch agent
 # Note of developer: pending configure json file,this file is present in same repository
@@ -41,6 +47,9 @@ echo "${name} ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/${name}
 # Create PATH for your user & download the webapp from github
 sudo -H -i -u ${name} -- env bash << EOF
 # change directory project home
+
+export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain $domain --domain-owner $owner --query authorizationToken --output text`
+
 cd /home/${name}
 
 # export environment variables
@@ -66,7 +75,7 @@ elif [ ${lenguage} == "java"] ; then
     cd $JARPATH
     
     # NOTE OF DEVELOPER: use param remote-name for write file name in output curl and use jar command
-    java -jar $(echo curl --remote-name -X GET -u ${user}:${secret} ${artifact}) && clear
+    java -jar $(echo curl --remote-name -X GET -u ${user}:${CODEARTIFACT_AUTH_TOKEN} ${artifact}) && clear
     # if param is not exist then use next code and comment other code
     # curl -X GET -u ${user}:${secret} ${artifact} && clear
     # java -jar $(echo find . -name *.${package})

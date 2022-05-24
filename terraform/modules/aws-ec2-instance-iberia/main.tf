@@ -320,7 +320,9 @@ resource "aws_instance" "app" {
         artifact= "${var.ref}" , 
         package = "${var.package}" , 
         user   = "${var.artifact_user}",
-        secret = "${var.artifact_secret}"
+        domain = "${var.project}",
+        #secret = "${var.artifact_secret}"
+        owner  = "${data.aws_caller_identity.current.account_id}"
       })
 
     tags = {
