@@ -99,7 +99,7 @@ resource "aws_route_table_association" "route_table_association_private" {
 
   # route_table_id = aws_route_table.private[index(data.aws_subnets.snet_amber_eu_central_1_subnets.ids, each.key)].id
   count = length(toset(data.aws_subnets.snet_amber_eu_central_1_subnets.ids))
-  subnet_id = toset(data.aws_subnets.snet_amber_eu_central_1_subnets.ids)[count.index].id
+  subnet_id = data.aws_subnets.snet_amber_eu_central_1_subnets.ids[count.index].id
   route_table_id = aws_route_table.private[count.index].id
 
 }
