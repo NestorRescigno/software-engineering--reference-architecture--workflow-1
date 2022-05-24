@@ -135,7 +135,7 @@ cd ${WORKSPACE}/.github/cicd/terraform/modules/aws-ec2-instance-iberia
 export INSTANCES=$(aws ec2 describe-instances --filters "Name=tag-value, Values=${ARTIFACT}-${ENVIROMENT_PREFIX_DEV}" --query 'Reservations[*].Instances[*].[InstanceId]' --output text)
 
 echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-echo INSTANCES
+echo "${INSTANCES}"
 echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 
 

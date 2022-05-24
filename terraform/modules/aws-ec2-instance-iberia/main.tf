@@ -13,14 +13,14 @@
 #  secret_key  = var.secret_key
 # }
 
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.13"
-    }
-  }
-}
+# terraform {
+#   required_providers {
+#     aws = {
+#       source  = "hashicorp/aws"
+#       version = "~> 4.13"
+#     }
+#   }
+# }
 
 # Configure the AWS Provider
 provider "aws" {
