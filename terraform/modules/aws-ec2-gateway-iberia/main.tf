@@ -94,7 +94,7 @@ resource "aws_route_table" "private" {
 resource "aws_route_table_association" "route_table_association_private" {
   for_each = toset(data.aws_subnets.snet_amber_eu_central_1_subnets.ids)
   subnet_id = each.value
-  route_table_id = aws_route_table.private[index(toset([for s in data.aws_subnets.snet_amber_eu_central_1_subnets.ids : s.id]), each.value)].id
+  route_table_id = aws_route_table.private.*.id
 }
 
 
@@ -150,7 +150,7 @@ resource "aws_vpc_endpoint" "s3" {
 resource "aws_vpc_endpoint_route_table_association" "private_s3" {
   for_each = data.aws_availability_zone.all
   vpc_endpoint_id = aws_vpc_endpoint.s3.id
-  route_table_id  = aws_route_table.private[index(data.aws_availability_zone.all, each.key)].id
+  route_table_id  = aws_route_table.private.*.id
 }
 
 # resource "aws_vpc_endpoint_route_table_association" "public_s3" {
