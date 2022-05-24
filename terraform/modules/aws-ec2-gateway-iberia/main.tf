@@ -99,7 +99,7 @@ data "aws_subnet" "listsubnet" {
 
 ####################### test output
 resource "aws_route_table_association" "route_table_association_private" {
-   for_each = toset(data.aws_subnet.listsubnet)
+   for_each = (data.aws_subnet.listsubnet
    subnet_id = each.value
    route_table_id = aws_route_table.private[index(data.aws_subnet.listsubnet, each.value)].id
 }
@@ -149,7 +149,7 @@ resource "aws_vpc_endpoint" "s3" {
 
 ####################### test output
 resource "aws_vpc_endpoint_route_table_association" "private_s3" {
-  for_each = toset(data.aws_subnet.listsubnet)
+  for_each = data.aws_subnet.listsubnet
   vpc_endpoint_id = aws_vpc_endpoint.s3.id
   route_table_id  = aws_route_table.private[index(data.aws_subnet.listsubnet, each.value)].id
 }
