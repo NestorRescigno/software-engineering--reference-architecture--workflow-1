@@ -67,8 +67,13 @@ resource "aws_internet_gateway" "igw_dc" {
 ####################################################################################
 resource "aws_route_table" "private" {
   # count                 = var.vertical_routes ? length(var.azs) : var.n_tiers
-  for_each = data.aws_availability_zone.all
   vpc_id = data.aws_vpc.vpc_product.id
+  
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.igw_dc.id
+  }
+
   propagating_vgws = []
   tags             =  merge(var.common_tags, tomap({ "Name" = "rt-${local.data.vpc.vpc_product}-${each.value.name_suffix}-private" })) 
   
@@ -79,6 +84,16 @@ resource "aws_route_table" "private" {
     ignore_changes = [propagating_vgws]
   }
 }
+
+
+####################### test output
+resource "aws_route_table_association" "route_table_association_private" {
+   for_each = toset(data.aws_subnets.snet_amber_eu_central_1_subnets.ids)
+   subnet_id = each.value
+   route_table_id = aws_route_table.private.id
+}
+
+
 
 # resource "aws_route" "route_nat_gateway_private" {
 #   for_each = data.aws_availability_zone.all
@@ -92,17 +107,17 @@ resource "aws_route_table" "private" {
 # }
 
 
-data "aws_subnet" "listsubnet" {
-  for_each = toset(data.aws_subnets.snet_amber_eu_central_1_subnets.ids)
-  id       = each.value
-}
+# data "aws_subnet" "listsubnet" {
+#   for_each = toset(data.aws_subnets.snet_amber_eu_central_1_subnets.ids)
+#   id       = each.value
+# }
 
-####################### test output
-resource "aws_route_table_association" "route_table_association_private" {
-   count = length(data.aws_subnet.listsubnet)
-   subnet_id =data.aws_subnet.listsubnet[count.index].id
-   route_table_id = aws_route_table.private[count.index].id
-}
+# ####################### test output
+# resource "aws_route_table_association" "route_table_association_private" {
+#   # # #  count = length(data.aws_subnet.listsubnet)
+#    subnet_id =data.aws_subnet.listsubnet[count.index].id
+#    route_table_id = aws_route_table.private[count.index].id
+# }
 
 
 
@@ -147,12 +162,12 @@ resource "aws_vpc_endpoint" "s3" {
 }
 
 
-####################### test output
-resource "aws_vpc_endpoint_route_table_association" "private_s3" {
-  count = length(data.aws_subnet.listsubnet)
-  vpc_endpoint_id = aws_vpc_endpoint.s3.id
-  route_table_id  = aws_route_table.private[count.index].id
-}
+# ####################### test output
+# resource "aws_vpc_endpoint_route_table_association" "private_s3" {
+#   count = length(data.aws_subnet.listsubnet)
+#   vpc_endpoint_id = aws_vpc_endpoint.s3.id
+#   route_table_id  = aws_route_table.private[count.index].id
+# }
 
 # resource "aws_vpc_endpoint_route_table_association" "public_s3" {
 #   count = var.enable_s3_endpoint && (var.public_mask != 0 || length(var.public_subnets) != 0) && length(var.azs) > 0 ? 1 : 0
