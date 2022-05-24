@@ -321,6 +321,7 @@ resource "aws_instance" "app" {
         package = "${var.package}" , 
         user   = "${var.artifact_user}",
         domain = "${var.project}",
+        service_name = "${var.service_name}"
         #secret = "${var.artifact_secret}"
         owner  = "${data.aws_caller_identity.current.account_id}"
       })
