@@ -99,14 +99,9 @@ data "aws_subnet" "listsubnet" {
 
 ####################### test output
 resource "aws_route_table_association" "route_table_association_private" {
-  # for_each = toset(data.aws_subnets.snet_amber_eu_central_1_subnets.ids)
-  # subnet_id = each.value
-
-  # route_table_id = aws_route_table.private[index(data.aws_subnets.snet_amber_eu_central_1_subnets.ids, each.key)].id
-  count = length(data.aws_subnet.listsubnet)
-  subnet_id = data.aws_subnet.listsubnet[count.index].id
-  route_table_id = aws_route_table.private[count.index].id
-
+   for_each = toset(data.aws_subnet.listsubnet)
+   subnet_id = each.value
+   route_table_id = aws_route_table.private[index(data.aws_subnet.listsubnet, each.value)].id
 }
 
 
@@ -154,9 +149,9 @@ resource "aws_vpc_endpoint" "s3" {
 
 ####################### test output
 resource "aws_vpc_endpoint_route_table_association" "private_s3" {
-  count = length(data.aws_availability_zone.all)
+  for_each = toset(data.aws_subnet.listsubnet)
   vpc_endpoint_id = aws_vpc_endpoint.s3.id
-  route_table_id  = aws_route_table.private[count.index].id
+  route_table_id  = aws_route_table.private[index(data.aws_subnet.listsubnet, each.value)].id
 }
 
 # resource "aws_vpc_endpoint_route_table_association" "public_s3" {
