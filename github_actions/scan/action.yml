@@ -21,16 +21,16 @@ inputs:
     type: string
     required: false
     default: "java"
-  group_name:
+  group-name:
     type: string
     required: true
-  service_name:
+  service-name:
     type: string
     required: true
-  service_version:
+  service-version:
     type: string
     required: true
-  service_package:
+  service-package:
     type: string
     required: false
   # control scan code
@@ -86,9 +86,9 @@ runs:
           -Dsonar.login=${{ inputs.sonarqube-user }} 
           -Dsonar.password=${{ inputs.sonarqube-token }}
           -Dsonar.host.url=${{ inputs.sonarqube-host }}
-          -Dsonar.projectKey="${{ inputs.group_name  }}:${{ inputs.service_name }}" 
-          -Dsonar.projectName=${{ inputs.service_name  }}
-          -Dsonar.projectVersion=${{ inputs.service_version  }} 
+          -Dsonar.projectKey="${{ inputs.group-name  }}:${{ inputs.service-name }}" 
+          -Dsonar.projectName=${{ inputs.service-name  }}
+          -Dsonar.projectVersion=${{ inputs.service-version  }} 
           -Dsonar.java.binaries=**/target/classes
           -Dsonar.language=${{ inputs.lenguage-code  }} 
     # - name: sonar
