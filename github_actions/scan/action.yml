@@ -16,10 +16,10 @@ inputs:
   # configure project 
   project_name:
     type: string
-    required: true
+    required: false
   lenguage-code:
     type: string
-    required: true
+    required: false
     default: "java"
   group_name:
     type: string
@@ -32,11 +32,11 @@ inputs:
     required: true
   service_package:
     type: string
-    required: true
+    required: false
   # control scan code
   scancode-allow:
     type: boolean
-    required: true
+    required: false
     default: false
   # control quality code with sonar
   sonarqube-host:
@@ -73,27 +73,43 @@ runs:
     #- name: checkout
     #  uses: actions/checkout@v3    
     #######################################
-    - name: sonar
-      working-directory: .github/cicd/scripts
-      shell: sh
-      env:
-        WORKSPACE: ${{ github.workspace }}
-        LENGUAGE: ${{inputs.lenguage-code}}
-        REF: ${{ github.ref }}
-        # get package name generate from step build
-        GROUP:  ${{ inputs.group_name  }}  
-        # get package name generate from step build
-        ARTIFACT:  ${{ inputs.service_name  }}   
-        # get package name generate from step build
-        VERSION:  ${{ inputs.service_version  }}     
-        # get package type extention from step build
-        PACKAGE: ${{ inputs.service_package }} 
-        SONAR_URL: ${{ inputs.sonarqube-host }} 
-        SONAR_USER: ${{ inputs.sonarqube-user }} 
-        SONAR_SECRET: ${{ inputs.sonarqube-token }} 
-        SONAR_CLI: ${{ inputs.sonarqube-client-version }}
-      if: ${{ inputs.scancode }}
-      run: sonar-scanner.sh
+    - name: SonarQube Scan
+      uses: sonarsource/sonarqube-scan-action@v1.1.0
+      with:
+        projectBaseDir: src
+        args: >
+          -Dsonar.tests=tests/
+          -Dsonar.verbose=true
+          -Dsonar.login=${{ inputs.sonarqube-user }} 
+          -Dsonar.password=${{ inputs.sonarqube-token }}
+          -Dsonar.host.url=${{ inputs.sonarqube-host }}
+          -Dsonar.projectKey="${{ inputs.group_name  }}:${{ inputs.service_name }}" 
+          -Dsonar.projectName=${{ inputs.service_name  }}
+          -Dsonar.projectVersion=${{ inputs.service_version  }} 
+          -Dsonar.java.binaries=**/target/classes
+          -Dsonar.language=${{ inputs.lenguage-code  }} 
+    # - name: sonar
+    #   working-directory: .github/cicd/scripts
+    #   shell: sh
+    #   env:
+    #     WORKSPACE: ${{ github.workspace }}
+    #     LENGUAGE: ${{inputs.lenguage-code}}
+    #     REF: ${{ github.ref }}
+    #     # get package name generate from step build
+    #     GROUP:  ${{ inputs.group_name  }}  
+    #     # get package name generate from step build
+    #     ARTIFACT:  ${{ inputs.service_name  }}   
+    #     # get package name generate from step build
+    #     VERSION:  ${{ inputs.service_version  }}     
+    #     # get package type extention from step build
+    #     PACKAGE: ${{ inputs.service_package }} 
+    #     SONAR_URL: ${{ inputs.sonarqube-host }} 
+    #     SONAR_USER: ${{ inputs.sonarqube-user }} 
+    #     SONAR_SECRET: ${{ inputs.sonarqube-token }} 
+    #     SONAR_CLI: ${{ inputs.sonarqube-client-version }}
+    #   if: ${{ inputs.scancode }}
+    #   run: sonar-scanner.sh
+
   # Note of develop: pendieng testing and tool implement      
   #    - name: vulnerability-scan
   #      working-directory: .github/cicd/scripts

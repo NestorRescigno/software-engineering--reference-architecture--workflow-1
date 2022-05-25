@@ -105,6 +105,15 @@ resource "aws_security_group" "instances" {
     self = true
   }
 
+  # inbound
+  ingress {
+    from_port      = 22
+    to_port        = 22
+    protocol       = "TCP"
+    cidr_blocks      = ["0.0.0.0/0"] 
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
   ## outbound all traffic
   egress {
     from_port      = 0
