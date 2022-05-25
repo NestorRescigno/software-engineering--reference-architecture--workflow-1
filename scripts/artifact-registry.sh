@@ -5,7 +5,7 @@
 # *********************************************************************
 # sh ./setup.sh
 # setting credencials 
-sudo amazon-linux-extras install -y docker
+
 # setting variable
 LANGUAGE=$LANGUAGE 
 REF=$REF

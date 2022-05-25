@@ -6,7 +6,7 @@
 # setting variable
 # ${{ env.SCRIPT }}/build.sh ${{ github.workspace }} ${{ env.LANGUAGE }} ${{ github.ref }}
 # sh ./setup.sh
-
+sudo amazon-linux-extras install -y docker
 if [[ $LENGUAGE -eq "java" ]] ; then
   echo "***************************************************"
   echo "Artifact java Building with maven"
