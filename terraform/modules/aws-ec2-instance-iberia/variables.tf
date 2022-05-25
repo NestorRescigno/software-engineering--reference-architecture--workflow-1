@@ -97,5 +97,5 @@ variable "global_dns" {
 variable "pem" {
   description = "key peir"
   type        = string
-  default     = "github-runner"
+  default     = "demospringkey"
 }
