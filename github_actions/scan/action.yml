@@ -89,7 +89,7 @@ runs:
           -Dsonar.projectKey=${{ inputs.group-name  }}:${{ inputs.service-name }} 
           -Dsonar.projectName=${{ inputs.service-name  }}
           -Dsonar.projectVersion=${{ inputs.service-version  }} 
-          -Dsonar.java.binaries=./target/classes
+          -Dsonar.java.binaries=../target/classes
           -Dsonar.language=${{ inputs.lenguage-code  }} 
           -Dsonar.sources=main/java/
     # - name: sonar
