@@ -336,27 +336,27 @@ resource "aws_instance" "app" {
   lifecycle { create_before_destroy = false }  
 }
 
-#################################
-### create private key
-#################################
-resource "tls_private_key" "pk" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
-}
+# #################################
+# ### create private key
+# #################################
+# resource "tls_private_key" "pk" {
+#   algorithm = "RSA"
+#   rsa_bits  = 4096
+# }
 
-resource "aws_key_pair" "kp" {
-  key_name   = "temp-key"  # Create a "myKey" to AWS!!
-  public_key = tls_private_key.pk.public_key_openssh
+# resource "aws_key_pair" "kp" {
+#   key_name   = "temp-key"  # Create a "myKey" to AWS!!
+#   public_key = tls_private_key.pk.public_key_openssh
   
-  lifecycle {
-      create_before_destroy = true
-  }
-}
+#   lifecycle {
+#       create_before_destroy = true
+#   }
+# }
 
-resource "local_file" "ssh_key" {
-  filename = "${aws_key_pair.kp.key_name}.pem"
-  content = tls_private_key.pk.private_key_pem
-}
+# resource "local_file" "ssh_key" {
+#   filename = "${aws_key_pair.kp.key_name}.pem"
+#   content = tls_private_key.pk.private_key_pem
+# }
 
 
 
