@@ -86,7 +86,7 @@ runs:
           -Dsonar.login=${{ inputs.sonarqube-user }} 
           -Dsonar.password=${{ inputs.sonarqube-token }}
           -Dsonar.host.url=${{ inputs.sonarqube-host }}
-          -Dsonar.projectKey="${{ inputs.group-name  }}:${{ inputs.service-name }}" 
+          -Dsonar.projectKey=${{ inputs.group-name  }}:${{ inputs.service-name }} 
           -Dsonar.projectName=${{ inputs.service-name  }}
           -Dsonar.projectVersion=${{ inputs.service-version  }} 
           -Dsonar.java.binaries=**/target/classes
