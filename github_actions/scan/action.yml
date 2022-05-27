@@ -92,6 +92,7 @@ runs:
           -Dsonar.java.binaries=../target/classes
           -Dsonar.language=${{ inputs.lenguage-code  }} 
           -Dsonar.sources=main/java/
+          -Dsonar.branch.name=main
     # - name: sonar
     #   working-directory: .github/cicd/scripts
     #   shell: sh
