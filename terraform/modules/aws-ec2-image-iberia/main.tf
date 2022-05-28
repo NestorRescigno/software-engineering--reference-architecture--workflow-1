@@ -17,6 +17,14 @@ terraform {
 # Configure the AWS Provider
 provider "aws" {
   region = var.aws_region
+    # set provice assume role: set stage in line command "terraform workspace new staging"
+  # No credentials explicitly set here because they come from either the
+  # environment or the global credentials file.
+
+  # assume_role = {
+  #  role_arn = "${var.workspace_iam_roles[terraform.workspace]}"
+  # }
+
 }
 
 # data source with identity account

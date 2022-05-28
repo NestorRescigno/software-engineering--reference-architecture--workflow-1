@@ -31,3 +31,16 @@ variable "common_tags" {
   type    = map(any)
   default = {}
 }
+
+# use this value for set IAM en role 
+# When configuring Terraform, use either environment variables or the standard credentials file ~/.aws/credentials to 
+# provide the administrator user's IAM credentials within the administrative account to both the S3 backend and to 
+# Terraform's AWS provider.
+
+# variable "workspace_iam_roles" {
+#   default = {
+#     development    = "arn:aws:iam::DEVELOPMENT-ACCOUNT-ID:role/Terraform"
+#     staging    = "arn:aws:iam::STAGING-ACCOUNT-ID:role/Terraform"
+#     production = "arn:aws:iam::PRODUCTION-ACCOUNT-ID:role/Terraform"
+#   }
+# }
