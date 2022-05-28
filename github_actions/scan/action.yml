@@ -79,6 +79,8 @@ runs:
         SONAR_TOKEN: "dsdsa"
         SONAR_HOST_URL: "https://sonar.corp.iberia.es"
       with:
+        # -Dsonar.qualitygate.wait=true  if the Quality Gate is red, this will make the analysis step fail, even if the actual analysis itself is successful.
+        # -Dsonar.qualitygate.timeout=300 You can set the sonar.qualitygate.timeout property to an amount of time (in seconds) that the scanner should wait for a report to be processed. The default is 300 seconds.
         projectBaseDir: src
         args: >
           -Dsonar.tests=test/
@@ -93,6 +95,10 @@ runs:
           -Dsonar.language=${{ inputs.lenguage-code  }} 
           -Dsonar.sources=main/java/
           -Dsonar.branch.name=main
+          -Dsonar.qualitygate.wait=true
+          -Dsonar.qualitygate.timeout=300
+    # -Dsonar.qualitygate.wait=true  # set this  
+    # -Dsonar.qualitygate.timeout=300 You can set the sonar.qualitygate.timeout property to an amount of time (in seconds) that the scanner should wait for a report to be processed. The default is 300 seconds.
     # - name: sonar
     #   working-directory: .github/cicd/scripts
     #   shell: sh

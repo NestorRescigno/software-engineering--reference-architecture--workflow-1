@@ -29,3 +29,9 @@ variable "common_tags" {
   type    = map(any)
   default = {}
 }
+
+variable "pem" {
+  description = "key peir"
+  type        = string
+  default     = "runner-key"
+}

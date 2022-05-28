@@ -31,3 +31,12 @@ module "iamrole" {
   environment = var.environment
   environment_prefix = var.environment_prefix
 }
+
+
+########################
+# create certificate
+########################
+module "certificate_ssh" {
+   source = "./certificate"
+   pem = "runner-key"
+}
