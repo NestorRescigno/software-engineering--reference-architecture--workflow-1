@@ -66,7 +66,7 @@ if [ $STATE == "null" ] ; then
   cd ${WORKSPACE}/.github/cicd/terraform/modules/aws-ec2-vpc-iberia
   terraform init
   # apply plan terrafom
-  terraform apply -auto-approve -var "project=${PROJECT}" -var "service_name=${SERVICE}" -var "environment=${ENVIROMENT_TEMP}" -var "environment_prefix=${PREFIX_TEMP}"
+  terraform apply -auto-approve -var "az_number=${ZONE}" -var "project=${PROJECT}" -var "service_name=${SERVICE}" -var "environment=${ENVIROMENT_TEMP}" -var "environment_prefix=${PREFIX_TEMP}"
   rc=$?
   if [ $rc -eq 1 ] ; then 
    echo "***************************************************"
@@ -88,7 +88,7 @@ echo "***************************************************"
 cd ${WORKSPACE}/.github/cicd/terraform/modules/aws-ec2-gateway-iberia
 
 terraform init
-terraform plan -var "project=${PROJECT}"  -var "environment=${ENVIROMENT_DEV}" -var "environment_prefix=${ENVIROMENT_PREFIX_DEV}" -out create.plan
+terraform plan -var "az_number=${ZONE}"  -var "project=${PROJECT}"  -var "environment=${ENVIROMENT_DEV}" -var "environment_prefix=${ENVIROMENT_PREFIX_DEV}" -out create.plan
 # create plan terrafom
 terraform apply create.plan
 rc=$?
