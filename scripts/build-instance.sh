@@ -157,10 +157,36 @@ fi
 # terraform apply # temporal comment to test
 
 echo "***************************************************"
-echo " instance id: $(terraform output instance_id)"
+echo " instance id: $(terraform output instance_id)      "
 echo "***************************************************"
 export DataList=$(terraform output instance_ids)
 export InstaceZoneA=$(terraform output instance_ips)
+
+# test health
+sleep 40
+echo "instance state:"
+HEALTH_STATUS=0
+while [ ${HEALTH_STATUS} == 0 ];
+do 
+  # test from ALB 
+  # aws elbv2 describe-target-health --target-group-arn $ALB_ARN --query 'TargetHealthDescriptions[*].[Target.Id, TargetHealth.State]' --output json | grep draining || HEALTH_STATUS=$?
+  # test directly instance
+  aws ec2 describe-instance-status --instance-ids $DataList --query InstanceStatuses[*].InstanceStatus.Details[*].Status --output json | grep "passed" || HEALTH_STATUS=$?
+  sleep 10
+done
+if [  ${HEALTH_STATUS} == 0 ]
+then
+  echo "Unhealthy"
+  echo "Deployment failed"
+  exit (-1)
+else
+  echo "Healthy"
+  echo "Deployment Completed"
+  # copy ssh file to path in instance
+
+  echo $InstaceZoneA
+  scp ./target/$ARTIFACT-$VERSION.$PACKAGE ec2-user@$InstaceZoneA:/opt/services
+fi
 
 
 

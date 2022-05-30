@@ -21,7 +21,8 @@
 # pull request event from action
   if [[ $REF == refs/heads/main* ]] ; then 
     ENVIROMENT_TEMP=$ENVIROMENT  # may be change to preproduction or production 
-    PREFIX_TEMP=$ENVIROMENT_PREFIX 
+    PREFIX_TEMP=$ENVIROMENT_PREFIX
+    ZONE="{a = 1, b = 2, c = 3}"
     ###########################################################################
     ##################### NOT IMPLEMENT PROFILE ###############################
     # if [[ $AWS_PROFILE  -eq "" ]] ; then
@@ -35,6 +36,7 @@
 elif [[ $REF == refs/heads/develop* ]] ; then  
     ENVIROMENT_TEMP=$ENVIROMENT_DEV  # may be change to preproduction or production 
     PREFIX_TEMP=$ENVIROMENT_PREFIX_DEV
+    ZONE="{a = 1}"
     ###########################################################################
     ##################### NOT IMPLEMENT PROFILE ###############################
     # if [[ $AWS_PROFILE  -eq "" ]] ; then
@@ -75,8 +77,6 @@ if [ $STATE == "null" ] ; then
    echo "***************************************************"
    exit -1
   fi
-
-
 
 
 ##################################
