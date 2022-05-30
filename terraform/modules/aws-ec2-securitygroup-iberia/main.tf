@@ -118,8 +118,8 @@ resource "aws_security_group" "instances" {
     from_port      = 22
     to_port        = 22
     protocol       = "TCP"
-    cidr_blocks      = ["0.0.0.0/0"] 
-    ipv6_cidr_blocks = ["::/0"]
+    cidr_blocks      = ["10.200.177.169"] 
+   #ipv6_cidr_blocks = ["::/0"]
   }
 
   ## outbound all traffic
@@ -200,6 +200,6 @@ resource "aws_key_pair" "kp" {
 }
 
 resource "local_file" "ssh_key" {
-  filename = "${aws_key_pair.kp.key_name}.pem"
+  filename = "/opt/ssh/${aws_key_pair.kp.key_name}.pub"
   content = tls_private_key.pk.private_key_pem
 }
