@@ -76,7 +76,7 @@ runs:
     - name: SonarQube Scan
       uses: sonarsource/sonarqube-scan-action@v1.1.0
       env:
-        SONAR_TOKEN: "dsdsa"
+        SONAR_TOKEN: ${{ inputs.sonarqube-token }}
         SONAR_HOST_URL: "https://sonar.corp.iberia.es"
       with:
         # -Dsonar.qualitygate.wait=true  if the Quality Gate is red, this will make the analysis step fail, even if the actual analysis itself is successful.
@@ -97,6 +97,12 @@ runs:
           -Dsonar.branch.name=main
           -Dsonar.qualitygate.wait=true
           -Dsonar.qualitygate.timeout=300
+    - name: SonarQube Quality Gate check
+      uses: sonarsource/sonarqube-quality-gate-action@master
+      # Force to fail step after specific time
+      timeout-minutes: 5
+      env:
+         SONAR_TOKEN: ${{ inputs.sonarqube-token }}
     # -Dsonar.qualitygate.wait=true  # set this  
     # -Dsonar.qualitygate.timeout=300 You can set the sonar.qualitygate.timeout property to an amount of time (in seconds) that the scanner should wait for a report to be processed. The default is 300 seconds.
     # - name: sonar
