@@ -97,8 +97,8 @@ runs:
           -Dsonar.branch.name=main
           -Dsonar.qualitygate.wait=true
           -Dsonar.qualitygate.timeout=300
-    - name: SonarQube Quality Gate check
-      uses: sonarsource/sonarqube-quality-gate-action@master
+    - name: SonarQube Quality Gate Check
+      uses: SonarSource/sonarqube-quality-gate-action@v1.0.0
       # Force to fail step after specific time
       timeout-minutes: 5
       env:
