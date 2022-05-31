@@ -45,6 +45,9 @@ inputs:
   sonarqube-user:
     type: string
     required: false
+  sonarqube-pwd:
+    type: string
+    required: false
   sonarqube-token:
     type: string
     required: false
@@ -86,7 +89,7 @@ runs:
           -Dsonar.tests=test/
           -Dsonar.verbose=true
           -Dsonar.login=${{ inputs.sonarqube-user }} 
-          -Dsonar.password=${{ inputs.sonarqube-token }}
+          -Dsonar.password=${{ inputs.sonarqube-pwd }}
           -Dsonar.host.url=${{ inputs.sonarqube-host }}
           -Dsonar.projectKey=${{ inputs.group-name  }}:${{ inputs.service-name }} 
           -Dsonar.projectName=${{ inputs.service-name  }}
