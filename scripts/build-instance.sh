@@ -189,7 +189,25 @@ else
  fi
 
  # restart instance, it need for up app.
- # aws ec2 reboot-instances --instance-ids $DataList
-
+ aws ec2 reboot-instances --instance-ids $DataList
+ HEALTH_STATUS=0
+ while [ ${HEALTH_STATUS} == 0 ];
+ do 
+   # test from ALB 
+   # aws elbv2 describe-target-health --target-group-arn $ALB_ARN --query 'TargetHealthDescriptions[*].[Target.Id, TargetHealth.State]' --output json | grep draining || HEALTH_STATUS=$?
+   # test directly instance
+ aws ec2 describe-instance-status --instance-ids $DataList --query InstanceStatuses[*].InstanceStatus.Details[*].Status --output json | grep "passed" || HEALTH_STATUS=$?
+ sleep 10
+done
+if [  ${HEALTH_STATUS} == 0 ]
+then
+   echo "Unhealthy"
+   echo "Deployment failed"
+   exit (-1)
+else
+   echo "Healthy"
+   echo "Deployment Completed"
+   # copy ssh file to path in instance
+fi
   
 
