@@ -185,9 +185,11 @@ else
   # copy ssh file to path in instance
 
   echo $InstaceZoneA
-  scp ./target/$ARTIFACT-$VERSION.$PACKAGE ec2-user@$InstaceZoneA:/opt/services
-fi
+  scp ./target/$ARTIFACT-$VERSION.$PACKAGE ec2-user@$InstaceZoneA:/opt/microservice/lib
+ fi
 
+ # restart instance, it need for up app.
+ # aws ec2 reboot-instances --instance-ids $DataList
 
-
+  
 

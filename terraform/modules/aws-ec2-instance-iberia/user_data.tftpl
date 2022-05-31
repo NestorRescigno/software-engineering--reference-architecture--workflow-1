@@ -14,26 +14,18 @@ curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zi
 unzip awscliv2.zip
 sudo ./aws/install
 
-Install necessary dependencies
-Installing the CloudWatch agent
-sudo yum install amazon-cloudwatch-agent
+#sudo amazon-linux-extras install -y nginx1
 
-sudo amazon-linux-extras install -y java-openjdk11
-sudo amazon-linux-extras install -y nginx1
-
-printf "server {listen 127.0.0.1:80;root /srv/www/${service_name};location / {try_files $uri $uri/ /index.html;}}" > /etc/nginx/conf.d/${service_name}.conf
+#printf "server {listen 127.0.0.1:80;root /srv/www/${service_name};location / {try_files $uri $uri/ /index.html;}}" > /etc/nginx/conf.d/${service_name}.conf
 # echo "Hello Angular!"
-sudo systemctl enable nginx
-sudo systemctl restart nginx
-
-
-
-# echo "Copying the SSH key of github runner to the server"
-# echo -e "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDW3cVbdMlcu95EJaa/L+JUG8rABCVbS/Lq8OwZgTqppAsjO48Qdu2rVF8/JMAgowvbPCEYmvERUHpFY4s6l9LBQ0qsE5cTahLaG6ty6fug4oKRY9+et3Hie0DcSPxLvZqkLltF5b/DnbLvMcXQLc/om312AWnWR6w0857w1mVfDH3AKcos1aLYpg9AkXskxkTy5NWQyJ2U2AuqLtv8kvMHMDDzMoOr2Z9uuFn+94Tf2zwb1IcCBTcnd6b6w6LFQpW7fMid2VpfHDV3TwyeJECR0jLFFthTy4oWGiZIDQE4Z2KGGnk+qGyJn7xgyxXNKC7m8jZ0DDz1OWXmb45INoIz ssm-user@ip-10-200-177-169.eu-central-1.compute.internalcicd.cloud.iberi" >> /home/ec2-user/.ssh/authorized_keys
+#sudo systemctl enable nginx
+#sudo systemctl restart nginx
 
 ## configure file cloudwatch agent
 # Note of developer: pending configure json file,this file is present in same repository
-## end configure
+Install necessary dependencies
+Installing the CloudWatch agent
+sudo yum install amazon-cloudwatch-agent
 
 # sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
 # sudo apt-get -y -qq install curl wget git vim apt-transport-https ca-certificates
@@ -41,7 +33,7 @@ sudo systemctl restart nginx
 # sudo apt-get install nodejs
 
 # # java runtime11
-# sudo apt-get install openjdk-11-jre
+sudo amazon-linux-extras install -y java-openjdk11
 
 # # Setup your group and adding your user
 # sudo groupadd -r ${department}
@@ -52,43 +44,34 @@ sudo systemctl restart nginx
 # sudo cp /etc/sudoers /etc/sudoers.orig
 # echo "${name} ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/${name}
 
-# # Create PATH for your user & download the webapp from github
-# sudo -H -i -u ${name} -- env bash << EOF
-# # change directory project home
+# Create PATH for your user EC2-user and star application
+sudo -H -i -u ${name} -- env bash << EOF
+# change directory project home
 
 # export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain ${domain} --domain-owner ${owner} --query authorizationToken --output text`
 
-# cd /home/${name}
+cd /home/${name}
 
-# # export environment variables
-# export NODEROOT=/usr/lib/nodejs
-# export JAVAROOT=/usr/lib/java   # Note of developers : use readlink example -> $(dirname $(dirname $(readlink -f $(which java))))
+# export environment variables
+export NODEROOT=/usr/lib/nodejs
+export JAVAROOT=/usr/lib/java
 
-# # path software 
-# export NODEPATH=/home/${name}/www
-# export JARPATH=/home/${name}/target   # Note of developers : change to other path
+# path software 
+export NODEPATH=/home/${name}/www
+export JARPATH=/opt/microservice/lib   # Note of developers : change to other path
 
 # # setting environment path
-# export PATH=$PATH:$NODEROOT/bin:$JAVAROOT/bin:$NODEPATH/dist:$JARPATH
+export PATH=$PATH:$NODEROOT/bin:$JAVAROOT/bin:$NODEPATH/dist:$JARPATH
 
-# if [ ${lenguage} == "angular"] ; then
-#     # change directory
-#     cd $NODEPATH
-#     # get artifact 
-#     curl -X GET -u ${user}:$CODEARTIFACT_AUTH_TOKENec ${artifact} && clear
-#     # run service 
-#     ng serve 
-# elif [ ${lenguage} == "java"] ; then
-#     # run jar spring boot
-#     cd $JARPATH
-    
-#     # NOTE OF DEVELOPER: use param remote-name for write file name in output curl and use jar command
-#     java -jar $(echo curl --remote-name -X GET -u ${user}:$CODEARTIFACT_AUTH_TOKEN ${artifact}) && clear
-#     # if param is not exist then use next code and comment other code
-#     # curl -X GET -u ${user}:$CODEARTIFACT_AUTH_TOKEN ${artifact} && clear
-#     # java -jar $(echo find . -name *.${package})
-   
-# else 
-#     echo "Not complete process, lenguage code selected isn't implement to script"
-# if
-# EOF
+if [ ${lenguage} == "angular"] ; then
+     # change directory
+     cd $NODEPATH
+     
+elif [ ${lenguage} == "java"] ; then
+    # run jar spring boot
+    cd $JARPATH
+    $JAVAROOT -jar $BINARY $PARAM
+else 
+    echo "Not complete process, lenguage code selected isn't implement to script"
+if
+EOF
