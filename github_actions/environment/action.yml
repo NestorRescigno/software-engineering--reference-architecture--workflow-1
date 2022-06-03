@@ -111,7 +111,8 @@ runs:
       working-directory: .github/cicd/scripts
       env:
         WORKSPACE: ${{ github.workspace }}
-        REF: ${{ github.ref }}
+        #REF: ${{ github.ref }}
+        REF: $GITHUB_BASE_REF
         # Data proyect
         PROJECT: ${{ inputs.project-name }} 
         GROUP: ${{ inputs.group-name }} 

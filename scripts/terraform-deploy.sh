@@ -15,7 +15,7 @@
 
 # setting enviroment and prefix with conditional reference branchs
 # pull request event from action
-if [[ $REF == refs/heads/main* ]] ; then
+if [[ $REF == refs/heads/main* ] || [ $REF == main ]] ; then
     
     ###########################################################################
     ##################### NOT IMPLEMENT PROFILE ###############################

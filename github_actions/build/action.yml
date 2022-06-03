@@ -101,7 +101,8 @@ runs:
       env:
         WORKSPACE: ${{ github.workspace }}
         LENGUAGE: ${{inputs.lenguage-code}}
-        REF: ${{ github.ref }}
+        # REF: ${{ github.ref }}
+        REF: $GITHUB_BASE_REF
       run: sh build.sh
       shell: sh
     - id: control-version
