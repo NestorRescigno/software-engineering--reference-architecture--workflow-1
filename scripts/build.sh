@@ -14,7 +14,7 @@ if [[ $LENGUAGE -eq "java" ]] ; then
 
   VERSION=$(sed -n 's,.*<version>\(.*\)</version>.*,\1,p' ${WORKSPACE}/pom.xml | head -1)
   
-  if [[ $REF == refs/heads/main* ] || [ $REF == main ] ] ; then 
+  if [[ $REF == refs/heads/main* ] || [ $REF == main ]] ; then 
    
     #VERCHECK=$(echo ${VERSION,,} | grep -o 'snapshot'); 
     VERSIONTEMP=${VERSION%-SNAPSHOT}
@@ -30,7 +30,7 @@ if [[ $LENGUAGE -eq "java" ]] ; then
 
     echo "::set-output name=package-version::$(echo $VERSIONTEMP)" 
   
-  elif [[ $REF == refs/heads/develop* ] || [ $REF == develop ] ] ; then
+  elif [[ $REF == refs/heads/develop* ] || [ $REF == develop ]] ; then
     
     VERCHECK=$(echo ${VERSION,,} | grep -o 'snapshot')
 
@@ -69,11 +69,11 @@ elif [[  $LENGUAGE -eq "angular" ]] ; then
   echo "Artifact Angular Building"
   echo "***************************************************"
   
-  if [[ $REF == refs/heads/main* ] || [ $REF == main ] ] ; then 
+  if [[ $REF == refs/heads/main* ] || [ $REF == main ]] ; then 
 
     ng build --Prod ${workspace}/package.json  # implement build configure production --Prod
     
-  elif [[ $REF == refs/heads/develop* ] || [ $REF == develop ] ] ; then
+  elif [[ $REF == refs/heads/develop* ] || [ $REF == develop ]] ; then
 
     ng build ${workspace}/package.json 
 

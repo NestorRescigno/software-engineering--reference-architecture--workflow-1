@@ -19,7 +19,7 @@
 
 # setting enviroment and prefix with conditional reference branchs
 # pull request event from action
-  if [[ $REF == refs/heads/main* ] || [ $REF == main ] ] ; then 
+  if [[ $REF == refs/heads/main* ] || [ $REF == main ]] ; then 
     ENVIROMENT_TEMP=$ENVIROMENT  # may be change to preproduction or production 
     PREFIX_TEMP=$ENVIROMENT_PREFIX
     ZONE="{a = 1, b = 2, c = 3}"

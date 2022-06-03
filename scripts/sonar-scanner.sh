@@ -9,7 +9,7 @@
 
 
 # if url isn't empty then allow sonar for scanner code
-if [[ ${SONAR_URL} != "" && $REF == refs/heads/main* ]] ; then
+if [[ ${SONAR_URL} != "" && $REF == refs/heads/main*] ; then
 
   echo "***************************************************"
   echo "Sonar scanner started..."

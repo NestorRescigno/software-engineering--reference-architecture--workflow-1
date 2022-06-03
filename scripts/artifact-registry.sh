@@ -67,7 +67,7 @@ if [[ $LANGUAGE -eq "java" ]] ; then
     echo "***************************************************"
     echo "artifact type java"
     echo "***************************************************"
-    if [[ $REF == refs/heads/develop* ] || [ $REF == develop ] ] ; then
+    if [[ $REF == refs/heads/develop* ] || [ $REF == develop ]] ; then
         echo "***************************************************"
         echo "upload snapshop"
         echo "***************************************************"
@@ -94,7 +94,7 @@ if [[ $LANGUAGE -eq "java" ]] ; then
         echo "**************************************************"
         echo "upload complete"
         echo "***************************************************"
-    elif [[ $REF == refs/heads/main* ] || [ $REF == main ]  ] ; then
+    elif [[ $REF == refs/heads/main* ] || [ $REF == main ]] ; then
         echo "***************************************************"
         echo "upload release"
         echo "***************************************************"
@@ -131,7 +131,7 @@ elif [[ $LANGUAGE -eq "angular" ]] ; then
     echo "***************************************************"
     echo "Artifact type angular"
     echo "***************************************************"
-    if [[ $REF == refs/heads/main* ] || [ $REF == main ] ] ; then
+    if [[ $REF == refs/heads/main* ] || [ $REF == main ]] ; then
         echo "***************************************************"
         echo "upload npm private release"
         echo "***************************************************"
