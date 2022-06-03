@@ -19,7 +19,7 @@
 
 # setting enviroment and prefix with conditional reference branchs
 # pull request event from action
-  if [[ $REF == refs/heads/main* ] || [ $REF == main ]] ; then 
+  if [[ $REF == refs/heads/main* || $REF == main ]] ; then 
     ENVIROMENT_TEMP=$ENVIROMENT  # may be change to preproduction or production 
     PREFIX_TEMP=$ENVIROMENT_PREFIX
     ZONE="{a = 1, b = 2, c = 3}"
@@ -33,7 +33,7 @@
     # else
     #     . could-configure.sh "aws" $AWS_ACCESS_KEY $AWS_SECRET_ACCESS_KEY
     # fi 
-elif [[ $REF == refs/heads/develop* ] || [ $REF == develop ]] ; then  
+elif [[ $REF == refs/heads/develop* || $REF == develop ]] ; then  
     ENVIROMENT_TEMP=$ENVIROMENT_DEV  # may be change to preproduction or production 
     PREFIX_TEMP=$ENVIROMENT_PREFIX_DEV
     ZONE="{a = 1}"
