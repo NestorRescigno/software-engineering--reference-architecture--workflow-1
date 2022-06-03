@@ -112,7 +112,7 @@ runs:
       env:
         WORKSPACE: ${{ github.workspace }}
         #REF: ${{ github.ref }}
-        REF: $GITHUB_BASE_REF
+        REF:  ${{ github.base_ref }} 
         # Data proyect
         PROJECT: ${{ inputs.project-name }} 
         GROUP: ${{ inputs.group-name }} 
