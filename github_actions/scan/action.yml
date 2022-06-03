@@ -51,7 +51,7 @@ inputs:
   sonarqube-token:
     type: string
     required: false
-  ref-brach-code:
+  ref-branch-code:
     type: string
     required: false
   sonarqube-client-version:
@@ -99,7 +99,7 @@ runs:
           -Dsonar.projectVersion=${{ inputs.service-version  }} 
           -Dsonar.java.binaries=**/../target/classes
           -Dsonar.language=${{ inputs.lenguage-code  }} 
-          -Dsonar.branch.name=${{ inputs.ref-brach-code  }} 
+          -Dsonar.branch.name=${{ inputs.ref-branch-code  }} 
     - name: SonarQube Quality Gate Check
       uses: SonarSource/sonarqube-quality-gate-action@v1.0.0
       # Force to fail step after specific time
