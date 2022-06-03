@@ -9,6 +9,8 @@ https://binaries.sonarsource.com/?prefix=Distribution/sonar-scanner-cli/
 Build image
 -----
 
+boh!
+
 HashiCorp [Packer](https://learn.hashicorp.com/collections/packer/aws-get-started) automates the creation of any type of machine image, including AWS AMIs. You'll build an Ubuntu machine image on AWS in this tutorial.
 
 >use ami base to create new ami - standar aws producedure - this ami is shared with other account.
