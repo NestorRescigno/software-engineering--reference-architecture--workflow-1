@@ -89,15 +89,18 @@ runs:
         # -Dsonar.qualitygate.timeout=300 You can set the sonar.qualitygate.timeout property to an amount of time (in seconds) that the scanner should wait for a report to be processed. The default is 300 seconds.
         # -Dsonar.login=${{ inputs.sonarqube-user }} 
         # -Dsonar.password=${{ inputs.sonarqube-pwd }}
-        # projectBaseDir: src
+        
         # -Dsonar.tests=test/
         # -Dsonar.verbose=true
+        projectBaseDir: ${{ github.workspace }}
         args: >
           -Dsonar.host.url=${{ inputs.sonarqube-host }}
           -Dsonar.projectKey=${{ inputs.group-name  }}:${{ inputs.service-name }} 
           -Dsonar.projectName=${{ inputs.service-name  }}
           -Dsonar.projectVersion=${{ inputs.service-version  }} 
-          -Dsonar.java.binaries=**/../target/classes
+          -Dsonar.java.binaries=**/target/classes
+          -Dsonar.tests=**/src/test
+          -Dsonar.sources=**/src/main
           -Dsonar.language=${{ inputs.lenguage-code  }} 
           -Dsonar.branch.name=${{ inputs.ref-branch-code  }} 
     - name: SonarQube Quality Gate Check
