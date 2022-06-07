@@ -32,3 +32,4 @@ rm pipeline-scan-LATEST.zip
 #      --project_url "${CI_REPOSITORY_URL}"
 #      --project_ref "${CI_COMMIT_REF_NAME}"
 #      --gl_vulnerability_generation true
+#      añadir sanbox param. 
