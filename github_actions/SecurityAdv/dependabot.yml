@@ -3,8 +3,10 @@
 # Please see the documentation for all configuration options:
 # https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 
-# this file is location in .github, analysis default branch
-
+##############################################################
+## this file is location in .github/, analysis default branch
+##############################################################
+#
 # link documental for more information:
 
 #Configure Dependabot Alerts
