@@ -8,8 +8,18 @@
 # We have attempted to detect the languages in your repository. Please check
 # the `language` matrix defined below to confirm you have the correct set of
 # supported CodeQL languages.
-#
-name: "CodeQL"
+# The default scan for GitHub Code Scanning is very focused on high severity, high accuracy alerts so you will probably want to increase the number of queries executed against smaller projects or projects which have been security reviewed previously.
+
+# Running Additional Queries
+# https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-dependency-changes-in-a-pull-request 
+
+
+# Can you add security-and-quality or security-extended query suites to your CodeQL Init Action?
+
+# Example configuration
+# https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#example-configuration-files 
+
+name: "CodeQL & depedendaBot review"
 
 on:
   push:
@@ -70,3 +80,6 @@ jobs:
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
+    # analysis review dependabot.  
+    - name: 'Dependency Review'
+      uses: actions/dependency-review-action@v1

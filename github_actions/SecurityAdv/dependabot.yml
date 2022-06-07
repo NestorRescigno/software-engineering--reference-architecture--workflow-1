@@ -1,0 +1,29 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+
+# this file is location in .github, analysis default branch
+
+# link documental for more information:
+
+#Configure Dependabot Alerts
+#https://docs.github.com/en/code-security/dependabot/dependabot-alerts/configuring-dependabot-alerts#managing-dependabot-alerts-for-your-repository 
+
+# Dependabot will only alert on vulnerable dependencies in the default branch.
+
+#About Dependabot alerts
+#https://docs.github.com/en/code-security/dependabot/dependabot-alerts/about-dependabot-alerts#detection-of-vulnerable-dependencies 
+
+#Dependency Review (which is part of GitHub Advanced Security) will alert on new vulnerabilities during the Pull Request (view the rich diff on the pom file)
+
+#Reviewing Dependency Changes in a Pull Request
+#https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-dependency-changes-in-a-pull-request 
+
+
+version: 2
+updates:
+  - package-ecosystem: "maven" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "daily"
