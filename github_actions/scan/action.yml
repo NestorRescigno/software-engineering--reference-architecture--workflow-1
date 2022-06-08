@@ -99,10 +99,11 @@ runs:
           -Dsonar.projectName=${{ inputs.service-name  }}
           -Dsonar.projectVersion=${{ inputs.service-version  }} 
           -Dsonar.java.binaries=**/target/classes
-          -Dsonar.tests=test
-          -Dsonar.sources=src
+          -Dsonar.tests=**/test/*
+          -Dsonar.sources=**/src/*
           -Dsonar.language=${{ inputs.lenguage-code  }} 
           -Dsonar.branch.name=${{ inputs.ref-branch-code  }} 
+          -X
     - name: SonarQube Quality Gate Check
       uses: SonarSource/sonarqube-quality-gate-action@v1.0.0
       # Force to fail step after specific time
