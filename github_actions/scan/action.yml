@@ -99,8 +99,8 @@ runs:
           -Dsonar.projectName=${{ inputs.service-name  }}
           -Dsonar.projectVersion=${{ inputs.service-version  }} 
           -Dsonar.java.binaries=**/target/classes
-          -Dsonar.tests=/test/**/*
-          -Dsonar.sources=src/main/**/*
+          -Dsonar.tests=test
+          -Dsonar.sources=src
           -Dsonar.language=${{ inputs.lenguage-code  }} 
           -Dsonar.branch.name=${{ inputs.ref-branch-code  }} 
     - name: SonarQube Quality Gate Check
