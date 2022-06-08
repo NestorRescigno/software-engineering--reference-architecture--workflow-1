@@ -134,36 +134,37 @@ Usages
 ----
 can be referenced as follows:
 
-- **Implementation continous integration:**
+- **Implementation continous integration:** -> [example demo](https://github.com/Iberia-Ent/software-engineering--reference-architecture--demo/blob/main/.github/workflows/action.yml)
 ````
-# Implementation for deployment to environment ( pull request event to branch )
+# Implementation for deployment to environment ( pull request event to branch ) 
+env:
+  PROJECT: "best-practice"
+  LENGUAGE: "java"
+  ENVIROMENT_DEV: "development"
+  ENVIROMENT_DEV_PREFIX: "dev"
+  ENVIROMENT_INT: "integration"
+  ENVIROMENT_INT_PREFIX: "int"
+  INSTANCE_TYPE: "t4g.micro"
+  SCANCODE_ALLOW: false
+  SONAR_HOST: "https://sonar.corp.iberia.es"
+  SONAR_USER:  ${{ secrets.IBIS_SONAR_REPO_USER }}
+  SONAR_PWD:  ${{ secrets.IBIS_SONAR_REPO_PASS }}
+  SONAR_TOKEN:  ${{ secrets.IBIS_SONAR_TOKEN }}
+  SONAR_CL_VER: ""
+  VULNERABILITY_HOST: ""
+  VULNERABILITY_USER: ""
+  VULNERABILITY_TOKEN: 
 
-- uses: ./.github/workflows/action.yml@v1.0
+# checkout source in your workflow action base in runner   
+- name: Checkout actions
+  uses: actions/checkout@v2.4.2
   with:
-    project-name:                                     # Product global name example: 'bestpratices' - require true, use in dns name
-    lenguage-code:                                    # lenguage programming code for example: java or angular - require true  
-    testIntegration:                                  # run integration test, soap request or rest  default: false
-    testIntegration-path:                             # test xml integration path default: '${{ github.workspace }}'
-    scancode:                                         # control scan code default: false
-    sonarqube-host: ${{secret.sonar-url}}             # host control quality code with sonar - optional
-    sonarqube-user: ${{secret.sonar-user}}            # user control quality code with sonar - optional
-    sonarqube-token:${{secret.sonar-token}}           # pwd control quality code with sonar - optional
-    sonarqube-client-version:                         # client sonar-scanner use. see https://binaries.sonarsource.com/?prefix=Distribution/sonar-scanner-cli/
-    codeartifact-allow:                               # active true repositorio codeartifact - required: true - default: false (nexus adopt)
-    repository-DNS:  ${{secret.nexus-url}}            # host registry artifact - 
-                                                      # if codeArtifact allow then dns is example: my_domain-111122223333.d.codeartifact.us-west-2.amazonaws.com
-    repository-user: ${{secret.nexus-user}}           # user registry artifact - if codeArtifact allow then user is owner aws id.
-    repository-token:${{secret.nexus-pass}}           # pass registry artifact - if codeArtifact allow then token is auto generate. input is empty
-    aws-environment-name:                             # Environment name for default: 'production'
-    aws-environment-prefix:                           # Environment prefix name for default: 'pro'
-    aws-access-key:                                   # access key aws publish environment ( example: Integration, preproduction, quality)
-    aws-secret-acesss-key:                            # secret access key aws publish environment ( example: Integration, preproduction, quality)
-    aws-environment-dev-name:                         # Development environment name for default: 'development'
-    aws-environment-dev-prefix:                       # Development environment prefix name for default: 'dev'
-    aws-access-key-dev:                               # access key aws development environment
-    aws-secret-acesss-key-dev:                        # secret access key aws development environment 
-    aws-access-key-op:                                # access key aws operational environment, this account containt shared image 
-    aws-secret-acesss-key-op:                         # secret access key aws operational environment, this account containt shared image 
+    repository: 'Iberia-Ent/software-engineering--reference-architecture--workflow'
+    token: ${{ secrets.TOKEN_REP }}
+    ref: 'main'
+    path: '.github/cicd'
+
+
 ````
 For the demonstration of the implementation, a [demo](https://github.com/Iberia-Ent/software-engineering--reference-architecture--demo/blob/main/README.md) has been designed that consumes this workflow.
 
