@@ -21,31 +21,31 @@ inputs:
     required: true
     default: "java"
   # configuration cloud secret by enviroment  
-  aws-access-key:
-    type: string
-    required: false
-  aws-secret-acesss-key:
-    type: string
-    required: false
-  aws-region:
-    type: string
-    required: false
-    default: "eu-central-1"
+  # aws-access-key:
+  #  type: string
+  #  required: false
+  # aws-secret-acesss-key:
+  #  type: string
+  #  required: false
+  #aws-region:
+  #  type: string
+  #  required: false
+  #  default: "eu-central-1"
   # if use code artifact repository-host
-  codeartifact-allow:
-    type: string
-    required: true
-    default: false
-  repository-host:
-    type: string
-    required: true
+  # codeartifact-allow:
+  #  type: string
+  #  required: true
+  #  default: false
+  # repository-host:
+  #  type: string
+  #  required: true
   # if use codeartifact then repository-user is owner account id
-  repository-user:
-    type: string
-    required: true
-  repository-token:
-    type: string
-    required: true
+  # repository-user:
+  #  type: string
+  #  required: true
+  # repository-token:
+  # type: string
+  #  required: true
 outputs:
   package-groupid-name: 
     value: ${{ steps.package-generator-name.outputs.package-group }}
@@ -55,16 +55,16 @@ outputs:
     value: ${{ steps.package-generator-name.outputs.package-version }} 
   package-type-name:
     value: ${{ steps.package-generator-name.outputs.package-type-id }}
-  package-repository: 
-    value: ${{ steps.registry-repository.outputs.registry-repository-id }}
-  package-url: 
-    value: ${{ steps.registry-repository.outputs.registry-repository-url }}
-  package-usr: 
-    value: ${{ steps.registry-repository.outputs.registry-repository-usr }}
-  package-key: 
-    value: ${{ steps.registry-repository.outputs.registry-repository-key }}
-  package-owner: 
-    value: ${{ steps.registry-repository.outputs.registry-repository-owner }}  
+ # package-repository: 
+ #   value: ${{ steps.registry-repository.outputs.registry-repository-id }}
+ # package-url: 
+ #   value: ${{ steps.registry-repository.outputs.registry-repository-url }}
+ # package-usr: 
+ #   value: ${{ steps.registry-repository.outputs.registry-repository-usr }}
+ # package-key: 
+ #   value: ${{ steps.registry-repository.outputs.registry-repository-key }}
+ # package-owner: 
+ #   value: ${{ steps.registry-repository.outputs.registry-repository-owner }}  
 runs:
   using: "composite"
   steps:
@@ -89,12 +89,12 @@ runs:
       uses: stCarolas/setup-maven@v4.2
       with:
         maven-version: 3.8.2
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{inputs.aws-access-key}}
-        aws-secret-access-key: ${{inputs.aws-secret-acesss-key}}
-        aws-region: ${{inputs.aws-region}}     
+    # - name: Configure AWS credentials
+    #  uses: aws-actions/configure-aws-credentials@v1
+    #  with:
+    #    aws-access-key-id: ${{inputs.aws-access-key}}
+    #    aws-secret-access-key: ${{inputs.aws-secret-acesss-key}}
+    #    aws-region: ${{inputs.aws-region}}     
     #######################################
     - id: package-generator-name
       working-directory: .github/cicd/scripts
@@ -112,27 +112,28 @@ runs:
         # get package name generate from step build
         VERSION: ${{ steps.package-generator-name.outputs.package-version }}  
       run: # sh control-version.sh # error end file. control ascii
-      # deploy artifact to registry repository
-    - id: registry-repository
-      working-directory: .github/cicd/scripts
-      shell: sh
-      env:
-        WORKSPACE: ${{ github.workspace }}
-        LENGUAGE: ${{ inputs.lenguage-code }}
-        REF: ${{ github.base_ref }}
-        PROJECT: ${{ inputs.project-name }}
+      # Note of developer: move registry code artifact after sonar, price for storege, more up more price! ( free 2 Gb )
+      # create new action yaml for registry artifact. temporal comment for test.
+    # - id: registry-repository
+    #  working-directory: .github/cicd/scripts
+    #  shell: sh
+    #  env:
+    #    WORKSPACE: ${{ github.workspace }}
+    #    LENGUAGE: ${{ inputs.lenguage-code }}
+    #    REF: ${{ github.base_ref }}
+    #    PROJECT: ${{ inputs.project-name }}
         # get package name generate from step build
-        GROUP: ${{ steps.package-generator-name.outputs.package-group }} 
+    #    GROUP: ${{ steps.package-generator-name.outputs.package-group }} 
         # get package name generate from step build
-        ARTIFACT: ${{ steps.package-generator-name.outputs.package-artifact }} 
+    #    ARTIFACT: ${{ steps.package-generator-name.outputs.package-artifact }} 
         # get package name generate from step build
-        VERSION: ${{ steps.package-generator-name.outputs.package-version }}   
+    #    VERSION: ${{ steps.package-generator-name.outputs.package-version }}   
         # get package type extention from step build
-        PACKAGE: ${{ steps.package-generator-name.outputs.package-type-id }}
+    #    PACKAGE: ${{ steps.package-generator-name.outputs.package-type-id }}
         # active code artifact and reemplace nexus
-        CODEARTIFACT: ${{ inputs.codeartifact-allow }}
+    #    CODEARTIFACT: ${{ inputs.codeartifact-allow }}
         # DNS hasn't content http:// or https://  
-        REPOSITORY_DNS: ${{ inputs.repository-host }}
-        REPOSITORY_USER: ${{ inputs.repository-user }}
-        REPOSITORY_SECRET: ${{ inputs.repository-token }}
-      run: sh artifact-registry.sh 
+    #    REPOSITORY_DNS: ${{ inputs.repository-host }}
+    #    REPOSITORY_USER: ${{ inputs.repository-user }}
+    #    REPOSITORY_SECRET: ${{ inputs.repository-token }}
+    #  run: sh artifact-registry.sh 

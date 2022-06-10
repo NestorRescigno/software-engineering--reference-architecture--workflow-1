@@ -1,0 +1,125 @@
+# *********************************************************************
+# *************           IBERIA L.A.E.                   *************
+# *************       by Software Engineering             *************
+# *********************************************************************
+# This action yaml represents the different steps to perform 
+# for build and registry of artifact. 
+# use codeartifact and nexus repositories
+#
+# currently it is only possible to configure 
+# two types of languages "java and angular"
+
+#### test composite 
+name: 'Registry'
+description: 'Registry build artifact'
+inputs:
+  project-name:
+    type: string
+    required: true
+  lenguage-code:
+    type: string
+    required: true
+    default: "java"
+  group-name:
+    type: string
+    required: true
+  service-name:
+    type: string
+    required: true
+  service-version:
+    type: string
+    required: true
+  service-package:
+    type: string
+    required: true
+  # configuration cloud secret by enviroment  
+  aws-access-key:
+    type: string
+    required: false
+  aws-secret-acesss-key:
+    type: string
+    required: false
+  aws-region:
+    type: string
+    required: false
+    default: "eu-central-1"
+  # if use code artifact repository-host
+  codeartifact-allow:
+    type: string
+    required: true
+    default: false
+  repository-host:
+    type: string
+    required: true
+  # if use codeartifact then repository-user is owner account id
+  repository-user:
+    type: string
+    required: true
+  repository-token:
+    type: string
+    required: true
+outputs:
+  package-repository: 
+    value: ${{ steps.registry-repository.outputs.registry-repository-id }}
+  package-url: 
+    value: ${{ steps.registry-repository.outputs.registry-repository-url }}
+  package-usr: 
+    value: ${{ steps.registry-repository.outputs.registry-repository-usr }}
+  package-key: 
+    value: ${{ steps.registry-repository.outputs.registry-repository-key }}
+  package-owner: 
+    value: ${{ steps.registry-repository.outputs.registry-repository-owner }}  
+runs:
+  using: "composite"
+  steps:
+    ########################################################
+    # use temporaly this action but change 
+    # to future with script instal setup or install in magine
+    # checkout source code in runner 
+    # - name: Checkout source
+    #   uses: actions/checkout@v2.4.2
+    #   with:
+    #     clean: 'true'
+    - name: Setup Node 14
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+    - name: Setup JDK 11
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'temurin'
+        java-version: '11' 
+    - name: Setup Maven 3.8.2
+      uses: stCarolas/setup-maven@v4.2
+      with:
+        maven-version: 3.8.2
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{inputs.aws-access-key}}
+        aws-secret-access-key: ${{inputs.aws-secret-acesss-key}}
+        aws-region: ${{inputs.aws-region}}     
+    #######################################
+    - id: registry-repository
+      working-directory: .github/cicd/scripts
+      shell: sh
+      env:
+        WORKSPACE: ${{ github.workspace }}
+        LENGUAGE: ${{ inputs.lenguage-code }}
+        REF: ${{ github.base_ref }}
+        PROJECT: ${{ inputs.project-name }}
+        # get package name generate from step build
+        GROUP: ${{ inputs.group-name }} 
+        # get package name generate from step build
+        ARTIFACT: ${{ inputs.service-name }} 
+        # get package name generate from step build
+        VERSION: ${{ inputs.service-version }}   
+        # get package type extention from step build
+        PACKAGE: ${{ inputs.service-package }} 
+        # active code artifact and reemplace nexus
+        CODEARTIFACT: ${{ inputs.codeartifact-allow }}
+        # DNS hasn't content http:// or https://  
+        REPOSITORY_DNS: ${{ inputs.repository-host }}
+        REPOSITORY_USER: ${{ inputs.repository-user }}
+        REPOSITORY_SECRET: ${{ inputs.repository-token }}
+      run: sh artifact-registry.sh 
