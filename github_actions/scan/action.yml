@@ -104,6 +104,7 @@ runs:
           -Dsonar.java.coveragePlugin=jacoco
           -Dsonar.coverage.jacoco.xmlReportPaths=**/target/site/jacoco/jacoco.xml
           -Dsonar.exclusions=**/target/**,**/src/test/**
+          -X
     - name: SonarQube Quality Gate Check
       uses: SonarSource/sonarqube-quality-gate-action@v1.0.0
       # Force to fail step after specific time
