@@ -105,12 +105,12 @@ runs:
           -Dsonar.coverage.jacoco.xmlReportPaths=**/target/site/jacoco/jacoco.xml
           -Dsonar.exclusions=**/target/**,**/src/test/**
           -X
-    - name: SonarQube Quality Gate Check
-      uses: SonarSource/sonarqube-quality-gate-action@v1.0.0
+    # - name: SonarQube Quality Gate Check
+    #  uses: SonarSource/sonarqube-quality-gate-action@v1.0.0
       # Force to fail step after specific time
       # timeout-minutes: 5
-      env:
-         SONAR_TOKEN: ${{ inputs.sonarqube-token }}    
+    #  env:
+    #     SONAR_TOKEN: ${{ inputs.sonarqube-token }}    
     # -Dsonar.qualitygate.wait=true  # set this  
     # -Dsonar.qualitygate.timeout=300 You can set the sonar.qualitygate.timeout property to an amount of time (in seconds) that the scanner should wait for a report to be processed. The default is 300 seconds.
     # - name: sonar
